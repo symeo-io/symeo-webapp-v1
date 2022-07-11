@@ -26,7 +26,7 @@ jobs:
             - node_modules
       - run:
           name: Deploy to S3
-          command: cd .aws && ./deploy.sh --region eu-west-3 --env ${CIRCLE_BRANCH}
+          command: cd .aws && ./deploy.sh --region ${AWS_REGION} --env ${CIRCLE_BRANCH}
 
 workflows:
   deploy-webapp:
