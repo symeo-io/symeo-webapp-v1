@@ -1,0 +1,29 @@
+version: 2
+jobs:
+  deploy:
+    working_directory: ~/catlean-webapp
+    docker:
+      - image: circleci/aws-cli@3.1.1
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "~/catlean-webapp/yarn.lock" }}
+      - run:
+          name: Install nodejs
+          command: |
+            curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -
+            sudo apt install nodejs
+      - run:
+          name: Deploy to S3
+          command: cd infrastructure && ./deploy.sh --region eu-west-1 --env dev
+
+workflows:
+  version: 2
+  deploy:
+    jobs:
+      - deploy:
+          filters:
+            branches:
+              only:
+                - develop
+                - main
