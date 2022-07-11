@@ -58,18 +58,18 @@ PUBLIC_URL=${PREFIX_URL}.${DOMAIN}
 
 ## S3
 aws cloudformation deploy \
-  --stack-name splane-front-s3-${ENV} \
+  --stack-name catlean-webapp-s3-${ENV} \
   --template-file cloudformation/s3.yml \
   --parameter-overrides \
       Env=${ENV} \
   --region ${REGION} \
   --no-fail-on-empty-changeset
 
-export_stack_outputs splane-front-s3-${ENV} ${REGION}
+export_stack_outputs catlean-webapp-s3-${ENV} ${REGION}
 
 ## Cloudfront
 aws cloudformation deploy \
-  --stack-name splane-front-cloudfront-${ENV} \
+  --stack-name catlean-webapp-cloudfront-${ENV} \
   --template-file cloudformation/cloudfront.yml \
   --parameter-overrides \
       Env=${ENV} \
@@ -79,6 +79,6 @@ aws cloudformation deploy \
   --region ${REGION} \
   --no-fail-on-empty-changeset
 
-export_stack_outputs splane-front-cloudfront-${ENV} ${REGION}
+export_stack_outputs catlean-webapp-cloudfront-${ENV} ${REGION}
 
 echo "DONE"

@@ -31,4 +31,8 @@ jobs:
 workflows:
   deploy-webapp:
     jobs:
-      - deploy
+      - deploy:
+          filters:
+            branches:
+              only:
+                - staging
