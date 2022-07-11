@@ -1,0 +1,34 @@
+version: 2.1
+
+orbs:
+  aws-cli: circleci/aws-cli@3.1
+
+jobs:
+  deploy:
+    working_directory: ~/catlean-webapp
+    executor: aws-cli/default
+    steps:
+      - checkout
+      - aws-cli/setup
+      - restore_cache:
+          key: dependency-cache-{{ checksum "~/catlean-webapp/yarn.lock" }}
+      - run:
+          name: Install nodejs
+          command: |
+            curl -sL https://deb.nodesource.com/setup_16.x | sudo bash -
+            sudo apt install nodejs
+      - run:
+          name: Install front dependencies
+          command: yarn install
+      - save_cache:
+          key: dependency-cache-{{ checksum "~/catlean-webapp/yarn.lock" }}
+          paths:
+            - node_modules
+      - run:
+          name: Deploy to S3
+          command: cd infrastructure && ./deploy.sh --region eu-west-3 --env ${CIRCLE_BRANCH}
+
+workflows:
+  deploy-webapp:
+    jobs:
+      - deploy
