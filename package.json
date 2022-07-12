@@ -19,7 +19,7 @@
   },
   "scripts": {
     "start": "REACT_APP_ENV=local react-scripts start",
-    "build": "env-cmd .env.${REACT_APP_ENV} react-scripts build",
+    "build": "env-cmd -f .env.${REACT_APP_ENV} react-scripts build",
     "build:staging": "REACT_APP_ENV=staging yarn build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
