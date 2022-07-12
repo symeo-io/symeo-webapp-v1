@@ -5,24 +5,32 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
+import { config } from "./config";
+import { Provider, ReactReduxContext } from "react-redux";
+import { store } from "./store";
+import { GetTokenProvider } from "./GetTokenProvider";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <Auth0Provider
-      domain={process.env.REACT_APP_AUTH0_DOMAIN ?? ""}
-      clientId={process.env.REACT_APP_AUTH0_CLIENT_ID ?? ""}
-      audience={process.env.REACT_APP_AUTH0_AUDIENCE ?? ""}
-      redirectUri={window.location.origin}
-      cacheLocation="localstorage"
-      scope="read:current_user"
-    >
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Auth0Provider>
+    <Provider store={store} context={ReactReduxContext}>
+      <Auth0Provider
+        domain={config.auth0.domain}
+        clientId={config.auth0.clientId}
+        audience={config.auth0.audience}
+        redirectUri={window.location.origin}
+        cacheLocation="localstorage"
+        scope="read:current_user"
+      >
+        <GetTokenProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </GetTokenProvider>
+      </Auth0Provider>
+    </Provider>
   </React.StrictMode>
 );
 
