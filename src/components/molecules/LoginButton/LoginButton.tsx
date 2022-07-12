@@ -1,9 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
 function LoginButton() {
-  const { isLoading, isAuthenticated, error, user, loginWithRedirect, logout } =
-    useAuth0();
+  const {
+    isLoading,
+    isAuthenticated,
+    error,
+    user,
+    loginWithRedirect,
+    logout,
+    getAccessTokenSilently,
+  } = useAuth0();
+
+  useEffect(() => {
+    (async () => {
+      try {
+        if (isAuthenticated) {
+          const token = await getAccessTokenSilently({
+            audience: "https://api-staging.catlean.fr",
+          });
+          console.log("token", `"Bearer ${token}"`);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  }, [getAccessTokenSilently, isAuthenticated]);
 
   if (isLoading) {
     return <div>Loading...</div>;

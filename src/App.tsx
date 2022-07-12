@@ -7,7 +7,10 @@ function App() {
     <Auth0Provider
       domain={process.env.REACT_APP_AUTH0_DOMAIN ?? ""}
       clientId={process.env.REACT_APP_AUTH0_CLIENT_ID ?? ""}
+      audience={process.env.REACT_APP_AUTH0_AUDIENCE ?? ""}
       redirectUri={window.location.origin}
+      cacheLocation="localstorage"
+      scope="read:current_user"
     >
       <Home />
     </Auth0Provider>
