@@ -4,6 +4,24 @@ orbs:
   aws-cli: circleci/aws-cli@3.1
 
 jobs:
+  lint:
+    working_directory: ~/catlean-webapp
+    docker:
+      - image: cimg/node:16.16.0
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "~/catlean-webapp/yarn.lock" }}
+      - run:
+          name: Install front dependencies
+          command: yarn install
+      - save_cache:
+          key: dependency-cache-{{ checksum "~/catlean-webapp/yarn.lock" }}
+          paths:
+            - node_modules
+      - run:
+          name: Lint
+          command: yarn lint
   deploy:
     working_directory: ~/catlean-webapp
     executor: aws-cli/default
@@ -29,9 +47,12 @@ jobs:
           command: cd .aws && ./deploy.sh --region ${AWS_REGION} --env ${CIRCLE_BRANCH}
 
 workflows:
-  deploy-webapp:
+  webapp:
     jobs:
+      - lint
       - deploy:
+          requires:
+            - lint
           filters:
             branches:
               only:
