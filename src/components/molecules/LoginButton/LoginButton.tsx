@@ -1,51 +1,32 @@
-import React, { useEffect } from "react";
+import React, { useCallback } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import { Button, ButtonProps } from "@mui/material";
 
-function LoginButton() {
-  const {
-    isLoading,
-    isAuthenticated,
-    error,
-    user,
-    loginWithRedirect,
-    logout,
-    getAccessTokenSilently,
-  } = useAuth0();
+export type LoginButtonProps = { sx?: ButtonProps["sx"] };
 
-  useEffect(() => {
-    (async () => {
-      try {
-        if (isAuthenticated) {
-          const token = await getAccessTokenSilently({
-            audience: "https://api-staging.catlean.fr",
-          });
-          console.log("token", `"Bearer ${token}"`);
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    })();
-  }, [getAccessTokenSilently, isAuthenticated]);
+function LoginButton({ sx }: LoginButtonProps) {
+  const { isLoading, isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-  if (error) {
-    return <div>Oops... {error.message}</div>;
-  }
+  const handleClick = useCallback(() => {
+    if (isAuthenticated) {
+      return logout({ returnTo: window.location.origin });
+    }
 
-  if (isAuthenticated) {
-    return (
-      <div>
-        Hello {user?.name}{" "}
-        <button onClick={() => logout({ returnTo: window.location.origin })}>
-          Log out
-        </button>
-      </div>
-    );
-  } else {
-    return <button onClick={loginWithRedirect}>Log in</button>;
-  }
+    return loginWithRedirect();
+  }, []);
+
+  return (
+    <Button
+      sx={sx}
+      onClick={handleClick}
+      disabled={isLoading}
+      variant="contained"
+    >
+      {isLoading && "Loading..."}
+      {!isLoading && isAuthenticated && "Log out"}
+      {!isLoading && !isAuthenticated && "Log in"}
+    </Button>
+  );
 }
 
 export default LoginButton;

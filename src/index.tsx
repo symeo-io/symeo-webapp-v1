@@ -9,6 +9,8 @@ import { config } from "./config";
 import { Provider, ReactReduxContext } from "react-redux";
 import { store } from "./store";
 import { GetTokenProvider } from "./GetTokenProvider";
+import { theme } from "./theme/theme";
+import { ThemeProvider } from "@mui/material";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -25,9 +27,11 @@ root.render(
         scope="read:current_user"
       >
         <GetTokenProvider>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
+          <ThemeProvider theme={theme}>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </ThemeProvider>
         </GetTokenProvider>
       </Auth0Provider>
     </Provider>
