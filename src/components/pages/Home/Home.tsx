@@ -20,7 +20,7 @@ function Home() {
     >
       {user && (
         <Typography
-          variant="h4"
+          variant="h2"
           sx={{ marginBottom: (theme) => theme.spacing(3) }}
         >
           Hello {user.name}, welcome to Catlean!
