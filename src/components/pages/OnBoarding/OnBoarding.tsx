@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Card, Typography } from "@mui/material";
+import InfoIcon from "@mui/icons-material/Info";
 import Logo from "components/atoms/Logo/Logo";
 import { colors } from "theme/colors";
 import { useIntl } from "react-intl";
@@ -7,6 +8,7 @@ import gitHubLogo from "components/molecules/RepositoryProviderConnectPanel/gith
 import gitLabLogo from "components/molecules/RepositoryProviderConnectPanel/gitlab.svg";
 import bitbucketLogo from "components/molecules/RepositoryProviderConnectPanel/bitbucket.svg";
 import RepositoryProviderConnectPanel from "components/molecules/RepositoryProviderConnectPanel/RepositoryProviderConnectPanel";
+import MessageBox from "components/atoms/MessageBox/MessageBox";
 
 const repositoriesProviders = [
   {
@@ -75,15 +77,24 @@ function OnBoarding() {
               id: "on-boarding.connect-repositories-provider.message",
             })}
           </Typography>
-          {repositoriesProviders.map((provider) => (
-            <RepositoryProviderConnectPanel
-              key={provider.name}
-              name={provider.name}
-              logo={provider.logo}
-              supported={provider.supported}
-              sx={{ width: "350px", marginY: (theme) => theme.spacing(1) }}
+          <Box sx={{ width: "420px" }}>
+            {repositoriesProviders.map((provider) => (
+              <RepositoryProviderConnectPanel
+                key={provider.name}
+                name={provider.name}
+                logo={provider.logo}
+                supported={provider.supported}
+                sx={{ marginY: (theme) => theme.spacing(1) }}
+              />
+            ))}
+            <MessageBox
+              Icon={InfoIcon}
+              message={formatMessage({
+                id: "on-boarding.connect-repositories-provider.security-message",
+              })}
+              sx={{ marginTop: (theme) => theme.spacing(2) }}
             />
-          ))}
+          </Box>
         </Card>
       </Box>
     </Box>

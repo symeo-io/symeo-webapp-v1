@@ -4,6 +4,7 @@
     "connect-repositories-provider": {
       "title": "Connect your code repositories provider",
       "message": "Let Catlean analyse your code, commits and pull requests is the fastest way to measure and improve your DevOps performance.",
+      "security-message": "You're in control of your data: we do not copy or store your code on our end.",
       "panel": {
         "connect": "Connect",
         "soon": "Soon"
