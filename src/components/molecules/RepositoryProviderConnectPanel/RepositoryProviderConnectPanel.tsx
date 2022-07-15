@@ -8,6 +8,8 @@ export type RepositoryProviderConnectPanelProps = {
   name: string;
   logo: string;
   supported: boolean;
+  onClick?: () => void;
+  loading?: boolean;
   sx?: BoxProps["sx"];
 };
 
@@ -15,6 +17,8 @@ export function RepositoryProviderConnectPanel({
   name,
   logo,
   supported,
+  onClick,
+  loading = false,
   sx,
 }: RepositoryProviderConnectPanelProps) {
   const { formatMessage } = useIntl();
@@ -54,7 +58,7 @@ export function RepositoryProviderConnectPanel({
           minWidth: "87px",
         }}
       >
-        <Button disabled={!supported}>
+        <Button disabled={!supported} onClick={onClick} loading={loading}>
           {formatMessage({
             id: supported
               ? "on-boarding.connect-repositories-provider.panel.connect"

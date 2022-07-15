@@ -7,4 +7,7 @@ export const config = {
   api: {
     url: process.env.REACT_APP_API_URL ?? "",
   },
+  githubApp: {
+    name: process.env.REACT_APP_GITHUB_APP_NAME ?? "",
+  },
 };

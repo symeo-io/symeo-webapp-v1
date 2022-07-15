@@ -4,29 +4,10 @@ import InfoIcon from "@mui/icons-material/Info";
 import Logo from "components/atoms/Logo/Logo";
 import { colors } from "theme/colors";
 import { useIntl } from "react-intl";
-import gitHubLogo from "components/molecules/RepositoryProviderConnectPanel/github.svg";
-import gitLabLogo from "components/molecules/RepositoryProviderConnectPanel/gitlab.svg";
-import bitbucketLogo from "components/molecules/RepositoryProviderConnectPanel/bitbucket.svg";
-import RepositoryProviderConnectPanel from "components/molecules/RepositoryProviderConnectPanel/RepositoryProviderConnectPanel";
 import MessageBox from "components/atoms/MessageBox/MessageBox";
-
-const repositoriesProviders = [
-  {
-    name: "GitHub",
-    logo: gitHubLogo,
-    supported: true,
-  },
-  {
-    name: "GitLab",
-    logo: gitLabLogo,
-    supported: false,
-  },
-  {
-    name: "BitBucket",
-    logo: bitbucketLogo,
-    supported: false,
-  },
-];
+import GitHubConnectPanel from "components/molecules/RepositoryProviderConnectPanel/GitHubConnectPanel";
+import BitBucketConnectPanel from "components/molecules/RepositoryProviderConnectPanel/BitBucketConnectPanel";
+import GitLabConnectPanel from "components/molecules/RepositoryProviderConnectPanel/GitLabConnectPanel";
 
 function OnBoarding() {
   const { formatMessage } = useIntl();
@@ -78,15 +59,11 @@ function OnBoarding() {
             })}
           </Typography>
           <Box sx={{ width: "420px" }}>
-            {repositoriesProviders.map((provider) => (
-              <RepositoryProviderConnectPanel
-                key={provider.name}
-                name={provider.name}
-                logo={provider.logo}
-                supported={provider.supported}
-                sx={{ marginY: (theme) => theme.spacing(1) }}
-              />
-            ))}
+            <GitHubConnectPanel sx={{ marginY: (theme) => theme.spacing(1) }} />
+            <GitLabConnectPanel sx={{ marginY: (theme) => theme.spacing(1) }} />
+            <BitBucketConnectPanel
+              sx={{ marginY: (theme) => theme.spacing(1) }}
+            />
             <MessageBox
               Icon={InfoIcon}
               message={formatMessage({
