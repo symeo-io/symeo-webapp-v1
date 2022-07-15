@@ -25,6 +25,9 @@ const primary: Color = {
   950: "#000019",
 };
 
+primary.main = primary[450];
+primary.light = primary[300];
+primary.dark = primary[550];
 primary.surface = primary[25];
 primary.surfaceHover = primary[75];
 primary.borders = primary[300];

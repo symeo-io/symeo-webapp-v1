@@ -1,15 +1,16 @@
 import { createTheme } from "@mui/material";
-import primary from "./colors/primary";
+import { colors } from "./colors";
 
 export const theme = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: primary[450],
-      dark: primary[550],
-      light: primary[300],
       contrastText: "#FFFFFF",
-      ...primary,
+      ...colors.primary,
+    },
+    secondary: {
+      contrastText: "#FFFFFF",
+      ...colors.secondary,
     },
   },
   typography: {
@@ -33,7 +34,7 @@ export const theme = createTheme({
       fontSize: "0.875rem",
     },
     body2: {
-      fontSize: "0.875rem",
+      fontSize: "1rem",
     },
   },
   components: {

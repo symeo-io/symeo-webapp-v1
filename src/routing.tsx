@@ -1,5 +1,6 @@
 import React from "react";
 import HomePage from "components/pages/Home/Home";
+import OnBoardingPage from "components/pages/OnBoarding/OnBoarding";
 
 export type Route = {
   isSecured?: boolean;
@@ -12,6 +13,11 @@ const routes: Record<string, Route> = {
     path: "/",
     isSecured: true,
     element: HomePage,
+  } as Route,
+  onBoarding: {
+    path: "/onboarding",
+    isSecured: true,
+    element: OnBoardingPage,
   } as Route,
   "*": {
     path: "/*",

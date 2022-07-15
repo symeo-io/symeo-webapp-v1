@@ -21,6 +21,9 @@ export type Color = {
   850?: string;
   900?: string;
   950?: string;
+  light?: string;
+  dark?: string;
+  main?: string;
   surface?: string;
   surfaceHover?: string;
   borders?: string;
