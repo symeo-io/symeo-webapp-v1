@@ -12,4 +12,33 @@ export const userQueryApi = api.injectEndpoints({
   }),
 });
 
+const userMutationApi = api.injectEndpoints({
+  endpoints: (builder) => ({
+    linkOrganizationToCurrentUser: builder.mutation<
+      CurrentUserResponse,
+      { externalId: string }
+    >({
+      query: ({ externalId }) => ({
+        url: `/api/v1/me/organization`,
+        method: "POST",
+        body: { externalId },
+      }),
+      invalidatesTags: [{ type: "CurrentUser" }],
+      async onQueryStarted({ externalId }, { dispatch, queryFulfilled }) {
+        const { data: updatedCurrentUser } = await queryFulfilled;
+        dispatch(
+          userQueryApi.util.updateQueryData(
+            "getCurrentUser",
+            undefined,
+            (draft) => {
+              Object.assign(draft, updatedCurrentUser);
+            }
+          )
+        );
+      },
+    }),
+  }),
+});
+
 export const { useGetCurrentUserQuery } = userQueryApi;
+export const { useLinkOrganizationToCurrentUserMutation } = userMutationApi;

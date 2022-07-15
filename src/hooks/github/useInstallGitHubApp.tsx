@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { config } from "config";
 import ShortUniqueId from "short-unique-id";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useLinkOrganizationToCurrentUserMutation } from "redux/api/user/user.api";
+import routes from "../../routing";
 
 const uid = new ShortUniqueId({ length: 10 });
 
@@ -22,9 +24,13 @@ export const useInstallGitHubApp = () => {
 
 export const useFinishInstallGitHubApp = () => {
   const [loading, setIsLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const state = searchParams.get("state");
   const installationId = searchParams.get("installation_id");
+
+  const [linkOrganizationToCurrentUser] =
+    useLinkOrganizationToCurrentUserMutation();
 
   useEffect(() => {
     if (state && installationId) {
@@ -35,6 +41,10 @@ export const useFinishInstallGitHubApp = () => {
       }
 
       setIsLoading(true);
+      linkOrganizationToCurrentUser({ externalId: installationId }).then(() => {
+        setIsLoading(false);
+        navigate(routes.home.path);
+      });
     }
   }, [state, installationId]);
 
