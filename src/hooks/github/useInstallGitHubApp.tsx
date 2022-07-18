@@ -9,10 +9,6 @@ const uid = new ShortUniqueId({ length: 10 });
 
 const LOCAL_STORAGE_STATE_KEY = "GIT_HUB_APP_STATE";
 
-function wait(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
 export const useInstallGitHubApp = () => {
   return useCallback(() => {
     const state = uid();
@@ -45,15 +41,11 @@ export const useFinishInstallGitHubApp = () => {
       }
 
       setIsLoading(true);
-      wait(5000)
-        .then(() =>
-          linkOrganizationToCurrentUser({ externalId: installationId })
-        )
-
-        .then(() => {
-          setIsLoading(false);
-          navigate(routes.home.path);
-        });
+      linkOrganizationToCurrentUser({ externalId: installationId }).then(() => {
+        setIsLoading(false);
+        localStorage.setItem(LOCAL_STORAGE_STATE_KEY, "");
+        navigate(routes.home.path);
+      });
     }
   }, [state, installationId]);
 

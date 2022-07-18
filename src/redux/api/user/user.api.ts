@@ -18,6 +18,7 @@ const userMutationApi = api.injectEndpoints({
       CurrentUserResponse,
       { externalId: string }
     >({
+      extraOptions: { maxRetries: 5 },
       query: ({ externalId }) => ({
         url: `/api/v1/me/organization`,
         method: "POST",
