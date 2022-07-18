@@ -33,7 +33,7 @@ export const useFinishInstallGitHubApp = () => {
     useLinkOrganizationToCurrentUserMutation();
 
   useEffect(() => {
-    if (state && installationId) {
+    if (state && installationId && !loading) {
       const saveState = localStorage.getItem(LOCAL_STORAGE_STATE_KEY);
 
       if (saveState !== state) {
@@ -42,8 +42,8 @@ export const useFinishInstallGitHubApp = () => {
 
       setIsLoading(true);
       linkOrganizationToCurrentUser({ externalId: installationId }).then(() => {
-        setIsLoading(false);
         localStorage.setItem(LOCAL_STORAGE_STATE_KEY, "");
+        setIsLoading(false);
         navigate(routes.home.path);
       });
     }
