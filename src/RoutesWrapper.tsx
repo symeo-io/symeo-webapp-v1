@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Routes, Route } from "react-router-dom";
 import routes from "./routing";
 import ProtectedRoute from "./components/atoms/ProtectedRoute/ProtectedRoute";
 
 function RoutesWrapper() {
-  return (
-    <Routes>
-      {Object.values(routes).map((route) => (
+  const routeComponents = useMemo(
+    () =>
+      Object.values(routes).map((route) => (
         <Route
           key={route.path}
           path={route.path}
@@ -18,9 +18,11 @@ function RoutesWrapper() {
             )
           }
         />
-      ))}
-    </Routes>
+      )),
+    []
   );
+
+  return <Routes>{routeComponents}</Routes>;
 }
 
 export default RoutesWrapper;

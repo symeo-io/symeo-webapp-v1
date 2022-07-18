@@ -12,4 +12,4 @@ function ProtectedRoute({
   return <Component />;
 }
 
-export default ProtectedRoute;
+export default React.memo(ProtectedRoute);

@@ -13,7 +13,7 @@ function LoginButton({ sx }: LoginButtonProps) {
     }
 
     return loginWithRedirect();
-  }, []);
+  }, [isAuthenticated, loginWithRedirect, logout]);
 
   return (
     <Button

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { config } from "config";
 import ShortUniqueId from "short-unique-id";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -23,31 +23,46 @@ export const useInstallGitHubApp = () => {
 };
 
 export const useFinishInstallGitHubApp = () => {
+  console.log("useFinishInstallGitHubApp");
   const [loading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const state = searchParams.get("state");
   const installationId = searchParams.get("installation_id");
+  const isAttemptingToLinkOrgToUser = useRef<boolean>(false);
 
   const [linkOrganizationToCurrentUser] =
     useLinkOrganizationToCurrentUserMutation();
 
   useEffect(() => {
-    if (state && installationId && !loading) {
+    if (state && installationId) {
       const saveState = localStorage.getItem(LOCAL_STORAGE_STATE_KEY);
 
       if (saveState !== state) {
         return setSearchParams({});
       }
 
-      setIsLoading(true);
-      linkOrganizationToCurrentUser({ externalId: installationId }).then(() => {
-        localStorage.setItem(LOCAL_STORAGE_STATE_KEY, "");
-        setIsLoading(false);
-        navigate(routes.home.path);
-      });
+      if (!isAttemptingToLinkOrgToUser.current) {
+        isAttemptingToLinkOrgToUser.current = true;
+        setIsLoading(true);
+        linkOrganizationToCurrentUser({ externalId: installationId }).then(
+          () => {
+            localStorage.setItem(LOCAL_STORAGE_STATE_KEY, "");
+            setIsLoading(false);
+            isAttemptingToLinkOrgToUser.current = false;
+            navigate(routes.home.path);
+          }
+        );
+      }
     }
-  }, [state, installationId]);
+  }, [
+    installationId,
+    linkOrganizationToCurrentUser,
+    loading,
+    navigate,
+    setSearchParams,
+    state,
+  ]);
 
   return loading;
 };

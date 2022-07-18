@@ -19,7 +19,7 @@ function App() {
         navigate(routes.onBoarding.path);
       }
     }
-  }, [isSuccess, currentUserData, location]);
+  }, [isSuccess, currentUserData, location, navigate]);
 
   return <RoutesWrapper />;
 }
