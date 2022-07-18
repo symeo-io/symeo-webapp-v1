@@ -23,7 +23,6 @@ export const useInstallGitHubApp = () => {
 };
 
 export const useFinishInstallGitHubApp = () => {
-  console.log("useFinishInstallGitHubApp");
   const [loading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();

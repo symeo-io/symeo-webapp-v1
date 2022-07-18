@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Card, Typography } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import Logo from "components/atoms/Logo/Logo";
@@ -8,9 +8,20 @@ import MessageBox from "components/atoms/MessageBox/MessageBox";
 import GitHubConnectPanel from "components/molecules/RepositoryProviderConnectPanel/GitHubConnectPanel";
 import BitBucketConnectPanel from "components/molecules/RepositoryProviderConnectPanel/BitBucketConnectPanel";
 import GitLabConnectPanel from "components/molecules/RepositoryProviderConnectPanel/GitLabConnectPanel";
+import { useGetCurrentUserQuery } from "redux/api/user/user.api";
+import routes from "routing";
+import { useNavigate } from "react-router-dom";
 
 function OnBoarding() {
   const { formatMessage } = useIntl();
+  const navigate = useNavigate();
+  const { data: currentUserData, isSuccess } = useGetCurrentUserQuery();
+
+  useEffect(() => {
+    if (isSuccess && currentUserData && currentUserData.user.organization) {
+      navigate(routes.home.path);
+    }
+  }, [currentUserData, isSuccess, navigate]);
 
   return (
     <Box
