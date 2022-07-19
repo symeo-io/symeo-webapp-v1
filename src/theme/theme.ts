@@ -12,6 +12,9 @@ export const theme = createTheme({
       contrastText: "#FFFFFF",
       ...colors.secondary,
     },
+    error: {
+      ...colors.error,
+    },
   },
   typography: {
     h1: {

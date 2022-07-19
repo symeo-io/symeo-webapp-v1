@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { SnackbarProvider } from "notistack";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import enMessages from "translations/en.json";
 import { BrowserRouter } from "react-router-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { config } from "./config";
@@ -12,19 +12,15 @@ import { store } from "./store";
 import { GetTokenProvider } from "./GetTokenProvider";
 import { theme } from "./theme/theme";
 import { ThemeProvider } from "@mui/material";
-import flattenMessages from "./services/i18n/intl";
-import { IntlProvider } from "react-intl";
-
-const locales = {
-  en: flattenMessages(enMessages),
-};
+import { RawIntlProvider } from "react-intl";
+import { intl } from "./intl";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <IntlProvider locale="en" messages={locales.en}>
+    <RawIntlProvider value={intl}>
       <Provider store={store} context={ReactReduxContext}>
         <Auth0Provider
           domain={config.auth0.domain}
@@ -36,14 +32,16 @@ root.render(
         >
           <GetTokenProvider>
             <ThemeProvider theme={theme}>
-              <BrowserRouter>
-                <App />
-              </BrowserRouter>
+              <SnackbarProvider maxSnack={3}>
+                <BrowserRouter>
+                  <App />
+                </BrowserRouter>
+              </SnackbarProvider>
             </ThemeProvider>
           </GetTokenProvider>
         </Auth0Provider>
       </Provider>
-    </IntlProvider>
+    </RawIntlProvider>
   </React.StrictMode>
 );
 

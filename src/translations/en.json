@@ -10,5 +10,8 @@
         "soon": "Soon"
       }
     }
+  },
+  "errors": {
+    "F.ORGANIZATION_NAME_NOT_FOUND": "Organization not found"
   }
 }
