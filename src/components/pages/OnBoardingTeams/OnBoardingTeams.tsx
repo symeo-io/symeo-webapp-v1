@@ -1,17 +1,27 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Box, Divider } from "@mui/material";
+import { Box } from "@mui/material";
 import { useIntl } from "react-intl";
 import { useGetCurrentUserQuery } from "redux/api/user/user.api";
 import routes from "routing";
 import { useNavigate } from "react-router-dom";
 import OnBoardingPageContainer from "components/molecules/OnBoardingPageContainer/OnBoardingPageContainer";
 import OnBoardingCard from "components/molecules/OnBoardingCard/OnBoardingCard";
-import CreateTeamForm, {
-  CreateTeamFormValues,
-} from "components/organisms/CreateTeamForm/CreateTeamForm";
+import { CreateTeamFormValues } from "components/organisms/CreateTeamForm/CreateTeamForm";
 import Button from "components/atoms/Button/Button";
 import AddIcon from "@mui/icons-material/Add";
-import ClearIcon from "@mui/icons-material/Clear";
+import CreateTeamSection from "./CreateTeamSection";
+import {
+  emptyTeamFormErrors,
+  FormErrors,
+  getTeamsFormErrors,
+  isErrorsListEmpty,
+} from "components/organisms/CreateTeamForm/utils";
+import cloneDeep from "lodash/cloneDeep";
+
+const EMPTY_TEAM: CreateTeamFormValues = {
+  name: "",
+  repositories: [],
+};
 
 function OnBoardingTeams() {
   const { formatMessage } = useIntl();
@@ -19,10 +29,10 @@ function OnBoardingTeams() {
   const { data: currentUserData, isSuccess } = useGetCurrentUserQuery();
 
   const [teams, setTeams] = useState<CreateTeamFormValues[]>([
-    {
-      name: "",
-      repositories: [],
-    },
+    { ...EMPTY_TEAM },
+  ]);
+  const [errors, setErrors] = useState<FormErrors<CreateTeamFormValues>[]>([
+    cloneDeep(emptyTeamFormErrors),
   ]);
 
   const setTeam = useCallback(
@@ -34,17 +44,19 @@ function OnBoardingTeams() {
     [teams]
   );
 
-  const addTeam = useCallback(
-    () =>
-      setTeams([
-        ...teams,
-        {
-          name: "",
-          repositories: [],
-        },
-      ]),
-    [teams]
+  const setTeamErrors = useCallback(
+    (index: number, teamErrors: FormErrors<CreateTeamFormValues>) => {
+      const newErrors = [...errors];
+      newErrors[index] = teamErrors;
+      setErrors(newErrors);
+    },
+    [errors]
   );
+
+  const addTeam = useCallback(() => {
+    setTeams([...teams, { ...EMPTY_TEAM }]);
+    setErrors([...errors, cloneDeep(emptyTeamFormErrors)]);
+  }, [errors, teams]);
 
   const removeTeam = useCallback(
     (index: number) => {
@@ -52,10 +64,23 @@ function OnBoardingTeams() {
         const newTeams = [...teams];
         newTeams.splice(index, 1);
         setTeams(newTeams);
+
+        const newErrors = [...errors];
+        newErrors.splice(index, 1);
+        setErrors(newErrors);
       }
     },
-    [teams]
+    [errors, teams]
   );
+
+  const handleNext = useCallback(() => {
+    const errors = getTeamsFormErrors(teams);
+    setErrors(errors);
+
+    if (isErrorsListEmpty(errors)) {
+      console.log("OK");
+    }
+  }, [teams]);
 
   useEffect(() => {
     if (
@@ -79,38 +104,16 @@ function OnBoardingTeams() {
       >
         <Box sx={{ width: "100%" }}>
           {teams.map((team, index) => (
-            <>
-              {index !== 0 && (
-                <Divider sx={{ marginTop: (theme) => theme.spacing(4) }} />
-              )}
-              <Box
-                sx={{
-                  padding: (theme) => theme.spacing(1),
-                  display: "flex",
-                  justifyContent: "flex-end",
-                }}
-              >
-                <ClearIcon
-                  onClick={() => removeTeam(index)}
-                  sx={{
-                    cursor: "pointer",
-                    fontSize: "18px",
-                    visibility: teams.length <= 1 ? "hidden" : undefined,
-                  }}
-                />
-              </Box>
-              <CreateTeamForm
-                key={index}
-                values={team}
-                setValues={(values: CreateTeamFormValues) =>
-                  setTeam(index, values)
-                }
-                sx={{
-                  marginTop:
-                    index !== 0 ? (theme) => theme.spacing(3) : undefined,
-                }}
-              />
-            </>
+            <CreateTeamSection
+              key={index}
+              index={index}
+              errors={errors[index]}
+              setErrors={setTeamErrors}
+              team={team}
+              setTeam={setTeam}
+              teamsNumber={teams.length}
+              onRemoveTeamClick={removeTeam}
+            />
           ))}
           <Box
             sx={{
@@ -136,7 +139,10 @@ function OnBoardingTeams() {
                 id: "on-boarding.create-teams.skip-button-label",
               })}
             </Button>
-            <Button sx={{ marginLeft: (theme) => theme.spacing(2) }}>
+            <Button
+              sx={{ marginLeft: (theme) => theme.spacing(2) }}
+              onClick={handleNext}
+            >
               {formatMessage({
                 id: "on-boarding.create-teams.next-button-label",
               })}

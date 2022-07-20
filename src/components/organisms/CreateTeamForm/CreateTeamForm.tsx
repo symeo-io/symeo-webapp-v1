@@ -12,6 +12,7 @@ import { useIntl } from "react-intl";
 import { useGetRepositoriesQuery } from "redux/api/repository/repository.api";
 import { Repository } from "redux/api/repository/repository.type";
 import GitHubIcon from "./GitHubIcon";
+import { FormErrors } from "./utils";
 
 export type CreateTeamFormValues = {
   name: string;
@@ -21,10 +22,18 @@ export type CreateTeamFormValues = {
 export type OnBoardingCardProps = PropsWithChildren & {
   values: CreateTeamFormValues;
   setValues: (values: CreateTeamFormValues) => void;
+  errors: FormErrors<CreateTeamFormValues>;
+  setErrors: (errors: FormErrors<CreateTeamFormValues>) => void;
   sx?: BoxProps["sx"];
 };
 
-function CreateTeamForm({ values, setValues, sx }: OnBoardingCardProps) {
+function CreateTeamForm({
+  values,
+  setValues,
+  errors,
+  setErrors,
+  sx,
+}: OnBoardingCardProps) {
   const { formatMessage } = useIntl();
   const { data, isLoading } = useGetRepositoriesQuery();
 
@@ -36,15 +45,17 @@ function CreateTeamForm({ values, setValues, sx }: OnBoardingCardProps) {
   const handleNameChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       setValues({ ...values, name: event.target.value });
+      setErrors({ ...errors, name: [] }); // Resetting errors when editing field
     },
-    [setValues, values]
+    [errors, setErrors, setValues, values]
   );
 
   const handleRepositoriesChange = useCallback(
     (event: any, repositories: Repository[]) => {
       setValues({ ...values, repositories });
+      setErrors({ ...errors, repositories: [] }); // Resetting errors when editing field
     },
-    [setValues, values]
+    [errors, setErrors, setValues, values]
   );
 
   return (
@@ -62,6 +73,14 @@ function CreateTeamForm({ values, setValues, sx }: OnBoardingCardProps) {
           id: "on-boarding.create-teams.form.name-field-placeholder",
         })}
         sx={{ marginBottom: (theme) => theme.spacing(2) }}
+        error={errors.name.length > 0}
+        helperText={
+          errors.name.length > 0
+            ? errors.name
+                .map((error) => formatMessage({ id: error }))
+                .join(", ")
+            : undefined
+        }
       />
       <Autocomplete
         value={values.repositories}
@@ -96,6 +115,14 @@ function CreateTeamForm({ values, setValues, sx }: OnBoardingCardProps) {
             placeholder={formatMessage({
               id: "on-boarding.create-teams.form.repositories-field-placeholder",
             })}
+            error={errors.repositories.length > 0}
+            helperText={
+              errors.repositories.length > 0
+                ? errors.repositories
+                    .map((error) => formatMessage({ id: error }))
+                    .join(", ")
+                : undefined
+            }
             InputProps={{
               ...params.InputProps,
               startAdornment: (
