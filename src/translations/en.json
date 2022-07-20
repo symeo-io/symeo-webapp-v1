@@ -9,6 +9,18 @@
         "connect": "Connect",
         "soon": "Soon"
       }
+    },
+    "create-teams": {
+      "title": "Organise your repositories into teams",
+      "message": "Splitting your repositories into specific teams is the best way to get relevant insights.",
+      "form": {
+        "name-field-label": "Team name",
+        "name-field-placeholder": "Your first team name",
+        "repositories-field-label": "Select your team repositories",
+        "repositories-field-placeholder": "Search for a repo name",
+        "repositories-field-no-option": "No repositories found",
+        "repositories-field-loading": "Loading your repositories..."
+      }
     }
   },
   "errors": {

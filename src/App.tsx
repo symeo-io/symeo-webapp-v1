@@ -13,10 +13,10 @@ function App() {
   useEffect(() => {
     if (isSuccess && currentUserData) {
       if (
-        location.pathname !== routes.onBoarding.path &&
+        location.pathname !== routes.onBoardingVcs.path &&
         !currentUserData.user.organization
       ) {
-        navigate(routes.onBoarding.path);
+        navigate(routes.onBoardingVcs.path);
       }
     }
   }, [isSuccess, currentUserData, location, navigate]);

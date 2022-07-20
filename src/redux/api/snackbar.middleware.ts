@@ -15,7 +15,7 @@ export const snackbarMiddleware: Middleware =
             intl.formatMessage({
               id: `errors.${error.code}`,
             }),
-            { variant: "error" }
+            { variant: "error", autoHideDuration: 3000000 }
           );
         });
       }

@@ -7,7 +7,7 @@ export const userQueryApi = api.injectEndpoints({
       query: () => ({
         url: `/api/v1/me`,
       }),
-      providesTags: () => [{ type: "CurrentUser" }],
+      providesTags: (result) => [{ type: "CurrentUser", id: result?.user.id }],
     }),
   }),
 });
