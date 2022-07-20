@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import RoutesWrapper from "./RoutesWrapper";
-import { useGetCurrentUserQuery } from "./redux/api/user/user.api";
+import { useGetCurrentUserQuery } from "./redux/api/users/users.api";
 import { useLocation, useNavigate } from "react-router-dom";
 import routes from "./routing";
 
@@ -13,10 +13,18 @@ function App() {
   useEffect(() => {
     if (isSuccess && currentUserData) {
       if (
-        location.pathname !== routes.onBoarding.path &&
-        !currentUserData.user.organization
+        location.pathname !== routes.onBoardingVcs.path &&
+        !currentUserData.user.onboarding.has_connected_to_vcs
       ) {
-        navigate(routes.onBoarding.path);
+        return navigate(routes.onBoardingVcs.path);
+      }
+
+      if (
+        location.pathname !== routes.onBoardingTeams.path &&
+        currentUserData.user.onboarding.has_connected_to_vcs &&
+        !currentUserData.user.onboarding.has_configured_team
+      ) {
+        return navigate(routes.onBoardingTeams.path);
       }
     }
   }, [isSuccess, currentUserData, location, navigate]);

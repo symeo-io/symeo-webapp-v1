@@ -1,6 +1,7 @@
 import React from "react";
 import HomePage from "components/pages/Home/Home";
-import OnBoardingPage from "components/pages/OnBoarding/OnBoarding";
+import OnBoardingPageVcs from "components/pages/OnBoardingVcs/OnBoardingVcs";
+import OnBoardingPageTeams from "components/pages/OnBoardingTeams/OnBoardingTeams";
 
 export type Route = {
   isSecured?: boolean;
@@ -14,10 +15,15 @@ const routes: Record<string, Route> = {
     isSecured: true,
     element: HomePage,
   } as Route,
-  onBoarding: {
-    path: "/onboarding",
+  onBoardingVcs: {
+    path: "/onboarding-vcs",
     isSecured: true,
-    element: OnBoardingPage,
+    element: OnBoardingPageVcs,
+  } as Route,
+  onBoardingTeams: {
+    path: "/onboarding-teams",
+    isSecured: true,
+    element: OnBoardingPageTeams,
   } as Route,
   "*": {
     path: "/*",

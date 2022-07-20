@@ -17,12 +17,14 @@ import { intl } from "./intl";
 import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/tracing";
 
-Sentry.init({
-  dsn: config.sentry.dsn,
-  environment: config.env,
-  integrations: [new BrowserTracing()],
-  tracesSampleRate: 1.0,
-});
+if (config.sentry.dsn) {
+  Sentry.init({
+    dsn: config.sentry.dsn,
+    environment: config.env,
+    integrations: [new BrowserTracing()],
+    tracesSampleRate: 1.0,
+  });
+}
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
