@@ -58,9 +58,12 @@ function OnBoardingTeams() {
   );
 
   useEffect(() => {
-    if (isSuccess && currentUserData && currentUserData.user.organization) {
-      // navigate(routes.home.path);
-      console.log(routes.home.path);
+    if (
+      isSuccess &&
+      currentUserData &&
+      currentUserData.user.onboarding.has_configured_team
+    ) {
+      navigate(routes.home.path);
     }
   }, [currentUserData, isSuccess, navigate]);
 
@@ -118,6 +121,24 @@ function OnBoardingTeams() {
             <Button startIcon={<AddIcon />} onClick={addTeam}>
               {formatMessage({
                 id: "on-boarding.create-teams.add-team-button-label",
+              })}
+            </Button>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "flex-end",
+              marginTop: (theme) => theme.spacing(8),
+            }}
+          >
+            <Button variant="outlined">
+              {formatMessage({
+                id: "on-boarding.create-teams.skip-button-label",
+              })}
+            </Button>
+            <Button sx={{ marginLeft: (theme) => theme.spacing(2) }}>
+              {formatMessage({
+                id: "on-boarding.create-teams.next-button-label",
               })}
             </Button>
           </Box>

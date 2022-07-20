@@ -9,8 +9,8 @@ import GitLabConnectPanel from "components/molecules/RepositoryProviderConnectPa
 import { useGetCurrentUserQuery } from "redux/api/user/user.api";
 import routes from "routing";
 import { useNavigate } from "react-router-dom";
-import OnBoardingPageContainer from "../../molecules/OnBoardingPageContainer/OnBoardingPageContainer";
-import OnBoardingCard from "../../molecules/OnBoardingCard/OnBoardingCard";
+import OnBoardingPageContainer from "components/molecules/OnBoardingPageContainer/OnBoardingPageContainer";
+import OnBoardingCard from "components/molecules/OnBoardingCard/OnBoardingCard";
 
 function OnBoardingVcs() {
   const { formatMessage } = useIntl();
@@ -18,8 +18,16 @@ function OnBoardingVcs() {
   const { data: currentUserData, isSuccess } = useGetCurrentUserQuery();
 
   useEffect(() => {
-    if (isSuccess && currentUserData && currentUserData.user.organization) {
-      navigate(routes.home.path);
+    if (
+      isSuccess &&
+      currentUserData &&
+      currentUserData.user.onboarding.has_connected_to_vcs
+    ) {
+      if (!currentUserData.user.onboarding.has_configured_team) {
+        return navigate(routes.onBoardingTeams.path);
+      }
+
+      return navigate(routes.home.path);
     }
   }, [currentUserData, isSuccess, navigate]);
 
