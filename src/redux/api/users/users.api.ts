@@ -1,7 +1,7 @@
 import { api } from "../api";
-import { CurrentUserResponse } from "./user.type";
+import { CurrentUserResponse } from "./users.types";
 
-export const userQueryApi = api.injectEndpoints({
+export const usersQueryApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getCurrentUser: builder.query<CurrentUserResponse, void>({
       query: () => ({
@@ -12,7 +12,7 @@ export const userQueryApi = api.injectEndpoints({
   }),
 });
 
-const userMutationApi = api.injectEndpoints({
+const usersMutationApi = api.injectEndpoints({
   endpoints: (builder) => ({
     linkOrganizationToCurrentUser: builder.mutation<
       CurrentUserResponse,
@@ -28,7 +28,7 @@ const userMutationApi = api.injectEndpoints({
       async onQueryStarted({ externalId }, { dispatch, queryFulfilled }) {
         const { data: updatedCurrentUser } = await queryFulfilled;
         dispatch(
-          userQueryApi.util.updateQueryData(
+          usersQueryApi.util.updateQueryData(
             "getCurrentUser",
             undefined,
             (draft) => {
@@ -41,5 +41,5 @@ const userMutationApi = api.injectEndpoints({
   }),
 });
 
-export const { useGetCurrentUserQuery } = userQueryApi;
-export const { useLinkOrganizationToCurrentUserMutation } = userMutationApi;
+export const { useGetCurrentUserQuery } = usersQueryApi;
+export const { useLinkOrganizationToCurrentUserMutation } = usersMutationApi;

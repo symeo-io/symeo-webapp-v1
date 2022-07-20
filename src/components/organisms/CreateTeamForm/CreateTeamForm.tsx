@@ -9,8 +9,8 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import TextField from "components/molecules/TextField/TextField";
 import { useIntl } from "react-intl";
-import { useGetRepositoriesQuery } from "redux/api/repository/repository.api";
-import { Repository } from "redux/api/repository/repository.type";
+import { useGetRepositoriesQuery } from "redux/api/repositories/repositories.api";
+import { Repository } from "redux/api/repositories/repositories.types";
 import GitHubIcon from "./GitHubIcon";
 import { FormErrors } from "./utils";
 

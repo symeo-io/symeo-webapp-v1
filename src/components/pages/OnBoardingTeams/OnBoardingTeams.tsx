@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import { useIntl } from "react-intl";
-import { useGetCurrentUserQuery } from "redux/api/user/user.api";
+import { useGetCurrentUserQuery } from "redux/api/users/users.api";
 import routes from "routing";
 import { useNavigate } from "react-router-dom";
 import OnBoardingPageContainer from "components/molecules/OnBoardingPageContainer/OnBoardingPageContainer";
@@ -17,6 +17,8 @@ import {
   isErrorsListEmpty,
 } from "components/organisms/CreateTeamForm/utils";
 import cloneDeep from "lodash/cloneDeep";
+import { useCreateTeamsMutation } from "redux/api/teams/teams.api";
+import { formValuesToCreateTeamInput } from "redux/api/teams/teams.types";
 
 const EMPTY_TEAM: CreateTeamFormValues = {
   name: "",
@@ -27,6 +29,8 @@ function OnBoardingTeams() {
   const { formatMessage } = useIntl();
   const navigate = useNavigate();
   const { data: currentUserData, isSuccess } = useGetCurrentUserQuery();
+  const [createTeams, { isLoading: isLoadingCreateTeams }] =
+    useCreateTeamsMutation();
 
   const [teams, setTeams] = useState<CreateTeamFormValues[]>([
     { ...EMPTY_TEAM },
@@ -78,9 +82,9 @@ function OnBoardingTeams() {
     setErrors(errors);
 
     if (isErrorsListEmpty(errors)) {
-      console.log("OK");
+      createTeams(formValuesToCreateTeamInput(teams));
     }
-  }, [teams]);
+  }, [createTeams, teams]);
 
   useEffect(() => {
     if (
@@ -134,13 +138,14 @@ function OnBoardingTeams() {
               marginTop: (theme) => theme.spacing(8),
             }}
           >
-            <Button variant="outlined">
+            <Button variant="outlined" disabled={isLoadingCreateTeams}>
               {formatMessage({
                 id: "on-boarding.create-teams.skip-button-label",
               })}
             </Button>
             <Button
               sx={{ marginLeft: (theme) => theme.spacing(2) }}
+              loading={isLoadingCreateTeams}
               onClick={handleNext}
             >
               {formatMessage({

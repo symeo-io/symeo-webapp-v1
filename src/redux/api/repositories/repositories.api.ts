@@ -1,11 +1,11 @@
 import { api } from "../api";
-import { GetRepositoriesResponse } from "./repository.type";
+import { GetRepositoriesResponse } from "./repositories.types";
 
-export const repositoryQueryApi = api.injectEndpoints({
+export const repositoriesQueryApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getRepositories: builder.query<GetRepositoriesResponse, void>({
       query: () => ({
-        url: `/api/v1/repository`,
+        url: `/api/v1/repositories`,
       }),
       providesTags: (result) =>
         result?.repositories
@@ -21,4 +21,4 @@ export const repositoryQueryApi = api.injectEndpoints({
   }),
 });
 
-export const { useGetRepositoriesQuery } = repositoryQueryApi;
+export const { useGetRepositoriesQuery } = repositoriesQueryApi;

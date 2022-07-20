@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { config } from "config";
 import ShortUniqueId from "short-unique-id";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useLinkOrganizationToCurrentUserMutation } from "redux/api/user/user.api";
+import { useLinkOrganizationToCurrentUserMutation } from "redux/api/users/users.api";
 import routes from "../../routing";
 
 const uid = new ShortUniqueId({ length: 10 });

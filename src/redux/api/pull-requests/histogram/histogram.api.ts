@@ -4,7 +4,7 @@ export const histogramQueryApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getHistogram: builder.query<{}, void>({
       query: () => ({
-        url: `/api/v1/pull-request/histogram`,
+        url: `/api/v1/pull-requests/histogram`,
       }),
       providesTags: () => [{ type: "Histogram" }],
     }),

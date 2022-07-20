@@ -6,7 +6,7 @@ import MessageBox from "components/atoms/MessageBox/MessageBox";
 import GitHubConnectPanel from "components/molecules/RepositoryProviderConnectPanel/GitHubConnectPanel";
 import BitBucketConnectPanel from "components/molecules/RepositoryProviderConnectPanel/BitBucketConnectPanel";
 import GitLabConnectPanel from "components/molecules/RepositoryProviderConnectPanel/GitLabConnectPanel";
-import { useGetCurrentUserQuery } from "redux/api/user/user.api";
+import { useGetCurrentUserQuery } from "redux/api/users/users.api";
 import routes from "routing";
 import { useNavigate } from "react-router-dom";
 import OnBoardingPageContainer from "components/molecules/OnBoardingPageContainer/OnBoardingPageContainer";
@@ -23,10 +23,6 @@ function OnBoardingVcs() {
       currentUserData &&
       currentUserData.user.onboarding.has_connected_to_vcs
     ) {
-      if (!currentUserData.user.onboarding.has_configured_team) {
-        return navigate(routes.onBoardingTeams.path);
-      }
-
       return navigate(routes.home.path);
     }
   }, [currentUserData, isSuccess, navigate]);
