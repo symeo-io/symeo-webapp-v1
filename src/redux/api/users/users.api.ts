@@ -1,5 +1,9 @@
 import { api } from "../api";
-import { CurrentUserResponse } from "./users.types";
+import {
+  CurrentUserResponse,
+  OnBoarding,
+  UpdateOnBoardingResponse,
+} from "./users.types";
 
 export const usersQueryApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -38,8 +42,36 @@ const usersMutationApi = api.injectEndpoints({
         );
       },
     }),
+    updateOnBoarding: builder.mutation<UpdateOnBoardingResponse, OnBoarding>({
+      extraOptions: { maxRetries: 5 },
+      query: (onBoarding) => ({
+        url: `/api/v1/me/onboarding`,
+        method: "POST",
+        body: onBoarding,
+      }),
+      invalidatesTags: [{ type: "CurrentUser" }],
+      async onQueryStarted(onBoarding, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          usersQueryApi.util.updateQueryData(
+            "getCurrentUser",
+            undefined,
+            (draft) => {
+              draft.user.onboarding = onBoarding;
+            }
+          )
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          patchResult.undo();
+        }
+      },
+    }),
   }),
 });
 
 export const { useGetCurrentUserQuery } = usersQueryApi;
-export const { useLinkOrganizationToCurrentUserMutation } = usersMutationApi;
+export const {
+  useLinkOrganizationToCurrentUserMutation,
+  useUpdateOnBoardingMutation,
+} = usersMutationApi;

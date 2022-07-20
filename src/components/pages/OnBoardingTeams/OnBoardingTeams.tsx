@@ -1,7 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import { useIntl } from "react-intl";
-import { useGetCurrentUserQuery } from "redux/api/users/users.api";
+import {
+  useGetCurrentUserQuery,
+  useUpdateOnBoardingMutation,
+} from "redux/api/users/users.api";
 import routes from "routing";
 import { useNavigate } from "react-router-dom";
 import OnBoardingPageContainer from "components/molecules/OnBoardingPageContainer/OnBoardingPageContainer";
@@ -31,6 +34,8 @@ function OnBoardingTeams() {
   const { data: currentUserData, isSuccess } = useGetCurrentUserQuery();
   const [createTeams, { isLoading: isLoadingCreateTeams }] =
     useCreateTeamsMutation();
+  const [updateOnboarding, { isLoading: isLoadingUpdateOnBoarding }] =
+    useUpdateOnBoardingMutation();
 
   const [teams, setTeams] = useState<CreateTeamFormValues[]>([
     { ...EMPTY_TEAM },
@@ -77,14 +82,23 @@ function OnBoardingTeams() {
     [errors, teams]
   );
 
-  const handleNext = useCallback(() => {
+  const handleNext = useCallback(async () => {
     const errors = getTeamsFormErrors(teams);
     setErrors(errors);
 
     if (isErrorsListEmpty(errors)) {
-      createTeams(formValuesToCreateTeamInput(teams));
+      await createTeams(formValuesToCreateTeamInput(teams));
+      return navigate(routes.home.path);
     }
-  }, [createTeams, teams]);
+  }, [createTeams, navigate, teams]);
+
+  const handleSkip = useCallback(async () => {
+    await updateOnboarding({
+      has_configured_team: true,
+      has_connected_to_vcs: true,
+    });
+    return navigate(routes.home.path);
+  }, [navigate, updateOnboarding]);
 
   useEffect(() => {
     if (
@@ -138,7 +152,12 @@ function OnBoardingTeams() {
               marginTop: (theme) => theme.spacing(8),
             }}
           >
-            <Button variant="outlined" disabled={isLoadingCreateTeams}>
+            <Button
+              variant="outlined"
+              loading={isLoadingUpdateOnBoarding}
+              disabled={isLoadingCreateTeams}
+              onClick={handleSkip}
+            >
               {formatMessage({
                 id: "on-boarding.create-teams.skip-button-label",
               })}
@@ -146,6 +165,7 @@ function OnBoardingTeams() {
             <Button
               sx={{ marginLeft: (theme) => theme.spacing(2) }}
               loading={isLoadingCreateTeams}
+              disabled={isLoadingUpdateOnBoarding}
               onClick={handleNext}
             >
               {formatMessage({

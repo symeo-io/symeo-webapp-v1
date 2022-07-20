@@ -21,3 +21,8 @@ export type CurrentUserResponse = {
   user: User;
   errors?: Error[];
 };
+
+export type UpdateOnBoardingResponse = {
+  onboarding: OnBoarding;
+  errors?: Error[];
+};
