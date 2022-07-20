@@ -13,9 +13,10 @@
     "create-teams": {
       "title": "Organise your repositories into teams",
       "message": "Splitting your repositories into specific teams is the best way to get relevant insights.",
+      "add-team-button-label": "Add another team",
       "form": {
         "name-field-label": "Team name",
-        "name-field-placeholder": "Your first team name",
+        "name-field-placeholder": "Your team name",
         "repositories-field-label": "Select your team repositories",
         "repositories-field-placeholder": "Search for a repo name",
         "repositories-field-no-option": "No repositories found",
