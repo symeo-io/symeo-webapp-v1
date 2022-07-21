@@ -304,5 +304,21 @@ export const theme = createTheme({
         disableRipple: true,
       },
     },
+    MuiListSubheader: {
+      styleOverrides: {
+        root: {
+          lineHeight: "32px",
+          textTransform: "uppercase",
+          fontWeight: 400,
+        },
+      },
+    },
+    MuiList: {
+      styleOverrides: {
+        root: {
+          outline: "none",
+        },
+      },
+    },
   },
 });

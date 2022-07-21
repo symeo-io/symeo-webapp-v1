@@ -32,5 +32,11 @@
   },
   "errors": {
     "F.ORGANIZATION_NAME_NOT_FOUND": "Organization not found"
+  },
+  "sidebar": {
+    "account": {
+      "your-account": "Your account",
+      "logout": "Logout"
+    }
   }
 }

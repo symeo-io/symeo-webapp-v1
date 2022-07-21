@@ -33,13 +33,23 @@ function Sidebar() {
       {currentUserData &&
         currentUserData.user &&
         currentUserData.user.organization && (
-          <Box sx={{ padding: "20px 12px" }}>
+          <Box
+            sx={{
+              padding: (theme) => `${theme.spacing(2.5)} ${theme.spacing(1.5)}`,
+            }}
+          >
             <CurrentOrganization
               organization={currentUserData.user.organization}
             />
           </Box>
         )}
-      <Box sx={{ flex: 1, padding: "12px 0 12px 12px" }}>
+      <Box
+        sx={{
+          flex: 1,
+          padding: (theme) =>
+            `${theme.spacing(1.5)} 0 theme.spacing(1.5) theme.spacing(1.5)`,
+        }}
+      >
         <MenuList>
           <SidebarNavLink
             label="Home"
@@ -49,8 +59,8 @@ function Sidebar() {
         </MenuList>
       </Box>
       {user && (
-        <Box sx={{ padding: "12px" }}>
-          <CurrentUser user={user} />
+        <Box sx={{ padding: (theme) => theme.spacing(1.5) }}>
+          <CurrentUser />
         </Box>
       )}
     </Drawer>
