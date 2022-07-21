@@ -34,6 +34,9 @@
     "F.ORGANIZATION_NAME_NOT_FOUND": "Organization not found"
   },
   "sidebar": {
+    "links": {
+      "home": "Home"
+    },
     "account": {
       "your-account": "Your account",
       "logout": "Logout"

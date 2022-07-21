@@ -7,10 +7,12 @@ import SidebarNavLink from "components/molecules/SidebarNavLink/SidebarNavLink";
 import HomeIcon from "@mui/icons-material/Home";
 import CurrentUser from "components/molecules/CurrentUser/CurrentUser";
 import routes from "routing";
+import { useIntl } from "react-intl";
 
 export const SIDE_BAR_WIDTH = 224;
 
 function Sidebar() {
+  const { formatMessage } = useIntl();
   const { data: currentUserData } = useGetCurrentUserQuery();
   const { user } = useAuth0();
 
@@ -52,7 +54,7 @@ function Sidebar() {
       >
         <MenuList>
           <SidebarNavLink
-            label="Home"
+            label={formatMessage({ id: "sidebar.links.home" })}
             icon={<HomeIcon />}
             route={routes.home}
           />
