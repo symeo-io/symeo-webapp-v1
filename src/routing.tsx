@@ -5,6 +5,7 @@ import OnBoardingPageTeams from "components/pages/OnBoardingTeams/OnBoardingTeam
 
 export type Route = {
   isSecured?: boolean;
+  sidebar?: boolean;
   path: string;
   element: React.ComponentType<object>;
 };
@@ -13,6 +14,7 @@ const routes: Record<string, Route> = {
   home: {
     path: "/",
     isSecured: true,
+    sidebar: true,
     element: HomePage,
   } as Route,
   onBoardingVcs: {

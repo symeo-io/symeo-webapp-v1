@@ -259,5 +259,50 @@ export const theme = createTheme({
         deleteIcon: <ClearIcon />,
       },
     },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          "& .MuiListItemIcon-root": {
+            color: colors.secondary.bordersHover,
+          },
+
+          "& .MuiListItemText-root .MuiTypography-root": {
+            color: colors.secondary.text,
+          },
+
+          "&:hover": {
+            background: "transparent",
+
+            "& .MuiListItemIcon-root": {
+              color: colors.primary.bordersHover,
+            },
+
+            "& .MuiListItemText-root .MuiTypography-root": {
+              color: colors.primary.shapeActive,
+            },
+          },
+
+          "&.Mui-selected": {
+            background: "transparent",
+
+            "&:hover": {
+              background: "transparent",
+            },
+
+            "& .MuiListItemIcon-root": {
+              color: colors.secondary.bordersHover,
+            },
+
+            "& .MuiListItemText-root .MuiTypography-root": {
+              fontWeight: 600,
+              color: colors.secondary.text,
+            },
+          },
+        },
+      },
+      defaultProps: {
+        disableRipple: true,
+      },
+    },
   },
 });

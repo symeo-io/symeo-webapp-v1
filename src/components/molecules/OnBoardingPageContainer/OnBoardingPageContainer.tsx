@@ -1,7 +1,6 @@
 import React, { PropsWithChildren } from "react";
 import { Box, BoxProps } from "@mui/material";
 import Logo from "components/atoms/Logo/Logo";
-import { colors } from "theme/colors";
 
 export type OnBoardingPageContainerProps = PropsWithChildren & {
   sx?: BoxProps["sx"];
@@ -17,7 +16,6 @@ function OnBoardingPageContainer({
         height: "100%",
         display: "flex",
         flexDirection: "column",
-        background: colors.primary.surface,
         ...sx,
       }}
     >
