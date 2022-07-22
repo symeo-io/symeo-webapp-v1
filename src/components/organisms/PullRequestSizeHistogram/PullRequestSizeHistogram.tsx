@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import { theme } from "theme/theme";
 import Graph, { GraphProps } from "components/organisms/Graph/Graph";
 import { HistogramDataPoint } from "redux/api/pull-requests/histogram/histogram.types";
+import { colors } from "theme/colors";
 
 const histogramMockValues: HistogramDataPoint[] = [
   { start_date_range: "02/05", data_below_limit: 30, data_above_limit: 10 },
@@ -44,6 +45,8 @@ function PullRequestSizeHistogram({ sx }: PullRequestSizeHistogramProps) {
         spec: {
           width: 1200,
           height: 480,
+          autosize: "fit-x",
+          resize: true,
           padding: 5,
 
           data: [
@@ -87,13 +90,13 @@ function PullRequestSizeHistogram({ sx }: PullRequestSizeHistogramProps) {
               name: "cornerRadiusTop",
               type: "ordinal",
               domain: { data: "table", field: "c" },
-              range: [0, 4],
+              range: [0, 12],
             },
             {
               name: "cornerRadiusBottom",
               type: "ordinal",
               domain: { data: "table", field: "c" },
-              range: [4, 0],
+              range: [12, 0],
             },
           ],
 
@@ -102,19 +105,28 @@ function PullRequestSizeHistogram({ sx }: PullRequestSizeHistogramProps) {
               orient: "bottom",
               scale: "x",
               zindex: 1,
-              labelFontWeight: 700,
+              ticks: false,
+              labelFontWeight: 100,
               labelFontSize: 16,
-              labelPadding: 8,
+              labelPadding: 24,
               labelFont: theme.typography.fontFamily,
+              labelColor: colors.secondary.textActive,
+              domainColor: colors.secondary.borders,
             },
             {
               orient: "left",
               scale: "y",
-              zindex: 1,
-              labelFontWeight: 700,
+              zindex: 0,
+              ticks: false,
+              grid: true,
+              gridDash: [10],
+              gridColor: colors.secondary.surfaceHover,
+              domain: false,
+              labelFontWeight: 100,
               labelFontSize: 16,
-              labelPadding: 8,
+              labelPadding: 24,
               labelFont: theme.typography.fontFamily,
+              labelColor: colors.secondary.textActive,
             },
           ],
 
@@ -142,12 +154,6 @@ function PullRequestSizeHistogram({ sx }: PullRequestSizeHistogramProps) {
                   y: { scale: "y", field: "y0" },
                   y2: { scale: "y", field: "y1" },
                   fill: { scale: "color", field: "c" },
-                },
-                update: {
-                  fillOpacity: { value: 1 },
-                },
-                hover: {
-                  fillOpacity: { value: 0.5 },
                 },
               },
             },
