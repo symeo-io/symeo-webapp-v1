@@ -1,17 +1,18 @@
 import React, { useEffect } from "react";
 import RoutesWrapper from "./RoutesWrapper";
-import { useGetCurrentUserQuery } from "./redux/api/users/users.api";
+import { useGetCurrentUserQuery } from "redux/api/users/users.api";
 import { useLocation, useNavigate } from "react-router-dom";
 import routes from "./routing";
+import { Box, CircularProgress } from "@mui/material";
 
 function App() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { data: currentUserData, isSuccess } = useGetCurrentUserQuery();
+  const { data: currentUserData, isLoading } = useGetCurrentUserQuery();
 
   useEffect(() => {
-    if (isSuccess && currentUserData) {
+    if (currentUserData) {
       if (
         location.pathname !== routes.onBoardingVcs.path &&
         !currentUserData.user.onboarding.has_connected_to_vcs
@@ -27,7 +28,21 @@ function App() {
         return navigate(routes.onBoardingTeams.path);
       }
     }
-  }, [isSuccess, currentUserData, location, navigate]);
+  }, [currentUserData, location, navigate]);
+
+  if (isLoading)
+    return (
+      <Box
+        sx={{
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
 
   return <RoutesWrapper />;
 }

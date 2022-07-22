@@ -1,10 +1,7 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Box } from "@mui/material";
 import { useIntl } from "react-intl";
-import {
-  useGetCurrentUserQuery,
-  useUpdateOnBoardingMutation,
-} from "redux/api/users/users.api";
+import { useUpdateOnBoardingMutation } from "redux/api/users/users.api";
 import routes from "routing";
 import { useNavigate } from "react-router-dom";
 import OnBoardingPageContainer from "components/molecules/OnBoardingPageContainer/OnBoardingPageContainer";
@@ -31,7 +28,6 @@ const EMPTY_TEAM: CreateTeamFormValues = {
 function OnBoardingTeams() {
   const { formatMessage } = useIntl();
   const navigate = useNavigate();
-  const { data: currentUserData, isSuccess } = useGetCurrentUserQuery();
   const [createTeams, { isLoading: isLoadingCreateTeams }] =
     useCreateTeamsMutation();
   const [updateOnboarding, { isLoading: isLoadingUpdateOnBoarding }] =
@@ -99,16 +95,6 @@ function OnBoardingTeams() {
     });
     return navigate(routes.home.path);
   }, [navigate, updateOnboarding]);
-
-  useEffect(() => {
-    if (
-      isSuccess &&
-      currentUserData &&
-      currentUserData.user.onboarding.has_configured_team
-    ) {
-      navigate(routes.home.path);
-    }
-  }, [currentUserData, isSuccess, navigate]);
 
   return (
     <OnBoardingPageContainer>

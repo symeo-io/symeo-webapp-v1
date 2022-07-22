@@ -49,7 +49,7 @@ export const useFinishInstallGitHubApp = () => {
             localStorage.setItem(LOCAL_STORAGE_STATE_KEY, "");
             setIsLoading(false);
             isAttemptingToLinkOrgToUser.current = false;
-            navigate(routes.home.path);
+            navigate(routes.onBoardingTeams.path);
           }
         );
       }

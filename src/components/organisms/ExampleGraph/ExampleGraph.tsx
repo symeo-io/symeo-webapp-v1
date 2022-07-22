@@ -1,7 +1,7 @@
 import React from "react";
 import { Vega } from "react-vega";
 import { theme } from "theme/theme";
-// import { colors } from "theme/colors";
+import { colors } from "theme/colors";
 import { Box, Typography } from "@mui/material";
 
 function ExampleGraph() {
@@ -20,6 +20,7 @@ function ExampleGraph() {
         Super histogram
       </Typography>
       <Vega
+        actions={false}
         spec={{
           width: 1200,
           height: 480,
@@ -73,7 +74,10 @@ function ExampleGraph() {
               name: "color",
               type: "ordinal",
               domain: { data: "table", field: "c" },
-              range: { scheme: "category20" },
+              range: [
+                colors.secondary.shape as string,
+                colors.error.surfaceHover as string,
+              ],
             },
             {
               name: "cornerRadiusTop",

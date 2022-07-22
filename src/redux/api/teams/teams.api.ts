@@ -1,5 +1,5 @@
 import { api } from "../api";
-import { usersQueryApi } from "../users/users.api";
+import { usersQueryApi } from "redux/api/users/users.api";
 import { CreateTeamInput, CreateTeamResponse } from "./teams.types";
 
 const teamsMutationApi = api.injectEndpoints({
@@ -12,8 +12,7 @@ const teamsMutationApi = api.injectEndpoints({
       }),
       invalidatesTags: [{ type: "CurrentUser" }],
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
-        await queryFulfilled;
-        dispatch(
+        const updateResult = dispatch(
           usersQueryApi.util.updateQueryData(
             "getCurrentUser",
             undefined,
@@ -22,6 +21,12 @@ const teamsMutationApi = api.injectEndpoints({
             }
           )
         );
+
+        try {
+          await queryFulfilled;
+        } catch (e) {
+          updateResult.undo();
+        }
       },
     }),
   }),
