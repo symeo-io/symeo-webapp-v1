@@ -1,6 +1,7 @@
 import React from "react";
 import { Box } from "@mui/material";
 import PullRequestSizeHistogram from "components/organisms/PullRequestSizeHistogram/PullRequestSizeHistogram";
+import PullRequestMergedGraph from "components/organisms/PullRequestMergedGraph/PullRequestMergedGraph";
 
 function Home() {
   return (
@@ -13,6 +14,7 @@ function Home() {
       }}
     >
       <PullRequestSizeHistogram />
+      <PullRequestMergedGraph sx={{ marginTop: (theme) => theme.spacing(5) }} />
     </Box>
   );
 }

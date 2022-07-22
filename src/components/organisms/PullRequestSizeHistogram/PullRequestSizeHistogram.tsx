@@ -1,7 +1,6 @@
 import React, { useMemo } from "react";
 import { theme } from "theme/theme";
-import { colors } from "theme/colors";
-import Graph from "components/organisms/Graph/Graph";
+import Graph, { GraphProps } from "components/organisms/Graph/Graph";
 import { HistogramDataPoint } from "redux/api/pull-requests/histogram/histogram.types";
 
 const histogramMockValues: HistogramDataPoint[] = [
@@ -13,7 +12,11 @@ const histogramMockValues: HistogramDataPoint[] = [
   { start_date_range: "13/06", data_below_limit: 38, data_above_limit: 2 },
 ];
 
-function PullRequestSizeHistogram() {
+export type PullRequestSizeHistogramProps = {
+  sx?: GraphProps["sx"];
+};
+
+function PullRequestSizeHistogram({ sx }: PullRequestSizeHistogramProps) {
   const vegaValues = useMemo(() => {
     const result: { x: string; y: number; c: number }[] = [];
     histogramMockValues.forEach((point) => {
@@ -34,6 +37,7 @@ function PullRequestSizeHistogram() {
 
   return (
     <Graph
+      sx={sx}
       title={"86% PR met goals"}
       vega={{
         actions: false,
@@ -77,10 +81,7 @@ function PullRequestSizeHistogram() {
               name: "color",
               type: "ordinal",
               domain: { data: "table", field: "c" },
-              range: [
-                colors.secondary.shape as string,
-                colors.error.surfaceHover as string,
-              ],
+              range: { scheme: "category20" },
             },
             {
               name: "cornerRadiusTop",
