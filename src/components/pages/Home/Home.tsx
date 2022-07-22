@@ -10,11 +10,28 @@ function Home() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        padding: (theme) => theme.spacing(6),
+        padding: (theme) => theme.spacing(3),
       }}
     >
-      <PullRequestSizeHistogram />
-      <PullRequestMergedGraph sx={{ marginTop: (theme) => theme.spacing(5) }} />
+      <PullRequestSizeHistogram
+        sx={{
+          flex: 1,
+          "& .vega-embed .marks": {
+            width: "100% !important",
+            height: "auto !important",
+          },
+        }}
+      />
+      <PullRequestMergedGraph
+        sx={{
+          flex: 1,
+          marginTop: (theme) => theme.spacing(5),
+          "& .vega-embed .marks": {
+            width: "100% !important",
+            height: "auto !important",
+          },
+        }}
+      />
     </Box>
   );
 }
