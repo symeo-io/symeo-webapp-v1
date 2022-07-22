@@ -1,6 +1,7 @@
 import React from "react";
 import { theme } from "theme/theme";
 import Graph, { GraphProps } from "components/organisms/Graph/Graph";
+import { colors } from "theme/colors";
 
 const graphMockValues = [
   { pr_merging_date: "02/05", days_before_merge: 1, status: "closed" },
@@ -73,7 +74,10 @@ function PullRequestMergedGraph({ sx }: PullRequestMergedGraphProps) {
               name: "color",
               type: "ordinal",
               domain: { data: "table", field: "status" },
-              range: { scheme: "category20" },
+              range: [
+                colors.primary[400] as string,
+                colors.primary[150] as string,
+              ],
             },
           ],
 
@@ -82,19 +86,28 @@ function PullRequestMergedGraph({ sx }: PullRequestMergedGraphProps) {
               orient: "bottom",
               scale: "x",
               zindex: 1,
-              labelFontWeight: 700,
+              ticks: false,
+              labelFontWeight: 100,
               labelFontSize: 16,
-              labelPadding: 8,
+              labelPadding: 24,
               labelFont: theme.typography.fontFamily,
+              labelColor: colors.secondary.text,
+              domainColor: colors.secondary.borders,
             },
             {
               orient: "left",
               scale: "y",
-              zindex: 1,
-              labelFontWeight: 700,
+              zindex: 0,
+              ticks: false,
+              grid: true,
+              gridDash: [10],
+              gridColor: colors.secondary.surfaceHover,
+              domain: false,
+              labelFontWeight: 100,
               labelFontSize: 16,
-              labelPadding: 8,
+              labelPadding: 24,
               labelFont: theme.typography.fontFamily,
+              labelColor: colors.secondary.text,
             },
           ],
 
@@ -102,6 +115,7 @@ function PullRequestMergedGraph({ sx }: PullRequestMergedGraphProps) {
             {
               type: "symbol",
               from: { data: "table" },
+              zindex: 2,
               encode: {
                 enter: {
                   x: { scale: "x", field: "pr_merging_date" },
