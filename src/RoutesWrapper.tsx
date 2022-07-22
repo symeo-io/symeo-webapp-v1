@@ -1,8 +1,8 @@
 import React, { useMemo } from "react";
 import { Routes, Route } from "react-router-dom";
 import routes from "routing";
-import ProtectedRoute from "components/atoms/ProtectedRoute/ProtectedRoute";
-import { withSidebar } from "components/organisms/Sidebar/Sidebar";
+import AuthenticatedRoute from "components/atoms/AuthenticatedRoute/AuthenticatedRoute";
+import { withSidebar } from "hoc/withSidebar";
 
 function RoutesWrapper() {
   const routeComponents = useMemo(
@@ -18,7 +18,7 @@ function RoutesWrapper() {
             path={route.path}
             element={
               route.isSecured ? (
-                <ProtectedRoute component={Component} />
+                <AuthenticatedRoute component={Component} />
               ) : (
                 <Component />
               )
