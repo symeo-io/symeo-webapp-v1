@@ -6,11 +6,13 @@ export type GetHistogramInput = {
   histogramType: "time-limit" | "size-limit";
 };
 
+export type HistogramDataPoint = {
+  data_above_limit: number;
+  data_below_limit: number;
+  start_date_range: string;
+};
+
 export type GetHistogramResponse = {
-  data: {
-    data_above_limit: number;
-    data_below_limit: number;
-    start_date_range: string;
-  }[];
+  data: HistogramDataPoint[];
   error?: Error[];
 };

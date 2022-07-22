@@ -1,27 +1,38 @@
-import React from "react";
-import { Vega } from "react-vega";
+import React, { useMemo } from "react";
 import { theme } from "theme/theme";
 import { colors } from "theme/colors";
-import { Box, Typography } from "@mui/material";
+import Graph from "components/organisms/Graph/Graph";
+import { HistogramDataPoint } from "redux/api/pull-requests/histogram/histogram.types";
 
-function ExampleGraph() {
+export type PullRequestSizeHistogramProps = {
+  data: HistogramDataPoint[];
+};
+
+function PullRequestSizeHistogram({ data }: PullRequestSizeHistogramProps) {
+  const vegaValues = useMemo(() => {
+    const result: { x: string; y: number; c: number }[] = [];
+    data.forEach((point) => {
+      result.push({
+        x: point.start_date_range,
+        y: point.data_below_limit,
+        c: 0,
+      });
+      result.push({
+        x: point.start_date_range,
+        y: point.data_above_limit,
+        c: 1,
+      });
+    });
+
+    return result;
+  }, [data]);
+
   return (
-    <Box
-      sx={{
-        background: "white",
-        borderRadius: "8px",
-        padding: (theme) => `${theme.spacing(2)} ${theme.spacing(4)}`,
-      }}
-    >
-      <Typography
-        variant="h1"
-        sx={{ marginBottom: (theme) => theme.spacing(4) }}
-      >
-        Super histogram
-      </Typography>
-      <Vega
-        actions={false}
-        spec={{
+    <Graph
+      title={"86% PR met goals"}
+      vega={{
+        actions: false,
+        spec: {
           width: 1200,
           height: 480,
           padding: 5,
@@ -29,20 +40,7 @@ function ExampleGraph() {
           data: [
             {
               name: "table",
-              values: [
-                { x: "02/05", y: 30, c: 0 },
-                { x: "02/05", y: 10, c: 1 },
-                { x: "09/05", y: 35, c: 0 },
-                { x: "09/05", y: 5, c: 1 },
-                { x: "16/05", y: 25, c: 0 },
-                { x: "16/05", y: 15, c: 1 },
-                { x: "23/05", y: 32, c: 0 },
-                { x: "23/05", y: 8, c: 1 },
-                { x: "06/06", y: 38, c: 0 },
-                { x: "06/06", y: 2, c: 1 },
-                { x: "13/06", y: 38, c: 0 },
-                { x: "13/06", y: 2, c: 1 },
-              ],
+              values: vegaValues,
               transform: [
                 {
                   type: "stack",
@@ -148,10 +146,10 @@ function ExampleGraph() {
               },
             },
           ],
-        }}
-      />
-    </Box>
+        },
+      }}
+    />
   );
 }
 
-export default ExampleGraph;
+export default PullRequestSizeHistogram;
