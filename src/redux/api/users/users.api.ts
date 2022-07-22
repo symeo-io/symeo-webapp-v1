@@ -36,7 +36,7 @@ const usersMutationApi = api.injectEndpoints({
             "getCurrentUser",
             undefined,
             (draft) => {
-              Object.assign(draft, updatedCurrentUser);
+              draft.user = updatedCurrentUser.user;
             }
           )
         );
