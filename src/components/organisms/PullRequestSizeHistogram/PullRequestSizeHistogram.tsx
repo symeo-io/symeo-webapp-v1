@@ -84,7 +84,10 @@ function PullRequestSizeHistogram({ sx }: PullRequestSizeHistogramProps) {
               name: "color",
               type: "ordinal",
               domain: { data: "table", field: "c" },
-              range: { scheme: "category20" },
+              range: [
+                colors.primary[400] as string,
+                colors.primary[150] as string,
+              ],
             },
             {
               name: "cornerRadiusTop",
@@ -110,7 +113,7 @@ function PullRequestSizeHistogram({ sx }: PullRequestSizeHistogramProps) {
               labelFontSize: 16,
               labelPadding: 24,
               labelFont: theme.typography.fontFamily,
-              labelColor: colors.secondary.textActive,
+              labelColor: colors.secondary.text,
               domainColor: colors.secondary.borders,
             },
             {
@@ -126,7 +129,7 @@ function PullRequestSizeHistogram({ sx }: PullRequestSizeHistogramProps) {
               labelFontSize: 16,
               labelPadding: 24,
               labelFont: theme.typography.fontFamily,
-              labelColor: colors.secondary.textActive,
+              labelColor: colors.secondary.text,
             },
           ],
 
