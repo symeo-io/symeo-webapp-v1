@@ -33,7 +33,7 @@ function CurrentUser({ sx }: CurrentUserProps) {
   };
 
   const handleLogoutClick = () => {
-    logout();
+    logout({ returnTo: window.location.origin });
     closeMenu();
   };
 
