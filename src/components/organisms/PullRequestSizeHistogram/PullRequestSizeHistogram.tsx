@@ -4,14 +4,19 @@ import { colors } from "theme/colors";
 import Graph from "components/organisms/Graph/Graph";
 import { HistogramDataPoint } from "redux/api/pull-requests/histogram/histogram.types";
 
-export type PullRequestSizeHistogramProps = {
-  data: HistogramDataPoint[];
-};
+const histogramMockValues: HistogramDataPoint[] = [
+  { start_date_range: "02/05", data_below_limit: 30, data_above_limit: 10 },
+  { start_date_range: "09/05", data_below_limit: 35, data_above_limit: 5 },
+  { start_date_range: "16/05", data_below_limit: 25, data_above_limit: 15 },
+  { start_date_range: "23/05", data_below_limit: 32, data_above_limit: 8 },
+  { start_date_range: "06/06", data_below_limit: 38, data_above_limit: 2 },
+  { start_date_range: "13/06", data_below_limit: 38, data_above_limit: 2 },
+];
 
-function PullRequestSizeHistogram({ data }: PullRequestSizeHistogramProps) {
+function PullRequestSizeHistogram() {
   const vegaValues = useMemo(() => {
     const result: { x: string; y: number; c: number }[] = [];
-    data.forEach((point) => {
+    histogramMockValues.forEach((point) => {
       result.push({
         x: point.start_date_range,
         y: point.data_below_limit,
@@ -25,7 +30,7 @@ function PullRequestSizeHistogram({ data }: PullRequestSizeHistogramProps) {
     });
 
     return result;
-  }, [data]);
+  }, []);
 
   return (
     <Graph

@@ -7,16 +7,21 @@ export type Team = {
   repository_ids: number[];
 };
 
-export type CreateTeamInput = Omit<Team, "id">[];
+export type CreateTeamsInput = Omit<Team, "id">[];
 
-export type CreateTeamResponse = {
-  team: Team[];
+export type CreateTeamsResponse = {
+  teams: Team[];
+  errors?: Error[];
+};
+
+export type GetTeamsResponse = {
+  teams: Team[];
   errors?: Error[];
 };
 
 export function formValuesToCreateTeamInput(
   formValues: CreateTeamFormValues[]
-): CreateTeamInput {
+): CreateTeamsInput {
   return formValues.map((value) => ({
     name: value.name,
     repository_ids: value.repositories.map((repo) => repo.id),
