@@ -44,5 +44,8 @@
       "your-account": "Your account",
       "logout": "Logout"
     }
+  },
+  "organization": {
+    "title": "Organization Settings - {organizationName}"
   }
 }

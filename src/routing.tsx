@@ -1,5 +1,6 @@
 import React from "react";
 import HomePage from "components/pages/Home/Home";
+import OrganizationPage from "components/pages/Organization/Organization";
 import OnBoardingPageVcs from "components/pages/OnBoardingVcs/OnBoardingVcs";
 import OnBoardingPageTeams from "components/pages/OnBoardingTeams/OnBoardingTeams";
 
@@ -16,6 +17,12 @@ const routes: Record<string, Route> = {
     isSecured: true,
     sidebar: true,
     element: HomePage,
+  } as Route,
+  organization: {
+    path: "/organization",
+    isSecured: true,
+    sidebar: true,
+    element: OrganizationPage,
   } as Route,
   onBoardingVcs: {
     path: "/onboarding-vcs",

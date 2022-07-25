@@ -10,10 +10,12 @@ import routes from "routing";
 import { useIntl } from "react-intl";
 import Button from "components/atoms/Button/Button";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import { useNavigate } from "react-router-dom";
 
 export const SIDE_BAR_WIDTH = 224;
 
 function Sidebar() {
+  const navigate = useNavigate();
   const { formatMessage } = useIntl();
   const { data: currentUserData } = useGetCurrentUserQuery();
   const { user } = useAuth0();
@@ -69,7 +71,11 @@ function Sidebar() {
           flexDirection: "column",
         }}
       >
-        <Button startIcon={<PersonAddIcon />} color="secondary">
+        <Button
+          startIcon={<PersonAddIcon />}
+          color="secondary"
+          onClick={() => navigate(routes.organization.path)}
+        >
           {formatMessage({ id: "sidebar.invite.invite-people-button-label" })}
         </Button>
       </Box>
