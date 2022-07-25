@@ -3,6 +3,8 @@ import { theme } from "theme/theme";
 import Graph, { GraphProps } from "components/organisms/Graph/Graph";
 import { colors } from "theme/colors";
 
+const graphMockLimit = 5;
+
 const graphMockValues = [
   { pr_merging_date: "02/05", days_before_merge: 1, status: "closed" },
   { pr_merging_date: "02/05", days_before_merge: 3, status: "closed" },
@@ -123,6 +125,20 @@ function PullRequestMergedGraph({ sx }: PullRequestMergedGraphProps) {
                   shape: { value: "circle" },
                   size: { value: 600 },
                   fill: { scale: "color", field: "status" },
+                },
+              },
+            },
+            {
+              type: "rule",
+              interactive: false,
+              encode: {
+                update: {
+                  x: { value: 0 },
+                  y: { value: graphMockLimit, scale: "y" },
+                  y2: { value: graphMockLimit, scale: "y" },
+                  x2: { signal: "width" },
+                  stroke: { value: "black" },
+                  strokeDash: { value: [10] },
                 },
               },
             },

@@ -6,14 +6,14 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
-import { config } from "./config";
+import { config } from "config";
 import { Provider, ReactReduxContext } from "react-redux";
-import { store } from "./store";
-import { GetTokenProvider } from "./GetTokenProvider";
-import { theme } from "./theme/theme";
+import { store } from "store";
+import { GetTokenProvider } from "GetTokenProvider";
+import { theme } from "theme/theme";
 import { ThemeProvider } from "@mui/material";
 import { RawIntlProvider } from "react-intl";
-import { intl } from "./intl";
+import { intl } from "intl";
 import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/tracing";
 
@@ -39,7 +39,6 @@ root.render(
           audience={config.auth0.audience}
           redirectUri={window.location.origin}
           cacheLocation="localstorage"
-          scope="read:current_user"
         >
           <GetTokenProvider>
             <ThemeProvider theme={theme}>
