@@ -1,7 +1,6 @@
 import { Error } from "../../errors.type";
 
 export type GetHistogramInput = {
-  organizationName: string;
   teamName: string;
   histogramType: "time-limit" | "size-limit";
 };

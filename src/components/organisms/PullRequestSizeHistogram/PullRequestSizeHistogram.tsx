@@ -1,26 +1,27 @@
 import React, { useMemo } from "react";
 import { theme } from "theme/theme";
 import Graph, { GraphProps } from "components/organisms/Graph/Graph";
-import { HistogramDataPoint } from "redux/api/pull-requests/histogram/histogram.types";
 import { colors } from "theme/colors";
-
-const histogramMockValues: HistogramDataPoint[] = [
-  { start_date_range: "02/05", data_below_limit: 30, data_above_limit: 10 },
-  { start_date_range: "09/05", data_below_limit: 35, data_above_limit: 5 },
-  { start_date_range: "16/05", data_below_limit: 25, data_above_limit: 15 },
-  { start_date_range: "23/05", data_below_limit: 32, data_above_limit: 8 },
-  { start_date_range: "06/06", data_below_limit: 38, data_above_limit: 2 },
-  { start_date_range: "13/06", data_below_limit: 38, data_above_limit: 2 },
-];
+import { useGetHistogramQuery } from "redux/api/pull-requests/histogram/histogram.api";
 
 export type PullRequestSizeHistogramProps = {
   sx?: GraphProps["sx"];
 };
 
 function PullRequestSizeHistogram({ sx }: PullRequestSizeHistogramProps) {
+  const { data: histogramData } = useGetHistogramQuery({
+    histogramType: "size-limit",
+    teamName: "All",
+  });
+
+  const histogramValues = useMemo(
+    () => (histogramData ? histogramData.data : []),
+    [histogramData]
+  );
+
   const vegaValues = useMemo(() => {
     const result: { x: string; y: number; c: number }[] = [];
-    histogramMockValues.forEach((point) => {
+    histogramValues.forEach((point) => {
       result.push({
         x: point.start_date_range,
         y: point.data_below_limit,
@@ -34,7 +35,7 @@ function PullRequestSizeHistogram({ sx }: PullRequestSizeHistogramProps) {
     });
 
     return result;
-  }, []);
+  }, [histogramValues]);
 
   return (
     <Graph
@@ -89,18 +90,6 @@ function PullRequestSizeHistogram({ sx }: PullRequestSizeHistogramProps) {
                 colors.primary[150] as string,
               ],
             },
-            {
-              name: "cornerRadiusTop",
-              type: "ordinal",
-              domain: { data: "table", field: "c" },
-              range: [0, 12],
-            },
-            {
-              name: "cornerRadiusBottom",
-              type: "ordinal",
-              domain: { data: "table", field: "c" },
-              range: [12, 0],
-            },
           ],
 
           axes: [
@@ -139,18 +128,8 @@ function PullRequestSizeHistogram({ sx }: PullRequestSizeHistogramProps) {
               from: { data: "table" },
               encode: {
                 enter: {
-                  cornerRadiusTopRight: {
-                    scale: "cornerRadiusTop",
-                    field: "c",
-                  },
-                  cornerRadiusTopLeft: { scale: "cornerRadiusTop", field: "c" },
-                  cornerRadiusBottomRight: {
-                    scale: "cornerRadiusBottom",
-                    field: "c",
-                  },
-                  cornerRadiusBottomLeft: {
-                    scale: "cornerRadiusBottom",
-                    field: "c",
+                  cornerRadius: {
+                    value: 12,
                   },
                   x: { scale: "x", field: "x" },
                   width: { scale: "x", band: 1, offset: -1 },

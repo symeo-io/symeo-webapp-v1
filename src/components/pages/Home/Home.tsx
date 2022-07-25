@@ -15,6 +15,7 @@ function Home() {
     >
       <PullRequestSizeHistogram
         sx={{
+          maxWidth: "1338px",
           flex: 1,
           "& .vega-embed .marks": {
             width: "100% !important",
@@ -24,6 +25,7 @@ function Home() {
       />
       <PullRequestMergedGraph
         sx={{
+          maxWidth: "1338px",
           flex: 1,
           marginTop: (theme) => theme.spacing(5),
           "& .vega-embed .marks": {
