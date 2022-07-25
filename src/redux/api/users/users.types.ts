@@ -1,4 +1,4 @@
-import { Error } from "../errors.type";
+import { ResponseWithErrors } from "../errors.type";
 
 export type Organization = {
   id: string;
@@ -17,12 +17,10 @@ export type User = {
   onboarding: OnBoarding;
 };
 
-export type CurrentUserResponse = {
+export type CurrentUserResponse = ResponseWithErrors & {
   user: User;
-  errors?: Error[];
 };
 
-export type UpdateOnBoardingResponse = {
+export type UpdateOnBoardingResponse = ResponseWithErrors & {
   onboarding: OnBoarding;
-  errors?: Error[];
 };

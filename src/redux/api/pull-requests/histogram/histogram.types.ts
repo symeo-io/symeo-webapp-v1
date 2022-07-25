@@ -1,4 +1,4 @@
-import { Error } from "../../errors.type";
+import { ResponseWithErrors } from "../../errors.type";
 
 export type GetHistogramInput = {
   teamName: string;
@@ -11,7 +11,6 @@ export type HistogramDataPoint = {
   start_date_range: string;
 };
 
-export type GetHistogramResponse = {
+export type GetHistogramResponse = ResponseWithErrors & {
   data: HistogramDataPoint[];
-  error?: Error[];
 };

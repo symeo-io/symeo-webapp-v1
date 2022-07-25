@@ -1,4 +1,4 @@
-import { Error } from "../errors.type";
+import { ResponseWithErrors } from "../errors.type";
 import { CreateTeamFormValues } from "components/organisms/CreateTeamForm/CreateTeamForm";
 
 export type Team = {
@@ -9,14 +9,12 @@ export type Team = {
 
 export type CreateTeamsInput = Omit<Team, "id">[];
 
-export type CreateTeamsResponse = {
+export type CreateTeamsResponse = ResponseWithErrors & {
   teams: Team[];
-  errors?: Error[];
 };
 
-export type GetTeamsResponse = {
+export type GetTeamsResponse = ResponseWithErrors & {
   teams: Team[];
-  errors?: Error[];
 };
 
 export function formValuesToCreateTeamInput(

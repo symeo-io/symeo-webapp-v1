@@ -3,3 +3,7 @@ export type Error = {
   message: string;
   metadata: any;
 };
+
+export type ResponseWithErrors = {
+  errors: Error[];
+};
