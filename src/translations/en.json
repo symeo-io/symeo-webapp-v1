@@ -37,6 +37,9 @@
     "links": {
       "home": "Home"
     },
+    "invite": {
+      "invite-people-button-label": "Invite people"
+    },
     "account": {
       "your-account": "Your account",
       "logout": "Logout"

@@ -69,6 +69,26 @@ export const theme = createTheme({
             color: colors.secondary.light,
           },
         },
+        containedSecondary: {
+          background: colors.primary.surface,
+          color: colors.primary.main,
+
+          "&:hover": {
+            background: colors.primary.surfaceHover,
+            color: colors.primary.textHover,
+          },
+
+          "&:active": {
+            background: colors.primary.surface,
+            color: colors.primary.textHover,
+            outline: `4px solid rgba(15, 111, 201, 0.3)`,
+          },
+
+          "&.Mui-disabled": {
+            background: colors.secondary.surface,
+            color: colors.secondary.light,
+          },
+        },
         outlined: {
           background: "white",
           border: `1px solid ${colors.secondary.borders}`,

@@ -8,6 +8,8 @@ import HomeIcon from "@mui/icons-material/Home";
 import CurrentUser from "components/molecules/CurrentUser/CurrentUser";
 import routes from "routing";
 import { useIntl } from "react-intl";
+import Button from "components/atoms/Button/Button";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
 export const SIDE_BAR_WIDTH = 224;
 
@@ -60,8 +62,25 @@ function Sidebar() {
           />
         </MenuList>
       </Box>
+      <Box
+        sx={{
+          padding: (theme) => theme.spacing(1.5),
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <Button startIcon={<PersonAddIcon />} color="secondary">
+          {formatMessage({ id: "sidebar.invite.invite-people-button-label" })}
+        </Button>
+      </Box>
       {user && (
-        <Box sx={{ padding: (theme) => theme.spacing(1.5) }}>
+        <Box
+          sx={{
+            padding: (theme) => theme.spacing(1.5),
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
           <CurrentUser />
         </Box>
       )}
