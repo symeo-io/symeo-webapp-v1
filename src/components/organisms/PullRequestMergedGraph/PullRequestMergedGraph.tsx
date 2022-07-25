@@ -27,6 +27,15 @@ const graphMockValues = [
   { pr_merging_date: "07/05", days_before_merge: 23, status: "open" },
 ];
 
+const graphMockAverageValues = [
+  { pr_merging_date: "02/05", average: 1 },
+  { pr_merging_date: "03/05", average: 4 },
+  { pr_merging_date: "04/05", average: 2 },
+  { pr_merging_date: "05/05", average: 10 },
+  { pr_merging_date: "06/05", average: 4 },
+  { pr_merging_date: "07/05", average: 5 },
+];
+
 export type PullRequestMergedGraphProps = {
   sx?: GraphProps["sx"];
 };
@@ -45,41 +54,33 @@ function PullRequestMergedGraph({ sx }: PullRequestMergedGraphProps) {
 
           data: [
             {
-              name: "table",
+              name: "pieces",
               values: graphMockValues,
-              transform: [
-                {
-                  type: "stack",
-                  groupby: ["x"],
-                  sort: { field: "c" },
-                  field: "y",
-                },
-              ],
+            },
+            {
+              name: "average",
+              values: graphMockAverageValues,
             },
           ],
 
           scales: [
             {
               name: "x",
-              type: "band",
+              type: "point",
               range: "width",
-              padding: 0.5,
-              domain: { data: "table", field: "pr_merging_date" },
+              domain: { data: "pieces", field: "pr_merging_date" },
             },
             {
               name: "y",
               type: "log",
               range: "height",
-              domain: { data: "table", field: "days_before_merge" },
+              domain: { data: "pieces", field: "days_before_merge" },
             },
             {
               name: "color",
               type: "ordinal",
-              domain: { data: "table", field: "status" },
-              range: [
-                colors.primary[400] as string,
-                colors.primary[150] as string,
-              ],
+              domain: { data: "pieces", field: "status" },
+              range: ["#05CD99", "#FFCE20"],
             },
           ],
 
@@ -116,7 +117,7 @@ function PullRequestMergedGraph({ sx }: PullRequestMergedGraphProps) {
           marks: [
             {
               type: "symbol",
-              from: { data: "table" },
+              from: { data: "pieces" },
               zindex: 2,
               encode: {
                 enter: {
@@ -125,6 +126,21 @@ function PullRequestMergedGraph({ sx }: PullRequestMergedGraphProps) {
                   shape: { value: "circle" },
                   size: { value: 600 },
                   fill: { scale: "color", field: "status" },
+                },
+              },
+            },
+            {
+              type: "line",
+              from: { data: "average" },
+              encode: {
+                enter: {
+                  x: { scale: "x", field: "pr_merging_date" },
+                  y: { scale: "y", field: "average" },
+                  stroke: { value: colors.primary.main as string },
+                  strokeWidth: { value: 3 },
+                },
+                update: {
+                  interpolate: { value: "natural" },
                 },
               },
             },
