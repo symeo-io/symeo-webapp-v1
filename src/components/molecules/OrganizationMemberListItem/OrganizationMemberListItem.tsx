@@ -86,7 +86,7 @@ function OrganizationMemberListItem({
           alt={user.email}
           sx={{
             color: avatarPalette[100],
-            backgroundColor: avatarPalette[800],
+            backgroundColor: avatarPalette[600],
           }}
         >
           {user.email[0].toUpperCase()}
