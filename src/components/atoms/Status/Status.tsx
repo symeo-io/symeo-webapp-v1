@@ -29,9 +29,9 @@ function Status({ label, variant = "info", sx }: StatusProps) {
 
   return (
     <Box
+      component="span"
       sx={{
         padding: "2px 4px",
-        display: "inline",
         color: color.main,
         background: color.surface,
         border: `1px solid ${color.borders}`,

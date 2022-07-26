@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useState } from "react";
+import React, { ChangeEvent, useCallback, useMemo, useState } from "react";
 import {
   Box,
   BoxProps,
@@ -11,41 +11,13 @@ import { useIntl } from "react-intl";
 import TextField from "components/molecules/TextField/TextField";
 import Button from "components/atoms/Button/Button";
 import SearchIcon from "@mui/icons-material/Search";
-import { OrganizationUser } from "redux/api/organizations/organizations.types";
 import OrganizationMemberListItem from "components/molecules/OrganizationMemberListItem/OrganizationMemberListItem";
+import { useGetOrganizationUsersQuery } from "redux/api/organizations/organizations.api";
 
 export type OrganizationMembersProps = {
   organizationName: string;
   sx?: BoxProps["sx"];
 };
-
-const mockUsersValues: OrganizationUser[] = [
-  {
-    id: "1",
-    email: "georges.biaux@catlean.fr",
-    status: "ACTIVE",
-  },
-  {
-    id: "2",
-    email: "john.doe@catlean.fr",
-    status: "ACTIVE",
-  },
-  {
-    id: "3",
-    email: "george.abitbol@catlean.fr",
-    status: "ACTIVE",
-  },
-  {
-    id: "4",
-    email: "luke.skywalker@catlean.fr",
-    status: "PENDING",
-  },
-  {
-    id: "5",
-    email: "rick.deckard@catlean.fr",
-    status: "PENDING",
-  },
-];
 
 function OrganizationMembers({
   organizationName,
@@ -53,6 +25,9 @@ function OrganizationMembers({
 }: OrganizationMembersProps) {
   const { formatMessage } = useIntl();
   const [searchValue, setSearchValue] = useState<string>("");
+
+  const { data: usersData } = useGetOrganizationUsersQuery();
+  const users = useMemo(() => usersData?.users ?? [], [usersData?.users]);
 
   const handleSearchChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) =>
@@ -103,10 +78,11 @@ function OrganizationMembers({
         </Box>
         <Box sx={{ marginTop: (theme) => theme.spacing(3) }}>
           <List>
-            {mockUsersValues
+            {users
               .filter((user) => user.email.includes(searchValue))
               .map((user) => (
                 <OrganizationMemberListItem
+                  key={user.id}
                   user={user}
                   organizationName={organizationName}
                 />
