@@ -46,6 +46,14 @@
     }
   },
   "organization": {
-    "title": "Organization Settings - {organizationName}"
+    "title": "Organization Settings - {organizationName}",
+    "members": {
+      "title": "Manage your organization's members",
+      "invite-button-label": "Invite new members",
+      "search-placeholder": "Find a member...",
+      "ACTIVE": "ACTIVE",
+      "PENDING": "PENDING",
+      "you": "You"
+    }
   }
 }

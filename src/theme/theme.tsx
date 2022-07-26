@@ -120,6 +120,23 @@ export const theme = createTheme({
         disableFocusRipple: true,
       },
     },
+    MuiIconButton: {
+      styleOverrides: {
+        root: {
+          color: "#323232",
+          border: "1px solid #DCDCE4",
+          borderRadius: "4px",
+          padding: "7px",
+
+          "& .MuiSvgIcon-root": {
+            fontSize: "1rem",
+          },
+        },
+      },
+      defaultProps: {
+        disableRipple: true,
+      },
+    },
     MuiTextField: {
       styleOverrides: {
         root: {
@@ -152,6 +169,10 @@ export const theme = createTheme({
           "& .MuiInput-root": {
             marginTop: "4px",
             padding: "10px 16px",
+
+            "&.MuiInputBase-sizeSmall": {
+              padding: "6px 12px",
+            },
 
             "&.MuiInputBase-adornedStart": {
               paddingLeft: "12px",
@@ -337,6 +358,13 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           outline: "none",
+        },
+      },
+    },
+    MuiAvatar: {
+      styleOverrides: {
+        root: {
+          fontWeight: 700,
         },
       },
     },

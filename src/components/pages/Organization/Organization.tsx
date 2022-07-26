@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import { useIntl } from "react-intl";
 import { useGetCurrentUserQuery } from "redux/api/users/users.api";
+import OrganizationMembers from "components/organisms/OrganizationMembers/OrganizationMembers";
 
 function Organization() {
   const { formatMessage } = useIntl();
@@ -12,9 +13,10 @@ function Organization() {
       sx={{
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
         padding: (theme) => theme.spacing(3),
         maxWidth: "1100px",
+        width: "100%",
+        boxSizing: "border-box",
       }}
     >
       <Typography variant="h1">
@@ -23,6 +25,7 @@ function Organization() {
           { organizationName: currentUserData?.user?.organization?.name }
         )}
       </Typography>
+      <OrganizationMembers sx={{ marginTop: (theme) => theme.spacing(8) }} />
     </Box>
   );
 }

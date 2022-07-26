@@ -9,7 +9,15 @@ export function withSidebar<T = object>(
     return (
       <Box sx={{ display: "flex", height: "100%" }}>
         <Sidebar />
-        <Box sx={{ flex: 1, overflow: "auto" }}>
+        <Box
+          sx={{
+            flex: 1,
+            overflow: "auto",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
           <WrappedComponent {...props} />
         </Box>
       </Box>
