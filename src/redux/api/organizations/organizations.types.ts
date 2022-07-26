@@ -9,3 +9,9 @@ export type OrganizationUser = {
 export type GetOrganizationUsersResponse = ResponseWithErrors & {
   users: OrganizationUser[];
 };
+
+export type InviteUsersToOrganizationInput = { email: string }[];
+
+export type InviteUsersToOrganizationResponse = ResponseWithErrors & {
+  users: OrganizationUser[];
+};

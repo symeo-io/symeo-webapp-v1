@@ -9,10 +9,10 @@ import {
 } from "@mui/material";
 import { useIntl } from "react-intl";
 import TextField from "components/molecules/TextField/TextField";
-import Button from "components/atoms/Button/Button";
 import SearchIcon from "@mui/icons-material/Search";
 import OrganizationMemberListItem from "components/molecules/OrganizationMemberListItem/OrganizationMemberListItem";
 import { useGetOrganizationUsersQuery } from "redux/api/organizations/organizations.api";
+import InviteOrganizationMembersButton from "components/organisms/InviteOrganizationMembersButton/InviteOrganizationMembersButton";
 
 export type OrganizationMembersProps = {
   organizationName: string;
@@ -72,9 +72,9 @@ function OrganizationMembers({
               ),
             }}
           />
-          <Button>
-            {formatMessage({ id: "organization.members.invite-button-label" })}
-          </Button>
+          <InviteOrganizationMembersButton
+            organizationName={organizationName}
+          />
         </Box>
         <Box sx={{ marginTop: (theme) => theme.spacing(3) }}>
           <List>

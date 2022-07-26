@@ -57,7 +57,17 @@
       "ACTIVE": "ACTIVE",
       "PENDING": "PENDING",
       "you": "You",
-      "remove": {
+      "invite-dialog": {
+        "title": "Invite members to {organizationName}",
+        "invite-button-label": "Invite",
+        "email-field-label": "Enter the members emails",
+        "email-field-placeholder": "name@company.com",
+        "errors": {
+          "empty": "You must provide at least for email to invite",
+          "invalid-email": "This email is invalid"
+        }
+      },
+      "remove-dialog": {
         "title": "Removing a member from {organizationName}",
         "message": "User with email {email} will be removed",
         "confirm-label": "Remove member"

@@ -1,5 +1,9 @@
 import { api } from "../api";
-import { GetOrganizationUsersResponse } from "redux/api/organizations/organizations.types";
+import {
+  GetOrganizationUsersResponse,
+  InviteUsersToOrganizationInput,
+  InviteUsersToOrganizationResponse,
+} from "redux/api/organizations/organizations.types";
 import { ResponseWithErrors } from "redux/api/errors.type";
 
 export const organizationsQueryApi = api.injectEndpoints({
@@ -24,6 +28,29 @@ export const organizationsQueryApi = api.injectEndpoints({
 
 const organizationsMutationApi = api.injectEndpoints({
   endpoints: (builder) => ({
+    inviteUserToOrganization: builder.mutation<
+      InviteUsersToOrganizationResponse,
+      InviteUsersToOrganizationInput
+    >({
+      query: (emails) => ({
+        url: `/api/v1/organizations/users`,
+        method: "POST",
+        body: emails,
+      }),
+      invalidatesTags: () => [{ type: "User" }],
+      async onQueryStarted(emails, { dispatch, queryFulfilled }) {
+        const { data: invitedUsersData } = await queryFulfilled;
+        dispatch(
+          organizationsQueryApi.util.updateQueryData(
+            "getOrganizationUsers",
+            undefined,
+            (draft) => {
+              draft.users = draft.users.concat(invitedUsersData.users);
+            }
+          )
+        );
+      },
+    }),
     deleteUserFromOrganization: builder.mutation<
       ResponseWithErrors,
       { userId: string }
@@ -50,5 +77,7 @@ const organizationsMutationApi = api.injectEndpoints({
 });
 
 export const { useGetOrganizationUsersQuery } = organizationsQueryApi;
-export const { useDeleteUserFromOrganizationMutation } =
-  organizationsMutationApi;
+export const {
+  useDeleteUserFromOrganizationMutation,
+  useInviteUserToOrganizationMutation,
+} = organizationsMutationApi;

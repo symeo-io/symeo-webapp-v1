@@ -49,16 +49,16 @@ function OrganizationMemberListItem({
 
   const { handleOpen: openConfirmDelete } = useConfirm({
     title: formatMessage(
-      { id: "organization.members.remove.title" },
+      { id: "organization.members.remove-dialog.title" },
       { organizationName }
     ),
     message: formatMessage(
-      { id: "organization.members.remove.message" },
+      { id: "organization.members.remove-dialog.message" },
       { email: user.email }
     ),
     confirmButton: {
       label: formatMessage(
-        { id: "organization.members.remove.confirm-label" },
+        { id: "organization.members.remove-dialog.confirm-label" },
         { email: user.email }
       ),
       color: "error",
