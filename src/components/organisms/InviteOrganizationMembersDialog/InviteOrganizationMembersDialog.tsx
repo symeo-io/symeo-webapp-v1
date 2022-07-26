@@ -77,7 +77,15 @@ function InviteOrganizationMembersDialog({
           { organizationName }
         )}
       </DialogTitle>
-      <DialogContent sx={{ display: "flex", flexDirection: "column" }}>
+      <DialogContent
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          width: "500px",
+          height: "400px",
+          overflow: "auto",
+        }}
+      >
         {emails.map((email, index) => (
           <TextField
             key={index}
