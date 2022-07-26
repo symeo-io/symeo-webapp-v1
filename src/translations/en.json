@@ -1,5 +1,8 @@
 {
   "name": "Catlean",
+  "confirm": {
+    "cancel": "Cancel"
+  },
   "on-boarding": {
     "connect-repositories-provider": {
       "title": "Connect your code repositories provider",
@@ -37,9 +40,38 @@
     "links": {
       "home": "Home"
     },
+    "invite": {
+      "invite-people-button-label": "Invite people"
+    },
     "account": {
       "your-account": "Your account",
       "logout": "Logout"
+    }
+  },
+  "organization": {
+    "title": "Organization Settings - {organizationName}",
+    "members": {
+      "title": "Manage your organization's members",
+      "invite-button-label": "Invite new members",
+      "search-placeholder": "Find a member...",
+      "ACTIVE": "ACTIVE",
+      "PENDING": "PENDING",
+      "you": "You",
+      "invite-dialog": {
+        "title": "Invite members to {organizationName}",
+        "invite-button-label": "Invite",
+        "email-field-label": "Enter the members emails",
+        "email-field-placeholder": "name@company.com",
+        "errors": {
+          "empty": "You must provide at least one email to invite",
+          "invalid-email": "This email is invalid"
+        }
+      },
+      "remove-dialog": {
+        "title": "Removing a member from {organizationName}",
+        "message": "User with email {email} will be removed",
+        "confirm-label": "Remove member"
+      }
     }
   }
 }

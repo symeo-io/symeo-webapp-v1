@@ -12,9 +12,15 @@ function OrganizationAvatar({ organization }: OrganizationAvatarProps) {
     <Avatar
       alt={organization.name}
       variant="rounded"
-      sx={{ background: colors.primary.main }}
+      sx={{
+        background: colors.primary.main,
+        borderRadius: "4px",
+        width: 32,
+        height: 32,
+        fontSize: "18px",
+      }}
     >
-      {organization.name[0]}
+      {organization.name[0].toUpperCase()}
     </Avatar>
   );
 }
