@@ -63,7 +63,7 @@
         "email-field-label": "Enter the members emails",
         "email-field-placeholder": "name@company.com",
         "errors": {
-          "empty": "You must provide at least for email to invite",
+          "empty": "You must provide at least one email to invite",
           "invalid-email": "This email is invalid"
         }
       },
