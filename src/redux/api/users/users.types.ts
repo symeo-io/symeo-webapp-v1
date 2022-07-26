@@ -17,12 +17,6 @@ export type User = {
   onboarding: OnBoarding;
 };
 
-export type OrganizationUser = {
-  id: string;
-  email: string;
-  status: "ACTIVE" | "PENDING";
-};
-
 export type CurrentUserResponse = ResponseWithErrors & {
   user: User;
 };

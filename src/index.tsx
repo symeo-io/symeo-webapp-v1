@@ -9,13 +9,14 @@ import { Auth0Provider } from "@auth0/auth0-react";
 import { config } from "config";
 import { Provider, ReactReduxContext } from "react-redux";
 import { store } from "store";
-import { GetTokenProvider } from "GetTokenProvider";
+import { GetTokenProvider } from "providers/GetTokenProvider";
 import { theme } from "theme/theme";
 import { ThemeProvider } from "@mui/material";
 import { RawIntlProvider } from "react-intl";
 import { intl } from "intl";
 import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/tracing";
+import ConfirmDialogProvider from "providers/confirm/ConfirmDialogProvider";
 
 if (config.sentry.dsn) {
   Sentry.init({
@@ -44,7 +45,9 @@ root.render(
             <ThemeProvider theme={theme}>
               <SnackbarProvider maxSnack={3}>
                 <BrowserRouter>
-                  <App />
+                  <ConfirmDialogProvider>
+                    <App />
+                  </ConfirmDialogProvider>
                 </BrowserRouter>
               </SnackbarProvider>
             </ThemeProvider>

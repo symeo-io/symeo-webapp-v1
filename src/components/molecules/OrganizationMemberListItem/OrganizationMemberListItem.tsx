@@ -7,12 +7,13 @@ import {
   ListItemProps,
   ListItemText,
 } from "@mui/material";
-import { OrganizationUser } from "redux/api/users/users.types";
+import { OrganizationUser } from "redux/api/organizations/organizations.types";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { avatarColorPalettes } from "theme/colors";
 import Status from "components/atoms/Status/Status";
 import { useGetCurrentUserQuery } from "redux/api/users/users.api";
 import { useIntl } from "react-intl";
+import { useConfirm } from "providers/confirm/useConfirm";
 
 function getAvatarColorPalette(name: string) {
   let sumOfCharacterCodes = 0;
@@ -29,10 +30,12 @@ function getAvatarColorPalette(name: string) {
 export type OrganizationMemberListItemProps = {
   sx?: ListItemProps["sx"];
   user: OrganizationUser;
+  organizationName: string;
 };
 
 function OrganizationMemberListItem({
   user,
+  organizationName,
   sx,
 }: OrganizationMemberListItemProps) {
   const { formatMessage } = useIntl();
@@ -42,12 +45,35 @@ function OrganizationMemberListItem({
     [user.email]
   );
 
+  const { handleOpen: openConfirmDelete } = useConfirm({
+    title: formatMessage(
+      { id: "organization.members.remove.title" },
+      { organizationName }
+    ),
+    message: formatMessage(
+      { id: "organization.members.remove.message" },
+      { email: user.email }
+    ),
+    confirmButton: {
+      label: formatMessage(
+        { id: "organization.members.remove.confirm-label" },
+        { email: user.email }
+      ),
+      color: "error",
+      onClick: async () => console.log("toto"),
+    },
+  });
+
   return (
     <ListItem
       sx={sx}
       secondaryAction={
         user.email !== currentUserData?.user.email ? (
-          <IconButton edge="end" aria-label="comments">
+          <IconButton
+            edge="end"
+            aria-label="comments"
+            onClick={openConfirmDelete}
+          >
             <DeleteIcon />
           </IconButton>
         ) : undefined

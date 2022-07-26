@@ -1,8 +1,14 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
-import { config } from "../../config";
-import { getAccessToken } from "../../GetTokenProvider";
+import { config } from "config";
+import { getAccessToken } from "providers/GetTokenProvider";
 
-export const apiTagTypes = ["Histogram", "CurrentUser", "Repository"];
+export const apiTagTypes = [
+  "Histogram",
+  "CurrentUser",
+  "Repository",
+  "Team",
+  "User",
+];
 
 export const api = createApi({
   tagTypes: apiTagTypes,

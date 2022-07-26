@@ -25,7 +25,10 @@ function Organization() {
           { organizationName: currentUserData?.user?.organization?.name }
         )}
       </Typography>
-      <OrganizationMembers sx={{ marginTop: (theme) => theme.spacing(8) }} />
+      <OrganizationMembers
+        sx={{ marginTop: (theme) => theme.spacing(8) }}
+        organizationName={currentUserData?.user?.organization?.name ?? ""}
+      />
     </Box>
   );
 }

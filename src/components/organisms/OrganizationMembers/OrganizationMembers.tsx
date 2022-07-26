@@ -11,10 +11,11 @@ import { useIntl } from "react-intl";
 import TextField from "components/molecules/TextField/TextField";
 import Button from "components/atoms/Button/Button";
 import SearchIcon from "@mui/icons-material/Search";
-import { OrganizationUser } from "redux/api/users/users.types";
+import { OrganizationUser } from "redux/api/organizations/organizations.types";
 import OrganizationMemberListItem from "components/molecules/OrganizationMemberListItem/OrganizationMemberListItem";
 
 export type OrganizationMembersProps = {
+  organizationName: string;
   sx?: BoxProps["sx"];
 };
 
@@ -46,7 +47,10 @@ const mockUsersValues: OrganizationUser[] = [
   },
 ];
 
-function OrganizationMembers({ sx }: OrganizationMembersProps) {
+function OrganizationMembers({
+  organizationName,
+  sx,
+}: OrganizationMembersProps) {
   const { formatMessage } = useIntl();
   const [searchValue, setSearchValue] = useState<string>("");
 
@@ -102,7 +106,10 @@ function OrganizationMembers({ sx }: OrganizationMembersProps) {
             {mockUsersValues
               .filter((user) => user.email.includes(searchValue))
               .map((user) => (
-                <OrganizationMemberListItem user={user} />
+                <OrganizationMemberListItem
+                  user={user}
+                  organizationName={organizationName}
+                />
               ))}
           </List>
         </Box>
