@@ -8,13 +8,13 @@ export type ConfirmDialogConfig = {
     label: string;
     color?: ButtonProps["color"];
     variant?: ButtonProps["variant"];
-    onClick: () => Promise<void>;
+    onClick: () => Promise<any>;
   };
   cancelButton?: {
     label?: string;
     color?: ButtonProps["color"];
     variant?: ButtonProps["variant"];
-    onClick?: () => Promise<void>;
+    onClick?: () => Promise<any>;
   };
 };
 

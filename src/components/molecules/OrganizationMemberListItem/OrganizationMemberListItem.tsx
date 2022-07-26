@@ -14,6 +14,7 @@ import Status from "components/atoms/Status/Status";
 import { useGetCurrentUserQuery } from "redux/api/users/users.api";
 import { useIntl } from "react-intl";
 import { useConfirm } from "providers/confirm/useConfirm";
+import { useDeleteUserFromOrganizationMutation } from "redux/api/organizations/organizations.api";
 
 function getAvatarColorPalette(name: string) {
   let sumOfCharacterCodes = 0;
@@ -40,6 +41,7 @@ function OrganizationMemberListItem({
 }: OrganizationMemberListItemProps) {
   const { formatMessage } = useIntl();
   const { data: currentUserData } = useGetCurrentUserQuery();
+  const [deleteUser] = useDeleteUserFromOrganizationMutation();
   const avatarPalette = useMemo(
     () => getAvatarColorPalette(user.email),
     [user.email]
@@ -60,7 +62,7 @@ function OrganizationMemberListItem({
         { email: user.email }
       ),
       color: "error",
-      onClick: async () => console.log("toto"),
+      onClick: () => deleteUser({ userId: user.id }),
     },
   });
 
