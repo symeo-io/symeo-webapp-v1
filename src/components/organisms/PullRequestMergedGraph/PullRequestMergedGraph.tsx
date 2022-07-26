@@ -1,46 +1,23 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { theme } from "theme/theme";
 import Graph, { GraphProps } from "components/organisms/Graph/Graph";
 import { colors } from "theme/colors";
-
-const graphMockLimit = 5;
-
-const graphMockValues = [
-  { pr_merging_date: "02/05", days_before_merge: 1, status: "closed" },
-  { pr_merging_date: "02/05", days_before_merge: 3, status: "closed" },
-  { pr_merging_date: "03/05", days_before_merge: 4, status: "closed" },
-  { pr_merging_date: "04/05", days_before_merge: 2, status: "closed" },
-  { pr_merging_date: "04/05", days_before_merge: 5, status: "closed" },
-  { pr_merging_date: "04/05", days_before_merge: 4, status: "closed" },
-  { pr_merging_date: "05/05", days_before_merge: 10, status: "closed" },
-  { pr_merging_date: "05/05", days_before_merge: 6, status: "closed" },
-  { pr_merging_date: "05/05", days_before_merge: 7, status: "closed" },
-  { pr_merging_date: "05/05", days_before_merge: 8, status: "closed" },
-  { pr_merging_date: "06/05", days_before_merge: 4, status: "closed" },
-  { pr_merging_date: "06/05", days_before_merge: 8, status: "closed" },
-  { pr_merging_date: "06/05", days_before_merge: 12, status: "closed" },
-  { pr_merging_date: "06/05", days_before_merge: 1, status: "closed" },
-  { pr_merging_date: "06/05", days_before_merge: 3, status: "closed" },
-  { pr_merging_date: "07/05", days_before_merge: 5, status: "closed" },
-  { pr_merging_date: "07/05", days_before_merge: 12, status: "open" },
-  { pr_merging_date: "07/05", days_before_merge: 20, status: "open" },
-  { pr_merging_date: "07/05", days_before_merge: 23, status: "open" },
-];
-
-const graphMockAverageValues = [
-  { pr_merging_date: "02/05", average: 1 },
-  { pr_merging_date: "03/05", average: 4 },
-  { pr_merging_date: "04/05", average: 2 },
-  { pr_merging_date: "05/05", average: 10 },
-  { pr_merging_date: "06/05", average: 4 },
-  { pr_merging_date: "07/05", average: 5 },
-];
+import { useGetCurveQuery } from "redux/api/time-to-merge/curve/curve.api";
 
 export type PullRequestMergedGraphProps = {
   sx?: GraphProps["sx"];
 };
 
 function PullRequestMergedGraph({ sx }: PullRequestMergedGraphProps) {
+  const { data } = useGetCurveQuery({ teamName: "All" });
+
+  const limit = useMemo(() => (data ? data.curves.limit : 0), [data]);
+  const pieces = useMemo(() => (data ? data.curves.piece_curve : []), [data]);
+  const average = useMemo(
+    () => (data ? data.curves.average_curve : []),
+    [data]
+  );
+
   return (
     <Graph
       sx={sx}
@@ -55,11 +32,11 @@ function PullRequestMergedGraph({ sx }: PullRequestMergedGraphProps) {
           data: [
             {
               name: "pieces",
-              values: graphMockValues,
+              values: pieces,
             },
             {
               name: "average",
-              values: graphMockAverageValues,
+              values: average,
             },
           ],
 
@@ -68,13 +45,13 @@ function PullRequestMergedGraph({ sx }: PullRequestMergedGraphProps) {
               name: "x",
               type: "point",
               range: "width",
-              domain: { data: "pieces", field: "pr_merging_date" },
+              domain: { data: "pieces", field: "date" },
             },
             {
               name: "y",
               type: "log",
               range: "height",
-              domain: { data: "pieces", field: "days_before_merge" },
+              domain: { data: "pieces", field: "value" },
             },
             {
               name: "color",
@@ -121,8 +98,8 @@ function PullRequestMergedGraph({ sx }: PullRequestMergedGraphProps) {
               zindex: 2,
               encode: {
                 enter: {
-                  x: { scale: "x", field: "pr_merging_date" },
-                  y: { scale: "y", field: "days_before_merge" },
+                  x: { scale: "x", field: "date" },
+                  y: { scale: "y", field: "value" },
                   shape: { value: "circle" },
                   size: { value: 600 },
                   fill: { scale: "color", field: "status" },
@@ -134,8 +111,8 @@ function PullRequestMergedGraph({ sx }: PullRequestMergedGraphProps) {
               from: { data: "average" },
               encode: {
                 enter: {
-                  x: { scale: "x", field: "pr_merging_date" },
-                  y: { scale: "y", field: "average" },
+                  x: { scale: "x", field: "date" },
+                  y: { scale: "y", field: "value" },
                   stroke: { value: colors.primary.main as string },
                   strokeWidth: { value: 3 },
                 },
@@ -150,8 +127,8 @@ function PullRequestMergedGraph({ sx }: PullRequestMergedGraphProps) {
               encode: {
                 update: {
                   x: { value: 0 },
-                  y: { value: graphMockLimit, scale: "y" },
-                  y2: { value: graphMockLimit, scale: "y" },
+                  y: { value: limit, scale: "y" },
+                  y2: { value: limit, scale: "y" },
                   x2: { signal: "width" },
                   stroke: { value: "black" },
                   strokeDash: { value: [10] },

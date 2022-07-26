@@ -8,6 +8,7 @@ export const apiTagTypes = [
   "Repository",
   "Team",
   "User",
+  "Curve",
 ];
 
 export const api = createApi({
