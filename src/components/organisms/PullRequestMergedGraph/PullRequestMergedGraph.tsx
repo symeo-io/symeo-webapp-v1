@@ -56,7 +56,7 @@ function PullRequestMergedGraph({ sx }: PullRequestMergedGraphProps) {
             {
               name: "color",
               type: "ordinal",
-              domain: { data: "pieces", field: "status" },
+              domain: { data: "pieces", field: "open" },
               range: ["#05CD99", "#FFCE20"],
             },
           ],
@@ -102,7 +102,7 @@ function PullRequestMergedGraph({ sx }: PullRequestMergedGraphProps) {
                   y: { scale: "y", field: "value" },
                   shape: { value: "circle" },
                   size: { value: 600 },
-                  fill: { scale: "color", field: "status" },
+                  fill: { scale: "color", field: "open" },
                 },
               },
             },
