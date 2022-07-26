@@ -1,8 +1,7 @@
 import { ResponseWithErrors } from "../../errors.type";
 
 export type GetHistogramInput = {
-  teamName: string;
-  histogramType: "time-limit" | "size-limit";
+  teamName?: string;
 };
 
 export type HistogramDataPoint = {
@@ -12,5 +11,8 @@ export type HistogramDataPoint = {
 };
 
 export type GetHistogramResponse = ResponseWithErrors & {
-  data: HistogramDataPoint[];
+  histogram: {
+    data: HistogramDataPoint[];
+    limit: number;
+  };
 };

@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { theme } from "theme/theme";
 import Graph, { GraphProps } from "components/organisms/Graph/Graph";
 import { colors } from "theme/colors";
-import { useGetHistogramQuery } from "redux/api/pull-requests/histogram/histogram.api";
+import { useGetHistogramQuery } from "redux/api/time-to-merge/histogram/histogram.api";
 
 export type PullRequestSizeHistogramProps = {
   sx?: GraphProps["sx"];
@@ -10,12 +10,11 @@ export type PullRequestSizeHistogramProps = {
 
 function PullRequestSizeHistogram({ sx }: PullRequestSizeHistogramProps) {
   const { data: histogramData } = useGetHistogramQuery({
-    histogramType: "size-limit",
     teamName: "All",
   });
 
   const histogramValues = useMemo(
-    () => (histogramData ? histogramData.data : []),
+    () => (histogramData ? histogramData.histogram.data : []),
     [histogramData]
   );
 
