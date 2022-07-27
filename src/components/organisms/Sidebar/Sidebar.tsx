@@ -10,6 +10,7 @@ import routes from "routing";
 import { useIntl } from "react-intl";
 import Button from "components/atoms/Button/Button";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
 
 export const SIDE_BAR_WIDTH = 224;
@@ -49,6 +50,19 @@ function Sidebar() {
             />
           </Box>
         )}
+      <Box
+        sx={{
+          padding: (theme) => theme.spacing(1.5),
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <Button startIcon={<AddIcon />} color="secondary">
+          {formatMessage({
+            id: "sidebar.team-goals.new-team-goal-button-label",
+          })}
+        </Button>
+      </Box>
       <Box
         sx={{
           flex: 1,

@@ -167,6 +167,7 @@ export const theme = createTheme({
             },
           },
           "& .MuiInput-root": {
+            background: "white",
             marginTop: "4px",
             padding: "10px 16px",
 

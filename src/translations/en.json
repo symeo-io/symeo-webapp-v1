@@ -43,6 +43,9 @@
     "invite": {
       "invite-people-button-label": "Invite People"
     },
+    "team-goals": {
+      "new-team-goal-button-label": "New Team Goal"
+    },
     "account": {
       "your-account": "Your account",
       "logout": "Logout"
