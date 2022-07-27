@@ -1,16 +1,16 @@
 import React from "react";
-import { Box, BoxProps, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { colors } from "theme/colors";
 import Button from "components/atoms/Button/Button";
 import { useIntl } from "react-intl";
+import { PropsWithSx } from "types/PropsWithSx";
 
-export type RepositoryProviderConnectPanelProps = {
+export type RepositoryProviderConnectPanelProps = PropsWithSx & {
   name: string;
   logo: string;
   supported: boolean;
   onClick?: () => void;
   loading?: boolean;
-  sx?: BoxProps["sx"];
 };
 
 export function RepositoryProviderConnectPanel({

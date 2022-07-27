@@ -1,7 +1,6 @@
 import React from "react";
 import {
   Box,
-  BoxProps,
   ListItemIcon,
   ListSubheader,
   Menu,
@@ -14,10 +13,9 @@ import { useAuth0 } from "@auth0/auth0-react";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { useIntl } from "react-intl";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { PropsWithSx } from "types/PropsWithSx";
 
-export type CurrentUserProps = {
-  sx?: BoxProps["sx"];
-};
+export type CurrentUserProps = PropsWithSx;
 
 function CurrentUser({ sx }: CurrentUserProps) {
   const { user, logout } = useAuth0();

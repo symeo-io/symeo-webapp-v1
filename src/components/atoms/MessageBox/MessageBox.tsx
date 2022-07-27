@@ -1,12 +1,12 @@
 import React from "react";
-import { Box, BoxProps, SvgIcon, Typography } from "@mui/material";
+import { Box, SvgIcon, Typography } from "@mui/material";
 import { colors } from "theme/colors";
+import { PropsWithSx } from "types/PropsWithSx";
 
-export type MessageBoxProps = {
+export type MessageBoxProps = PropsWithSx & {
   Icon?: typeof SvgIcon;
   message: string;
   variant?: "primary" | "secondary";
-  sx?: BoxProps["sx"];
 };
 
 export function MessageBox({

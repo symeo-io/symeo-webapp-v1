@@ -1,14 +1,13 @@
 import React, { useMemo } from "react";
 import { theme } from "theme/theme";
-import Graph, { GraphProps } from "components/organisms/Graph/Graph";
+import Graph from "components/organisms/Graph/Graph";
 import { colors } from "theme/colors";
 import { useGetCurveQuery } from "redux/api/time-to-merge/curve/curve.api";
 import cloneDeep from "lodash/cloneDeep";
+import { PropsWithSx } from "types/PropsWithSx";
 import dayjs from "dayjs";
 
-export type PullRequestMergedGraphProps = {
-  sx?: GraphProps["sx"];
-};
+export type PullRequestMergedGraphProps = PropsWithSx;
 
 function PullRequestMergedGraph({ sx }: PullRequestMergedGraphProps) {
   const { data } = useGetCurveQuery({ teamName: "All" });

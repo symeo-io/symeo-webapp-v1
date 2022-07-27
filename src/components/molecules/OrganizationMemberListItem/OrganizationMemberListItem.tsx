@@ -4,7 +4,6 @@ import {
   IconButton,
   ListItem,
   ListItemAvatar,
-  ListItemProps,
   ListItemText,
 } from "@mui/material";
 import { OrganizationUser } from "redux/api/organizations/organizations.types";
@@ -15,6 +14,7 @@ import { useIntl } from "react-intl";
 import { useConfirm } from "providers/confirm/useConfirm";
 import { useDeleteUserFromOrganizationMutation } from "redux/api/organizations/organizations.api";
 import { useCurrentUser } from "providers/currentUser/useCurrentUser";
+import { PropsWithSx } from "types/PropsWithSx";
 
 function getAvatarColorPalette(name: string) {
   let sumOfCharacterCodes = 0;
@@ -28,8 +28,7 @@ function getAvatarColorPalette(name: string) {
   return avatarColorPalettes[paletteIndex];
 }
 
-export type OrganizationMemberListItemProps = {
-  sx?: ListItemProps["sx"];
+export type OrganizationMemberListItemProps = PropsWithSx & {
   user: OrganizationUser;
   organizationName: string;
 };

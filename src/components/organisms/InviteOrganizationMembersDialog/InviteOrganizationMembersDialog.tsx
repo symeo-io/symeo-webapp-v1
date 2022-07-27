@@ -3,7 +3,6 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogProps,
   DialogTitle,
   IconButton,
 } from "@mui/material";
@@ -14,12 +13,12 @@ import TextField from "components/molecules/TextField/TextField";
 import AddIcon from "@mui/icons-material/Add";
 import { validateEmails } from "components/organisms/InviteOrganizationMembersDialog/utils";
 import { useInviteUserToOrganizationMutation } from "redux/api/organizations/organizations.api";
+import { PropsWithSx } from "types/PropsWithSx";
 
-export type InviteOrganizationMembersDialogProps = {
+export type InviteOrganizationMembersDialogProps = PropsWithSx & {
   open: boolean;
   handleClose: () => void;
   organizationName: string;
-  sx?: DialogProps["sx"];
 };
 
 const INITIAL_EMAILS_LIST = ["", "", "", "", ""];

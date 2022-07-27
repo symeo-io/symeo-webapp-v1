@@ -1,18 +1,13 @@
 import React, { useMemo } from "react";
-import {
-  ListItemIcon,
-  ListItemText,
-  MenuItem,
-  MenuItemProps,
-} from "@mui/material";
+import { ListItemIcon, ListItemText, MenuItem } from "@mui/material";
 import { Route } from "routing";
 import { useLocation, useNavigate } from "react-router-dom";
+import { PropsWithSx } from "types/PropsWithSx";
 
-export type SidebarNavLinkProps = {
+export type SidebarNavLinkProps = PropsWithSx & {
   label: string;
   icon: React.ReactElement;
   route: Route;
-  sx?: MenuItemProps["sx"];
 };
 
 function SidebarNavLink({ label, icon, route, sx }: SidebarNavLinkProps) {

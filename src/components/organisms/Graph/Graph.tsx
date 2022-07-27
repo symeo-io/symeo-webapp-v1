@@ -1,12 +1,12 @@
 import React from "react";
 import { Vega } from "react-vega";
-import { Box, BoxProps, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { VegaProps } from "react-vega/lib/Vega";
+import { PropsWithSx } from "types/PropsWithSx";
 
-export type GraphProps = {
+export type GraphProps = PropsWithSx & {
   title: string;
   vega: VegaProps;
-  sx?: BoxProps["sx"];
 };
 
 function Graph({ title, vega, sx }: GraphProps) {

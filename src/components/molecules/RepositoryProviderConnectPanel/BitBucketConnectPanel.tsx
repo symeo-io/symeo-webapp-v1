@@ -1,11 +1,9 @@
 import React from "react";
-import { BoxProps } from "@mui/material";
 import RepositoryProviderConnectPanel from "./RepositoryProviderConnectPanel";
 import bitBucketLogo from "components/molecules/RepositoryProviderConnectPanel/bitbucket.svg";
+import { PropsWithSx } from "types/PropsWithSx";
 
-export type BitBucketConnectPanelProps = {
-  sx?: BoxProps["sx"];
-};
+export type BitBucketConnectPanelProps = PropsWithSx;
 
 export function BitBucketConnectPanel({ sx }: BitBucketConnectPanelProps) {
   return (

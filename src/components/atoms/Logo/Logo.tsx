@@ -1,10 +1,9 @@
 import React from "react";
 import { useIntl } from "react-intl";
-import { Typography, TypographyProps } from "@mui/material";
+import { Typography } from "@mui/material";
+import { PropsWithSx } from "types/PropsWithSx";
 
-export type LogoProps = {
-  sx?: TypographyProps["sx"];
-};
+export type LogoProps = PropsWithSx;
 
 export function Logo({ sx }: LogoProps) {
   const { formatMessage } = useIntl();

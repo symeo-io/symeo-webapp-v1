@@ -1,7 +1,6 @@
 import React from "react";
 import {
   Box,
-  BoxProps,
   ListItemIcon,
   ListItemText,
   ListSubheader,
@@ -16,10 +15,10 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { colors } from "theme/colors";
 import { useIntl } from "react-intl";
 import GroupsIcon from "@mui/icons-material/Groups";
+import { PropsWithSx } from "types/PropsWithSx";
 
-export type OrganizationProps = {
+export type OrganizationProps = PropsWithSx & {
   organization: Organization;
-  sx?: BoxProps["sx"];
 };
 
 function CurrentOrganization({ organization, sx }: OrganizationProps) {

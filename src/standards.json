@@ -1,0 +1,8 @@
+{
+  "standards": [{
+    "code": "time-to-merge",
+    "recommanded-value": 5,
+    "new": true,
+    "active": true
+  }]
+}

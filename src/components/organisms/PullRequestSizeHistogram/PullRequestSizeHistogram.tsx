@@ -1,12 +1,11 @@
 import React, { useMemo } from "react";
 import { theme } from "theme/theme";
-import Graph, { GraphProps } from "components/organisms/Graph/Graph";
+import Graph from "components/organisms/Graph/Graph";
 import { colors } from "theme/colors";
 import { useGetHistogramQuery } from "redux/api/time-to-merge/histogram/histogram.api";
+import { PropsWithSx } from "types/PropsWithSx";
 
-export type PullRequestSizeHistogramProps = {
-  sx?: GraphProps["sx"];
-};
+export type PullRequestSizeHistogramProps = PropsWithSx;
 
 function PullRequestSizeHistogram({ sx }: PullRequestSizeHistogramProps) {
   const { data: histogramData } = useGetHistogramQuery({
