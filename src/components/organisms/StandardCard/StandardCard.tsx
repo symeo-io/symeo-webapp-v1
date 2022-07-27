@@ -6,6 +6,8 @@ import { colors } from "theme/colors";
 import * as icons from "@mui/icons-material";
 import Status from "components/atoms/Status/Status";
 import Button from "components/atoms/Button/Button";
+import { useNavigate } from "react-router-dom";
+import routes from "routing";
 
 export type Standard = {
   code: string;
@@ -22,6 +24,7 @@ export type StandardCardProps = PropsWithSx & {
 
 function StandardCard({ standard, sx }: StandardCardProps) {
   const { formatMessage } = useIntl();
+  const navigate = useNavigate();
   const IconComponent = useMemo(() => icons[standard.icon], [standard.icon]);
 
   return (
@@ -53,7 +56,7 @@ function StandardCard({ standard, sx }: StandardCardProps) {
           marginTop: (theme) => theme.spacing(2),
         }}
       >
-        <Button>
+        <Button onClick={() => navigate(routes[standard.code].path)}>
           {formatMessage({ id: "standards.start-improving-button-label" })}
         </Button>
       </Box>

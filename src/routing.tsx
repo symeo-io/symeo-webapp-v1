@@ -4,6 +4,7 @@ import OrganizationPage from "components/pages/Organization/Organization";
 import TeamGoalsPage from "components/pages/TeamGoals/TeamGoals";
 import OnBoardingPageVcs from "components/pages/OnBoardingVcs/OnBoardingVcs";
 import OnBoardingPageTeams from "components/pages/OnBoardingTeams/OnBoardingTeams";
+import TimeToMergePage from "components/pages/standards/TimeToMerge/TimeToMerge";
 
 export type Route = {
   isSecured?: boolean;
@@ -30,6 +31,12 @@ const routes: Record<string, Route> = {
     isSecured: true,
     sidebar: true,
     element: TeamGoalsPage,
+  } as Route,
+  "time-to-merge": {
+    path: "/team-goals/time-to-merge",
+    isSecured: true,
+    sidebar: true,
+    element: TimeToMergePage,
   } as Route,
   onBoardingVcs: {
     path: "/onboarding-vcs",
