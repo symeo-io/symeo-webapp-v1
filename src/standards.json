@@ -1,8 +1,10 @@
 {
   "standards": [{
     "code": "time-to-merge",
-    "recommanded-value": 5,
+    "recommandedValue": 5,
     "new": true,
-    "active": true
+    "active": true,
+    "icon": "ShutterSpeed",
+    "availableGraphs": ["histogram", "curves"]
   }]
 }
