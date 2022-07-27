@@ -99,6 +99,7 @@ function CurrentOrganization({ organization, sx }: OrganizationProps) {
           {teams &&
             teams.map((team) => (
               <MenuItem
+                key={team.id}
                 selected={selectedTeam?.id === team.id}
                 onClick={() => {
                   setSelectedTeam(team);
