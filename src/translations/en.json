@@ -79,5 +79,8 @@
         "confirm-label": "Remove member"
       }
     }
+  },
+  "team-goals": {
+    "title": "Choose a new Goal for {teamName} {teamName, select, All {Teams} other {Team}}"
   }
 }

@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Box, Typography } from "@mui/material";
 import { useIntl } from "react-intl";
 import { useCurrentUser } from "providers/currentUser/useCurrentUser";
 
 function TeamGoals() {
   const { formatMessage } = useIntl();
-  const { currentUser } = useCurrentUser();
+  const { selectedTeam } = useCurrentUser();
+
+  const teamName = useMemo(() => selectedTeam?.name ?? "All", [selectedTeam]);
 
   return (
     <Box
@@ -19,10 +21,7 @@ function TeamGoals() {
       }}
     >
       <Typography variant="h1">
-        {formatMessage(
-          { id: "organization.title" },
-          { organizationName: currentUser?.organization?.name }
-        )}
+        {formatMessage({ id: "team-goals.title" }, { teamName })}
       </Typography>
     </Box>
   );
