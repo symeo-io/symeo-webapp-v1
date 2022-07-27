@@ -3,6 +3,7 @@ import { theme } from "theme/theme";
 import Graph, { GraphProps } from "components/organisms/Graph/Graph";
 import { colors } from "theme/colors";
 import { useGetCurveQuery } from "redux/api/time-to-merge/curve/curve.api";
+import cloneDeep from "lodash/cloneDeep";
 
 export type PullRequestMergedGraphProps = {
   sx?: GraphProps["sx"];
@@ -11,12 +12,17 @@ export type PullRequestMergedGraphProps = {
 function PullRequestMergedGraph({ sx }: PullRequestMergedGraphProps) {
   const { data } = useGetCurveQuery({ teamName: "All" });
 
-  const limit = useMemo(() => (data ? data.curves.limit : 0), [data]);
-  const pieces = useMemo(() => (data ? data.curves.piece_curve : []), [data]);
-  const average = useMemo(
-    () => (data ? data.curves.average_curve : []),
+  const limit = useMemo(() => data?.curves.limit, [data]);
+  const pieces = useMemo(
+    () => data?.curves.piece_curve && cloneDeep(data.curves.piece_curve),
     [data]
   );
+  const average = useMemo(
+    () => data?.curves.average_curve && cloneDeep(data.curves.average_curve),
+    [data]
+  );
+
+  if (!data || !limit || !pieces || !average) return null;
 
   return (
     <Graph
