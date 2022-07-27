@@ -313,7 +313,7 @@ export const theme = createTheme({
           },
 
           "&:hover": {
-            background: "transparent",
+            background: colors.primary.surface,
 
             "& .MuiListItemIcon-root": {
               color: colors.primary.bordersHover,
@@ -326,9 +326,11 @@ export const theme = createTheme({
 
           "&.Mui-selected": {
             background: "transparent",
+            borderRight: `2px solid ${colors.primary.main}`,
 
             "&:hover": {
               background: "transparent",
+              borderRight: `2px solid ${colors.primary.shapeActive}`,
             },
 
             "& .MuiListItemIcon-root": {

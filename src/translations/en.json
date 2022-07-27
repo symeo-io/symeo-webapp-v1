@@ -37,6 +37,9 @@
     "F.ORGANIZATION_NAME_NOT_FOUND": "Organization not found"
   },
   "sidebar": {
+    "organization": {
+      "all-teams-label": "All"
+    },
     "links": {
       "home": "Home"
     },

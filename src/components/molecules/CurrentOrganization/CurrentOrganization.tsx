@@ -1,7 +1,21 @@
 import React from "react";
-import { Box, BoxProps } from "@mui/material";
+import {
+  Box,
+  BoxProps,
+  ListItemIcon,
+  ListItemText,
+  ListSubheader,
+  Menu,
+  MenuItem,
+  MenuList,
+} from "@mui/material";
 import { Organization } from "redux/api/users/users.types";
 import OrganizationAvatar from "components/atoms/OrganizationAvatar/OrganizationAvatar";
+import { useCurrentUser } from "providers/currentUser/useCurrentUser";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { colors } from "theme/colors";
+import { useIntl } from "react-intl";
+import GroupsIcon from "@mui/icons-material/Groups";
 
 export type OrganizationProps = {
   organization: Organization;
@@ -9,13 +23,97 @@ export type OrganizationProps = {
 };
 
 function CurrentOrganization({ organization, sx }: OrganizationProps) {
+  const { formatMessage } = useIntl();
+  const { selectedTeam, teams, setSelectedTeam } = useCurrentUser();
+
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  const openMenu = (event: React.MouseEvent<HTMLDivElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const closeMenu = () => {
+    setAnchorEl(null);
+  };
+
   return (
-    <Box sx={{ display: "flex", alignItems: "center", ...sx }}>
-      <OrganizationAvatar organization={organization} />
-      <Box sx={{ marginLeft: (theme) => theme.spacing(1), fontWeight: 700 }}>
-        {organization.name}
+    <>
+      <Box
+        onClick={openMenu}
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          borderRadius: "4px",
+          cursor: "pointer",
+          padding: (theme) => theme.spacing(1),
+          "&:hover": {
+            background: "rgba(220, 231, 242, 0.35)",
+          },
+          ...sx,
+        }}
+      >
+        <OrganizationAvatar organization={organization} />
+        <Box sx={{ flex: 1, marginLeft: (theme) => theme.spacing(1) }}>
+          <Box sx={{ fontWeight: 700 }}>{organization.name}</Box>
+          <Box sx={{ fontSize: "14px", color: colors.secondary.text }}>
+            {selectedTeam?.name ?? "All"}
+          </Box>
+        </Box>
+        <KeyboardArrowDownIcon />
       </Box>
-    </Box>
+      <Menu
+        anchorEl={anchorEl}
+        open={open}
+        onClose={closeMenu}
+        MenuListProps={{
+          "aria-labelledby": "basic-button",
+        }}
+        anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+        sx={{
+          "& .MuiPaper-root": {
+            width: "190px",
+          },
+        }}
+      >
+        <MenuList
+          subheader={<ListSubheader>{organization.name}</ListSubheader>}
+        >
+          <MenuItem
+            selected={!selectedTeam}
+            onClick={() => {
+              setSelectedTeam(undefined);
+              closeMenu();
+            }}
+          >
+            <ListItemIcon>
+              <GroupsIcon />
+            </ListItemIcon>
+            <ListItemText>
+              {formatMessage({ id: "sidebar.organization.all-teams-label" })}
+            </ListItemText>
+          </MenuItem>
+          {teams &&
+            teams.map((team) => (
+              <MenuItem
+                selected={selectedTeam?.id === team.id}
+                onClick={() => {
+                  setSelectedTeam(team);
+                  closeMenu();
+                }}
+              >
+                <ListItemIcon>
+                  <GroupsIcon />
+                </ListItemIcon>
+                <ListItemText>{team.name}</ListItemText>
+              </MenuItem>
+            ))}
+        </MenuList>
+      </Menu>
+    </>
   );
 }
 

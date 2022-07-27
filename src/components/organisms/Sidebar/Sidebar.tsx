@@ -40,7 +40,7 @@ function Sidebar() {
       {currentUser && currentUser.organization && (
         <Box
           sx={{
-            padding: (theme) => `${theme.spacing(2.5)} ${theme.spacing(1.5)}`,
+            padding: (theme) => `${theme.spacing(1.5)} ${theme.spacing(0.5)}`,
           }}
         >
           <CurrentOrganization organization={currentUser.organization} />
