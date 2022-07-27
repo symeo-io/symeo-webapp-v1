@@ -11,10 +11,10 @@ import { OrganizationUser } from "redux/api/organizations/organizations.types";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { avatarColorPalettes } from "theme/colors";
 import Status from "components/atoms/Status/Status";
-import { useGetCurrentUserQuery } from "redux/api/users/users.api";
 import { useIntl } from "react-intl";
 import { useConfirm } from "providers/confirm/useConfirm";
 import { useDeleteUserFromOrganizationMutation } from "redux/api/organizations/organizations.api";
+import { useCurrentUser } from "providers/currentUser/useCurrentUser";
 
 function getAvatarColorPalette(name: string) {
   let sumOfCharacterCodes = 0;
@@ -40,7 +40,7 @@ function OrganizationMemberListItem({
   sx,
 }: OrganizationMemberListItemProps) {
   const { formatMessage } = useIntl();
-  const { data: currentUserData } = useGetCurrentUserQuery();
+  const { currentUser } = useCurrentUser();
   const [deleteUser] = useDeleteUserFromOrganizationMutation();
   const avatarPalette = useMemo(
     () => getAvatarColorPalette(user.email),
@@ -70,7 +70,7 @@ function OrganizationMemberListItem({
     <ListItem
       sx={sx}
       secondaryAction={
-        user.email !== currentUserData?.user.email ? (
+        user.email !== currentUser?.email ? (
           <IconButton
             edge="end"
             aria-label="comments"
@@ -107,7 +107,7 @@ function OrganizationMemberListItem({
               })}
               variant={user.status === "ACTIVE" ? "success" : "warning"}
             />
-            {user.email === currentUserData?.user.email && (
+            {user.email === currentUser?.email && (
               <Status
                 sx={{ marginLeft: (theme) => theme.spacing(1) }}
                 label={formatMessage({

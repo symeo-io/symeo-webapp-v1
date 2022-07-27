@@ -1,6 +1,5 @@
 import React from "react";
 import { Box, Drawer, MenuList } from "@mui/material";
-import { useGetCurrentUserQuery } from "redux/api/users/users.api";
 import CurrentOrganization from "components/molecules/CurrentOrganization/CurrentOrganization";
 import { useAuth0 } from "@auth0/auth0-react";
 import SidebarNavLink from "components/molecules/SidebarNavLink/SidebarNavLink";
@@ -12,13 +11,14 @@ import Button from "components/atoms/Button/Button";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
+import { useCurrentUser } from "providers/currentUser/useCurrentUser";
 
 export const SIDE_BAR_WIDTH = 224;
 
 function Sidebar() {
   const navigate = useNavigate();
   const { formatMessage } = useIntl();
-  const { data: currentUserData } = useGetCurrentUserQuery();
+  const { currentUser } = useCurrentUser();
   const { user } = useAuth0();
 
   return (
@@ -37,19 +37,15 @@ function Sidebar() {
       variant="permanent"
       anchor="left"
     >
-      {currentUserData &&
-        currentUserData.user &&
-        currentUserData.user.organization && (
-          <Box
-            sx={{
-              padding: (theme) => `${theme.spacing(2.5)} ${theme.spacing(1.5)}`,
-            }}
-          >
-            <CurrentOrganization
-              organization={currentUserData.user.organization}
-            />
-          </Box>
-        )}
+      {currentUser && currentUser.organization && (
+        <Box
+          sx={{
+            padding: (theme) => `${theme.spacing(2.5)} ${theme.spacing(1.5)}`,
+          }}
+        >
+          <CurrentOrganization organization={currentUser.organization} />
+        </Box>
+      )}
       <Box
         sx={{
           padding: (theme) => theme.spacing(1.5),
@@ -57,7 +53,11 @@ function Sidebar() {
           flexDirection: "column",
         }}
       >
-        <Button startIcon={<AddIcon />} color="secondary">
+        <Button
+          startIcon={<AddIcon />}
+          color="secondary"
+          onClick={() => navigate(routes.teamGoals.path)}
+        >
           {formatMessage({
             id: "sidebar.team-goals.new-team-goal-button-label",
           })}

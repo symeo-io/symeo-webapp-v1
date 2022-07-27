@@ -1,10 +1,9 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import { useIntl } from "react-intl";
-import OrganizationMembers from "components/organisms/OrganizationMembers/OrganizationMembers";
 import { useCurrentUser } from "providers/currentUser/useCurrentUser";
 
-function Organization() {
+function TeamGoals() {
   const { formatMessage } = useIntl();
   const { currentUser } = useCurrentUser();
 
@@ -25,12 +24,8 @@ function Organization() {
           { organizationName: currentUser?.organization?.name }
         )}
       </Typography>
-      <OrganizationMembers
-        sx={{ marginTop: (theme) => theme.spacing(8) }}
-        organizationName={currentUser?.organization?.name ?? ""}
-      />
     </Box>
   );
 }
 
-export default Organization;
+export default TeamGoals;
