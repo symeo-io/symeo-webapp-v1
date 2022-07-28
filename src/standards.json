@@ -1,10 +1,13 @@
 {
-  "standards": [{
-    "code": "time-to-merge",
-    "recommandedValue": 5,
-    "new": true,
-    "active": true,
-    "icon": "ShutterSpeed",
-    "availableGraphs": ["histogram", "curves"]
-  }]
+  "standards": {
+    "time-to-merge": {
+      "code": "time-to-merge",
+      "recommandedValue": 5,
+      "valueRange": [1, 15],
+      "new": true,
+      "active": true,
+      "icon": "ShutterSpeed",
+      "availableGraphs": ["histogram", "curves"]
+    }
+  }
 }

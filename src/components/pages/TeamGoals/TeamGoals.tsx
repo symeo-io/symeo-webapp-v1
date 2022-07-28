@@ -7,7 +7,9 @@ import StandardCard, {
   Standard,
 } from "components/organisms/StandardCard/StandardCard";
 
-const standards: Standard[] = standardsData.standards as Standard[];
+const standards: Standard[] = Object.values(
+  standardsData.standards
+) as Standard[];
 
 function TeamGoals() {
   const { formatMessage } = useIntl();

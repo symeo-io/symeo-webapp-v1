@@ -17,7 +17,9 @@ export type UseCurrentUserOutput = {
 export function useCurrentUser(): UseCurrentUserOutput {
   const { data: currentUserData } = useGetCurrentUserQuery();
   const { user: auth0User } = useAuth0();
-  const { data: teamData } = useGetTeamsQuery();
+  const { data: teamData } = useGetTeamsQuery(undefined, {
+    skip: !currentUserData || !currentUserData?.user.organization,
+  });
   const { selectedTeam, setSelectedTeam } = useContext(
     CurrentUserConfigContext
   );

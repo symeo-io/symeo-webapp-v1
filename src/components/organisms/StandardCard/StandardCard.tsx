@@ -12,6 +12,7 @@ import routes from "routing";
 export type Standard = {
   code: string;
   recommandedValue: number;
+  valueRange: [number, number];
   new: boolean;
   active: boolean;
   availableGraphs: string[];
