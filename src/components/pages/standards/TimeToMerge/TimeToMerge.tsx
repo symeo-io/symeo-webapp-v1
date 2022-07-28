@@ -21,6 +21,12 @@ function TimeToMerge() {
     []
   );
 
+  const handleSave = useCallback(() => {
+    // TODO : save value
+    console.log("value", value);
+    return navigate(routes.home.path);
+  }, [navigate, value]);
+
   const marks = useMemo(() => {
     const result = [];
     for (let i = standard.valueRange[0]; i <= standard.valueRange[1]; i++) {
@@ -96,7 +102,10 @@ function TimeToMerge() {
             id: "standards.cancel",
           })}
         </Button>
-        <Button sx={{ marginLeft: (theme) => theme.spacing(1) }}>
+        <Button
+          onClick={handleSave}
+          sx={{ marginLeft: (theme) => theme.spacing(1) }}
+        >
           {formatMessage({
             id: "standards.create",
           })}
