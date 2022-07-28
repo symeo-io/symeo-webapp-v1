@@ -2,18 +2,31 @@ import React, { useMemo } from "react";
 import { theme } from "theme/theme";
 import Graph from "components/organisms/Graph/Graph";
 import { colors } from "theme/colors";
-import { useGetCurveQuery } from "redux/api/time-to-merge/curve/curve.api";
 import cloneDeep from "lodash/cloneDeep";
 import { PropsWithSx } from "types/PropsWithSx";
 import dayjs from "dayjs";
 import { useCurrentUser } from "providers/currentUser/useCurrentUser";
+import { useGetGraphQuery } from "redux/api/goals/graphs/graphs.api";
+import {
+  GetCurveResponse,
+  StandardCode,
+} from "redux/api/goals/graphs/graphs.types";
 
-export type PullRequestMergedGraphProps = PropsWithSx;
+export type CurvesProps = PropsWithSx & {
+  standardCode: StandardCode;
+};
 
-function PullRequestMergedGraph({ sx }: PullRequestMergedGraphProps) {
+function Curves({ standardCode, sx }: CurvesProps) {
   const { selectedTeam } = useCurrentUser();
 
-  const { data } = useGetCurveQuery({ teamId: selectedTeam?.id });
+  const { data } = useGetGraphQuery(
+    {
+      teamId: selectedTeam?.id,
+      type: "curves",
+      standardCode,
+    },
+    { skip: !selectedTeam }
+  ) as { data: GetCurveResponse | undefined };
 
   const limit = useMemo(() => data?.curves.limit, [data]);
   const pieces = useMemo(
@@ -177,4 +190,4 @@ function PullRequestMergedGraph({ sx }: PullRequestMergedGraphProps) {
   );
 }
 
-export default PullRequestMergedGraph;
+export default Curves;

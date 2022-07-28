@@ -12,8 +12,9 @@ import {
   useGetGoalsQuery,
 } from "redux/api/goals/goals.api";
 import { useCurrentUser } from "providers/currentUser/useCurrentUser";
+import { Standard } from "components/organisms/StandardCard/StandardCard";
 
-const standard = standardsData.standards["time-to-merge"];
+const standard = standardsData.standards["time-to-merge"] as Standard;
 
 function TimeToMerge() {
   const { formatMessage } = useIntl();

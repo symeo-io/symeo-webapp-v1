@@ -2,18 +2,29 @@ import React, { useMemo } from "react";
 import { theme } from "theme/theme";
 import Graph from "components/organisms/Graph/Graph";
 import { colors } from "theme/colors";
-import { useGetHistogramQuery } from "redux/api/time-to-merge/histogram/histogram.api";
 import { PropsWithSx } from "types/PropsWithSx";
 import { useCurrentUser } from "providers/currentUser/useCurrentUser";
+import { useGetGraphQuery } from "redux/api/goals/graphs/graphs.api";
+import {
+  GetHistogramResponse,
+  StandardCode,
+} from "redux/api/goals/graphs/graphs.types";
 
-export type PullRequestSizeHistogramProps = PropsWithSx;
+export type HistogramProps = PropsWithSx & {
+  standardCode: StandardCode;
+};
 
-function PullRequestSizeHistogram({ sx }: PullRequestSizeHistogramProps) {
+function Histogram({ standardCode, sx }: HistogramProps) {
   const { selectedTeam } = useCurrentUser();
 
-  const { data: histogramData } = useGetHistogramQuery({
-    teamId: selectedTeam?.id,
-  });
+  const { data: histogramData } = useGetGraphQuery(
+    {
+      teamId: selectedTeam?.id,
+      type: "histogram",
+      standardCode,
+    },
+    { skip: !selectedTeam }
+  ) as { data: GetHistogramResponse | undefined };
 
   const histogramValues = useMemo(
     () => (histogramData ? histogramData.histogram.data : []),
@@ -141,4 +152,4 @@ function PullRequestSizeHistogram({ sx }: PullRequestSizeHistogramProps) {
   );
 }
 
-export default PullRequestSizeHistogram;
+export default Histogram;

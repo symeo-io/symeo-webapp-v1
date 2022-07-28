@@ -8,15 +8,16 @@ import Status from "components/atoms/Status/Status";
 import Button from "components/atoms/Button/Button";
 import { useNavigate } from "react-router-dom";
 import routes from "routing";
+import { GraphType, StandardCode } from "redux/api/goals/graphs/graphs.types";
 
 export type Standard = {
-  code: string;
+  code: StandardCode;
   recommandedValue: number;
   valueRange: [number, number];
   unit: string;
   new: boolean;
   active: boolean;
-  availableGraphs: string[];
+  availableGraphs: GraphType[];
   icon: keyof typeof icons;
 };
 
