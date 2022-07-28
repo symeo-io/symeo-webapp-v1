@@ -17,19 +17,27 @@ function PullRequestMergedGraph({ sx }: PullRequestMergedGraphProps) {
   const pieces = useMemo(
     () =>
       data?.curves.piece_curve &&
-      cloneDeep(data.curves.piece_curve).map((point) => ({
-        ...point,
-        date: dayjs(point.date, "DD/MM/YYYY").toDate(),
-      })),
+      cloneDeep(data.curves.piece_curve)
+        .map((point) => ({
+          ...point,
+          date: dayjs(point.date, "DD/MM/YYYY").toDate(),
+        }))
+        .sort(function (a, b) {
+          return a.date.getTime() - b.date.getTime();
+        }),
     [data]
   );
   const average = useMemo(
     () =>
       data?.curves.average_curve &&
-      cloneDeep(data.curves.average_curve).map((point) => ({
-        ...point,
-        date: dayjs(point.date, "DD/MM/YYYY").toDate(),
-      })),
+      cloneDeep(data.curves.average_curve)
+        .map((point) => ({
+          ...point,
+          date: dayjs(point.date, "DD/MM/YYYY").toDate(),
+        }))
+        .sort(function (a, b) {
+          return a.date.getTime() - b.date.getTime();
+        }),
     [data]
   );
 
@@ -142,7 +150,7 @@ function PullRequestMergedGraph({ sx }: PullRequestMergedGraphProps) {
                   strokeWidth: { value: 3 },
                 },
                 update: {
-                  interpolate: { value: "natural" },
+                  interpolate: { value: "monotone" },
                 },
               },
             },
