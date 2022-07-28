@@ -19,17 +19,17 @@ function PullRequestSizeHistogram({ sx }: PullRequestSizeHistogramProps) {
   );
 
   const vegaValues = useMemo(() => {
-    const result: { x: string; y: number; c: number }[] = [];
+    const result: { date: string; value: number; above: boolean }[] = [];
     histogramValues.forEach((point) => {
       result.push({
-        x: point.start_date_range,
-        y: point.data_below_limit,
-        c: 0,
+        date: point.start_date_range,
+        value: point.data_below_limit,
+        above: false,
       });
       result.push({
-        x: point.start_date_range,
-        y: point.data_above_limit,
-        c: 1,
+        date: point.start_date_range,
+        value: point.data_above_limit,
+        above: true,
       });
     });
 
@@ -56,9 +56,9 @@ function PullRequestSizeHistogram({ sx }: PullRequestSizeHistogramProps) {
               transform: [
                 {
                   type: "stack",
-                  groupby: ["x"],
-                  sort: { field: "c" },
-                  field: "y",
+                  groupby: ["date"],
+                  sort: { field: "above" },
+                  field: "value",
                 },
               ],
             },
@@ -70,7 +70,7 @@ function PullRequestSizeHistogram({ sx }: PullRequestSizeHistogramProps) {
               type: "band",
               range: "width",
               padding: 0.5,
-              domain: { data: "table", field: "x" },
+              domain: { data: "table", field: "date" },
             },
             {
               name: "y",
@@ -83,11 +83,8 @@ function PullRequestSizeHistogram({ sx }: PullRequestSizeHistogramProps) {
             {
               name: "color",
               type: "ordinal",
-              domain: { data: "table", field: "c" },
-              range: [
-                colors.primary[400] as string,
-                colors.primary[150] as string,
-              ],
+              domain: { data: "table", field: "above" },
+              range: [colors.primary[400] as string, "#F25857"],
             },
           ],
 
@@ -127,14 +124,11 @@ function PullRequestSizeHistogram({ sx }: PullRequestSizeHistogramProps) {
               from: { data: "table" },
               encode: {
                 enter: {
-                  cornerRadius: {
-                    value: 12,
-                  },
-                  x: { scale: "x", field: "x" },
+                  x: { scale: "x", field: "date" },
                   width: { scale: "x", band: 1, offset: -1 },
                   y: { scale: "y", field: "y0" },
                   y2: { scale: "y", field: "y1" },
-                  fill: { scale: "color", field: "c" },
+                  fill: { scale: "color", field: "above" },
                 },
               },
             },
