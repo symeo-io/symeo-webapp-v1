@@ -3,6 +3,7 @@
     "time-to-merge": {
       "code": "time-to-merge",
       "recommandedValue": 5,
+      "unit": "days",
       "valueRange": [1, 15],
       "new": true,
       "active": true,

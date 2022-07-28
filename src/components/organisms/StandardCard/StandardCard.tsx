@@ -13,6 +13,7 @@ export type Standard = {
   code: string;
   recommandedValue: number;
   valueRange: [number, number];
+  unit: string;
   new: boolean;
   active: boolean;
   availableGraphs: string[];

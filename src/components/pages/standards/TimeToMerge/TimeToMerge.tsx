@@ -1,13 +1,17 @@
 import React, { useCallback, useMemo, useState } from "react";
-import { Box, Slider, Typography } from "@mui/material";
+import { Box, Divider, Slider, Typography } from "@mui/material";
 import { useIntl } from "react-intl";
 import SliderMark from "components/atoms/SliderMark/SliderMark";
 import standardsData from "standards.json";
+import Button from "components/atoms/Button/Button";
+import { useNavigate } from "react-router-dom";
+import routes from "routing";
 
 const standard = standardsData.standards["time-to-merge"];
 
 function TimeToMerge() {
   const { formatMessage } = useIntl();
+  const navigate = useNavigate();
   const [value, setValue] = useState<number>(standard.recommandedValue);
 
   const handleChange = useCallback(
@@ -72,8 +76,31 @@ function TimeToMerge() {
             min={standard.valueRange[0]}
             max={standard.valueRange[1]}
             marks={marks}
+            sx={{ marginBottom: "62px" }}
           />
         </Box>
+      </Box>
+      <Divider sx={{ marginTop: (theme) => theme.spacing(3) }} />
+      <Box
+        sx={{
+          paddingY: (theme) => theme.spacing(2),
+          display: "flex",
+          justifyContent: "flex-end",
+        }}
+      >
+        <Button
+          variant="outlined"
+          onClick={() => navigate(routes.teamGoals.path)}
+        >
+          {formatMessage({
+            id: "standards.cancel",
+          })}
+        </Button>
+        <Button sx={{ marginLeft: (theme) => theme.spacing(1) }}>
+          {formatMessage({
+            id: "standards.create",
+          })}
+        </Button>
       </Box>
     </Box>
   );

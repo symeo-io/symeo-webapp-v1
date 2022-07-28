@@ -86,7 +86,10 @@
   "standards": {
     "new": "New",
     "start-improving-button-label": "Start Improving",
-    "settings": "Settings",
+    "save": "Save changes",
+    "create": "Set up team goal",
+    "delete": "Delete team goal",
+    "cancel": "Cancel",
     "time-to-merge": {
       "title": "Aim for short PR lifecycle",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
