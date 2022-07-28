@@ -22,6 +22,12 @@ function PullRequestMergedGraph({ sx }: PullRequestMergedGraphProps) {
     [data]
   );
 
+  const maxValue = useMemo(
+    () =>
+      limit && pieces && Math.max(limit, ...pieces.map((piece) => piece.value)),
+    [limit, pieces]
+  );
+
   if (!data || !limit || !pieces || !average) return null;
 
   return (
@@ -58,6 +64,7 @@ function PullRequestMergedGraph({ sx }: PullRequestMergedGraphProps) {
               type: "log",
               range: "height",
               domain: { data: "pieces", field: "value" },
+              domainMax: maxValue,
             },
             {
               name: "color",
