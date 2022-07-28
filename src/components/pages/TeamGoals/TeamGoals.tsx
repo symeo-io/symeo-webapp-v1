@@ -6,6 +6,7 @@ import standardsData from "standards.json";
 import StandardCard, {
   Standard,
 } from "components/organisms/StandardCard/StandardCard";
+import { useGetGoalsQuery } from "redux/api/goals/goals.api";
 
 const standards: Standard[] = Object.values(
   standardsData.standards
@@ -15,6 +16,15 @@ function TeamGoals() {
   const { formatMessage } = useIntl();
   const { selectedTeam } = useCurrentUser();
 
+  const { data } = useGetGoalsQuery(
+    { teamId: selectedTeam?.id ?? "" },
+    { skip: !selectedTeam }
+  );
+
+  const goals = useMemo(
+    () => (data?.team_goals ? data.team_goals : []),
+    [data]
+  );
   const teamName = useMemo(() => selectedTeam?.name ?? "All", [selectedTeam]);
 
   return (
@@ -42,6 +52,9 @@ function TeamGoals() {
           <StandardCard
             key={standard.code}
             standard={standard}
+            configured={
+              !!goals.find((goal) => goal.standard_code === standard.code)
+            }
             sx={{
               margin: (theme) => `${theme.spacing(2)} ${theme.spacing(1)}`,
             }}

@@ -13,7 +13,6 @@ import OrganizationAvatar from "components/atoms/OrganizationAvatar/Organization
 import { useCurrentUser } from "providers/currentUser/useCurrentUser";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { colors } from "theme/colors";
-import { useIntl } from "react-intl";
 import GroupsIcon from "@mui/icons-material/Groups";
 import { PropsWithSx } from "types/PropsWithSx";
 
@@ -22,7 +21,6 @@ export type OrganizationProps = PropsWithSx & {
 };
 
 function CurrentOrganization({ organization, sx }: OrganizationProps) {
-  const { formatMessage } = useIntl();
   const { selectedTeam, teams, setSelectedTeam } = useCurrentUser();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -55,7 +53,7 @@ function CurrentOrganization({ organization, sx }: OrganizationProps) {
         <Box sx={{ flex: 1, marginLeft: (theme) => theme.spacing(1) }}>
           <Box sx={{ fontWeight: 700 }}>{organization.name}</Box>
           <Box sx={{ fontSize: "14px", color: colors.secondary.text }}>
-            {selectedTeam?.name ?? "All"}
+            {selectedTeam?.name}
           </Box>
         </Box>
         <KeyboardArrowDownIcon />
@@ -81,20 +79,6 @@ function CurrentOrganization({ organization, sx }: OrganizationProps) {
         <MenuList
           subheader={<ListSubheader>{organization.name}</ListSubheader>}
         >
-          <MenuItem
-            selected={!selectedTeam}
-            onClick={() => {
-              setSelectedTeam(undefined);
-              closeMenu();
-            }}
-          >
-            <ListItemIcon>
-              <GroupsIcon />
-            </ListItemIcon>
-            <ListItemText>
-              {formatMessage({ id: "sidebar.organization.all-teams-label" })}
-            </ListItemText>
-          </MenuItem>
           {teams &&
             teams.map((team) => (
               <MenuItem

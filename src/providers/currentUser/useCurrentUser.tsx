@@ -11,7 +11,7 @@ export type UseCurrentUserOutput = {
   auth0User?: Auth0User;
   teams?: Team[];
   selectedTeam?: Team;
-  setSelectedTeam: (team: Team | undefined) => void;
+  setSelectedTeam: (team: Team) => void;
 };
 
 export function useCurrentUser(): UseCurrentUserOutput {

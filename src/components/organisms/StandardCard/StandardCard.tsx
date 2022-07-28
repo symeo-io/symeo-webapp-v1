@@ -22,9 +22,10 @@ export type Standard = {
 
 export type StandardCardProps = PropsWithSx & {
   standard: Standard;
+  configured?: boolean;
 };
 
-function StandardCard({ standard, sx }: StandardCardProps) {
+function StandardCard({ standard, configured = false, sx }: StandardCardProps) {
   const { formatMessage } = useIntl();
   const navigate = useNavigate();
   const IconComponent = useMemo(() => icons[standard.icon], [standard.icon]);
@@ -58,8 +59,15 @@ function StandardCard({ standard, sx }: StandardCardProps) {
           marginTop: (theme) => theme.spacing(2),
         }}
       >
-        <Button onClick={() => navigate(routes[standard.code].path)}>
-          {formatMessage({ id: "standards.start-improving-button-label" })}
+        <Button
+          onClick={() => navigate(routes[standard.code].path)}
+          variant={configured ? "outlined" : "contained"}
+        >
+          {formatMessage({
+            id: configured
+              ? "standards.configure-button-label"
+              : "standards.start-improving-button-label",
+          })}
         </Button>
       </Box>
     </Card>

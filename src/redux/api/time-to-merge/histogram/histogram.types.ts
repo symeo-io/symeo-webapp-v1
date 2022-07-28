@@ -1,7 +1,7 @@
 import { ResponseWithErrors } from "../../errors.type";
 
 export type GetHistogramInput = {
-  teamName?: string;
+  teamId?: string;
 };
 
 export type HistogramDataPoint = {

@@ -86,6 +86,7 @@
   "standards": {
     "new": "New",
     "start-improving-button-label": "Start Improving",
+    "configure-button-label": "Configure",
     "save": "Save changes",
     "create": "Set up team goal",
     "delete": "Delete team goal",

@@ -9,6 +9,7 @@ export const apiTagTypes = [
   "Team",
   "User",
   "Curve",
+  "Goal",
 ];
 
 export const api = createApi({

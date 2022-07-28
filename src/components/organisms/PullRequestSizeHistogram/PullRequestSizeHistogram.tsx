@@ -4,12 +4,15 @@ import Graph from "components/organisms/Graph/Graph";
 import { colors } from "theme/colors";
 import { useGetHistogramQuery } from "redux/api/time-to-merge/histogram/histogram.api";
 import { PropsWithSx } from "types/PropsWithSx";
+import { useCurrentUser } from "providers/currentUser/useCurrentUser";
 
 export type PullRequestSizeHistogramProps = PropsWithSx;
 
 function PullRequestSizeHistogram({ sx }: PullRequestSizeHistogramProps) {
+  const { selectedTeam } = useCurrentUser();
+
   const { data: histogramData } = useGetHistogramQuery({
-    teamName: "All",
+    teamId: selectedTeam?.id,
   });
 
   const histogramValues = useMemo(

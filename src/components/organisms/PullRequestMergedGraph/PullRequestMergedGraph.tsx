@@ -6,11 +6,14 @@ import { useGetCurveQuery } from "redux/api/time-to-merge/curve/curve.api";
 import cloneDeep from "lodash/cloneDeep";
 import { PropsWithSx } from "types/PropsWithSx";
 import dayjs from "dayjs";
+import { useCurrentUser } from "providers/currentUser/useCurrentUser";
 
 export type PullRequestMergedGraphProps = PropsWithSx;
 
 function PullRequestMergedGraph({ sx }: PullRequestMergedGraphProps) {
-  const { data } = useGetCurveQuery({ teamName: "All" });
+  const { selectedTeam } = useCurrentUser();
+
+  const { data } = useGetCurveQuery({ teamId: selectedTeam?.id });
 
   const limit = useMemo(() => data?.curves.limit, [data]);
   const pieces = useMemo(

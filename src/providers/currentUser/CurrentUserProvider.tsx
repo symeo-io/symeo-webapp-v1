@@ -1,4 +1,9 @@
-import React, { PropsWithChildren, useCallback, useMemo } from "react";
+import React, {
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useMemo,
+} from "react";
 import { CurrentUserConfigContext } from "providers/currentUser/CurrentUserConfigContext";
 import { Team } from "redux/api/teams/teams.types";
 import { useCurrentUser } from "providers/currentUser/useCurrentUser";
@@ -10,11 +15,16 @@ export type CurrentUserProviderProps = PropsWithChildren;
 
 function CurrentUserProvider({ children }: CurrentUserProviderProps) {
   const { teams } = useCurrentUser();
-  const [selectedTeamId, setSelectedTeamId, removeSelectedTeamId] =
-    useLocalStorage<string | undefined>(
-      SELECTED_TEAM_LOCAL_STORAGE_KEY,
-      undefined
-    );
+  const [selectedTeamId, setSelectedTeamId] = useLocalStorage<string>(
+    SELECTED_TEAM_LOCAL_STORAGE_KEY,
+    teams ? teams[0].id : undefined
+  );
+
+  useEffect(() => {
+    if (teams && !selectedTeamId) {
+      setSelectedTeamId(teams[0].id);
+    }
+  }, [selectedTeamId, setSelectedTeamId, teams]);
 
   const selectedTeam = useMemo(
     () =>
@@ -23,9 +33,8 @@ function CurrentUserProvider({ children }: CurrentUserProviderProps) {
   );
 
   const setSelectedTeam = useCallback(
-    (team: Team | undefined) =>
-      team ? setSelectedTeamId(team?.id) : removeSelectedTeamId(),
-    [removeSelectedTeamId, setSelectedTeamId]
+    (team: Team) => setSelectedTeamId(team.id),
+    [setSelectedTeamId]
   );
 
   return (

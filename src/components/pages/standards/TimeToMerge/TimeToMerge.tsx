@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Box, Divider, Slider, Typography } from "@mui/material";
 import { useIntl } from "react-intl";
 import SliderMark from "components/atoms/SliderMark/SliderMark";
@@ -6,6 +6,12 @@ import standardsData from "standards.json";
 import Button from "components/atoms/Button/Button";
 import { useNavigate } from "react-router-dom";
 import routes from "routing";
+import {
+  useCreateGoalMutation,
+  useDeleteGoalMutation,
+  useGetGoalsQuery,
+} from "redux/api/goals/goals.api";
+import { useCurrentUser } from "providers/currentUser/useCurrentUser";
 
 const standard = standardsData.standards["time-to-merge"];
 
@@ -14,6 +20,28 @@ function TimeToMerge() {
   const navigate = useNavigate();
   const [value, setValue] = useState<number>(standard.recommandedValue);
 
+  const { selectedTeam } = useCurrentUser();
+  const { data } = useGetGoalsQuery(
+    { teamId: selectedTeam?.id ?? "" },
+    { skip: !selectedTeam }
+  );
+  const [createGoal, { isLoading: isLoadingCreate }] = useCreateGoalMutation();
+  const [deleteGoal, { isLoading: isLoadingDelete }] = useDeleteGoalMutation();
+
+  const goal = useMemo(
+    () =>
+      data?.team_goals
+        ? data.team_goals.find((g) => g.standard_code === standard.code)
+        : null,
+    [data]
+  );
+
+  useEffect(() => {
+    if (goal) {
+      setValue(goal.value);
+    }
+  }, [goal]);
+
   const handleChange = useCallback(
     (event: Event, newValue: number | number[]) => {
       setValue(newValue as number);
@@ -21,11 +49,32 @@ function TimeToMerge() {
     []
   );
 
-  const handleSave = useCallback(() => {
-    // TODO : save value
-    console.log("value", value);
+  const handleSave = useCallback(async () => {
+    if (!goal) return;
+
+    // TODO: patch goal
+
     return navigate(routes.home.path);
-  }, [navigate, value]);
+  }, [goal, navigate]);
+
+  const handleCreate = useCallback(async () => {
+    if (goal || !selectedTeam) return;
+
+    await createGoal({
+      standard_code: standard.code,
+      value,
+      team_id: selectedTeam.id,
+    });
+
+    return navigate(routes.home.path);
+  }, [createGoal, goal, navigate, selectedTeam, value]);
+
+  const handleDelete = useCallback(async () => {
+    if (!goal) return;
+
+    await deleteGoal({ teamGoalId: goal.id });
+    return navigate(routes.home.path);
+  }, [deleteGoal, goal, navigate]);
 
   const marks = useMemo(() => {
     const result = [];
@@ -102,14 +151,39 @@ function TimeToMerge() {
             id: "standards.cancel",
           })}
         </Button>
-        <Button
-          onClick={handleSave}
-          sx={{ marginLeft: (theme) => theme.spacing(1) }}
-        >
-          {formatMessage({
-            id: "standards.create",
-          })}
-        </Button>
+        {!goal && (
+          <Button
+            loading={isLoadingCreate}
+            onClick={handleCreate}
+            sx={{ marginLeft: (theme) => theme.spacing(1) }}
+          >
+            {formatMessage({
+              id: "standards.create",
+            })}
+          </Button>
+        )}
+        {goal && (
+          <Button
+            loading={isLoadingDelete}
+            color="error"
+            onClick={handleDelete}
+            sx={{ marginLeft: (theme) => theme.spacing(1) }}
+          >
+            {formatMessage({
+              id: "standards.delete",
+            })}
+          </Button>
+        )}
+        {goal && (
+          <Button
+            onClick={handleSave}
+            sx={{ marginLeft: (theme) => theme.spacing(1) }}
+          >
+            {formatMessage({
+              id: "standards.save",
+            })}
+          </Button>
+        )}
       </Box>
     </Box>
   );

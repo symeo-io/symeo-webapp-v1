@@ -4,8 +4,11 @@ import { GetCurveInput, GetCurveResponse } from "./curve.types";
 export const curveQueryApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getCurve: builder.query<GetCurveResponse, GetCurveInput>({
-      query: ({ teamName }) => ({
-        url: `/api/v1/time-to-merge/curve?team_name=${teamName}`,
+      query: ({ teamId }) => ({
+        url: `/api/v1/teams/goals/time-to-merge/curves`,
+        params: {
+          team_id: teamId,
+        },
       }),
       providesTags: () => [{ type: "Curve" }],
     }),

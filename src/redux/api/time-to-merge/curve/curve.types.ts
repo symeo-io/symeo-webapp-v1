@@ -1,7 +1,7 @@
 import { ResponseWithErrors } from "../../errors.type";
 
 export type GetCurveInput = {
-  teamName?: string;
+  teamId?: string;
 };
 
 export type AverageCurveDataPoint = {
