@@ -17,6 +17,10 @@ import { intl } from "intl";
 import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/tracing";
 import ConfirmDialogProvider from "providers/confirm/ConfirmDialogProvider";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+import dayjs from "dayjs";
+
+dayjs.extend(customParseFormat);
 
 if (config.sentry.dsn) {
   Sentry.init({

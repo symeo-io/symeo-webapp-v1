@@ -4,6 +4,7 @@ import Graph, { GraphProps } from "components/organisms/Graph/Graph";
 import { colors } from "theme/colors";
 import { useGetCurveQuery } from "redux/api/time-to-merge/curve/curve.api";
 import cloneDeep from "lodash/cloneDeep";
+import dayjs from "dayjs";
 
 export type PullRequestMergedGraphProps = {
   sx?: GraphProps["sx"];
@@ -14,11 +15,21 @@ function PullRequestMergedGraph({ sx }: PullRequestMergedGraphProps) {
 
   const limit = useMemo(() => data?.curves.limit, [data]);
   const pieces = useMemo(
-    () => data?.curves.piece_curve && cloneDeep(data.curves.piece_curve),
+    () =>
+      data?.curves.piece_curve &&
+      cloneDeep(data.curves.piece_curve).map((point) => ({
+        ...point,
+        date: dayjs(point.date, "DD/MM/YYYY").toDate(),
+      })),
     [data]
   );
   const average = useMemo(
-    () => data?.curves.average_curve && cloneDeep(data.curves.average_curve),
+    () =>
+      data?.curves.average_curve &&
+      cloneDeep(data.curves.average_curve).map((point) => ({
+        ...point,
+        date: dayjs(point.date, "DD/MM/YYYY").toDate(),
+      })),
     [data]
   );
 
@@ -55,7 +66,8 @@ function PullRequestMergedGraph({ sx }: PullRequestMergedGraphProps) {
           scales: [
             {
               name: "x",
-              type: "point",
+              type: "time",
+              nice: "day",
               range: "width",
               domain: { data: "pieces", field: "date" },
             },
