@@ -12,6 +12,7 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
 import { useCurrentUser } from "providers/currentUser/useCurrentUser";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 export const SIDE_BAR_WIDTH = 224;
 
@@ -75,6 +76,20 @@ function Sidebar() {
             label={formatMessage({ id: "sidebar.links.dashboard" })}
             icon={<HomeIcon />}
             route={routes.home}
+          />
+        </MenuList>
+      </Box>
+      <Box
+        sx={{
+          padding: (theme) =>
+            `${theme.spacing(1.5)} 0 theme.spacing(1.5) theme.spacing(1.5)`,
+        }}
+      >
+        <MenuList>
+          <SidebarNavLink
+            label={formatMessage({ id: "sidebar.links.organization" })}
+            icon={<SettingsIcon />}
+            route={routes.organization}
           />
         </MenuList>
       </Box>

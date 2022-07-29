@@ -41,7 +41,8 @@
       "all-teams-label": "All"
     },
     "links": {
-      "dashboard": "Dashboard"
+      "dashboard": "Dashboard",
+      "organization": "Organization Settings"
     },
     "invite": {
       "invite-people-button-label": "Invite People"
