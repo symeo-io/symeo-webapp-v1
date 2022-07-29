@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { Organization } from "redux/api/users/users.types";
 import OrganizationAvatar from "components/atoms/OrganizationAvatar/OrganizationAvatar";
-import { useCurrentUser } from "providers/currentUser/useCurrentUser";
+import { useCurrentUser } from "hooks/useCurrentUser";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { colors } from "theme/colors";
 import GroupsIcon from "@mui/icons-material/Groups";

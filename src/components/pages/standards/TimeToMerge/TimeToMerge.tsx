@@ -9,10 +9,9 @@ import routes from "routing";
 import {
   useCreateGoalMutation,
   useDeleteGoalMutation,
-  useGetGoalsQuery,
   useUpdateGoalMutation,
 } from "redux/api/goals/goals.api";
-import { useCurrentUser } from "providers/currentUser/useCurrentUser";
+import { useCurrentUser } from "hooks/useCurrentUser";
 import { Standard } from "components/organisms/StandardCard/StandardCard";
 import { useConfirm } from "providers/confirm/useConfirm";
 
@@ -23,21 +22,14 @@ function TimeToMerge() {
   const navigate = useNavigate();
   const [value, setValue] = useState<number>(standard.recommandedValue);
 
-  const { selectedTeam } = useCurrentUser();
-  const { data } = useGetGoalsQuery(
-    { teamId: selectedTeam?.id ?? "" },
-    { skip: !selectedTeam }
-  );
+  const { selectedTeam, goals } = useCurrentUser();
   const [createGoal, { isLoading: isLoadingCreate }] = useCreateGoalMutation();
   const [deleteGoal, { isLoading: isLoadingDelete }] = useDeleteGoalMutation();
   const [updateGoal, { isLoading: isLoadingUpdate }] = useUpdateGoalMutation();
 
   const goal = useMemo(
-    () =>
-      data?.team_goals
-        ? data.team_goals.find((g) => g.standard_code === standard.code)
-        : null,
-    [data]
+    () => goals?.find((g) => g.standard_code === standard.code) ?? null,
+    [goals]
   );
 
   useEffect(() => {

@@ -3,6 +3,10 @@ import { usersQueryApi } from "redux/api/users/users.api";
 import {
   CreateTeamsInput,
   CreateTeamsResponse,
+  DeleteTeamsInput,
+  DeleteTeamsResponse,
+  EditTeamInput,
+  EditTeamResponse,
   GetTeamsResponse,
 } from "./teams.types";
 
@@ -53,8 +57,59 @@ const teamsMutationApi = api.injectEndpoints({
         }
       },
     }),
+    editTeam: builder.mutation<EditTeamResponse, EditTeamInput>({
+      query: (input) => ({
+        url: `/api/v1/teams`,
+        method: "PATCH",
+        body: input,
+      }),
+      invalidatesTags: [{ type: "Team" }],
+      async onQueryStarted({ id, ...rest }, { dispatch, queryFulfilled }) {
+        const updateResult = dispatch(
+          teamsQueryApi.util.updateQueryData("getTeams", undefined, (draft) => {
+            const editedTeam = draft.teams.find((team) => team.id === id);
+            if (editedTeam) {
+              Object.assign(editedTeam, { id, ...rest });
+            }
+          })
+        );
+
+        try {
+          await queryFulfilled;
+        } catch (e) {
+          updateResult.undo();
+        }
+      },
+    }),
+    deleteTeam: builder.mutation<DeleteTeamsResponse, DeleteTeamsInput>({
+      query: ({ teamId }) => ({
+        url: `/api/v1/teams`,
+        method: "DELETE",
+        params: {
+          team_id: teamId,
+        },
+      }),
+      invalidatesTags: [{ type: "Team" }],
+      async onQueryStarted({ teamId }, { dispatch, queryFulfilled }) {
+        const updateResult = dispatch(
+          teamsQueryApi.util.updateQueryData("getTeams", undefined, (draft) => {
+            draft.teams = draft.teams.filter((team) => team.id !== teamId);
+          })
+        );
+
+        try {
+          await queryFulfilled;
+        } catch (e) {
+          updateResult.undo();
+        }
+      },
+    }),
   }),
 });
 
 export const { useGetTeamsQuery } = teamsQueryApi;
-export const { useCreateTeamsMutation } = teamsMutationApi;
+export const {
+  useCreateTeamsMutation,
+  useDeleteTeamMutation,
+  useEditTeamMutation,
+} = teamsMutationApi;

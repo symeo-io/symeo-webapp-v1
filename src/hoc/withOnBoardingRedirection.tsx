@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import routes from "routing";
-import { useCurrentUser } from "providers/currentUser/useCurrentUser";
+import { useCurrentUser } from "hooks/useCurrentUser";
 
 export function withOnBoardingRedirection<T = object>(
   WrappedComponent: React.ComponentType<T>

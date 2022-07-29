@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, CircularProgress } from "@mui/material";
-import { useCurrentUser } from "providers/currentUser/useCurrentUser";
+import { useCurrentUser } from "hooks/useCurrentUser";
 
 export function withCurrentUserLoader<T = object>(
   WrappedComponent: React.ComponentType<T>

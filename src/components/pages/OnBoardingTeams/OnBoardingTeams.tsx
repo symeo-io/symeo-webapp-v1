@@ -5,12 +5,13 @@ import routes from "routing";
 import { useNavigate } from "react-router-dom";
 import OnBoardingPageContainer from "components/molecules/OnBoardingPageContainer/OnBoardingPageContainer";
 import OnBoardingCard from "components/molecules/OnBoardingCard/OnBoardingCard";
-import { CreateTeamFormValues } from "components/organisms/CreateTeamForm/CreateTeamForm";
+import { EditOrCreateTeamFormValues } from "components/organisms/CreateTeamForm/CreateTeamForm";
 import Button from "components/atoms/Button/Button";
 import AddIcon from "@mui/icons-material/Add";
 import CreateTeamSection from "./CreateTeamSection";
 import {
-  emptyTeamFormErrors,
+  EMPTY_TEAM,
+  EMPTY_TEAM_FORM_ERRORS,
   FormErrors,
   getTeamsFormErrors,
   isErrorsListEmpty,
@@ -19,26 +20,21 @@ import cloneDeep from "lodash/cloneDeep";
 import { useCreateTeamsMutation } from "redux/api/teams/teams.api";
 import { formValuesToCreateTeamInput } from "redux/api/teams/teams.types";
 
-const EMPTY_TEAM: CreateTeamFormValues = {
-  name: "",
-  repositories: [],
-};
-
 function OnBoardingTeams() {
   const { formatMessage } = useIntl();
   const navigate = useNavigate();
   const [createTeams, { isLoading: isLoadingCreateTeams }] =
     useCreateTeamsMutation();
 
-  const [teams, setTeams] = useState<CreateTeamFormValues[]>([
-    { ...EMPTY_TEAM },
+  const [teams, setTeams] = useState<EditOrCreateTeamFormValues[]>([
+    cloneDeep(EMPTY_TEAM),
   ]);
-  const [errors, setErrors] = useState<FormErrors<CreateTeamFormValues>[]>([
-    cloneDeep(emptyTeamFormErrors),
-  ]);
+  const [errors, setErrors] = useState<
+    FormErrors<EditOrCreateTeamFormValues>[]
+  >([cloneDeep(EMPTY_TEAM_FORM_ERRORS)]);
 
   const setTeam = useCallback(
-    (index: number, values: CreateTeamFormValues) => {
+    (index: number, values: EditOrCreateTeamFormValues) => {
       const newTeams = [...teams];
       newTeams[index] = values;
       setTeams(newTeams);
@@ -47,7 +43,7 @@ function OnBoardingTeams() {
   );
 
   const setTeamErrors = useCallback(
-    (index: number, teamErrors: FormErrors<CreateTeamFormValues>) => {
+    (index: number, teamErrors: FormErrors<EditOrCreateTeamFormValues>) => {
       const newErrors = [...errors];
       newErrors[index] = teamErrors;
       setErrors(newErrors);
@@ -56,8 +52,8 @@ function OnBoardingTeams() {
   );
 
   const addTeam = useCallback(() => {
-    setTeams([...teams, { ...EMPTY_TEAM }]);
-    setErrors([...errors, cloneDeep(emptyTeamFormErrors)]);
+    setTeams([...teams, cloneDeep(EMPTY_TEAM)]);
+    setErrors([...errors, cloneDeep(EMPTY_TEAM_FORM_ERRORS)]);
   }, [errors, teams]);
 
   const removeTeam = useCallback(

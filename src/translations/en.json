@@ -82,6 +82,24 @@
         "message": "User with email {email} will be removed",
         "confirm-label": "Remove member"
       }
+    },
+    "teams": {
+      "title": "Manage your organization's teams",
+      "create-button-label": "Create a new team",
+      "search-placeholder": "Find a team...",
+      "remove-dialog": {
+        "title": "Removing a team from {organizationName}",
+        "message": "Team {teamName} will be removed",
+        "confirm-label": "Remove team"
+      },
+      "create-dialog": {
+        "title": "Create team for {organizationName}",
+        "create-button-label": "Create"
+      },
+      "edit-dialog": {
+        "title": "Edit team for {organizationName}",
+        "edit-button-label": "Edit"
+      }
     }
   },
   "team-goals": {

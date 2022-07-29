@@ -1,26 +1,22 @@
-import React, { ChangeEvent, useCallback, useMemo, useState } from "react";
+import React, { ChangeEvent, useCallback, useState } from "react";
 import { Box, Divider, InputAdornment, List, Typography } from "@mui/material";
 import { useIntl } from "react-intl";
 import TextField from "components/molecules/TextField/TextField";
 import SearchIcon from "@mui/icons-material/Search";
-import OrganizationMemberListItem from "components/molecules/OrganizationMemberListItem/OrganizationMemberListItem";
-import { useGetOrganizationUsersQuery } from "redux/api/organizations/organizations.api";
-import InviteOrganizationMembersButton from "components/molecules/InviteOrganizationMembersButton/InviteOrganizationMembersButton";
 import { PropsWithSx } from "types/PropsWithSx";
+import { useCurrentUser } from "hooks/useCurrentUser";
+import OrganizationTeamListItem from "components/molecules/OrganizationTeamListItem/OrganizationTeamListItem";
+import CreateOrganizationTeamButton from "components/molecules/CreateOrganizationTeamButton/CreateOrganizationTeamButton";
 
 export type OrganizationMembersProps = PropsWithSx & {
   organizationName: string;
 };
 
-function OrganizationMembers({
-  organizationName,
-  sx,
-}: OrganizationMembersProps) {
+function OrganizationTeams({ organizationName, sx }: OrganizationMembersProps) {
   const { formatMessage } = useIntl();
   const [searchValue, setSearchValue] = useState<string>("");
 
-  const { data: usersData } = useGetOrganizationUsersQuery();
-  const users = useMemo(() => usersData?.users ?? [], [usersData?.users]);
+  const { teams } = useCurrentUser();
 
   const handleSearchChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) =>
@@ -34,7 +30,7 @@ function OrganizationMembers({
         variant="h2"
         sx={{ paddingBottom: (theme) => theme.spacing(1) }}
       >
-        {formatMessage({ id: "organization.members.title" })}
+        {formatMessage({ id: "organization.teams.title" })}
       </Typography>
       <Divider />
       <Box
@@ -55,7 +51,7 @@ function OrganizationMembers({
             sx={{ width: "240px", marginTop: 0 }}
             size="small"
             placeholder={formatMessage({
-              id: "organization.members.search-placeholder",
+              id: "organization.teams.search-placeholder",
             })}
             InputProps={{
               startAdornment: (
@@ -65,24 +61,23 @@ function OrganizationMembers({
               ),
             }}
           />
-          <InviteOrganizationMembersButton
-            organizationName={organizationName}
-          />
+          <CreateOrganizationTeamButton organizationName={organizationName} />
         </Box>
         <Box sx={{ marginTop: (theme) => theme.spacing(3) }}>
           <List>
-            {users
-
-              .filter((user) =>
-                user.email.toLowerCase().includes(searchValue.toLowerCase())
-              )
-              .map((user) => (
-                <OrganizationMemberListItem
-                  key={user.id}
-                  user={user}
-                  organizationName={organizationName}
-                />
-              ))}
+            {teams &&
+              teams
+                .filter((team) =>
+                  team.name.toLowerCase().includes(searchValue.toLowerCase())
+                )
+                .map((team) => (
+                  <OrganizationTeamListItem
+                    key={team.id}
+                    team={team}
+                    organizationName={organizationName}
+                    showDelete={teams.length > 1}
+                  />
+                ))}
           </List>
         </Box>
       </Box>
@@ -90,4 +85,4 @@ function OrganizationMembers({
   );
 }
 
-export default OrganizationMembers;
+export default OrganizationTeams;

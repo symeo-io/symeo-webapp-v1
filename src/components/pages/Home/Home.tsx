@@ -1,7 +1,6 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { Box, Typography } from "@mui/material";
-import { useCurrentUser } from "providers/currentUser/useCurrentUser";
-import { useGetGoalsQuery } from "redux/api/goals/goals.api";
+import { useCurrentUser } from "hooks/useCurrentUser";
 import standardsData from "standards.json";
 import { StandardCode } from "redux/api/goals/graphs/graphs.types";
 import { Standard } from "components/organisms/StandardCard/StandardCard";
@@ -12,17 +11,8 @@ const standards = standardsData.standards as Record<StandardCode, Standard>;
 
 function Home() {
   const { formatMessage } = useIntl();
-  const { selectedTeam } = useCurrentUser();
-
-  const { data } = useGetGoalsQuery(
-    { teamId: selectedTeam?.id ?? "" },
-    { skip: !selectedTeam }
-  );
-
-  const goals = useMemo(
-    () => (data?.team_goals ? data.team_goals : []),
-    [data]
-  );
+  const { selectedTeam, goals } = useCurrentUser();
+  console.log("selectedTeam, goals", selectedTeam, goals);
 
   return (
     <Box
@@ -41,7 +31,7 @@ function Home() {
           { teamName: selectedTeam?.name }
         )}
       </Typography>
-      {goals.map((goal) => (
+      {goals?.map((goal) => (
         <GoalDashboardSection
           key={goal.id}
           standard={standards[goal.standard_code]}

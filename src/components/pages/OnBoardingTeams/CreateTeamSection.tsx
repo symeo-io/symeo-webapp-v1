@@ -1,17 +1,20 @@
 import React from "react";
 import { Box, Divider } from "@mui/material";
 import CreateTeamForm, {
-  CreateTeamFormValues,
+  EditOrCreateTeamFormValues,
 } from "components/organisms/CreateTeamForm/CreateTeamForm";
 import ClearIcon from "@mui/icons-material/Clear";
 import { FormErrors } from "../../organisms/CreateTeamForm/utils";
 
 export type CreateTeamSectionProps = {
   index: number;
-  team: CreateTeamFormValues;
-  setTeam: (index: number, values: CreateTeamFormValues) => void;
-  errors: FormErrors<CreateTeamFormValues>;
-  setErrors: (index: number, errors: FormErrors<CreateTeamFormValues>) => void;
+  team: EditOrCreateTeamFormValues;
+  setTeam: (index: number, values: EditOrCreateTeamFormValues) => void;
+  errors: FormErrors<EditOrCreateTeamFormValues>;
+  setErrors: (
+    index: number,
+    errors: FormErrors<EditOrCreateTeamFormValues>
+  ) => void;
   teamsNumber: number;
   onRemoveTeamClick: (index: number) => void;
 };
@@ -49,9 +52,11 @@ function CreateTeamSection({
       <CreateTeamForm
         key={index}
         values={team}
-        setValues={(values: CreateTeamFormValues) => setTeam(index, values)}
+        setValues={(values: EditOrCreateTeamFormValues) =>
+          setTeam(index, values)
+        }
         errors={errors}
-        setErrors={(errors: FormErrors<CreateTeamFormValues>) =>
+        setErrors={(errors: FormErrors<EditOrCreateTeamFormValues>) =>
           setErrors(index, errors)
         }
         sx={{
