@@ -1,17 +1,25 @@
 import React, { useMemo } from "react";
 import { theme } from "theme/theme";
-import Graph, { GraphProps } from "components/organisms/Graph/Graph";
+import VegaGraph from "components/organisms/Graph/VegaGraph";
 import { colors } from "theme/colors";
-import { useGetHistogramQuery } from "redux/api/time-to-merge/histogram/histogram.api";
+import { useCurrentUser } from "providers/currentUser/useCurrentUser";
+import { useGetGraphQuery } from "redux/api/goals/graphs/graphs.api";
+import { GetHistogramResponse } from "redux/api/goals/graphs/graphs.types";
+import { GraphProps } from "components/organisms/Graph/types";
+import { useIntl } from "react-intl";
 
-export type PullRequestSizeHistogramProps = {
-  sx?: GraphProps["sx"];
-};
+function Histogram({ standardCode, width, height, sx }: GraphProps) {
+  const { formatMessage } = useIntl();
+  const { selectedTeam } = useCurrentUser();
 
-function PullRequestSizeHistogram({ sx }: PullRequestSizeHistogramProps) {
-  const { data: histogramData } = useGetHistogramQuery({
-    teamName: "All",
-  });
+  const { data: histogramData } = useGetGraphQuery(
+    {
+      teamId: selectedTeam?.id,
+      type: "histogram",
+      standardCode,
+    },
+    { skip: !selectedTeam }
+  ) as { data: GetHistogramResponse | undefined };
 
   const histogramValues = useMemo(
     () => (histogramData ? histogramData.histogram.data : []),
@@ -37,14 +45,14 @@ function PullRequestSizeHistogram({ sx }: PullRequestSizeHistogramProps) {
   }, [histogramValues]);
 
   return (
-    <Graph
+    <VegaGraph
       sx={sx}
-      title={"86% PR met goals"}
+      title={formatMessage({ id: "standards.graphs.histogram.title" })}
       vega={{
         actions: false,
         spec: {
-          width: 1200,
-          height: 480,
+          width,
+          height,
           autosize: "fit-x",
           resize: true,
           padding: 5,
@@ -96,10 +104,12 @@ function PullRequestSizeHistogram({ sx }: PullRequestSizeHistogramProps) {
               ticks: false,
               labelFontWeight: 100,
               labelFontSize: 16,
-              labelPadding: 24,
+              labelPadding: 40,
               labelFont: theme.typography.fontFamily,
               labelColor: colors.secondary.text,
               domainColor: colors.secondary.borders,
+              labelAngle: -45,
+              labelOffset: -28,
             },
             {
               orient: "left",
@@ -139,4 +149,4 @@ function PullRequestSizeHistogram({ sx }: PullRequestSizeHistogramProps) {
   );
 }
 
-export default PullRequestSizeHistogram;
+export default Histogram;

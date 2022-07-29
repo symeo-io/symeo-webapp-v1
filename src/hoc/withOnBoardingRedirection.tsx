@@ -1,27 +1,27 @@
 import React from "react";
-import { useGetCurrentUserQuery } from "redux/api/users/users.api";
 import { Navigate, useLocation } from "react-router-dom";
 import routes from "routing";
+import { useCurrentUser } from "providers/currentUser/useCurrentUser";
 
 export function withOnBoardingRedirection<T = object>(
   WrappedComponent: React.ComponentType<T>
 ): React.FC<T> {
   return function (props: T) {
     const location = useLocation();
-    const { data: currentUserData } = useGetCurrentUserQuery();
+    const { currentUser } = useCurrentUser();
 
-    if (currentUserData) {
+    if (currentUser) {
       if (
         location.pathname !== routes.onBoardingVcs.path &&
-        !currentUserData.user.onboarding.has_connected_to_vcs
+        !currentUser.onboarding.has_connected_to_vcs
       ) {
         return <Navigate to={routes.onBoardingVcs.path} replace />;
       }
 
       if (
         location.pathname !== routes.onBoardingTeams.path &&
-        currentUserData.user.onboarding.has_connected_to_vcs &&
-        !currentUserData.user.onboarding.has_configured_team
+        currentUser.onboarding.has_connected_to_vcs &&
+        !currentUser.onboarding.has_configured_team
       ) {
         return <Navigate to={routes.onBoardingTeams.path} replace />;
       }

@@ -1,17 +1,27 @@
 import React, { useMemo } from "react";
 import { theme } from "theme/theme";
-import Graph, { GraphProps } from "components/organisms/Graph/Graph";
+import VegaGraph from "components/organisms/Graph/VegaGraph";
 import { colors } from "theme/colors";
-import { useGetCurveQuery } from "redux/api/time-to-merge/curve/curve.api";
 import cloneDeep from "lodash/cloneDeep";
 import dayjs from "dayjs";
+import { useCurrentUser } from "providers/currentUser/useCurrentUser";
+import { useGetGraphQuery } from "redux/api/goals/graphs/graphs.api";
+import { GetCurveResponse } from "redux/api/goals/graphs/graphs.types";
+import { GraphProps } from "components/organisms/Graph/types";
+import { useIntl } from "react-intl";
 
-export type PullRequestMergedGraphProps = {
-  sx?: GraphProps["sx"];
-};
+function Curves({ standardCode, width, height, sx }: GraphProps) {
+  const { formatMessage } = useIntl();
+  const { selectedTeam } = useCurrentUser();
 
-function PullRequestMergedGraph({ sx }: PullRequestMergedGraphProps) {
-  const { data } = useGetCurveQuery({ teamName: "All" });
+  const { data } = useGetGraphQuery(
+    {
+      teamId: selectedTeam?.id,
+      type: "curves",
+      standardCode,
+    },
+    { skip: !selectedTeam }
+  ) as { data: GetCurveResponse | undefined };
 
   const limit = useMemo(() => data?.curves.limit, [data]);
   const pieces = useMemo(
@@ -50,14 +60,14 @@ function PullRequestMergedGraph({ sx }: PullRequestMergedGraphProps) {
   if (!data || !limit || !pieces || !average) return null;
 
   return (
-    <Graph
+    <VegaGraph
       sx={sx}
-      title={"Pull Requests are merged before 5 days"}
+      title={formatMessage({ id: "standards.graphs.curves.title" })}
       vega={{
         actions: false,
         spec: {
-          width: 1200,
-          height: 480,
+          width,
+          height,
           padding: 5,
 
           data: [
@@ -102,10 +112,12 @@ function PullRequestMergedGraph({ sx }: PullRequestMergedGraphProps) {
               ticks: false,
               labelFontWeight: 100,
               labelFontSize: 16,
-              labelPadding: 24,
+              labelPadding: 40,
               labelFont: theme.typography.fontFamily,
               labelColor: colors.secondary.text,
               domainColor: colors.secondary.borders,
+              labelAngle: -45,
+              labelOffset: -28,
             },
             {
               orient: "left",
@@ -175,4 +187,4 @@ function PullRequestMergedGraph({ sx }: PullRequestMergedGraphProps) {
   );
 }
 
-export default PullRequestMergedGraph;
+export default Curves;

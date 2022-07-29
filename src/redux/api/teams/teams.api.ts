@@ -34,7 +34,7 @@ const teamsMutationApi = api.injectEndpoints({
         method: "POST",
         body: input,
       }),
-      invalidatesTags: [{ type: "CurrentUser" }],
+      invalidatesTags: [{ type: "CurrentUser" }, { type: "Team" }],
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         const updateResult = dispatch(
           usersQueryApi.util.updateQueryData(

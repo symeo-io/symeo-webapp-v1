@@ -37,16 +37,25 @@
     "F.ORGANIZATION_NAME_NOT_FOUND": "Organization not found"
   },
   "sidebar": {
+    "organization": {
+      "all-teams-label": "All"
+    },
     "links": {
-      "home": "Home"
+      "dashboard": "Dashboard"
     },
     "invite": {
       "invite-people-button-label": "Invite People"
+    },
+    "team-goals": {
+      "new-team-goal-button-label": "New Team Goal"
     },
     "account": {
       "your-account": "Your account",
       "logout": "Logout"
     }
+  },
+  "dashboard": {
+    "title": "{teamName} Team Dashboard"
   },
   "organization": {
     "title": "Organization Settings - {organizationName}",
@@ -71,6 +80,46 @@
         "title": "Removing a member from {organizationName}",
         "message": "User with email {email} will be removed",
         "confirm-label": "Remove member"
+      }
+    }
+  },
+  "team-goals": {
+    "title": "Choose a new Goal for {teamName} {teamName, select, All {Teams} other {Team}}"
+  },
+  "standards": {
+    "new": "New",
+    "start-improving-button-label": "Start Improving",
+    "configure-button-label": "Configure",
+    "save": "Save changes",
+    "create": "Set up team goal",
+    "delete": {
+      "button-label": "Delete team goal",
+      "confirm": {
+        "title": "Deleting Team Goal",
+        "message": "Goal \"{standardName}\" will be removed from {teamName} Team",
+        "confirm-label": "Delete team goal"
+      }
+    },
+    "cancel": "Cancel",
+    "graphs": {
+      "histogram": {
+        "title": "Tendency"
+      },
+      "curves": {
+        "title": "Pieces"
+      }
+    },
+    "time-to-merge": {
+      "title": "Aim for short PR lifecycle",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "page": {
+        "title": "Aim for short PR lifecycle - Settings",
+        "limit-config": {
+          "title": "Choose the number days before a PR should be merged"
+        }
+      },
+      "dashboard": {
+        "title": "All Pull Requests are merged in less than {target} days"
       }
     }
   }

@@ -1,10 +1,9 @@
 import React, { PropsWithChildren } from "react";
-import { Box, BoxProps } from "@mui/material";
+import { Box } from "@mui/material";
 import Logo from "components/atoms/Logo/Logo";
+import { PropsWithSx } from "types/PropsWithSx";
 
-export type OnBoardingPageContainerProps = PropsWithChildren & {
-  sx?: BoxProps["sx"];
-};
+export type OnBoardingPageContainerProps = PropsWithChildren & PropsWithSx;
 
 function OnBoardingPageContainer({
   children,

@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { Box } from "@mui/material";
 import { useIntl } from "react-intl";
-import { useUpdateOnBoardingMutation } from "redux/api/users/users.api";
 import routes from "routing";
 import { useNavigate } from "react-router-dom";
 import OnBoardingPageContainer from "components/molecules/OnBoardingPageContainer/OnBoardingPageContainer";
@@ -30,8 +29,6 @@ function OnBoardingTeams() {
   const navigate = useNavigate();
   const [createTeams, { isLoading: isLoadingCreateTeams }] =
     useCreateTeamsMutation();
-  const [updateOnboarding, { isLoading: isLoadingUpdateOnBoarding }] =
-    useUpdateOnBoardingMutation();
 
   const [teams, setTeams] = useState<CreateTeamFormValues[]>([
     { ...EMPTY_TEAM },
@@ -88,14 +85,6 @@ function OnBoardingTeams() {
     }
   }, [createTeams, navigate, teams]);
 
-  const handleSkip = useCallback(async () => {
-    await updateOnboarding({
-      has_configured_team: true,
-      has_connected_to_vcs: true,
-    });
-    return navigate(routes.home.path);
-  }, [navigate, updateOnboarding]);
-
   return (
     <OnBoardingPageContainer>
       <OnBoardingCard
@@ -139,19 +128,8 @@ function OnBoardingTeams() {
             }}
           >
             <Button
-              variant="outlined"
-              loading={isLoadingUpdateOnBoarding}
-              disabled={isLoadingCreateTeams}
-              onClick={handleSkip}
-            >
-              {formatMessage({
-                id: "on-boarding.create-teams.skip-button-label",
-              })}
-            </Button>
-            <Button
               sx={{ marginLeft: (theme) => theme.spacing(2) }}
               loading={isLoadingCreateTeams}
-              disabled={isLoadingUpdateOnBoarding}
               onClick={handleNext}
             >
               {formatMessage({

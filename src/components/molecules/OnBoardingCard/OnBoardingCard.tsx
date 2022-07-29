@@ -1,11 +1,12 @@
 import React, { PropsWithChildren } from "react";
-import { Card, CardProps, Typography } from "@mui/material";
+import { Card, Typography } from "@mui/material";
+import { PropsWithSx } from "types/PropsWithSx";
 
-export type OnBoardingCardProps = PropsWithChildren & {
-  title?: string;
-  subtitle?: string;
-  sx?: CardProps["sx"];
-};
+export type OnBoardingCardProps = PropsWithChildren &
+  PropsWithSx & {
+    title?: string;
+    subtitle?: string;
+  };
 
 function OnBoardingCard({
   children,

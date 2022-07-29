@@ -1,33 +1,33 @@
 import React from "react";
 import { Vega } from "react-vega";
-import { Box, BoxProps, Typography } from "@mui/material";
+import { Card, Typography } from "@mui/material";
 import { VegaProps } from "react-vega/lib/Vega";
+import { PropsWithSx } from "types/PropsWithSx";
 
-export type GraphProps = {
+export type VegaGraphProps = PropsWithSx & {
   title: string;
   vega: VegaProps;
-  sx?: BoxProps["sx"];
 };
 
-function Graph({ title, vega, sx }: GraphProps) {
+function VegaGraph({ title, vega, sx }: VegaGraphProps) {
   return (
-    <Box
+    <Card
       sx={{
         background: "white",
         borderRadius: "8px",
-        padding: (theme) => `${theme.spacing(2)} ${theme.spacing(4)}`,
+        padding: (theme) => theme.spacing(2),
         ...sx,
       }}
     >
       <Typography
-        variant="h1"
+        variant="h2"
         sx={{ marginBottom: (theme) => theme.spacing(4) }}
       >
         {title}
       </Typography>
       <Vega {...vega} />
-    </Box>
+    </Card>
   );
 }
 
-export default Graph;
+export default VegaGraph;

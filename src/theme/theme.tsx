@@ -167,6 +167,7 @@ export const theme = createTheme({
             },
           },
           "& .MuiInput-root": {
+            background: "white",
             marginTop: "4px",
             padding: "10px 16px",
 
@@ -312,7 +313,7 @@ export const theme = createTheme({
           },
 
           "&:hover": {
-            background: "transparent",
+            background: colors.primary.surface,
 
             "& .MuiListItemIcon-root": {
               color: colors.primary.bordersHover,
@@ -325,9 +326,11 @@ export const theme = createTheme({
 
           "&.Mui-selected": {
             background: "transparent",
+            borderRight: `2px solid ${colors.primary.main}`,
 
             "&:hover": {
               background: "transparent",
+              borderRight: `2px solid ${colors.primary.shapeActive}`,
             },
 
             "& .MuiListItemIcon-root": {
@@ -365,6 +368,22 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           fontWeight: 700,
+        },
+      },
+    },
+    MuiSlider: {
+      styleOverrides: {
+        thumb: {
+          height: 24,
+          width: 24,
+          backgroundColor: "#fff",
+          border: "2px solid currentColor",
+          "&:focus, &:hover, &.Mui-active, &.Mui-focusVisible": {
+            boxShadow: "inherit",
+          },
+          "&:before": {
+            display: "none",
+          },
         },
       },
     },

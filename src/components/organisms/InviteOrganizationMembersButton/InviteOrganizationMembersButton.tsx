@@ -1,13 +1,13 @@
 import React, { useCallback, useState } from "react";
-import Button, { ButtonProps } from "components/atoms/Button/Button";
+import Button from "components/atoms/Button/Button";
 import InviteOrganizationMembersDialog, {
   InviteOrganizationMembersDialogProps,
 } from "components/organisms/InviteOrganizationMembersDialog/InviteOrganizationMembersDialog";
 import { useIntl } from "react-intl";
+import { PropsWithSx } from "types/PropsWithSx";
 
-export type InviteOrganizationMembersButtonProps = {
+export type InviteOrganizationMembersButtonProps = PropsWithSx & {
   organizationName: string;
-  sx?: ButtonProps["sx"];
   dialogSx?: InviteOrganizationMembersDialogProps["sx"];
 };
 

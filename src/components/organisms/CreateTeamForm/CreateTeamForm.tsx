@@ -1,11 +1,5 @@
 import React, { PropsWithChildren, useCallback, useMemo } from "react";
-import {
-  Autocomplete,
-  Box,
-  BoxProps,
-  Chip,
-  InputAdornment,
-} from "@mui/material";
+import { Autocomplete, Box, Chip, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import TextField from "components/molecules/TextField/TextField";
 import { useIntl } from "react-intl";
@@ -13,19 +7,20 @@ import { useGetRepositoriesQuery } from "redux/api/repositories/repositories.api
 import { Repository } from "redux/api/repositories/repositories.types";
 import GitHubIcon from "./GitHubIcon";
 import { FormErrors } from "./utils";
+import { PropsWithSx } from "types/PropsWithSx";
 
 export type CreateTeamFormValues = {
   name: string;
   repositories: Repository[];
 };
 
-export type OnBoardingCardProps = PropsWithChildren & {
-  values: CreateTeamFormValues;
-  setValues: (values: CreateTeamFormValues) => void;
-  errors: FormErrors<CreateTeamFormValues>;
-  setErrors: (errors: FormErrors<CreateTeamFormValues>) => void;
-  sx?: BoxProps["sx"];
-};
+export type OnBoardingCardProps = PropsWithChildren &
+  PropsWithSx & {
+    values: CreateTeamFormValues;
+    setValues: (values: CreateTeamFormValues) => void;
+    errors: FormErrors<CreateTeamFormValues>;
+    setErrors: (errors: FormErrors<CreateTeamFormValues>) => void;
+  };
 
 function CreateTeamForm({
   values,

@@ -17,6 +17,7 @@ import { intl } from "intl";
 import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/tracing";
 import ConfirmDialogProvider from "providers/confirm/ConfirmDialogProvider";
+import CurrentUserProvider from "providers/currentUser/CurrentUserProvider";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import dayjs from "dayjs";
 
@@ -50,7 +51,9 @@ root.render(
               <SnackbarProvider maxSnack={3}>
                 <BrowserRouter>
                   <ConfirmDialogProvider>
-                    <App />
+                    <CurrentUserProvider>
+                      <App />
+                    </CurrentUserProvider>
                   </ConfirmDialogProvider>
                 </BrowserRouter>
               </SnackbarProvider>

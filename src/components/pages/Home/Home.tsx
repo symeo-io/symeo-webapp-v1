@@ -1,39 +1,53 @@
-import React from "react";
-import { Box } from "@mui/material";
-import PullRequestSizeHistogram from "components/organisms/PullRequestSizeHistogram/PullRequestSizeHistogram";
-import PullRequestMergedGraph from "components/organisms/PullRequestMergedGraph/PullRequestMergedGraph";
+import React, { useMemo } from "react";
+import { Box, Typography } from "@mui/material";
+import { useCurrentUser } from "providers/currentUser/useCurrentUser";
+import { useGetGoalsQuery } from "redux/api/goals/goals.api";
+import standardsData from "standards.json";
+import { StandardCode } from "redux/api/goals/graphs/graphs.types";
+import { Standard } from "components/organisms/StandardCard/StandardCard";
+import { useIntl } from "react-intl";
+import GoalDashboardSection from "components/organisms/GoalDashboardSection/GoalDashboardSection";
+
+const standards = standardsData.standards as Record<StandardCode, Standard>;
 
 function Home() {
+  const { formatMessage } = useIntl();
+  const { selectedTeam } = useCurrentUser();
+
+  const { data } = useGetGoalsQuery(
+    { teamId: selectedTeam?.id ?? "" },
+    { skip: !selectedTeam }
+  );
+
+  const goals = useMemo(
+    () => (data?.team_goals ? data.team_goals : []),
+    [data]
+  );
+
   return (
     <Box
       sx={{
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
         padding: (theme) => theme.spacing(3),
       }}
     >
-      <PullRequestSizeHistogram
-        sx={{
-          maxWidth: "1338px",
-          flex: 1,
-          "& .vega-embed .marks": {
-            width: "100% !important",
-            height: "auto !important",
-          },
-        }}
-      />
-      <PullRequestMergedGraph
-        sx={{
-          maxWidth: "1338px",
-          flex: 1,
-          marginTop: (theme) => theme.spacing(5),
-          "& .vega-embed .marks": {
-            width: "100% !important",
-            height: "auto !important",
-          },
-        }}
-      />
+      <Typography
+        variant="h1"
+        sx={{ marginBottom: (theme) => theme.spacing(4) }}
+      >
+        {formatMessage(
+          { id: "dashboard.title" },
+          { teamName: selectedTeam?.name }
+        )}
+      </Typography>
+      {goals.map((goal) => (
+        <GoalDashboardSection
+          key={goal.id}
+          standard={standards[goal.standard_code]}
+          goal={goal}
+        />
+      ))}
     </Box>
   );
 }

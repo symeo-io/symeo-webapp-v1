@@ -1,12 +1,12 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import { useIntl } from "react-intl";
-import { useGetCurrentUserQuery } from "redux/api/users/users.api";
 import OrganizationMembers from "components/organisms/OrganizationMembers/OrganizationMembers";
+import { useCurrentUser } from "providers/currentUser/useCurrentUser";
 
 function Organization() {
   const { formatMessage } = useIntl();
-  const { data: currentUserData } = useGetCurrentUserQuery();
+  const { currentUser } = useCurrentUser();
 
   return (
     <Box
@@ -22,12 +22,12 @@ function Organization() {
       <Typography variant="h1">
         {formatMessage(
           { id: "organization.title" },
-          { organizationName: currentUserData?.user?.organization?.name }
+          { organizationName: currentUser?.organization?.name }
         )}
       </Typography>
       <OrganizationMembers
         sx={{ marginTop: (theme) => theme.spacing(8) }}
-        organizationName={currentUserData?.user?.organization?.name ?? ""}
+        organizationName={currentUser?.organization?.name ?? ""}
       />
     </Box>
   );

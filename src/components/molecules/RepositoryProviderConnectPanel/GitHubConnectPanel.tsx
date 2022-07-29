@@ -1,15 +1,13 @@
 import React, { useCallback } from "react";
-import { BoxProps } from "@mui/material";
 import {
   useFinishInstallGitHubApp,
   useInstallGitHubApp,
 } from "hooks/github/useInstallGitHubApp";
 import RepositoryProviderConnectPanel from "./RepositoryProviderConnectPanel";
 import gitHubLogo from "components/molecules/RepositoryProviderConnectPanel/github.svg";
+import { PropsWithSx } from "types/PropsWithSx";
 
-export type GitHubConnectPanelProps = {
-  sx?: BoxProps["sx"];
-};
+export type GitHubConnectPanelProps = PropsWithSx;
 
 export function GitHubConnectPanel({ sx }: GitHubConnectPanelProps) {
   const installGitHubApp = useInstallGitHubApp();
