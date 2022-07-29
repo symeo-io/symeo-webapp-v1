@@ -3,7 +3,12 @@ import cloneDeep from "lodash/cloneDeep";
 
 export type FormErrors<Values> = Record<keyof Values, string[]>;
 
-export const emptyTeamFormErrors = {
+export const EMPTY_TEAM: CreateTeamFormValues = {
+  name: "",
+  repositories: [],
+};
+
+export const EMPTY_TEAM_FORM_ERRORS = {
   name: [],
   repositories: [],
 };
@@ -20,8 +25,9 @@ export function isErrorsEmpty(errors: FormErrors<any>): boolean {
 export function getTeamFormErrors(
   values: CreateTeamFormValues
 ): FormErrors<CreateTeamFormValues> {
-  const errors: FormErrors<CreateTeamFormValues> =
-    cloneDeep(emptyTeamFormErrors);
+  const errors: FormErrors<CreateTeamFormValues> = cloneDeep(
+    EMPTY_TEAM_FORM_ERRORS
+  );
 
   if (!values.name) {
     errors.name.push("on-boarding.create-teams.form.errors.empty-name");

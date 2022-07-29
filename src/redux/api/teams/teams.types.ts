@@ -13,6 +13,12 @@ export type CreateTeamsResponse = ResponseWithErrors & {
   teams: Team[];
 };
 
+export type DeleteTeamsInput = {
+  teamId: string;
+};
+
+export type DeleteTeamsResponse = ResponseWithErrors;
+
 export type GetTeamsResponse = ResponseWithErrors & {
   teams: Team[];
 };

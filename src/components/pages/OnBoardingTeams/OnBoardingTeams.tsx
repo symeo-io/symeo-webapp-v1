@@ -10,7 +10,8 @@ import Button from "components/atoms/Button/Button";
 import AddIcon from "@mui/icons-material/Add";
 import CreateTeamSection from "./CreateTeamSection";
 import {
-  emptyTeamFormErrors,
+  EMPTY_TEAM,
+  EMPTY_TEAM_FORM_ERRORS,
   FormErrors,
   getTeamsFormErrors,
   isErrorsListEmpty,
@@ -19,11 +20,6 @@ import cloneDeep from "lodash/cloneDeep";
 import { useCreateTeamsMutation } from "redux/api/teams/teams.api";
 import { formValuesToCreateTeamInput } from "redux/api/teams/teams.types";
 
-const EMPTY_TEAM: CreateTeamFormValues = {
-  name: "",
-  repositories: [],
-};
-
 function OnBoardingTeams() {
   const { formatMessage } = useIntl();
   const navigate = useNavigate();
@@ -31,10 +27,10 @@ function OnBoardingTeams() {
     useCreateTeamsMutation();
 
   const [teams, setTeams] = useState<CreateTeamFormValues[]>([
-    { ...EMPTY_TEAM },
+    cloneDeep(EMPTY_TEAM),
   ]);
   const [errors, setErrors] = useState<FormErrors<CreateTeamFormValues>[]>([
-    cloneDeep(emptyTeamFormErrors),
+    cloneDeep(EMPTY_TEAM_FORM_ERRORS),
   ]);
 
   const setTeam = useCallback(
@@ -56,8 +52,8 @@ function OnBoardingTeams() {
   );
 
   const addTeam = useCallback(() => {
-    setTeams([...teams, { ...EMPTY_TEAM }]);
-    setErrors([...errors, cloneDeep(emptyTeamFormErrors)]);
+    setTeams([...teams, cloneDeep(EMPTY_TEAM)]);
+    setErrors([...errors, cloneDeep(EMPTY_TEAM_FORM_ERRORS)]);
   }, [errors, teams]);
 
   const removeTeam = useCallback(

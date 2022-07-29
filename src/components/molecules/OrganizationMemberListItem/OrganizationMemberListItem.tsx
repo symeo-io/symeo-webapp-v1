@@ -66,7 +66,10 @@ function OrganizationMemberListItem({
 
   return (
     <ListItem
-      sx={sx}
+      sx={{
+        borderBottom: "1px solid rgba(0, 0, 0, 0.05)",
+        ...sx,
+      }}
       secondaryAction={
         user.email !== currentUser?.email ? (
           <IconButton
