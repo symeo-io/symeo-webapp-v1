@@ -17,11 +17,11 @@ function CurrentUserProvider({ children }: CurrentUserProviderProps) {
   const { teams } = useCurrentUser();
   const [selectedTeamId, setSelectedTeamId] = useLocalStorage<string>(
     SELECTED_TEAM_LOCAL_STORAGE_KEY,
-    teams ? teams[0].id : undefined
+    teams && teams[0] ? teams[0].id : undefined
   );
 
   useEffect(() => {
-    if (teams && !selectedTeamId) {
+    if (teams && teams[0] && !selectedTeamId) {
       setSelectedTeamId(teams[0].id);
     }
   }, [selectedTeamId, setSelectedTeamId, teams]);
