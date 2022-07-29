@@ -25,6 +25,13 @@ export type CreateGoalInput = {
 
 export type CreateGoalResponse = ResponseWithErrors;
 
+export type UpdateGoalInput = {
+  id: string;
+  value: number;
+};
+
+export type UpdateGoalResponse = ResponseWithErrors;
+
 export type DeleteGoalsInput = {
   teamGoalId: string;
 };

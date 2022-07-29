@@ -6,6 +6,8 @@ import {
   DeleteGoalsResponse,
   GetGoalsInput,
   GetGoalsResponse,
+  UpdateGoalInput,
+  UpdateGoalResponse,
 } from "redux/api/goals/goals.types";
 
 export const goalsQueryApi = api.injectEndpoints({
@@ -32,6 +34,14 @@ const goalsMutationApi = api.injectEndpoints({
       }),
       invalidatesTags: [{ type: "Goal" }],
     }),
+    updateGoal: builder.mutation<UpdateGoalResponse, UpdateGoalInput>({
+      query: (input) => ({
+        url: `/api/v1/teams/goals`,
+        method: "PATCH",
+        body: input,
+      }),
+      invalidatesTags: [{ type: "Goal" }, { type: "Graph" }],
+    }),
     deleteGoal: builder.mutation<DeleteGoalsResponse, DeleteGoalsInput>({
       query: ({ teamGoalId }) => ({
         url: `/api/v1/teams/goals`,
@@ -46,5 +56,8 @@ const goalsMutationApi = api.injectEndpoints({
 });
 
 export const { useGetGoalsQuery } = goalsQueryApi;
-export const { useCreateGoalMutation, useDeleteGoalMutation } =
-  goalsMutationApi;
+export const {
+  useCreateGoalMutation,
+  useDeleteGoalMutation,
+  useUpdateGoalMutation,
+} = goalsMutationApi;

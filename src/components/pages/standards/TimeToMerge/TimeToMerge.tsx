@@ -10,6 +10,7 @@ import {
   useCreateGoalMutation,
   useDeleteGoalMutation,
   useGetGoalsQuery,
+  useUpdateGoalMutation,
 } from "redux/api/goals/goals.api";
 import { useCurrentUser } from "providers/currentUser/useCurrentUser";
 import { Standard } from "components/organisms/StandardCard/StandardCard";
@@ -28,6 +29,7 @@ function TimeToMerge() {
   );
   const [createGoal, { isLoading: isLoadingCreate }] = useCreateGoalMutation();
   const [deleteGoal, { isLoading: isLoadingDelete }] = useDeleteGoalMutation();
+  const [updateGoal, { isLoading: isLoadingUpdate }] = useUpdateGoalMutation();
 
   const goal = useMemo(
     () =>
@@ -53,10 +55,10 @@ function TimeToMerge() {
   const handleSave = useCallback(async () => {
     if (!goal) return;
 
-    // TODO: patch goal
+    await updateGoal({ id: goal.id, value });
 
     return navigate(routes.home.path);
-  }, [goal, navigate]);
+  }, [goal, navigate, updateGoal, value]);
 
   const handleCreate = useCallback(async () => {
     if (goal || !selectedTeam) return;
@@ -177,6 +179,7 @@ function TimeToMerge() {
         )}
         {goal && (
           <Button
+            loading={isLoadingUpdate}
             onClick={handleSave}
             sx={{ marginLeft: (theme) => theme.spacing(1) }}
           >
