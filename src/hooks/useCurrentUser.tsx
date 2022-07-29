@@ -32,17 +32,17 @@ export function useCurrentUser(): UseCurrentUserOutput {
     SELECTED_TEAM_LOCAL_STORAGE_KEY
   );
 
-  useEffect(() => {
-    if (teams && teams[0] && !selectedTeamId) {
-      setSelectedTeamId(teams[0].id);
-    }
-  }, [selectedTeamId, setSelectedTeamId, teams]);
-
   const selectedTeam = useMemo(
     () =>
       teams ? teams.find((team) => team.id === selectedTeamId) : undefined,
     [selectedTeamId, teams]
   );
+
+  useEffect(() => {
+    if (teams && teams[0] && !selectedTeam) {
+      setSelectedTeamId(teams[0].id);
+    }
+  }, [selectedTeam, setSelectedTeamId, teams]);
 
   const setSelectedTeam = useCallback(
     (team: Team) => setSelectedTeamId(team.id),
