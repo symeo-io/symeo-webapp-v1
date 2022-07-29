@@ -15,7 +15,7 @@ function VegaGraph({ title, vega, sx }: VegaGraphProps) {
       sx={{
         background: "white",
         borderRadius: "8px",
-        padding: (theme) => `${theme.spacing(2)} ${theme.spacing(4)}`,
+        padding: (theme) => theme.spacing(2),
         ...sx,
       }}
     >

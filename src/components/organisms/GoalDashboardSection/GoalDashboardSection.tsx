@@ -44,10 +44,10 @@ function GoalDashboardSection({ standard, goal }: GoalDashboardSectionProps) {
             key={graphType}
             type={graphType}
             standardCode={standard.code}
-            width={550}
-            height={350}
+            width={400}
+            height={280}
             sx={{
-              margin: (theme) => `${theme.spacing(1)} ${theme.spacing(2)}`,
+              margin: (theme) => theme.spacing(1),
             }}
           />
         ))}
