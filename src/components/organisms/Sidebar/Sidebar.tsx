@@ -11,7 +11,7 @@ import Button from "components/atoms/Button/Button";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
-import { useCurrentUser } from "providers/currentUser/useCurrentUser";
+import { useCurrentUser } from "hooks/useCurrentUser";
 import SettingsIcon from "@mui/icons-material/Settings";
 
 export const SIDE_BAR_WIDTH = 224;

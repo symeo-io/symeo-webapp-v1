@@ -2,9 +2,9 @@ import React, { useCallback, useState } from "react";
 import Button from "components/atoms/Button/Button";
 import { useIntl } from "react-intl";
 import { PropsWithSx } from "types/PropsWithSx";
-import CreateOrganizationTeamDialog, {
+import EditOrCreateOrganizationTeamDialog, {
   CreateOrganizationTeamDialogProps,
-} from "components/organisms/CreateOrganizationTeamDialog/CreateOrganizationTeamDialog";
+} from "components/organisms/EditOrCreateOrganizationTeamDialog/EditOrCreateOrganizationTeamDialog";
 
 export type CreateOrganizationTeamButtonProps = PropsWithSx & {
   organizationName: string;
@@ -27,7 +27,7 @@ function CreateOrganizationTeamButton({
       <Button sx={sx} onClick={handleOpenDialog}>
         {formatMessage({ id: "organization.teams.create-button-label" })}
       </Button>
-      <CreateOrganizationTeamDialog
+      <EditOrCreateOrganizationTeamDialog
         open={dialogOpen}
         handleClose={handleCloseDialog}
         organizationName={organizationName}

@@ -4,9 +4,9 @@ import { useIntl } from "react-intl";
 import TextField from "components/molecules/TextField/TextField";
 import SearchIcon from "@mui/icons-material/Search";
 import { PropsWithSx } from "types/PropsWithSx";
-import { useCurrentUser } from "providers/currentUser/useCurrentUser";
+import { useCurrentUser } from "hooks/useCurrentUser";
 import OrganizationTeamListItem from "components/molecules/OrganizationTeamListItem/OrganizationTeamListItem";
-import CreateOrganizationTeamButton from "components/organisms/CreateOrganizationTeamButton/CreateOrganizationTeamButton";
+import CreateOrganizationTeamButton from "components/molecules/CreateOrganizationTeamButton/CreateOrganizationTeamButton";
 
 export type OrganizationMembersProps = PropsWithSx & {
   organizationName: string;

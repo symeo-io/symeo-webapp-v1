@@ -21,15 +21,17 @@ import {
   isErrorsEmpty,
 } from "components/organisms/CreateTeamForm/utils";
 import GroupsIcon from "@mui/icons-material/Groups";
-import { formValuesToCreateTeamInput } from "redux/api/teams/teams.types";
+import { formValuesToCreateTeamInput, Team } from "redux/api/teams/teams.types";
 
 export type CreateOrganizationTeamDialogProps = PropsWithSx & {
+  team?: Team;
   open: boolean;
   handleClose: () => void;
   organizationName: string;
 };
 
-function CreateOrganizationTeamDialog({
+function EditOrCreateOrganizationTeamDialog({
+  team,
   open,
   handleClose,
   organizationName,
@@ -108,4 +110,4 @@ function CreateOrganizationTeamDialog({
   );
 }
 
-export default CreateOrganizationTeamDialog;
+export default EditOrCreateOrganizationTeamDialog;

@@ -5,7 +5,7 @@ import TextField from "components/molecules/TextField/TextField";
 import SearchIcon from "@mui/icons-material/Search";
 import OrganizationMemberListItem from "components/molecules/OrganizationMemberListItem/OrganizationMemberListItem";
 import { useGetOrganizationUsersQuery } from "redux/api/organizations/organizations.api";
-import InviteOrganizationMembersButton from "components/organisms/InviteOrganizationMembersButton/InviteOrganizationMembersButton";
+import InviteOrganizationMembersButton from "components/molecules/InviteOrganizationMembersButton/InviteOrganizationMembersButton";
 import { PropsWithSx } from "types/PropsWithSx";
 
 export type OrganizationMembersProps = PropsWithSx & {

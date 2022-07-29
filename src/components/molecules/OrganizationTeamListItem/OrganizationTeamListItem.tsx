@@ -13,6 +13,7 @@ import { PropsWithSx } from "types/PropsWithSx";
 import { Team } from "redux/api/teams/teams.types";
 import GroupsIcon from "@mui/icons-material/Groups";
 import { useDeleteTeamMutation } from "redux/api/teams/teams.api";
+import EditOrganizationTeamButton from "components/molecules/EditOrganizationTeamButton/EditOrganizationTeamButton";
 
 export type OrganizationTeamListItemProps = PropsWithSx & {
   team: Team;
@@ -54,15 +55,20 @@ function OrganizationTeamListItem({
         ...sx,
       }}
       secondaryAction={
-        showDelete ? (
-          <IconButton
-            edge="end"
-            aria-label="comments"
-            onClick={openConfirmDelete}
-          >
-            <DeleteIcon />
-          </IconButton>
-        ) : undefined
+        <>
+          <EditOrganizationTeamButton
+            organizationName={organizationName}
+            team={team}
+          />
+          {showDelete && (
+            <IconButton
+              onClick={openConfirmDelete}
+              sx={{ marginLeft: (theme) => theme.spacing(1) }}
+            >
+              <DeleteIcon />
+            </IconButton>
+          )}
+        </>
       }
     >
       <ListItemAvatar>

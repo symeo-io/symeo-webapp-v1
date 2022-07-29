@@ -1,12 +1,11 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { Box, Typography } from "@mui/material";
 import { useIntl } from "react-intl";
-import { useCurrentUser } from "providers/currentUser/useCurrentUser";
+import { useCurrentUser } from "hooks/useCurrentUser";
 import standardsData from "standards.json";
 import StandardCard, {
   Standard,
 } from "components/organisms/StandardCard/StandardCard";
-import { useGetGoalsQuery } from "redux/api/goals/goals.api";
 
 const standards: Standard[] = Object.values(
   standardsData.standards
@@ -14,18 +13,7 @@ const standards: Standard[] = Object.values(
 
 function TeamGoals() {
   const { formatMessage } = useIntl();
-  const { selectedTeam } = useCurrentUser();
-
-  const { data } = useGetGoalsQuery(
-    { teamId: selectedTeam?.id ?? "" },
-    { skip: !selectedTeam }
-  );
-
-  const goals = useMemo(
-    () => (data?.team_goals ? data.team_goals : []),
-    [data]
-  );
-  const teamName = useMemo(() => selectedTeam?.name ?? "All", [selectedTeam]);
+  const { selectedTeam, goals } = useCurrentUser();
 
   return (
     <Box
@@ -39,7 +27,10 @@ function TeamGoals() {
       }}
     >
       <Typography variant="h1">
-        {formatMessage({ id: "team-goals.title" }, { teamName })}
+        {formatMessage(
+          { id: "team-goals.title" },
+          { teamName: selectedTeam?.name }
+        )}
       </Typography>
       <Box
         sx={{
@@ -53,7 +44,7 @@ function TeamGoals() {
             key={standard.code}
             standard={standard}
             configured={
-              !!goals.find((goal) => goal.standard_code === standard.code)
+              !!goals?.find((goal) => goal.standard_code === standard.code)
             }
             sx={{
               margin: (theme) => `${theme.spacing(2)} ${theme.spacing(1)}`,

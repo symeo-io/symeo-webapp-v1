@@ -5,6 +5,8 @@ import {
   CreateTeamsResponse,
   DeleteTeamsInput,
   DeleteTeamsResponse,
+  EditTeamInput,
+  EditTeamResponse,
   GetTeamsResponse,
 } from "./teams.types";
 
@@ -55,6 +57,30 @@ const teamsMutationApi = api.injectEndpoints({
         }
       },
     }),
+    editTeam: builder.mutation<EditTeamResponse, EditTeamInput>({
+      query: (input) => ({
+        url: `/api/v1/teams`,
+        method: "PATCH",
+        body: input,
+      }),
+      invalidatesTags: [{ type: "Team" }],
+      async onQueryStarted({ id, ...rest }, { dispatch, queryFulfilled }) {
+        const updateResult = dispatch(
+          teamsQueryApi.util.updateQueryData("getTeams", undefined, (draft) => {
+            const editedTeam = draft.teams.find((team) => team.id === id);
+            if (editedTeam) {
+              Object.assign(editedTeam, { id, ...rest });
+            }
+          })
+        );
+
+        try {
+          await queryFulfilled;
+        } catch (e) {
+          updateResult.undo();
+        }
+      },
+    }),
     deleteTeam: builder.mutation<DeleteTeamsResponse, DeleteTeamsInput>({
       query: ({ teamId }) => ({
         url: `/api/v1/teams`,
@@ -82,5 +108,8 @@ const teamsMutationApi = api.injectEndpoints({
 });
 
 export const { useGetTeamsQuery } = teamsQueryApi;
-export const { useCreateTeamsMutation, useDeleteTeamMutation } =
-  teamsMutationApi;
+export const {
+  useCreateTeamsMutation,
+  useDeleteTeamMutation,
+  useEditTeamMutation,
+} = teamsMutationApi;

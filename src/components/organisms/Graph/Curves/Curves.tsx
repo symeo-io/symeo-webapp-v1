@@ -4,7 +4,7 @@ import VegaGraph from "components/organisms/Graph/VegaGraph";
 import { colors } from "theme/colors";
 import cloneDeep from "lodash/cloneDeep";
 import dayjs from "dayjs";
-import { useCurrentUser } from "providers/currentUser/useCurrentUser";
+import { useCurrentUser } from "hooks/useCurrentUser";
 import { useGetGraphQuery } from "redux/api/goals/graphs/graphs.api";
 import { GetCurveResponse } from "redux/api/goals/graphs/graphs.types";
 import { GraphProps } from "components/organisms/Graph/types";

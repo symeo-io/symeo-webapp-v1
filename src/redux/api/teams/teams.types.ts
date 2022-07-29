@@ -19,6 +19,10 @@ export type DeleteTeamsInput = {
 
 export type DeleteTeamsResponse = ResponseWithErrors;
 
+export type EditTeamInput = Pick<Team, "id"> & Partial<Omit<Team, "id">>;
+
+export type EditTeamResponse = ResponseWithErrors;
+
 export type GetTeamsResponse = ResponseWithErrors & {
   teams: Team[];
 };

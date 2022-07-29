@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import { useIntl } from "react-intl";
 import OrganizationMembers from "components/organisms/OrganizationMembers/OrganizationMembers";
-import { useCurrentUser } from "providers/currentUser/useCurrentUser";
+import { useCurrentUser } from "hooks/useCurrentUser";
 import OrganizationTeams from "components/organisms/OrganizationTeams/OrganizationTeams";
 
 function Organization() {

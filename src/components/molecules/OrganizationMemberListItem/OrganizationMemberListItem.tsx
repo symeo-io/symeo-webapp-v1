@@ -13,7 +13,7 @@ import Status from "components/atoms/Status/Status";
 import { useIntl } from "react-intl";
 import { useConfirm } from "providers/confirm/useConfirm";
 import { useDeleteUserFromOrganizationMutation } from "redux/api/organizations/organizations.api";
-import { useCurrentUser } from "providers/currentUser/useCurrentUser";
+import { useCurrentUser } from "hooks/useCurrentUser";
 import { PropsWithSx } from "types/PropsWithSx";
 
 function getAvatarColorPalette(name: string) {
@@ -72,11 +72,7 @@ function OrganizationMemberListItem({
       }}
       secondaryAction={
         user.email !== currentUser?.email ? (
-          <IconButton
-            edge="end"
-            aria-label="comments"
-            onClick={openConfirmDelete}
-          >
+          <IconButton onClick={openConfirmDelete}>
             <DeleteIcon />
           </IconButton>
         ) : undefined
