@@ -67,7 +67,9 @@ function OrganizationTeams({ organizationName, sx }: OrganizationMembersProps) {
           <List>
             {teams &&
               teams
-                .filter((team) => team.name.includes(searchValue))
+                .filter((team) =>
+                  team.name.toLowerCase().includes(searchValue.toLowerCase())
+                )
                 .map((team) => (
                   <OrganizationTeamListItem
                     key={team.id}

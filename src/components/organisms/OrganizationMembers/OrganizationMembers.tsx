@@ -72,7 +72,10 @@ function OrganizationMembers({
         <Box sx={{ marginTop: (theme) => theme.spacing(3) }}>
           <List>
             {users
-              .filter((user) => user.email.includes(searchValue))
+
+              .filter((user) =>
+                user.email.toLowerCase().includes(searchValue.toLowerCase())
+              )
               .map((user) => (
                 <OrganizationMemberListItem
                   key={user.id}
