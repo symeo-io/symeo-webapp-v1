@@ -148,7 +148,9 @@ function TimeToMerge() {
       >
         <Button
           variant="outlined"
-          onClick={() => navigate(routes.teamGoals.path)}
+          onClick={() =>
+            navigate(goal ? routes.home.path : routes.teamGoals.path)
+          }
         >
           {formatMessage({
             id: "standards.cancel",
