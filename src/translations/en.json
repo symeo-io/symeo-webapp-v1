@@ -92,7 +92,14 @@
     "configure-button-label": "Configure",
     "save": "Save changes",
     "create": "Set up team goal",
-    "delete": "Delete team goal",
+    "delete": {
+      "button-label": "Delete team goal",
+      "confirm": {
+        "title": "Deleting Team Goal",
+        "message": "Goal \"{standardName}\" will be removed from {teamName} Team",
+        "confirm-label": "Delete team goal"
+      }
+    },
     "cancel": "Cancel",
     "graphs": {
       "histogram": {

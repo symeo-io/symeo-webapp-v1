@@ -56,10 +56,9 @@ function OrganizationMemberListItem({
       { email: user.email }
     ),
     confirmButton: {
-      label: formatMessage(
-        { id: "organization.members.remove-dialog.confirm-label" },
-        { email: user.email }
-      ),
+      label: formatMessage({
+        id: "organization.members.remove-dialog.confirm-label",
+      }),
       color: "error",
       onClick: () => deleteUser({ userId: user.id }),
     },

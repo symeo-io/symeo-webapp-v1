@@ -55,11 +55,9 @@ function ConfirmDialogDisplayer({
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>{formatMessage({ id: config.title })}</DialogTitle>
+      <DialogTitle>{config.title}</DialogTitle>
       <DialogContent>
-        <DialogContentText>
-          {formatMessage({ id: config.message })}
-        </DialogContentText>
+        <DialogContentText>{config.message}</DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button
@@ -69,7 +67,7 @@ function ConfirmDialogDisplayer({
           loading={isLoadingCancel}
         >
           {config.cancelButton?.label
-            ? formatMessage({ id: config.cancelButton.label })
+            ? config.cancelButton.label
             : formatMessage({ id: "confirm.cancel" })}
         </Button>
         <Button
@@ -78,7 +76,7 @@ function ConfirmDialogDisplayer({
           variant={config.confirmButton?.variant}
           loading={isLoadingConfirm}
         >
-          {formatMessage({ id: config.confirmButton.label })}
+          {config.confirmButton.label}
         </Button>
       </DialogActions>
     </Dialog>

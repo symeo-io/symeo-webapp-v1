@@ -41,6 +41,7 @@ function GoalDashboardSection({ standard, goal }: GoalDashboardSectionProps) {
       <Box sx={{ display: "flex", flexWrap: "wrap" }}>
         {standard.availableGraphs.map((graphType) => (
           <GoalGraph
+            key={graphType}
             type={graphType}
             standardCode={standard.code}
             width={550}

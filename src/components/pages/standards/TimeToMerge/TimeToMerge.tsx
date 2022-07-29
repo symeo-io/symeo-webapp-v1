@@ -14,6 +14,7 @@ import {
 } from "redux/api/goals/goals.api";
 import { useCurrentUser } from "providers/currentUser/useCurrentUser";
 import { Standard } from "components/organisms/StandardCard/StandardCard";
+import { useConfirm } from "providers/confirm/useConfirm";
 
 const standard = standardsData.standards["time-to-merge"] as Standard;
 
@@ -78,6 +79,22 @@ function TimeToMerge() {
     await deleteGoal({ teamGoalId: goal.id });
     return navigate(routes.home.path);
   }, [deleteGoal, goal, navigate]);
+
+  const { handleOpen: openConfirmDelete } = useConfirm({
+    title: formatMessage({ id: "standards.delete.confirm.title" }),
+    message: formatMessage(
+      { id: "standards.delete.confirm.message" },
+      {
+        standardName: formatMessage({ id: `standards.${standard.code}.title` }),
+        teamName: selectedTeam?.name,
+      }
+    ),
+    confirmButton: {
+      label: formatMessage({ id: "standards.delete.confirm.confirm-label" }),
+      color: "error",
+      onClick: handleDelete,
+    },
+  });
 
   const marks = useMemo(() => {
     const result = [];
@@ -171,11 +188,11 @@ function TimeToMerge() {
           <Button
             loading={isLoadingDelete}
             color="error"
-            onClick={handleDelete}
+            onClick={openConfirmDelete}
             sx={{ marginLeft: (theme) => theme.spacing(1) }}
           >
             {formatMessage({
-              id: "standards.delete",
+              id: "standards.delete.button-label",
             })}
           </Button>
         )}

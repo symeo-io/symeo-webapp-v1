@@ -43,6 +43,7 @@ function Home() {
       </Typography>
       {goals.map((goal) => (
         <GoalDashboardSection
+          key={goal.id}
           standard={standards[goal.standard_code]}
           goal={goal}
         />
