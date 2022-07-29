@@ -44,6 +44,11 @@ function CreateOrganizationTeamDialog({
   );
   const [createTeams, { isLoading }] = useCreateTeamsMutation();
 
+  const reset = useCallback(() => {
+    setValue(cloneDeep(EMPTY_TEAM));
+    setErrors(cloneDeep(EMPTY_TEAM_FORM_ERRORS));
+  }, []);
+
   const handleCreate = useCallback(async () => {
     const errors = getTeamFormErrors(value);
     setErrors(errors);
@@ -51,12 +56,17 @@ function CreateOrganizationTeamDialog({
     if (isErrorsEmpty(errors)) {
       await createTeams(formValuesToCreateTeamInput([value]));
       handleClose();
-      setValue(cloneDeep(EMPTY_TEAM));
+      reset();
     }
-  }, [createTeams, handleClose, value]);
+  }, [createTeams, handleClose, reset, value]);
+
+  const handleCloseAndReset = useCallback(() => {
+    reset();
+    handleClose();
+  }, [handleClose, reset]);
 
   return (
-    <Dialog open={open} onClose={handleClose} sx={sx}>
+    <Dialog open={open} onClose={handleCloseAndReset} sx={sx}>
       <DialogTitle sx={{ display: "flex", alignItems: "center" }}>
         <GroupsIcon sx={{ marginRight: (theme) => theme.spacing(1) }} />
         {formatMessage(
@@ -81,7 +91,11 @@ function CreateOrganizationTeamDialog({
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} variant="outlined" disabled={isLoading}>
+        <Button
+          onClick={handleCloseAndReset}
+          variant="outlined"
+          disabled={isLoading}
+        >
           {formatMessage({ id: "confirm.cancel" })}
         </Button>
         <Button onClick={handleCreate} loading={isLoading}>

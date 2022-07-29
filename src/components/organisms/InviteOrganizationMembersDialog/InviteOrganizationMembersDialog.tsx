@@ -14,6 +14,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { validateEmails } from "components/organisms/InviteOrganizationMembersDialog/utils";
 import { useInviteUserToOrganizationMutation } from "redux/api/organizations/organizations.api";
 import { PropsWithSx } from "types/PropsWithSx";
+import cloneDeep from "lodash/cloneDeep";
 
 export type InviteOrganizationMembersDialogProps = PropsWithSx & {
   open: boolean;
@@ -30,7 +31,9 @@ function InviteOrganizationMembersDialog({
   sx,
 }: InviteOrganizationMembersDialogProps) {
   const { formatMessage } = useIntl();
-  const [emails, setEmails] = useState<string[]>([...INITIAL_EMAILS_LIST]);
+  const [emails, setEmails] = useState<string[]>(
+    cloneDeep(INITIAL_EMAILS_LIST)
+  );
   const [errors, setErrors] = useState<(string | undefined)[]>([]);
   const [inviteUser, { isLoading }] = useInviteUserToOrganizationMutation();
 
@@ -50,6 +53,11 @@ function InviteOrganizationMembersDialog({
 
   const addEmail = useCallback(() => setEmails([...emails, ""]), [emails]);
 
+  const reset = useCallback(() => {
+    setEmails(cloneDeep(INITIAL_EMAILS_LIST));
+    setErrors([]);
+  }, []);
+
   const handleInvite = useCallback(async () => {
     const newErrors = validateEmails(emails);
     setErrors(newErrors);
@@ -63,12 +71,17 @@ function InviteOrganizationMembersDialog({
           }))
       );
       handleClose();
-      setEmails([...INITIAL_EMAILS_LIST]);
+      reset();
     }
-  }, [emails, handleClose, inviteUser]);
+  }, [emails, handleClose, inviteUser, reset]);
+
+  const handleCloseAndReset = useCallback(() => {
+    handleClose();
+    reset();
+  }, [handleClose, reset]);
 
   return (
-    <Dialog open={open} onClose={handleClose} sx={sx}>
+    <Dialog open={open} onClose={handleCloseAndReset} sx={sx}>
       <DialogTitle sx={{ display: "flex", alignItems: "center" }}>
         <MailOutlineIcon sx={{ marginRight: (theme) => theme.spacing(1) }} />
         {formatMessage(
@@ -114,7 +127,11 @@ function InviteOrganizationMembersDialog({
         </IconButton>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} variant="outlined" disabled={isLoading}>
+        <Button
+          onClick={handleCloseAndReset}
+          variant="outlined"
+          disabled={isLoading}
+        >
           {formatMessage({ id: "confirm.cancel" })}
         </Button>
         <Button onClick={handleInvite} loading={isLoading}>
