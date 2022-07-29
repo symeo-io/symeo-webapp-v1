@@ -5,7 +5,7 @@ import routes from "routing";
 import { useNavigate } from "react-router-dom";
 import OnBoardingPageContainer from "components/molecules/OnBoardingPageContainer/OnBoardingPageContainer";
 import OnBoardingCard from "components/molecules/OnBoardingCard/OnBoardingCard";
-import { CreateTeamFormValues } from "components/organisms/CreateTeamForm/CreateTeamForm";
+import { EditOrCreateTeamFormValues } from "components/organisms/CreateTeamForm/CreateTeamForm";
 import Button from "components/atoms/Button/Button";
 import AddIcon from "@mui/icons-material/Add";
 import CreateTeamSection from "./CreateTeamSection";
@@ -26,15 +26,15 @@ function OnBoardingTeams() {
   const [createTeams, { isLoading: isLoadingCreateTeams }] =
     useCreateTeamsMutation();
 
-  const [teams, setTeams] = useState<CreateTeamFormValues[]>([
+  const [teams, setTeams] = useState<EditOrCreateTeamFormValues[]>([
     cloneDeep(EMPTY_TEAM),
   ]);
-  const [errors, setErrors] = useState<FormErrors<CreateTeamFormValues>[]>([
-    cloneDeep(EMPTY_TEAM_FORM_ERRORS),
-  ]);
+  const [errors, setErrors] = useState<
+    FormErrors<EditOrCreateTeamFormValues>[]
+  >([cloneDeep(EMPTY_TEAM_FORM_ERRORS)]);
 
   const setTeam = useCallback(
-    (index: number, values: CreateTeamFormValues) => {
+    (index: number, values: EditOrCreateTeamFormValues) => {
       const newTeams = [...teams];
       newTeams[index] = values;
       setTeams(newTeams);
@@ -43,7 +43,7 @@ function OnBoardingTeams() {
   );
 
   const setTeamErrors = useCallback(
-    (index: number, teamErrors: FormErrors<CreateTeamFormValues>) => {
+    (index: number, teamErrors: FormErrors<EditOrCreateTeamFormValues>) => {
       const newErrors = [...errors];
       newErrors[index] = teamErrors;
       setErrors(newErrors);

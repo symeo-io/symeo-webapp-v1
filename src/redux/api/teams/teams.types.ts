@@ -1,5 +1,5 @@
 import { ResponseWithErrors } from "../errors.type";
-import { CreateTeamFormValues } from "components/organisms/CreateTeamForm/CreateTeamForm";
+import { EditOrCreateTeamFormValues } from "components/organisms/CreateTeamForm/CreateTeamForm";
 
 export type Team = {
   id: string;
@@ -28,10 +28,28 @@ export type GetTeamsResponse = ResponseWithErrors & {
 };
 
 export function formValuesToCreateTeamInput(
-  formValues: CreateTeamFormValues[]
+  formValues: EditOrCreateTeamFormValues[]
 ): CreateTeamsInput {
   return formValues.map((value) => ({
     name: value.name,
-    repository_ids: value.repositories.map((repo) => repo.id),
+    repository_ids: value.repositoryIds,
   }));
+}
+
+export function formValuesToEditTeamInput(
+  id: string,
+  formValues: EditOrCreateTeamFormValues
+): EditTeamInput {
+  return {
+    id,
+    name: formValues.name,
+    repository_ids: formValues.repositoryIds,
+  };
+}
+
+export function teamToFormValues(team: Team): EditOrCreateTeamFormValues {
+  return {
+    name: team.name,
+    repositoryIds: team.repository_ids,
+  };
 }

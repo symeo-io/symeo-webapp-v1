@@ -14,6 +14,7 @@ export type CreateOrganizationTeamButtonProps = PropsWithSx & {
 };
 
 function EditOrganizationTeamButton({
+  team,
   organizationName,
   sx,
   dialogSx,
@@ -29,6 +30,7 @@ function EditOrganizationTeamButton({
         <EditIcon />
       </IconButton>
       <EditOrCreateOrganizationTeamDialog
+        team={team}
         open={dialogOpen}
         handleClose={handleCloseDialog}
         organizationName={organizationName}

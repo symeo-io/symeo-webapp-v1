@@ -1,16 +1,16 @@
-import { CreateTeamFormValues } from "./CreateTeamForm";
+import { EditOrCreateTeamFormValues } from "./CreateTeamForm";
 import cloneDeep from "lodash/cloneDeep";
 
 export type FormErrors<Values> = Record<keyof Values, string[]>;
 
-export const EMPTY_TEAM: CreateTeamFormValues = {
+export const EMPTY_TEAM: EditOrCreateTeamFormValues = {
   name: "",
-  repositories: [],
+  repositoryIds: [],
 };
 
 export const EMPTY_TEAM_FORM_ERRORS = {
   name: [],
-  repositories: [],
+  repositoryIds: [],
 };
 
 export function isErrorsEmpty(errors: FormErrors<any>): boolean {
@@ -23,9 +23,9 @@ export function isErrorsEmpty(errors: FormErrors<any>): boolean {
 }
 
 export function getTeamFormErrors(
-  values: CreateTeamFormValues
-): FormErrors<CreateTeamFormValues> {
-  const errors: FormErrors<CreateTeamFormValues> = cloneDeep(
+  values: EditOrCreateTeamFormValues
+): FormErrors<EditOrCreateTeamFormValues> {
+  const errors: FormErrors<EditOrCreateTeamFormValues> = cloneDeep(
     EMPTY_TEAM_FORM_ERRORS
   );
 
@@ -33,8 +33,8 @@ export function getTeamFormErrors(
     errors.name.push("on-boarding.create-teams.form.errors.empty-name");
   }
 
-  if (values.repositories.length === 0) {
-    errors.repositories.push(
+  if (values.repositoryIds.length === 0) {
+    errors.repositoryIds.push(
       "on-boarding.create-teams.form.errors.empty-repositories"
     );
   }
@@ -52,7 +52,7 @@ export function isErrorsListEmpty(errorsList: FormErrors<any>[]): boolean {
 }
 
 export function getTeamsFormErrors(
-  values: CreateTeamFormValues[]
-): FormErrors<CreateTeamFormValues>[] {
+  values: EditOrCreateTeamFormValues[]
+): FormErrors<EditOrCreateTeamFormValues>[] {
   return values.map((value) => getTeamFormErrors(value));
 }

@@ -9,17 +9,17 @@ import GitHubIcon from "./GitHubIcon";
 import { FormErrors } from "./utils";
 import { PropsWithSx } from "types/PropsWithSx";
 
-export type CreateTeamFormValues = {
+export type EditOrCreateTeamFormValues = {
   name: string;
-  repositories: Repository[];
+  repositoryIds: number[];
 };
 
 export type OnBoardingCardProps = PropsWithChildren &
   PropsWithSx & {
-    values: CreateTeamFormValues;
-    setValues: (values: CreateTeamFormValues) => void;
-    errors: FormErrors<CreateTeamFormValues>;
-    setErrors: (errors: FormErrors<CreateTeamFormValues>) => void;
+    values: EditOrCreateTeamFormValues;
+    setValues: (values: EditOrCreateTeamFormValues) => void;
+    errors: FormErrors<EditOrCreateTeamFormValues>;
+    setErrors: (errors: FormErrors<EditOrCreateTeamFormValues>) => void;
   };
 
 function CreateTeamForm({
@@ -47,10 +47,18 @@ function CreateTeamForm({
 
   const handleRepositoriesChange = useCallback(
     (event: any, repositories: Repository[]) => {
-      setValues({ ...values, repositories });
-      setErrors({ ...errors, repositories: [] }); // Resetting errors when editing field
+      setValues({
+        ...values,
+        repositoryIds: repositories.map((repo) => repo.id),
+      });
+      setErrors({ ...errors, repositoryIds: [] }); // Resetting errors when editing field
     },
     [errors, setErrors, setValues, values]
+  );
+
+  const selectedRepositories = useMemo(
+    () => repositories.filter((repo) => values.repositoryIds.includes(repo.id)),
+    [repositories, values.repositoryIds]
   );
 
   return (
@@ -78,7 +86,7 @@ function CreateTeamForm({
         }
       />
       <Autocomplete
-        value={values.repositories}
+        value={selectedRepositories}
         onChange={handleRepositoriesChange}
         multiple
         options={repositories}
@@ -110,10 +118,10 @@ function CreateTeamForm({
             placeholder={formatMessage({
               id: "on-boarding.create-teams.form.repositories-field-placeholder",
             })}
-            error={errors.repositories.length > 0}
+            error={errors.repositoryIds.length > 0}
             helperText={
-              errors.repositories.length > 0
-                ? errors.repositories
+              errors.repositoryIds.length > 0
+                ? errors.repositoryIds
                     .map((error) => formatMessage({ id: error }))
                     .join(", ")
                 : undefined

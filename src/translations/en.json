@@ -95,6 +95,10 @@
       "create-dialog": {
         "title": "Create team for {organizationName}",
         "create-button-label": "Create"
+      },
+      "edit-dialog": {
+        "title": "Edit team for {organizationName}",
+        "edit-button-label": "Edit"
       }
     }
   },

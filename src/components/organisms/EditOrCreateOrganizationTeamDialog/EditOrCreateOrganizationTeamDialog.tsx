@@ -8,9 +8,12 @@ import {
 import Button from "components/atoms/Button/Button";
 import { useIntl } from "react-intl";
 import { PropsWithSx } from "types/PropsWithSx";
-import { useCreateTeamsMutation } from "redux/api/teams/teams.api";
+import {
+  useCreateTeamsMutation,
+  useEditTeamMutation,
+} from "redux/api/teams/teams.api";
 import CreateTeamForm, {
-  CreateTeamFormValues,
+  EditOrCreateTeamFormValues,
 } from "components/organisms/CreateTeamForm/CreateTeamForm";
 import cloneDeep from "lodash/cloneDeep";
 import {
@@ -21,7 +24,12 @@ import {
   isErrorsEmpty,
 } from "components/organisms/CreateTeamForm/utils";
 import GroupsIcon from "@mui/icons-material/Groups";
-import { formValuesToCreateTeamInput, Team } from "redux/api/teams/teams.types";
+import {
+  formValuesToCreateTeamInput,
+  formValuesToEditTeamInput,
+  Team,
+  teamToFormValues,
+} from "redux/api/teams/teams.types";
 
 export type CreateOrganizationTeamDialogProps = PropsWithSx & {
   team?: Team;
@@ -38,29 +46,35 @@ function EditOrCreateOrganizationTeamDialog({
   sx,
 }: CreateOrganizationTeamDialogProps) {
   const { formatMessage } = useIntl();
-  const [value, setValue] = useState<CreateTeamFormValues>(
-    cloneDeep(EMPTY_TEAM)
+  const [value, setValue] = useState<EditOrCreateTeamFormValues>(
+    team ? teamToFormValues(team) : cloneDeep(EMPTY_TEAM)
   );
-  const [errors, setErrors] = useState<FormErrors<CreateTeamFormValues>>(
+  const [errors, setErrors] = useState<FormErrors<EditOrCreateTeamFormValues>>(
     cloneDeep(EMPTY_TEAM_FORM_ERRORS)
   );
-  const [createTeams, { isLoading }] = useCreateTeamsMutation();
+  const [createTeams, { isLoading: isLoadingCreate }] =
+    useCreateTeamsMutation();
+  const [editTeam, { isLoading: isLoadingEdit }] = useEditTeamMutation();
 
   const reset = useCallback(() => {
     setValue(cloneDeep(EMPTY_TEAM));
     setErrors(cloneDeep(EMPTY_TEAM_FORM_ERRORS));
   }, []);
 
-  const handleCreate = useCallback(async () => {
+  const handleEditOrCreate = useCallback(async () => {
     const errors = getTeamFormErrors(value);
     setErrors(errors);
 
     if (isErrorsEmpty(errors)) {
-      await createTeams(formValuesToCreateTeamInput([value]));
+      if (team) {
+        await editTeam(formValuesToEditTeamInput(team.id, value));
+      } else {
+        await createTeams(formValuesToCreateTeamInput([value]));
+        reset();
+      }
       handleClose();
-      reset();
     }
-  }, [createTeams, handleClose, reset, value]);
+  }, [createTeams, editTeam, handleClose, reset, team, value]);
 
   const handleCloseAndReset = useCallback(() => {
     reset();
@@ -72,7 +86,11 @@ function EditOrCreateOrganizationTeamDialog({
       <DialogTitle sx={{ display: "flex", alignItems: "center" }}>
         <GroupsIcon sx={{ marginRight: (theme) => theme.spacing(1) }} />
         {formatMessage(
-          { id: "organization.teams.create-dialog.title" },
+          {
+            id: team
+              ? "organization.teams.edit-dialog.title"
+              : "organization.teams.create-dialog.title",
+          },
           { organizationName }
         )}
       </DialogTitle>
@@ -96,13 +114,18 @@ function EditOrCreateOrganizationTeamDialog({
         <Button
           onClick={handleCloseAndReset}
           variant="outlined"
-          disabled={isLoading}
+          disabled={isLoadingCreate || isLoadingEdit}
         >
           {formatMessage({ id: "confirm.cancel" })}
         </Button>
-        <Button onClick={handleCreate} loading={isLoading}>
+        <Button
+          onClick={handleEditOrCreate}
+          loading={isLoadingCreate || isLoadingEdit}
+        >
           {formatMessage({
-            id: "organization.teams.create-dialog.create-button-label",
+            id: team
+              ? "organization.teams.edit-dialog.edit-button-label"
+              : "organization.teams.create-dialog.create-button-label",
           })}
         </Button>
       </DialogActions>
