@@ -72,7 +72,7 @@ function Sidebar() {
       >
         <MenuList>
           <SidebarNavLink
-            label={formatMessage({ id: "sidebar.links.home" })}
+            label={formatMessage({ id: "sidebar.links.dashboard" })}
             icon={<HomeIcon />}
             route={routes.home}
           />

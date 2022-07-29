@@ -1,17 +1,17 @@
 import React from "react";
 import { Vega } from "react-vega";
-import { Box, Typography } from "@mui/material";
+import { Card, Typography } from "@mui/material";
 import { VegaProps } from "react-vega/lib/Vega";
 import { PropsWithSx } from "types/PropsWithSx";
 
-export type GraphProps = PropsWithSx & {
+export type VegaGraphProps = PropsWithSx & {
   title: string;
   vega: VegaProps;
 };
 
-function Graph({ title, vega, sx }: GraphProps) {
+function VegaGraph({ title, vega, sx }: VegaGraphProps) {
   return (
-    <Box
+    <Card
       sx={{
         background: "white",
         borderRadius: "8px",
@@ -20,14 +20,14 @@ function Graph({ title, vega, sx }: GraphProps) {
       }}
     >
       <Typography
-        variant="h1"
+        variant="h2"
         sx={{ marginBottom: (theme) => theme.spacing(4) }}
       >
         {title}
       </Typography>
       <Vega {...vega} />
-    </Box>
+    </Card>
   );
 }
 
-export default Graph;
+export default VegaGraph;

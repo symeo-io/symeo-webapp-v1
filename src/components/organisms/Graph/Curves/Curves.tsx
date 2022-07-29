@@ -1,22 +1,17 @@
 import React, { useMemo } from "react";
 import { theme } from "theme/theme";
-import Graph from "components/organisms/Graph/Graph";
+import VegaGraph from "components/organisms/Graph/VegaGraph";
 import { colors } from "theme/colors";
 import cloneDeep from "lodash/cloneDeep";
-import { PropsWithSx } from "types/PropsWithSx";
 import dayjs from "dayjs";
 import { useCurrentUser } from "providers/currentUser/useCurrentUser";
 import { useGetGraphQuery } from "redux/api/goals/graphs/graphs.api";
-import {
-  GetCurveResponse,
-  StandardCode,
-} from "redux/api/goals/graphs/graphs.types";
+import { GetCurveResponse } from "redux/api/goals/graphs/graphs.types";
+import { GraphProps } from "components/organisms/Graph/types";
+import { useIntl } from "react-intl";
 
-export type CurvesProps = PropsWithSx & {
-  standardCode: StandardCode;
-};
-
-function Curves({ standardCode, sx }: CurvesProps) {
+function Curves({ standardCode, width, height, sx }: GraphProps) {
+  const { formatMessage } = useIntl();
   const { selectedTeam } = useCurrentUser();
 
   const { data } = useGetGraphQuery(
@@ -65,14 +60,14 @@ function Curves({ standardCode, sx }: CurvesProps) {
   if (!data || !limit || !pieces || !average) return null;
 
   return (
-    <Graph
+    <VegaGraph
       sx={sx}
-      title={"Pull Requests are merged before 5 days"}
+      title={formatMessage({ id: "standards.graphs.curves.title" })}
       vega={{
         actions: false,
         spec: {
-          width: 1200,
-          height: 480,
+          width,
+          height,
           padding: 5,
 
           data: [
@@ -117,10 +112,12 @@ function Curves({ standardCode, sx }: CurvesProps) {
               ticks: false,
               labelFontWeight: 100,
               labelFontSize: 16,
-              labelPadding: 24,
+              labelPadding: 40,
               labelFont: theme.typography.fontFamily,
               labelColor: colors.secondary.text,
               domainColor: colors.secondary.borders,
+              labelAngle: -45,
+              labelOffset: -28,
             },
             {
               orient: "left",

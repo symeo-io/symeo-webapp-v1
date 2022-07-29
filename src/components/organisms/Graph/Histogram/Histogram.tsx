@@ -1,20 +1,15 @@
 import React, { useMemo } from "react";
 import { theme } from "theme/theme";
-import Graph from "components/organisms/Graph/Graph";
+import VegaGraph from "components/organisms/Graph/VegaGraph";
 import { colors } from "theme/colors";
-import { PropsWithSx } from "types/PropsWithSx";
 import { useCurrentUser } from "providers/currentUser/useCurrentUser";
 import { useGetGraphQuery } from "redux/api/goals/graphs/graphs.api";
-import {
-  GetHistogramResponse,
-  StandardCode,
-} from "redux/api/goals/graphs/graphs.types";
+import { GetHistogramResponse } from "redux/api/goals/graphs/graphs.types";
+import { GraphProps } from "components/organisms/Graph/types";
+import { useIntl } from "react-intl";
 
-export type HistogramProps = PropsWithSx & {
-  standardCode: StandardCode;
-};
-
-function Histogram({ standardCode, sx }: HistogramProps) {
+function Histogram({ standardCode, width, height, sx }: GraphProps) {
+  const { formatMessage } = useIntl();
   const { selectedTeam } = useCurrentUser();
 
   const { data: histogramData } = useGetGraphQuery(
@@ -50,14 +45,14 @@ function Histogram({ standardCode, sx }: HistogramProps) {
   }, [histogramValues]);
 
   return (
-    <Graph
+    <VegaGraph
       sx={sx}
-      title={"86% PR met goals"}
+      title={formatMessage({ id: "standards.graphs.histogram.title" })}
       vega={{
         actions: false,
         spec: {
-          width: 1200,
-          height: 480,
+          width,
+          height,
           autosize: "fit-x",
           resize: true,
           padding: 5,
@@ -109,10 +104,12 @@ function Histogram({ standardCode, sx }: HistogramProps) {
               ticks: false,
               labelFontWeight: 100,
               labelFontSize: 16,
-              labelPadding: 24,
+              labelPadding: 40,
               labelFont: theme.typography.fontFamily,
               labelColor: colors.secondary.text,
               domainColor: colors.secondary.borders,
+              labelAngle: -45,
+              labelOffset: -28,
             },
             {
               orient: "left",
