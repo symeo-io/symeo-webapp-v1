@@ -57,6 +57,12 @@ function Curves({ standardCode, width, height, sx }: GraphProps) {
     [limit, pieces]
   );
 
+  const minValue = useMemo(
+    () =>
+      limit && pieces && Math.min(limit, ...pieces.map((piece) => piece.value)),
+    [limit, pieces]
+  );
+
   if (!data || !limit || !pieces || !average) return null;
 
   return (
@@ -95,6 +101,7 @@ function Curves({ standardCode, width, height, sx }: GraphProps) {
               range: "height",
               domain: { data: "pieces", field: "value" },
               domainMax: maxValue,
+              domainMin: minValue,
             },
             {
               name: "color",
