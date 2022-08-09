@@ -21,6 +21,7 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 import dayjs from "dayjs";
 import { LocalStorageContextProvider } from "providers/localStorage/LocalStorageContextProvider";
 import { datadogRum } from "@datadog/browser-rum";
+import { datadogLogs } from "@datadog/browser-logs";
 
 dayjs.extend(customParseFormat);
 
@@ -33,7 +34,7 @@ if (config.sentry.dsn) {
   });
 }
 
-if (config.datadog.applicationId) {
+if (config.datadog.clientToken) {
   datadogRum.init({
     applicationId: config.datadog.applicationId,
     clientToken: config.datadog.clientToken,
@@ -42,6 +43,13 @@ if (config.datadog.applicationId) {
     env: config.env,
     sampleRate: 100,
     trackInteractions: true,
+  });
+
+  datadogLogs.init({
+    clientToken: config.datadog.clientToken,
+    site: config.datadog.site,
+    forwardErrorsToLogs: true,
+    sampleRate: 100,
   });
 }
 
