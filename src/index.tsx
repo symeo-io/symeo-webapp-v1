@@ -14,8 +14,6 @@ import { theme } from "theme/theme";
 import { ThemeProvider } from "@mui/material";
 import { RawIntlProvider } from "react-intl";
 import { intl } from "intl";
-import * as Sentry from "@sentry/react";
-import { BrowserTracing } from "@sentry/tracing";
 import ConfirmDialogProvider from "providers/confirm/ConfirmDialogProvider";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import dayjs from "dayjs";
@@ -24,15 +22,6 @@ import { datadogRum } from "@datadog/browser-rum";
 import { datadogLogs } from "@datadog/browser-logs";
 
 dayjs.extend(customParseFormat);
-
-if (config.sentry.dsn) {
-  Sentry.init({
-    dsn: config.sentry.dsn,
-    environment: config.env,
-    integrations: [new BrowserTracing()],
-    tracesSampleRate: 1.0,
-  });
-}
 
 if (config.datadog.clientToken) {
   datadogRum.init({
