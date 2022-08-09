@@ -20,6 +20,7 @@ import ConfirmDialogProvider from "providers/confirm/ConfirmDialogProvider";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import dayjs from "dayjs";
 import { LocalStorageContextProvider } from "providers/localStorage/LocalStorageContextProvider";
+import { datadogRum } from "@datadog/browser-rum";
 
 dayjs.extend(customParseFormat);
 
@@ -29,6 +30,18 @@ if (config.sentry.dsn) {
     environment: config.env,
     integrations: [new BrowserTracing()],
     tracesSampleRate: 1.0,
+  });
+}
+
+if (config.datadog.applicationId) {
+  datadogRum.init({
+    applicationId: config.datadog.applicationId,
+    clientToken: config.datadog.clientToken,
+    site: config.datadog.site,
+    service: "catlean-webapp",
+    env: config.env,
+    sampleRate: 100,
+    trackInteractions: true,
   });
 }
 
