@@ -11,7 +11,9 @@ export const config = {
   githubApp: {
     name: process.env.REACT_APP_GITHUB_APP_NAME ?? "",
   },
-  sentry: {
-    dsn: process.env.REACT_APP_SENTRY_DSN ?? "",
+  datadog: {
+    applicationId: process.env.REACT_APP_DATADOG_APPLICATION_ID ?? "",
+    clientToken: process.env.REACT_APP_DATADOG_CLIENT_TOKEN ?? "",
+    site: process.env.REACT_APP_DATADOG_SITE ?? "datadoghq.eu",
   },
 };
