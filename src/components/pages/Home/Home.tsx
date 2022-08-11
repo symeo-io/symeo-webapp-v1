@@ -12,7 +12,6 @@ const standards = standardsData.standards as Record<StandardCode, Standard>;
 function Home() {
   const { formatMessage } = useIntl();
   const { selectedTeam, goals } = useCurrentUser();
-  console.log("selectedTeam, goals", selectedTeam, goals);
 
   return (
     <Box

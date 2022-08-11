@@ -5,8 +5,7 @@ import { useIntl } from "react-intl";
 import { Standard } from "components/organisms/StandardCard/StandardCard";
 import { Goal } from "redux/api/goals/goals.types";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { useNavigate } from "react-router-dom";
-import routes from "routing";
+import { useNavigate } from "hooks/useNavigate";
 
 export type GoalDashboardSectionProps = {
   standard: Standard;
@@ -33,7 +32,11 @@ function GoalDashboardSection({ standard, goal }: GoalDashboardSectionProps) {
         )}
         <IconButton
           sx={{ marginLeft: (theme) => theme.spacing(1) }}
-          onClick={() => navigate(routes[standard.code].path)}
+          onClick={() =>
+            navigate("teamGoalSetting", {
+              params: { standardCode: standard.code },
+            })
+          }
         >
           <SettingsIcon />
         </IconButton>

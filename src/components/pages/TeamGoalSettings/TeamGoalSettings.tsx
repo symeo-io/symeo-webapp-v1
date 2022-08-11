@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Box, Divider, Slider, Typography } from "@mui/material";
+import { Box, Divider, Slider, Typography, SliderProps } from "@mui/material";
 import { useIntl } from "react-intl";
 import SliderMark from "components/atoms/SliderMark/SliderMark";
 import standardsData from "standards.json";
 import Button from "components/atoms/Button/Button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import routes from "routing";
 import {
   useCreateGoalMutation,
@@ -14,10 +14,17 @@ import {
 import { useCurrentUser } from "hooks/useCurrentUser";
 import { Standard } from "components/organisms/StandardCard/StandardCard";
 import { useConfirm } from "providers/confirm/useConfirm";
+import { StandardCode } from "redux/api/goals/graphs/graphs.types";
 
-const standard = standardsData.standards["time-to-merge"] as Standard;
+function TeamGoalSettings() {
+  const { standardCode } = useParams();
+  const standard = useMemo(
+    // TODO: handle case where no standard is found with code
+    () => standardsData.standards[standardCode as StandardCode] as Standard,
+    [standardCode]
+  );
+  console.log("standard", standard);
 
-function TimeToMerge() {
   const { formatMessage } = useIntl();
   const navigate = useNavigate();
   const [value, setValue] = useState<number>(standard.recommandedValue);
@@ -29,7 +36,7 @@ function TimeToMerge() {
 
   const goal = useMemo(
     () => goals?.find((g) => g.standard_code === standard.code) ?? null,
-    [goals]
+    [goals, standard.code]
   );
 
   useEffect(() => {
@@ -63,7 +70,7 @@ function TimeToMerge() {
     });
 
     return navigate(routes.home.path);
-  }, [createGoal, goal, navigate, selectedTeam, value]);
+  }, [createGoal, goal, navigate, selectedTeam, standard.code, value]);
 
   const handleDelete = useCallback(async () => {
     if (!goal) return;
@@ -89,25 +96,30 @@ function TimeToMerge() {
   });
 
   const marks = useMemo(() => {
-    const result = [];
-    for (let i = standard.valueRange[0]; i <= standard.valueRange[1]; i++) {
+    const result: SliderProps["marks"] = [];
+
+    [
+      standard.valueRange[0],
+      standard.recommandedValue,
+      standard.valueRange[1],
+    ].forEach((value) =>
       result.push({
-        value: i,
+        value,
         label: (
           <SliderMark
-            value={i}
+            value={value}
             info={
-              standard.recommandedValue === i
+              standard.recommandedValue === value
                 ? { label: "Recommanded", variant: "success" }
                 : undefined
             }
           />
         ),
-      });
-    }
+      })
+    );
 
     return result;
-  }, []);
+  }, [standard.recommandedValue, standard.valueRange]);
 
   return (
     <Box
@@ -121,12 +133,12 @@ function TimeToMerge() {
       }}
     >
       <Typography variant="h1">
-        {formatMessage({ id: "standards.time-to-merge.page.title" })}
+        {formatMessage({ id: `standards.${standard.code}.page.title` })}
       </Typography>
       <Box sx={{ marginTop: (theme) => theme.spacing(8) }}>
         <Typography variant="h2">
           {formatMessage({
-            id: "standards.time-to-merge.page.limit-config.title",
+            id: `standards.${standard.code}.page.limit-config.title`,
           })}
         </Typography>
         <Box
@@ -139,10 +151,11 @@ function TimeToMerge() {
             track={false}
             value={value}
             onChange={handleChange}
-            step={1}
+            step={standard.valueStep}
             min={standard.valueRange[0]}
             max={standard.valueRange[1]}
             marks={marks}
+            valueLabelDisplay="on"
             sx={{ marginBottom: "62px" }}
           />
         </Box>
@@ -204,4 +217,4 @@ function TimeToMerge() {
   );
 }
 
-export default TimeToMerge;
+export default TeamGoalSettings;
