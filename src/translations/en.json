@@ -121,6 +121,7 @@
     },
     "cancel": "Cancel",
     "graphs": {
+      "loading": "Catlean is performing the initial processing of your data. Graphs will be displayed shortly.",
       "histogram": {
         "title": "Tendency"
       },

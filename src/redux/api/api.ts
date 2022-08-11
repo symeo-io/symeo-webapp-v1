@@ -10,6 +10,7 @@ export const apiTagTypes = [
   "User",
   "Curve",
   "Goal",
+  "JobStatus",
 ];
 
 export const api = createApi({
