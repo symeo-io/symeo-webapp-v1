@@ -10,18 +10,24 @@ import { GetCurveResponse } from "redux/api/goals/graphs/graphs.types";
 import { GraphProps } from "components/organisms/Graph/types";
 import { useIntl } from "react-intl";
 
-function Curves({ standardCode, width, height, sx }: GraphProps) {
+function Curves({
+  standardCode,
+  width,
+  height,
+  isProcessingInitialJob,
+  sx,
+}: GraphProps) {
   const { formatMessage } = useIntl();
   const { selectedTeam } = useCurrentUser();
 
-  const { data } = useGetGraphQuery(
+  const { data, isLoading } = useGetGraphQuery(
     {
       teamId: selectedTeam?.id,
       type: "curves",
       standardCode,
     },
     { skip: !selectedTeam }
-  ) as { data: GetCurveResponse | undefined };
+  ) as { data: GetCurveResponse | undefined; isLoading: boolean };
 
   const limit = useMemo(() => data?.curves.limit, [data]);
   const pieces = useMemo(
@@ -69,6 +75,12 @@ function Curves({ standardCode, width, height, sx }: GraphProps) {
   return (
     <VegaGraph
       sx={sx}
+      loading={isLoading || isProcessingInitialJob}
+      loadingMessage={
+        isProcessingInitialJob
+          ? formatMessage({ id: "standards.graphs.loading" })
+          : undefined
+      }
       title={formatMessage({ id: "standards.graphs.curves.title" })}
       vega={{
         actions: false,

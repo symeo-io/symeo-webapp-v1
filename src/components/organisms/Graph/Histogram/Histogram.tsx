@@ -8,18 +8,24 @@ import { GetHistogramResponse } from "redux/api/goals/graphs/graphs.types";
 import { GraphProps } from "components/organisms/Graph/types";
 import { useIntl } from "react-intl";
 
-function Histogram({ standardCode, width, height, sx }: GraphProps) {
+function Histogram({
+  standardCode,
+  width,
+  height,
+  isProcessingInitialJob = false,
+  sx,
+}: GraphProps) {
   const { formatMessage } = useIntl();
   const { selectedTeam } = useCurrentUser();
 
-  const { data: histogramData } = useGetGraphQuery(
+  const { data: histogramData, isLoading } = useGetGraphQuery(
     {
       teamId: selectedTeam?.id,
       type: "histogram",
       standardCode,
     },
-    { skip: !selectedTeam }
-  ) as { data: GetHistogramResponse | undefined };
+    { skip: !selectedTeam || isProcessingInitialJob }
+  ) as { data: GetHistogramResponse | undefined; isLoading: boolean };
 
   const histogramValues = useMemo(
     () => (histogramData ? histogramData.histogram.data : []),
@@ -47,6 +53,12 @@ function Histogram({ standardCode, width, height, sx }: GraphProps) {
   return (
     <VegaGraph
       sx={sx}
+      loading={isLoading || isProcessingInitialJob}
+      loadingMessage={
+        isProcessingInitialJob
+          ? formatMessage({ id: "standards.graphs.loading" })
+          : undefined
+      }
       title={formatMessage({ id: "standards.graphs.histogram.title" })}
       vega={{
         actions: false,

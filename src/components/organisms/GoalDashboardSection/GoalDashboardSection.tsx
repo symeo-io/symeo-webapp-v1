@@ -11,12 +11,14 @@ import { PropsWithSx } from "types/PropsWithSx";
 export type GoalDashboardSectionProps = PropsWithSx & {
   standard: Standard;
   goal: Goal;
+  isProcessingInitialJob?: boolean;
 };
 
 function GoalDashboardSection({
-  sx,
   standard,
   goal,
+  isProcessingInitialJob = false,
+  sx,
 }: GoalDashboardSectionProps) {
   const { formatMessage } = useIntl();
   const navigate = useNavigate();
@@ -54,6 +56,7 @@ function GoalDashboardSection({
             standardCode={standard.code}
             width={415}
             height={280}
+            isProcessingInitialJob={isProcessingInitialJob}
             sx={{
               margin: (theme) => theme.spacing(1),
             }}

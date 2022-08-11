@@ -5,4 +5,5 @@ export type GraphProps = PropsWithSx & {
   standardCode: StandardCode;
   width?: number;
   height?: number;
+  isProcessingInitialJob?: boolean;
 };
