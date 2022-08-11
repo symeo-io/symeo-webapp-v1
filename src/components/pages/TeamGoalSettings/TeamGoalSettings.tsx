@@ -4,8 +4,7 @@ import { useIntl } from "react-intl";
 import SliderMark from "components/atoms/SliderMark/SliderMark";
 import standardsData from "standards.json";
 import Button from "components/atoms/Button/Button";
-import { useNavigate, useParams } from "react-router-dom";
-import routes from "routing";
+import { useParams } from "react-router-dom";
 import {
   useCreateGoalMutation,
   useDeleteGoalMutation,
@@ -15,6 +14,7 @@ import { useCurrentUser } from "hooks/useCurrentUser";
 import { Standard } from "components/organisms/StandardCard/StandardCard";
 import { useConfirm } from "providers/confirm/useConfirm";
 import { StandardCode } from "redux/api/goals/graphs/graphs.types";
+import { useNavigate } from "hooks/useNavigate";
 
 function TeamGoalSettings() {
   const { standardCode } = useParams();
@@ -23,7 +23,6 @@ function TeamGoalSettings() {
     () => standardsData.standards[standardCode as StandardCode] as Standard,
     [standardCode]
   );
-  console.log("standard", standard);
 
   const { formatMessage } = useIntl();
   const navigate = useNavigate();
@@ -57,7 +56,7 @@ function TeamGoalSettings() {
 
     await updateGoal({ id: goal.id, value });
 
-    return navigate(routes.home.path);
+    return navigate("home");
   }, [goal, navigate, updateGoal, value]);
 
   const handleCreate = useCallback(async () => {
@@ -69,14 +68,14 @@ function TeamGoalSettings() {
       team_id: selectedTeam.id,
     });
 
-    return navigate(routes.home.path);
+    return navigate("home");
   }, [createGoal, goal, navigate, selectedTeam, standard.code, value]);
 
   const handleDelete = useCallback(async () => {
     if (!goal) return;
 
     await deleteGoal({ teamGoalId: goal.id });
-    return navigate(routes.home.path);
+    return navigate("home");
   }, [deleteGoal, goal, navigate]);
 
   const { handleOpen: openConfirmDelete } = useConfirm({
@@ -170,9 +169,7 @@ function TeamGoalSettings() {
       >
         <Button
           variant="outlined"
-          onClick={() =>
-            navigate(goal ? routes.home.path : routes.teamGoals.path)
-          }
+          onClick={() => navigate(goal ? "home" : "teamGoals")}
         >
           {formatMessage({
             id: "standards.cancel",

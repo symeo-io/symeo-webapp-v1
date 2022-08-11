@@ -1,29 +1,23 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { ListItemIcon, ListItemText, MenuItem } from "@mui/material";
-import { Route } from "routing";
-import { useLocation, useNavigate } from "react-router-dom";
+import routes from "routing";
+import { useMatch } from "react-router-dom";
 import { PropsWithSx } from "types/PropsWithSx";
+import { useNavigate } from "hooks/useNavigate";
 
 export type SidebarNavLinkProps = PropsWithSx & {
   label: string;
   icon: React.ReactElement;
-  route: Route;
+  to: keyof typeof routes;
 };
 
-function SidebarNavLink({ label, icon, route, sx }: SidebarNavLinkProps) {
-  const location = useLocation();
+function SidebarNavLink({ label, icon, to, sx }: SidebarNavLinkProps) {
   const navigate = useNavigate();
-  const selected = useMemo(
-    () => location.pathname === route.path,
-    [location, route]
-  );
+  const route = routes[to];
+  const selected = !!useMatch(route.path);
 
   return (
-    <MenuItem
-      sx={{ ...sx }}
-      onClick={() => navigate(route.path)}
-      selected={selected}
-    >
+    <MenuItem sx={{ ...sx }} onClick={() => navigate(to)} selected={selected}>
       <ListItemIcon>{icon}</ListItemIcon>
       <ListItemText>{label}</ListItemText>
     </MenuItem>

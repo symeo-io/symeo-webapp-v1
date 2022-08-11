@@ -1,8 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { Box } from "@mui/material";
 import { useIntl } from "react-intl";
-import routes from "routing";
-import { useNavigate } from "react-router-dom";
 import OnBoardingPageContainer from "components/molecules/OnBoardingPageContainer/OnBoardingPageContainer";
 import OnBoardingCard from "components/molecules/OnBoardingCard/OnBoardingCard";
 import { EditOrCreateTeamFormValues } from "components/organisms/CreateTeamForm/CreateTeamForm";
@@ -19,6 +17,7 @@ import {
 import cloneDeep from "lodash/cloneDeep";
 import { useCreateTeamsMutation } from "redux/api/teams/teams.api";
 import { formValuesToCreateTeamInput } from "redux/api/teams/teams.types";
+import { useNavigate } from "hooks/useNavigate";
 
 function OnBoardingTeams() {
   const { formatMessage } = useIntl();
@@ -77,7 +76,7 @@ function OnBoardingTeams() {
 
     if (isErrorsListEmpty(errors)) {
       await createTeams(formValuesToCreateTeamInput(teams));
-      return navigate(routes.home.path);
+      return navigate("home");
     }
   }, [createTeams, navigate, teams]);
 

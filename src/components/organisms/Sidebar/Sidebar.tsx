@@ -5,14 +5,13 @@ import { useAuth0 } from "@auth0/auth0-react";
 import SidebarNavLink from "components/molecules/SidebarNavLink/SidebarNavLink";
 import HomeIcon from "@mui/icons-material/Home";
 import CurrentUser from "components/molecules/CurrentUser/CurrentUser";
-import routes from "routing";
 import { useIntl } from "react-intl";
 import Button from "components/atoms/Button/Button";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import AddIcon from "@mui/icons-material/Add";
-import { useNavigate } from "react-router-dom";
 import { useCurrentUser } from "hooks/useCurrentUser";
 import SettingsIcon from "@mui/icons-material/Settings";
+import { useNavigate } from "hooks/useNavigate";
 
 export const SIDE_BAR_WIDTH = 224;
 
@@ -57,7 +56,7 @@ function Sidebar() {
         <Button
           startIcon={<AddIcon />}
           color="secondary"
-          onClick={() => navigate(routes.teamGoals.path)}
+          onClick={() => navigate("teamGoals")}
         >
           {formatMessage({
             id: "sidebar.team-goals.new-team-goal-button-label",
@@ -75,7 +74,7 @@ function Sidebar() {
           <SidebarNavLink
             label={formatMessage({ id: "sidebar.links.dashboard" })}
             icon={<HomeIcon />}
-            route={routes.home}
+            to="home"
           />
         </MenuList>
       </Box>
@@ -89,7 +88,7 @@ function Sidebar() {
           <SidebarNavLink
             label={formatMessage({ id: "sidebar.links.organization" })}
             icon={<SettingsIcon />}
-            route={routes.organization}
+            to="organization"
           />
         </MenuList>
       </Box>
@@ -103,7 +102,7 @@ function Sidebar() {
         <Button
           startIcon={<PersonAddIcon />}
           color="secondary"
-          onClick={() => navigate(routes.organization.path)}
+          onClick={() => navigate("organization")}
         >
           {formatMessage({ id: "sidebar.invite.invite-people-button-label" })}
         </Button>
