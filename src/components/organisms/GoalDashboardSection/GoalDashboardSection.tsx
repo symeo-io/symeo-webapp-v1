@@ -6,18 +6,23 @@ import { Standard } from "components/organisms/StandardCard/StandardCard";
 import { Goal } from "redux/api/goals/goals.types";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useNavigate } from "hooks/useNavigate";
+import { PropsWithSx } from "types/PropsWithSx";
 
-export type GoalDashboardSectionProps = {
+export type GoalDashboardSectionProps = PropsWithSx & {
   standard: Standard;
   goal: Goal;
 };
 
-function GoalDashboardSection({ standard, goal }: GoalDashboardSectionProps) {
+function GoalDashboardSection({
+  sx,
+  standard,
+  goal,
+}: GoalDashboardSectionProps) {
   const { formatMessage } = useIntl();
   const navigate = useNavigate();
 
   return (
-    <Box>
+    <Box sx={sx}>
       <Typography
         variant="h2"
         sx={{

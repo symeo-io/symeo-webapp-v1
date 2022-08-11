@@ -30,8 +30,9 @@ function Home() {
           { teamName: selectedTeam?.name }
         )}
       </Typography>
-      {goals?.map((goal) => (
+      {goals?.map((goal, index) => (
         <GoalDashboardSection
+          sx={{ marginTop: (theme) => (index !== 0 ? theme.spacing(6) : 0) }}
           key={goal.id}
           standard={standards[goal.standard_code]}
           goal={goal}
