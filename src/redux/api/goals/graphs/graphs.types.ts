@@ -1,7 +1,7 @@
 import { ResponseWithErrors } from "redux/api/errors.type";
 
 export type GraphType = "curves" | "histogram";
-export type StandardCode = "time-to-merge";
+export type StandardCode = "time-to-merge" | "pull-request-size";
 
 export type GetGraphsInput = {
   teamId?: string;

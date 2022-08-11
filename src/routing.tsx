@@ -4,7 +4,7 @@ import OrganizationPage from "components/pages/Organization/Organization";
 import TeamGoalsPage from "components/pages/TeamGoals/TeamGoals";
 import OnBoardingPageVcs from "components/pages/OnBoardingVcs/OnBoardingVcs";
 import OnBoardingPageTeams from "components/pages/OnBoardingTeams/OnBoardingTeams";
-import TimeToMergePage from "components/pages/standards/TimeToMerge/TimeToMerge";
+import TeamGoalSettings from "components/pages/TeamGoalSettings/TeamGoalSettings";
 
 export type Route = {
   isSecured?: boolean;
@@ -13,7 +13,7 @@ export type Route = {
   element: React.ComponentType<object>;
 };
 
-const routes: Record<string, Route> = {
+const routes = {
   home: {
     path: "/",
     isSecured: true,
@@ -32,11 +32,11 @@ const routes: Record<string, Route> = {
     sidebar: true,
     element: TeamGoalsPage,
   } as Route,
-  "time-to-merge": {
-    path: "/team-goals/time-to-merge",
+  teamGoalSetting: {
+    path: "/team-goals/:standardCode",
     isSecured: true,
     sidebar: true,
-    element: TimeToMergePage,
+    element: TeamGoalSettings,
   } as Route,
   onBoardingVcs: {
     path: "/onboarding-vcs",

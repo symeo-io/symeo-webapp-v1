@@ -385,6 +385,11 @@ export const theme = createTheme({
             display: "none",
           },
         },
+        valueLabel: {
+          backgroundColor: "transparent",
+          color: colors.secondary.text,
+          fontWeight: 400,
+        },
       },
     },
   },

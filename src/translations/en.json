@@ -134,11 +134,24 @@
       "page": {
         "title": "Aim for short PR lifecycle - Settings",
         "limit-config": {
-          "title": "Choose the number days before a PR should be merged"
+          "title": "Choose the number of days before a PR should be merged"
         }
       },
       "dashboard": {
         "title": "All Pull Requests are merged in less than {target} days"
+      }
+    },
+    "pull-request-size": {
+      "title": "Avoid large pull request",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "page": {
+        "title": "Avoid large pull request - Settings",
+        "limit-config": {
+          "title": "Choose a line count limit for each pull requests"
+        }
+      },
+      "dashboard": {
+        "title": "Less than {target} changes per PR"
       }
     }
   }

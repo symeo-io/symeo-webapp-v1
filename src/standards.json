@@ -5,6 +5,18 @@
       "recommandedValue": 5,
       "unit": "days",
       "valueRange": [1, 15],
+      "valueStep": 1,
+      "new": true,
+      "active": true,
+      "icon": "ShutterSpeed",
+      "availableGraphs": ["histogram", "curves"]
+    },
+    "pull-request-size": {
+      "code": "pull-request-size",
+      "recommandedValue": 1000,
+      "unit": "days",
+      "valueRange": [200, 5000],
+      "valueStep": 1,
       "new": true,
       "active": true,
       "icon": "ShutterSpeed",

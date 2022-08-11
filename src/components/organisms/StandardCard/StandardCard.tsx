@@ -6,14 +6,14 @@ import { colors } from "theme/colors";
 import * as icons from "@mui/icons-material";
 import Status from "components/atoms/Status/Status";
 import Button from "components/atoms/Button/Button";
-import { useNavigate } from "react-router-dom";
-import routes from "routing";
 import { GraphType, StandardCode } from "redux/api/goals/graphs/graphs.types";
+import { useNavigate } from "hooks/useNavigate";
 
 export type Standard = {
   code: StandardCode;
   recommandedValue: number;
   valueRange: [number, number];
+  valueStep: number;
   unit: string;
   new: boolean;
   active: boolean;
@@ -61,7 +61,11 @@ function StandardCard({ standard, configured = false, sx }: StandardCardProps) {
         }}
       >
         <Button
-          onClick={() => navigate(routes[standard.code].path)}
+          onClick={() =>
+            navigate("teamGoalSetting", {
+              params: { standardCode: standard.code },
+            })
+          }
           variant={configured ? "outlined" : "contained"}
         >
           {formatMessage({

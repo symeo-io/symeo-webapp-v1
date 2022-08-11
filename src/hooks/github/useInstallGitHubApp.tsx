@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { config } from "config";
 import ShortUniqueId from "short-unique-id";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { useLinkOrganizationToCurrentUserMutation } from "redux/api/users/users.api";
-import routes from "../../routing";
+import { useNavigate } from "hooks/useNavigate";
 
 const uid = new ShortUniqueId({ length: 10 });
 
@@ -49,7 +49,7 @@ export const useFinishInstallGitHubApp = () => {
             localStorage.setItem(LOCAL_STORAGE_STATE_KEY, "");
             setIsLoading(false);
             isAttemptingToLinkOrgToUser.current = false;
-            navigate(routes.onBoardingTeams.path);
+            navigate("onBoardingTeams");
           }
         );
       }
