@@ -10,7 +10,6 @@ export const jobsQueryApi = api.injectEndpoints({
           job_code: jobCode,
         },
       }),
-      providesTags: () => [{ type: "JobStatus" }],
     }),
   }),
 });
