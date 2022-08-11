@@ -11,8 +11,8 @@
       "icon": "ShutterSpeed",
       "availableGraphs": ["histogram", "curves"]
     },
-    "pr-size": {
-      "code": "pr-size",
+    "pull-request-size": {
+      "code": "pull-request-size",
       "recommandedValue": 1000,
       "unit": "days",
       "valueRange": [200, 5000],

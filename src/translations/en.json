@@ -141,7 +141,7 @@
         "title": "All Pull Requests are merged in less than {target} days"
       }
     },
-    "pr-size": {
+    "pull-request-size": {
       "title": "Avoid large pull request",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       "page": {
