@@ -88,12 +88,6 @@ function Histogram({ standardCode, width, height, sx }: GraphProps) {
               zero: true,
               domain: { data: "table", field: "y1" },
             },
-            {
-              name: "color",
-              type: "ordinal",
-              domain: { data: "table", field: "above" },
-              range: [colors.primary[400] as string, "#F25857"],
-            },
           ],
 
           axes: [
@@ -138,7 +132,10 @@ function Histogram({ standardCode, width, height, sx }: GraphProps) {
                   width: { scale: "x", band: 1, offset: -1 },
                   y: { scale: "y", field: "y0" },
                   y2: { scale: "y", field: "y1" },
-                  fill: { scale: "color", field: "above" },
+                  fill: [
+                    { test: "datum.above", value: "#F25857" },
+                    { value: colors.primary[400] as string },
+                  ],
                 },
               },
             },
