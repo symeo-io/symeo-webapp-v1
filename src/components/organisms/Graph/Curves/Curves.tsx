@@ -37,6 +37,7 @@ function Curves({ standardCode, width, height, sx }: GraphProps) {
         }),
     [data]
   );
+
   const average = useMemo(
     () =>
       data?.curves.average_curve &&
@@ -103,12 +104,6 @@ function Curves({ standardCode, width, height, sx }: GraphProps) {
               domainMax: maxValue,
               domainMin: minValue,
             },
-            {
-              name: "color",
-              type: "ordinal",
-              domain: { data: "pieces", field: "open" },
-              range: ["#05CD99", "#FFCE20"],
-            },
           ],
 
           axes: [
@@ -153,8 +148,18 @@ function Curves({ standardCode, width, height, sx }: GraphProps) {
                   x: { scale: "x", field: "date" },
                   y: { scale: "y", field: "value" },
                   shape: { value: "circle" },
-                  size: { value: 600 },
-                  fill: { scale: "color", field: "open" },
+                  size: { value: 100 },
+                  fill: [
+                    { test: `datum.value > ${limit}`, value: "#F25857" },
+                    { test: "datum.open", value: "#FFCE20" },
+                    { value: "#05CD99" },
+                  ],
+                },
+                update: {
+                  fillOpacity: { value: 1 },
+                },
+                hover: {
+                  fillOpacity: { value: 0.5 },
                 },
               },
             },
@@ -166,7 +171,7 @@ function Curves({ standardCode, width, height, sx }: GraphProps) {
                   x: { scale: "x", field: "date" },
                   y: { scale: "y", field: "value" },
                   stroke: { value: colors.primary.main as string },
-                  strokeWidth: { value: 3 },
+                  strokeWidth: { value: 1.5 },
                 },
                 update: {
                   interpolate: { value: "monotone" },
