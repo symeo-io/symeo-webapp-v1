@@ -3,7 +3,6 @@ import {
   GetGraphsInput,
   GetGraphsResponse,
 } from "redux/api/goals/graphs/graphs.types";
-import dayjs from "dayjs";
 
 export const graphsQueryApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -12,8 +11,8 @@ export const graphsQueryApi = api.injectEndpoints({
         url: `/api/v1/teams/goals/${standardCode}/${type}`,
         params: {
           team_id: teamId,
-          start_date: dayjs(startDate).format("YYYY-MM-DD"),
-          end_date: dayjs(endDate).format("YYYY-MM-DD"),
+          start_date: startDate,
+          end_date: endDate,
         },
       }),
       providesTags: (_, __, { teamId, type, standardCode }) => [

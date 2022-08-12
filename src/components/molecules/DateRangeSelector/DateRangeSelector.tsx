@@ -1,6 +1,5 @@
 import * as React from "react";
-import { useCallback, useContext, useMemo } from "react";
-import { SelectedDateRangeContext } from "providers/selectedDateRange/SelectedDateRangeContextProvider";
+import { useCallback, useMemo } from "react";
 import { DateRangePicker, RangeKeyDict } from "react-date-range";
 import { staticRanges } from "components/molecules/DateRangeSelector/utils";
 import { Box, Popover, Typography } from "@mui/material";
@@ -9,6 +8,7 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import dayjs from "dayjs";
+import { useSelectedDateRange } from "hooks/useSelectedDateRange";
 
 const RANGE_KEY = "SELECTED_DATE_RANGE";
 
@@ -25,12 +25,12 @@ function DateRangeSelector() {
 
   const open = Boolean(anchorEl);
 
-  const { dateRange, setDateRange } = useContext(SelectedDateRangeContext);
+  const [dateRange, setDateRange] = useSelectedDateRange();
 
   const selectionRange = useMemo(
     () => ({
-      startDate: dateRange[0],
-      endDate: dateRange[1],
+      startDate: dateRange.startDate,
+      endDate: dateRange.endDate,
       key: RANGE_KEY,
     }),
     [dateRange]
@@ -39,7 +39,10 @@ function DateRangeSelector() {
   const onChange = useCallback(
     (ranges: RangeKeyDict) => {
       const range = ranges[RANGE_KEY];
-      setDateRange([range.startDate, range.endDate]);
+      setDateRange({
+        startDate: range.startDate as Date,
+        endDate: range.endDate as Date,
+      });
     },
     [setDateRange]
   );
@@ -84,9 +87,9 @@ function DateRangeSelector() {
           }}
         />
         <Typography component="span" sx={{ fontWeight: 700 }}>
-          {dayjs(dateRange[0]).format("MMM D")}
+          {dayjs(dateRange.startDate).format("MMM D")}
           {" - "}
-          {dayjs(dateRange[1]).format("MMM D")}
+          {dayjs(dateRange.endDate).format("MMM D")}
         </Typography>
         <ArrowIcon
           sx={{

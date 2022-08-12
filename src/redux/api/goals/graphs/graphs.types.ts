@@ -7,8 +7,8 @@ export type GetGraphsInput = {
   teamId?: string;
   type: GraphType;
   standardCode: StandardCode;
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
 };
 
 export type AverageCurveDataPoint = {

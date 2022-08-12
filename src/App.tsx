@@ -13,7 +13,6 @@ import { SnackbarProvider } from "notistack";
 import { BrowserRouter } from "react-router-dom";
 import ConfirmDialogProvider from "providers/confirm/ConfirmDialogProvider";
 import { LocalStorageContextProvider } from "providers/localStorage/LocalStorageContextProvider";
-import { SelectedDateRangeContextProvider } from "providers/selectedDateRange/SelectedDateRangeContextProvider";
 
 function App() {
   return (
@@ -32,9 +31,7 @@ function App() {
                 <BrowserRouter>
                   <ConfirmDialogProvider>
                     <LocalStorageContextProvider>
-                      <SelectedDateRangeContextProvider>
-                        <RoutesWrapper />
-                      </SelectedDateRangeContextProvider>
+                      <RoutesWrapper />
                     </LocalStorageContextProvider>
                   </ConfirmDialogProvider>
                 </BrowserRouter>

@@ -15,18 +15,15 @@ export const LocalStorageContextProvider = ({
     Record<string, string | undefined>
   >({ ...localStorage });
 
-  const setValue = useCallback(
-    (key: string, value: string | undefined) => {
-      if (value) {
-        localStorage.setItem(key, value);
-      } else {
-        localStorage.removeItem(key);
-      }
+  const setValue = useCallback((key: string, value: string | undefined) => {
+    if (value) {
+      localStorage.setItem(key, value);
+    } else {
+      localStorage.removeItem(key);
+    }
 
-      setStateValues({ ...values, [key]: value });
-    },
-    [values]
-  );
+    setStateValues((previousValues) => ({ ...previousValues, [key]: value }));
+  }, []);
 
   return (
     <LocalStorageContext.Provider
