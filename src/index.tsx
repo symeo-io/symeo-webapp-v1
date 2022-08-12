@@ -1,27 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { SnackbarProvider } from "notistack";
 import "./index.css";
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter } from "react-router-dom";
-import { Auth0Provider } from "@auth0/auth0-react";
 import { config } from "config";
-import { Provider, ReactReduxContext } from "react-redux";
-import { store } from "store";
-import { GetTokenProvider } from "providers/GetTokenProvider";
-import { theme } from "theme/theme";
-import { ThemeProvider } from "@mui/material";
-import { RawIntlProvider } from "react-intl";
-import { intl } from "intl";
-import ConfirmDialogProvider from "providers/confirm/ConfirmDialogProvider";
-import customParseFormat from "dayjs/plugin/customParseFormat";
-import dayjs from "dayjs";
-import { LocalStorageContextProvider } from "providers/localStorage/LocalStorageContextProvider";
 import { datadogRum } from "@datadog/browser-rum";
 import { datadogLogs } from "@datadog/browser-logs";
+import dayjs from "dayjs";
+import quarterOfYear from "dayjs/plugin/quarterOfYear";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 
 dayjs.extend(customParseFormat);
+dayjs.extend(quarterOfYear);
 
 if (config.datadog.clientToken) {
   datadogRum.init({
@@ -47,31 +39,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <RawIntlProvider value={intl}>
-      <Provider store={store} context={ReactReduxContext}>
-        <Auth0Provider
-          domain={config.auth0.domain}
-          clientId={config.auth0.clientId}
-          audience={config.auth0.audience}
-          redirectUri={window.location.origin}
-          cacheLocation="localstorage"
-        >
-          <GetTokenProvider>
-            <ThemeProvider theme={theme}>
-              <SnackbarProvider maxSnack={3}>
-                <BrowserRouter>
-                  <ConfirmDialogProvider>
-                    <LocalStorageContextProvider>
-                      <App />
-                    </LocalStorageContextProvider>
-                  </ConfirmDialogProvider>
-                </BrowserRouter>
-              </SnackbarProvider>
-            </ThemeProvider>
-          </GetTokenProvider>
-        </Auth0Provider>
-      </Provider>
-    </RawIntlProvider>
+    <App />
   </React.StrictMode>
 );
 
