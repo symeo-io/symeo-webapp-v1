@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useContext, useMemo } from "react";
 import { theme } from "theme/theme";
 import VegaGraph from "components/organisms/Graph/VegaGraph";
 import { colors } from "theme/colors";
@@ -7,6 +7,7 @@ import { useGetGraphQuery } from "redux/api/goals/graphs/graphs.api";
 import { GetHistogramResponse } from "redux/api/goals/graphs/graphs.types";
 import { GraphProps } from "components/organisms/Graph/types";
 import { useIntl } from "react-intl";
+import { SelectedDateRangeContext } from "providers/selectedDateRange/SelectedDateRangeContextProvider";
 
 function Histogram({
   standardCode,
@@ -17,14 +18,23 @@ function Histogram({
 }: GraphProps) {
   const { formatMessage } = useIntl();
   const { selectedTeam } = useCurrentUser();
+  const { dateRange } = useContext(SelectedDateRangeContext);
 
   const { data: histogramData, isLoading } = useGetGraphQuery(
     {
       teamId: selectedTeam?.id,
       type: "histogram",
       standardCode,
+      startDate: dateRange[0] as Date,
+      endDate: dateRange[1] as Date,
     },
-    { skip: !selectedTeam || isProcessingInitialJob }
+    {
+      skip:
+        !selectedTeam ||
+        isProcessingInitialJob ||
+        !dateRange[0] ||
+        !dateRange[1],
+    }
   ) as { data: GetHistogramResponse | undefined; isLoading: boolean };
 
   const histogramValues = useMemo(

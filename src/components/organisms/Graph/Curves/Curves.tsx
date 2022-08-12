@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useContext, useMemo } from "react";
 import { theme } from "theme/theme";
 import VegaGraph from "components/organisms/Graph/VegaGraph";
 import { colors } from "theme/colors";
@@ -9,6 +9,7 @@ import { useGetGraphQuery } from "redux/api/goals/graphs/graphs.api";
 import { GetCurveResponse } from "redux/api/goals/graphs/graphs.types";
 import { GraphProps } from "components/organisms/Graph/types";
 import { useIntl } from "react-intl";
+import { SelectedDateRangeContext } from "providers/selectedDateRange/SelectedDateRangeContextProvider";
 
 function Curves({
   standardCode,
@@ -19,14 +20,23 @@ function Curves({
 }: GraphProps) {
   const { formatMessage } = useIntl();
   const { selectedTeam } = useCurrentUser();
+  const { dateRange } = useContext(SelectedDateRangeContext);
 
   const { data, isLoading } = useGetGraphQuery(
     {
       teamId: selectedTeam?.id,
       type: "curves",
       standardCode,
+      startDate: dateRange[0] as Date,
+      endDate: dateRange[1] as Date,
     },
-    { skip: !selectedTeam }
+    {
+      skip:
+        !selectedTeam ||
+        !dateRange[0] ||
+        !dateRange[1] ||
+        isProcessingInitialJob,
+    }
   ) as { data: GetCurveResponse | undefined; isLoading: boolean };
 
   const limit = useMemo(() => data?.curves.limit, [data]);
