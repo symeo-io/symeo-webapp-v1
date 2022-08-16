@@ -11,6 +11,7 @@ export type Route = {
   sidebar?: boolean;
   path: string;
   element: React.ComponentType<object>;
+  defaultParams?: Record<string, string>;
 };
 
 const routes = {
@@ -21,10 +22,13 @@ const routes = {
     element: HomePage,
   } as Route,
   organization: {
-    path: "/organization",
+    path: "/organization/:tab",
     isSecured: true,
     sidebar: true,
     element: OrganizationPage,
+    defaultParams: {
+      tab: "members",
+    },
   } as Route,
   teamGoals: {
     path: "/team-goals",

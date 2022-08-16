@@ -392,5 +392,23 @@ export const theme = createTheme({
         },
       },
     },
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          textTransform: "none",
+          fontSize: "0.875rem",
+          color: colors.secondary.text,
+          fontWeight: 400,
+
+          "&.Mui-selected": {
+            fontWeight: 600,
+            color: colors.secondary.text,
+          },
+        },
+      },
+      defaultProps: {
+        disableRipple: true,
+      },
+    },
   },
 });
