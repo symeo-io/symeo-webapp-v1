@@ -7,6 +7,8 @@ import { useGetGraphQuery } from "redux/api/goals/graphs/graphs.api";
 import { GetHistogramResponse } from "redux/api/goals/graphs/graphs.types";
 import { GraphProps } from "components/organisms/Graph/types";
 import { useIntl } from "react-intl";
+import { useSelectedDateRange } from "hooks/useSelectedDateRange";
+import dayjs from "dayjs";
 
 function Histogram({
   standardCode,
@@ -17,14 +19,19 @@ function Histogram({
 }: GraphProps) {
   const { formatMessage } = useIntl();
   const { selectedTeam } = useCurrentUser();
+  const [dateRange] = useSelectedDateRange();
 
   const { data: histogramData, isLoading } = useGetGraphQuery(
     {
       teamId: selectedTeam?.id,
       type: "histogram",
       standardCode,
+      startDate: dayjs(dateRange.startDate).format("YYYY-MM-DD"),
+      endDate: dayjs(dateRange.endDate).format("YYYY-MM-DD"),
     },
-    { skip: !selectedTeam || isProcessingInitialJob }
+    {
+      skip: !selectedTeam || isProcessingInitialJob,
+    }
   ) as { data: GetHistogramResponse | undefined; isLoading: boolean };
 
   const histogramValues = useMemo(
