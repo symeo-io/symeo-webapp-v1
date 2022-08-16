@@ -1,13 +1,23 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Tab, Typography } from "@mui/material";
 import { useIntl } from "react-intl";
 import OrganizationMembers from "components/organisms/OrganizationMembers/OrganizationMembers";
 import { useCurrentUser } from "hooks/useCurrentUser";
 import OrganizationTeams from "components/organisms/OrganizationTeams/OrganizationTeams";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "hooks/useNavigate";
+import TabPanel from "@mui/lab/TabPanel";
+import { TabContext, TabList } from "@mui/lab";
 
 function Organization() {
   const { formatMessage } = useIntl();
   const { currentUser } = useCurrentUser();
+  const { tab } = useParams();
+  const navigate = useNavigate();
+
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    navigate("organization", { params: { tab: newValue } });
+  };
 
   return (
     <Box
@@ -26,14 +36,34 @@ function Organization() {
           { organizationName: currentUser?.organization?.name }
         )}
       </Typography>
-      <OrganizationMembers
-        sx={{ marginTop: (theme) => theme.spacing(8) }}
-        organizationName={currentUser?.organization?.name ?? ""}
-      />
-      <OrganizationTeams
-        sx={{ marginTop: (theme) => theme.spacing(8) }}
-        organizationName={currentUser?.organization?.name ?? ""}
-      />
+      <TabContext value={tab ?? "members"}>
+        <TabList
+          onChange={handleTabChange}
+          sx={{
+            marginTop: (theme) => theme.spacing(8),
+            marginBottom: (theme) => theme.spacing(1),
+          }}
+        >
+          <Tab
+            label={formatMessage({ id: "organization.members-tab-label" })}
+            value="members"
+          />
+          <Tab
+            label={formatMessage({ id: "organization.teams-tab-label" })}
+            value="teams"
+          />
+        </TabList>
+        <TabPanel value="members">
+          <OrganizationMembers
+            organizationName={currentUser?.organization?.name ?? ""}
+          />
+        </TabPanel>
+        <TabPanel value="teams">
+          <OrganizationTeams
+            organizationName={currentUser?.organization?.name ?? ""}
+          />
+        </TabPanel>
+      </TabContext>
     </Box>
   );
 }

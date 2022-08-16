@@ -60,6 +60,8 @@
   },
   "organization": {
     "title": "Organization Settings - {organizationName}",
+    "members-tab-label": "Members",
+    "teams-tab-label": "Teams",
     "members": {
       "title": "Manage your organization's members",
       "invite-button-label": "Invite new members",
