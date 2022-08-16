@@ -42,7 +42,7 @@ function Curves({
       cloneDeep(data.curves.piece_curve)
         .map((point) => ({
           ...point,
-          date: dayjs(point.date, "DD/MM/YYYY").toDate(),
+          date: dayjs(point.date, "YYYY-MM-DD").toDate(),
         }))
         .sort(function (a, b) {
           return a.date.getTime() - b.date.getTime();
@@ -56,7 +56,7 @@ function Curves({
       cloneDeep(data.curves.average_curve)
         .map((point) => ({
           ...point,
-          date: dayjs(point.date, "DD/MM/YYYY").toDate(),
+          date: dayjs(point.date, "YYYY-MM-DD").toDate(),
         }))
         .sort(function (a, b) {
           return a.date.getTime() - b.date.getTime();
