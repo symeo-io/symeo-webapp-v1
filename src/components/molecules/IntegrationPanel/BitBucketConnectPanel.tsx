@@ -1,13 +1,13 @@
 import React from "react";
-import RepositoryProviderConnectPanel from "./RepositoryProviderConnectPanel";
-import bitBucketLogo from "components/molecules/RepositoryProviderConnectPanel/bitbucket.svg";
+import IntegrationPanel from "./IntegrationPanel";
+import bitBucketLogo from "components/molecules/IntegrationPanel/bitbucket.svg";
 import { PropsWithSx } from "types/PropsWithSx";
 
 export type BitBucketConnectPanelProps = PropsWithSx;
 
 export function BitBucketConnectPanel({ sx }: BitBucketConnectPanelProps) {
   return (
-    <RepositoryProviderConnectPanel
+    <IntegrationPanel
       name="BitBucket"
       logo={bitBucketLogo}
       supported={false}

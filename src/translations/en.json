@@ -10,6 +10,7 @@
       "security-message": "You're in control of your data: we do not copy or store your code on our end.",
       "panel": {
         "connect": "Connect",
+        "enabled": "Enabled",
         "soon": "Soon"
       }
     },
@@ -62,6 +63,7 @@
     "title": "Organization Settings - {organizationName}",
     "members-tab-label": "Members",
     "teams-tab-label": "Teams",
+    "integrations-tab-label": "Integrations",
     "members": {
       "title": "Manage your organization's members",
       "invite-button-label": "Invite new members",
@@ -102,6 +104,10 @@
         "title": "Edit team for {organizationName}",
         "edit-button-label": "Edit"
       }
+    },
+    "integrations": {
+      "title": "Manage your organization's integrations",
+      "code-repositories-provider-title": "code repositories provider"
     }
   },
   "team-goals": {
