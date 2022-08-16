@@ -4,23 +4,37 @@ import { colors } from "theme/colors";
 import Button from "components/atoms/Button/Button";
 import { useIntl } from "react-intl";
 import { PropsWithSx } from "types/PropsWithSx";
+import CheckIcon from "@mui/icons-material/Check";
 
-export type RepositoryProviderConnectPanelProps = PropsWithSx & {
+export type IntegrationPanelProps = PropsWithSx & {
   name: string;
   logo: string;
-  supported: boolean;
+  supported?: boolean;
+  enabled?: boolean;
   onClick?: () => void;
   loading?: boolean;
 };
 
-export function RepositoryProviderConnectPanel({
+function getButtonLabel(supported: boolean, enabled: boolean): string {
+  if (enabled) {
+    return "on-boarding.connect-repositories-provider.panel.enabled";
+  }
+
+  if (supported) {
+    return "on-boarding.connect-repositories-provider.panel.connect";
+  }
+  return "on-boarding.connect-repositories-provider.panel.soon";
+}
+
+export function IntegrationPanel({
   name,
   logo,
-  supported,
+  supported = true,
+  enabled = false,
   onClick,
   loading = false,
   sx,
-}: RepositoryProviderConnectPanelProps) {
+}: IntegrationPanelProps) {
   const { formatMessage } = useIntl();
 
   return (
@@ -58,11 +72,15 @@ export function RepositoryProviderConnectPanel({
           minWidth: "87px",
         }}
       >
-        <Button disabled={!supported} onClick={onClick} loading={loading}>
+        <Button
+          disabled={!supported}
+          onClick={!enabled ? onClick : undefined}
+          loading={loading}
+          color={enabled ? "success" : "primary"}
+          startIcon={enabled ? <CheckIcon /> : undefined}
+        >
           {formatMessage({
-            id: supported
-              ? "on-boarding.connect-repositories-provider.panel.connect"
-              : "on-boarding.connect-repositories-provider.panel.soon",
+            id: getButtonLabel(supported, enabled),
           })}
         </Button>
       </Box>
@@ -70,4 +88,4 @@ export function RepositoryProviderConnectPanel({
   );
 }
 
-export default RepositoryProviderConnectPanel;
+export default IntegrationPanel;

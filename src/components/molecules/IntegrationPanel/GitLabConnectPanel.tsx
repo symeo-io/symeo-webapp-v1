@@ -1,13 +1,13 @@
 import React from "react";
-import RepositoryProviderConnectPanel from "./RepositoryProviderConnectPanel";
-import gitLabLogo from "components/molecules/RepositoryProviderConnectPanel/gitlab.svg";
+import IntegrationPanel from "./IntegrationPanel";
+import gitLabLogo from "components/molecules/IntegrationPanel/gitlab.svg";
 import { PropsWithSx } from "types/PropsWithSx";
 
 export type GitLabConnectPanelProps = PropsWithSx;
 
 export function GitLabConnectPanel({ sx }: GitLabConnectPanelProps) {
   return (
-    <RepositoryProviderConnectPanel
+    <IntegrationPanel
       name="GitLab"
       logo={gitLabLogo}
       supported={false}

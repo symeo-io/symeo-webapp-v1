@@ -1,9 +1,10 @@
 import React from "react";
 import { Box, Tab, Typography } from "@mui/material";
 import { useIntl } from "react-intl";
-import OrganizationMembers from "components/organisms/OrganizationMembers/OrganizationMembers";
 import { useCurrentUser } from "hooks/useCurrentUser";
+import OrganizationMembers from "components/organisms/OrganizationMembers/OrganizationMembers";
 import OrganizationTeams from "components/organisms/OrganizationTeams/OrganizationTeams";
+import OrganizationIntegrations from "components/organisms/OrganizationIntegrations/OrganizationIntegrations";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "hooks/useNavigate";
 import TabPanel from "@mui/lab/TabPanel";
@@ -28,6 +29,9 @@ function Organization() {
         maxWidth: "1100px",
         width: "100%",
         boxSizing: "border-box",
+        "& .MuiTabPanel-root": {
+          padding: 0,
+        },
       }}
     >
       <Typography variant="h1">
@@ -41,7 +45,7 @@ function Organization() {
           onChange={handleTabChange}
           sx={{
             marginTop: (theme) => theme.spacing(8),
-            marginBottom: (theme) => theme.spacing(1),
+            marginBottom: (theme) => theme.spacing(3),
           }}
         >
           <Tab
@@ -52,6 +56,10 @@ function Organization() {
             label={formatMessage({ id: "organization.teams-tab-label" })}
             value="teams"
           />
+          <Tab
+            label={formatMessage({ id: "organization.integrations-tab-label" })}
+            value="integrations"
+          />
         </TabList>
         <TabPanel value="members">
           <OrganizationMembers
@@ -60,6 +68,11 @@ function Organization() {
         </TabPanel>
         <TabPanel value="teams">
           <OrganizationTeams
+            organizationName={currentUser?.organization?.name ?? ""}
+          />
+        </TabPanel>
+        <TabPanel value="integrations">
+          <OrganizationIntegrations
             organizationName={currentUser?.organization?.name ?? ""}
           />
         </TabPanel>

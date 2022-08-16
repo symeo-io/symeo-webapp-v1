@@ -3,8 +3,8 @@ import {
   useFinishInstallGitHubApp,
   useInstallGitHubApp,
 } from "hooks/github/useInstallGitHubApp";
-import RepositoryProviderConnectPanel from "./RepositoryProviderConnectPanel";
-import gitHubLogo from "components/molecules/RepositoryProviderConnectPanel/github.svg";
+import IntegrationPanel from "./IntegrationPanel";
+import gitHubLogo from "components/molecules/IntegrationPanel/github.svg";
 import { PropsWithSx } from "types/PropsWithSx";
 
 export type GitHubConnectPanelProps = PropsWithSx;
@@ -20,7 +20,7 @@ export function GitHubConnectPanel({ sx }: GitHubConnectPanelProps) {
   }, [isLoadingGithub, installGitHubApp]);
 
   return (
-    <RepositoryProviderConnectPanel
+    <IntegrationPanel
       name="GitHub"
       logo={gitHubLogo}
       supported={true}

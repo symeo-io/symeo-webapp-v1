@@ -3,9 +3,9 @@ import { Box } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import { useIntl } from "react-intl";
 import MessageBox from "components/atoms/MessageBox/MessageBox";
-import GitHubConnectPanel from "components/molecules/RepositoryProviderConnectPanel/GitHubConnectPanel";
-import BitBucketConnectPanel from "components/molecules/RepositoryProviderConnectPanel/BitBucketConnectPanel";
-import GitLabConnectPanel from "components/molecules/RepositoryProviderConnectPanel/GitLabConnectPanel";
+import GitHubConnectPanel from "components/molecules/IntegrationPanel/GitHubConnectPanel";
+import BitBucketConnectPanel from "components/molecules/IntegrationPanel/BitBucketConnectPanel";
+import GitLabConnectPanel from "components/molecules/IntegrationPanel/GitLabConnectPanel";
 import OnBoardingPageContainer from "components/molecules/OnBoardingPageContainer/OnBoardingPageContainer";
 import OnBoardingCard from "components/molecules/OnBoardingCard/OnBoardingCard";
 
