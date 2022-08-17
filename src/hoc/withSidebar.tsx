@@ -14,8 +14,8 @@ export function withSidebar<T = object>(
             flex: 1,
             overflow: "auto",
             display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
+            flexDirection: "row",
+            justifyContent: "center",
           }}
         >
           <WrappedComponent {...props} />

@@ -20,6 +20,8 @@
     "email-validator": "^2.0.4",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "highcharts": "^10.2.0",
+    "highcharts-react-official": "^3.1.0",
     "lodash": "^4.17.21",
     "notistack": "^3.0.0-alpha.7",
     "prettier": "^2.7.1",
