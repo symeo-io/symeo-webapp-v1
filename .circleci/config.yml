@@ -58,6 +58,27 @@ jobs:
       - slack/notify:
           event: pass
           template: basic_success_1
+  build-aws-infrastructure:
+    executor: aws-cli/default
+    steps:
+      - checkout
+      - aws-cli/setup
+      - run:
+          name: Build infrastructure
+          command: |
+            cd .aws && ./build_infrastructure.sh \
+              --region ${AWS_REGION} \
+              --env ${ENVIRONMENT} \
+              --prefix-url ${PREFIX_URL_FRONTEND} \
+              --domain ${DOMAIN} \
+              --acm-arn ${ACM_ARN}
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          template: basic_success_1
+
 workflows:
   webapp:
     jobs:
@@ -75,3 +96,33 @@ workflows:
             branches:
               only:
                 - staging
+      - deploy:
+          requires:
+            - lint
+          context:
+            - slack-notifications
+            - demo
+          filters:
+            branches:
+              only:
+                - demo
+  build-infrastructure:
+    jobs:
+      - build-aws-infrastructure:
+          context:
+            - staging
+            - slack-notifications
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^infrastructure-staging-.+$/
+      - build-aws-infrastructure:
+          context:
+            - demo
+            - slack-notifications
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^infrastructure-demo-.+$/
