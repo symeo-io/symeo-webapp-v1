@@ -7,6 +7,7 @@ import { Standard } from "components/organisms/StandardCard/StandardCard";
 import { useIntl } from "react-intl";
 import GoalDashboardSection from "components/organisms/GoalDashboardSection/GoalDashboardSection";
 import { useGetJobStatusQuery } from "redux/api/jobs/jobs.api";
+import DateRangeSelector from "components/molecules/DateRangeSelector/DateRangeSelector";
 
 const standards = standardsData.standards as Record<StandardCode, Standard>;
 
@@ -48,15 +49,21 @@ function Home() {
         padding: (theme) => theme.spacing(3),
       }}
     >
-      <Typography
-        variant="h1"
-        sx={{ marginBottom: (theme) => theme.spacing(4) }}
+      <Box
+        sx={{
+          marginBottom: (theme) => theme.spacing(4),
+          display: "flex",
+          alignItems: "center",
+        }}
       >
-        {formatMessage(
-          { id: "dashboard.title" },
-          { teamName: selectedTeam?.name }
-        )}
-      </Typography>
+        <Typography variant="h1" sx={{ flex: 1 }}>
+          {formatMessage(
+            { id: "dashboard.title" },
+            { teamName: selectedTeam?.name }
+          )}
+        </Typography>
+        <DateRangeSelector />
+      </Box>
       {jobStatusData &&
         goals?.map((goal, index) => (
           <GoalDashboardSection

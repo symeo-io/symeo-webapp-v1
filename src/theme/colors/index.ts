@@ -3,7 +3,6 @@ import secondary from "./secondary";
 import error from "./error";
 import warning from "theme/colors/warning";
 import success from "theme/colors/success";
-import { Color } from "./color.type";
 import {
   amber,
   blue,
@@ -25,7 +24,7 @@ import {
   yellow,
 } from "@mui/material/colors";
 
-export const colors: Record<string, Color> = {
+export const colors = {
   primary,
   secondary,
   error,

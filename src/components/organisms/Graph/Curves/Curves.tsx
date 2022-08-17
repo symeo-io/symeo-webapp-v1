@@ -9,6 +9,7 @@ import { useGetGraphQuery } from "redux/api/goals/graphs/graphs.api";
 import { GetCurveResponse } from "redux/api/goals/graphs/graphs.types";
 import { GraphProps } from "components/organisms/Graph/types";
 import { useIntl } from "react-intl";
+import { useSelectedDateRange } from "hooks/useSelectedDateRange";
 
 function Curves({
   standardCode,
@@ -19,14 +20,19 @@ function Curves({
 }: GraphProps) {
   const { formatMessage } = useIntl();
   const { selectedTeam } = useCurrentUser();
+  const [dateRange] = useSelectedDateRange();
 
   const { data, isLoading } = useGetGraphQuery(
     {
       teamId: selectedTeam?.id,
       type: "curves",
       standardCode,
+      startDate: dayjs(dateRange.startDate).format("YYYY-MM-DD"),
+      endDate: dayjs(dateRange.endDate).format("YYYY-MM-DD"),
     },
-    { skip: !selectedTeam }
+    {
+      skip: !selectedTeam || isProcessingInitialJob,
+    }
   ) as { data: GetCurveResponse | undefined; isLoading: boolean };
 
   const limit = useMemo(() => data?.curves.limit, [data]);
@@ -36,7 +42,7 @@ function Curves({
       cloneDeep(data.curves.piece_curve)
         .map((point) => ({
           ...point,
-          date: dayjs(point.date, "DD/MM/YYYY").toDate(),
+          date: dayjs(point.date, "YYYY-MM-DD").toDate(),
         }))
         .sort(function (a, b) {
           return a.date.getTime() - b.date.getTime();
@@ -50,7 +56,7 @@ function Curves({
       cloneDeep(data.curves.average_curve)
         .map((point) => ({
           ...point,
-          date: dayjs(point.date, "DD/MM/YYYY").toDate(),
+          date: dayjs(point.date, "YYYY-MM-DD").toDate(),
         }))
         .sort(function (a, b) {
           return a.date.getTime() - b.date.getTime();
