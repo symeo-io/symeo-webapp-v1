@@ -51,7 +51,7 @@ jobs:
             - node_modules
       - run:
           name: Deploy to S3
-          command: cd .aws && ./deploy.sh --region ${AWS_REGION} --env ${CIRCLE_BRANCH}
+          command: cd .aws && ./deploy.sh --region ${AWS_REGION} --env ${ENVIRONMENT}
       - slack/notify:
           event: fail
           template: basic_fail_1
@@ -64,11 +64,13 @@ workflows:
       - lint:
           context:
             - slack-notifications
+            - staging
       - deploy:
           requires:
             - lint
           context:
             - slack-notifications
+            - staging
           filters:
             branches:
               only:
