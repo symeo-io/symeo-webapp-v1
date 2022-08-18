@@ -1,12 +1,12 @@
 {
-  "name": "Catlean",
+  "name": "Symeo",
   "confirm": {
     "cancel": "Cancel"
   },
   "on-boarding": {
     "connect-repositories-provider": {
       "title": "Connect your code repositories provider",
-      "message": "Let Catlean analyse your code, commits and pull requests is the fastest way to measure and improve your DevOps performance.",
+      "message": "Let Symeo analyse your code, commits and pull requests is the fastest way to measure and improve your DevOps performance.",
       "security-message": "You're in control of your data: we do not copy or store your code on our end.",
       "panel": {
         "connect": "Connect",
@@ -129,7 +129,7 @@
     },
     "cancel": "Cancel",
     "graphs": {
-      "loading": "Catlean is performing the initial processing of your data. Graphs will be displayed shortly.",
+      "loading": "Symeo is performing the initial processing of your data. Graphs will be displayed shortly.",
       "histogram": {
         "title": "Tendency"
       },

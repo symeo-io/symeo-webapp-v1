@@ -6,18 +6,18 @@ orbs:
 
 jobs:
   lint:
-    working_directory: ~/catlean-webapp
+    working_directory: ~/symeo-webapp
     docker:
       - image: cimg/node:16.16.0
     steps:
       - checkout
       - restore_cache:
-          key: dependency-cache-{{ checksum "~/catlean-webapp/yarn.lock" }}
+          key: dependency-cache-{{ checksum "~/symeo-webapp/yarn.lock" }}
       - run:
           name: Install front dependencies
           command: yarn install
       - save_cache:
-          key: dependency-cache-{{ checksum "~/catlean-webapp/yarn.lock" }}
+          key: dependency-cache-{{ checksum "~/symeo-webapp/yarn.lock" }}
           paths:
             - node_modules
       - run:
@@ -30,13 +30,13 @@ jobs:
           event: pass
           template: basic_success_1
   deploy:
-    working_directory: ~/catlean-webapp
+    working_directory: ~/symeo-webapp
     executor: aws-cli/default
     steps:
       - checkout
       - aws-cli/setup
       - restore_cache:
-          key: dependency-cache-{{ checksum "~/catlean-webapp/yarn.lock" }}
+          key: dependency-cache-{{ checksum "~/symeo-webapp/yarn.lock" }}
       - run:
           name: Install nodejs
           command: |
@@ -46,7 +46,7 @@ jobs:
           name: Install front dependencies
           command: yarn install
       - save_cache:
-          key: dependency-cache-{{ checksum "~/catlean-webapp/yarn.lock" }}
+          key: dependency-cache-{{ checksum "~/symeo-webapp/yarn.lock" }}
           paths:
             - node_modules
       - run:

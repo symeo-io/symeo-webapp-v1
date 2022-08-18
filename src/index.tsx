@@ -20,7 +20,7 @@ if (config.datadog.clientToken) {
     applicationId: config.datadog.applicationId,
     clientToken: config.datadog.clientToken,
     site: config.datadog.site,
-    service: "catlean-webapp",
+    service: "symeo-webapp",
     env: config.env,
     sampleRate: 100,
     trackInteractions: true,

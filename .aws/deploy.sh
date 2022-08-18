@@ -41,7 +41,7 @@ else
     export AWS_PROFILE=${PROFILE}
 fi
 
-export_stack_outputs catlean-webapp-s3-${ENV} ${REGION}
+export_stack_outputs symeo-webapp-s3-${ENV} ${REGION}
 
 yarn build:${ENV}
 
