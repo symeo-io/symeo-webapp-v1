@@ -44,7 +44,11 @@ function Curves({ standardCode, isProcessingInitialJob, sx }: GraphProps) {
           : undefined
       }
       title={formatMessage({ id: "standards.graphs.curves.title" })}
-      options={buildCurveOptions(limit, series)}
+      options={buildCurveOptions(
+        limit,
+        series,
+        formatMessage({ id: `standards.${standardCode}.curves.yAxisTitle` })
+      )}
     />
   );
 }

@@ -53,7 +53,11 @@ function Histogram({
           : undefined
       }
       title={formatMessage({ id: "standards.graphs.histogram.title" })}
-      options={buildHistogramOptions(dates, series as SeriesOptionsType[])}
+      options={buildHistogramOptions(
+        dates,
+        series as SeriesOptionsType[],
+        formatMessage({ id: `standards.${standardCode}.histogram.yAxisTitle` })
+      )}
     />
   );
 }
