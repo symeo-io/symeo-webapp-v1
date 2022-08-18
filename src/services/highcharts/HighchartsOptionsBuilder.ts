@@ -26,7 +26,8 @@ export const DEFAULT_COMMON_OPTIONS = {
 
 export const buildHistogramOptions = (
   categories: string[],
-  series: SeriesOptionsType[]
+  series: SeriesOptionsType[],
+  yAxisTitle?: string
 ): HighchartsReact.Props["options"] => ({
   chart: {
     type: "column",
@@ -38,6 +39,11 @@ export const buildHistogramOptions = (
   yAxis: {
     min: 0,
     opposite: false,
+    title: yAxisTitle
+      ? {
+          text: yAxisTitle,
+        }
+      : undefined,
   },
   plotOptions: {
     series: {
@@ -55,7 +61,8 @@ export const buildHistogramOptions = (
 
 export const buildCurveOptions = (
   limit: number,
-  series: SeriesOptionsType[]
+  series: SeriesOptionsType[],
+  yAxisTitle?: string
 ): HighchartsReact.Props["options"] => ({
   xAxis: {
     type: "datetime",
@@ -67,6 +74,11 @@ export const buildCurveOptions = (
   yAxis: {
     type: "logarithmic",
     opposite: false,
+    title: yAxisTitle
+      ? {
+          text: yAxisTitle,
+        }
+      : undefined,
     plotLines: limit
       ? [
           {

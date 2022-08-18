@@ -148,6 +148,12 @@
       },
       "dashboard": {
         "title": "All Pull Requests are merged in less than {target} days"
+      },
+      "histogram": {
+        "yAxisTitle": "Pull Requests"
+      },
+      "curves": {
+        "yAxisTitle": "Days to merge"
       }
     },
     "pull-request-size": {
@@ -161,6 +167,12 @@
       },
       "dashboard": {
         "title": "Less than {target} changes per PR"
+      },
+      "histogram": {
+        "yAxisTitle": "Pull Requests"
+      },
+      "curves": {
+        "yAxisTitle": "Changes per Pull Request"
       }
     }
   }
