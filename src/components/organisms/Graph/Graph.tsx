@@ -2,7 +2,7 @@ import React from "react";
 import HighchartsReact from "highcharts-react-official";
 import { Box, Card, CircularProgress, Typography } from "@mui/material";
 import { PropsWithSx } from "types/PropsWithSx";
-import Highcharts from "highcharts/highstock";
+import Highcharts from "services/highcharts/Highcharts";
 
 export type GraphProps = PropsWithSx & {
   title: string;
