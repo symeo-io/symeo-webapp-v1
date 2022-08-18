@@ -1,23 +1,23 @@
 import React from "react";
-import { Vega } from "react-vega";
+import HighchartsReact from "highcharts-react-official";
 import { Box, Card, CircularProgress, Typography } from "@mui/material";
-import { VegaProps } from "react-vega/lib/Vega";
 import { PropsWithSx } from "types/PropsWithSx";
+import Highcharts from "highcharts/highstock";
 
-export type VegaGraphProps = PropsWithSx & {
+export type GraphProps = PropsWithSx & {
   title: string;
-  vega: VegaProps;
+  options: HighchartsReact.Props["options"];
   loading?: boolean;
   loadingMessage?: string;
 };
 
-function VegaGraph({
+function Graph({
   title,
-  vega,
+  options,
   loading = false,
   loadingMessage,
   sx,
-}: VegaGraphProps) {
+}: GraphProps) {
   return (
     <Card
       sx={{
@@ -34,7 +34,11 @@ function VegaGraph({
         {title}
       </Typography>
       <Box sx={{ position: "relative" }}>
-        <Vega {...vega} />
+        <HighchartsReact
+          highcharts={Highcharts}
+          constructorType="stockChart"
+          options={options}
+        />
         {loading && (
           <Box
             sx={{
@@ -70,4 +74,4 @@ function VegaGraph({
   );
 }
 
-export default VegaGraph;
+export default Graph;

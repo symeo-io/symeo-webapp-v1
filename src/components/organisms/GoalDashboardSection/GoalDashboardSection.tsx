@@ -48,17 +48,16 @@ function GoalDashboardSection({
           <SettingsIcon />
         </IconButton>
       </Typography>
-      <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+      <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
         {standard.availableGraphs.map((graphType) => (
           <GoalGraph
             key={graphType}
             type={graphType}
             standardCode={standard.code}
-            width={415}
-            height={280}
             isProcessingInitialJob={isProcessingInitialJob}
             sx={{
               margin: (theme) => theme.spacing(1),
+              flex: 1,
             }}
           />
         ))}
