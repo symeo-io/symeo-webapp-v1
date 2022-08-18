@@ -16,7 +16,7 @@ export const buildHistogramSeries = (
 
   const aboveSeries: { name: string; data: number[]; color: string } = {
     name: "Above limit",
-    color: colors.warning.light as string,
+    color: "rgb(255, 28, 82)",
     data: [],
   };
   const belowSeries: { name: string; data: number[]; color: string } = {
