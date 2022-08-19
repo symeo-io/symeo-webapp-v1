@@ -10,6 +10,7 @@ import dayjs from "dayjs";
 import { SeriesOptionsType } from "highcharts";
 import { buildHistogramOptions } from "services/highcharts/HighchartsOptionsBuilder";
 import { buildHistogramSeries } from "services/highcharts/HighchartsSeriesBuilder";
+import { useGetMetricsQuery } from "redux/api/goals/metrics/metrics.api";
 
 function Histogram({
   standardCode,
@@ -22,7 +23,7 @@ function Histogram({
 
   const { data: histogramData, isLoading } = useGetGraphQuery(
     {
-      teamId: selectedTeam?.id,
+      teamId: selectedTeam?.id as string,
       type: "histogram",
       standardCode,
       startDate: dayjs(dateRange.startDate).format("YYYY-MM-DD"),
@@ -32,6 +33,18 @@ function Histogram({
       skip: !selectedTeam || isProcessingInitialJob,
     }
   ) as { data: GetHistogramResponse | undefined; isLoading: boolean };
+
+  const { data: metricsData } = useGetMetricsQuery(
+    {
+      teamId: selectedTeam?.id as string,
+      standardCode,
+      startDate: dayjs(dateRange.startDate).format("YYYY-MM-DD"),
+      endDate: dayjs(dateRange.endDate).format("YYYY-MM-DD"),
+    },
+    {
+      skip: !selectedTeam || isProcessingInitialJob,
+    }
+  );
 
   const histogramValues = useMemo(
     () => (histogramData ? histogramData.histogram.data : []),
@@ -52,7 +65,19 @@ function Histogram({
           ? formatMessage({ id: "standards.graphs.loading" })
           : undefined
       }
-      title={formatMessage({ id: "standards.graphs.histogram.title" })}
+      title={
+        metricsData?.metrics.average.value !== undefined
+          ? formatMessage(
+              { id: `standards.${standardCode}.histogram.title` },
+              { value: metricsData?.metrics.average.value }
+            )
+          : undefined
+      }
+      subtitle={formatMessage({
+        id: `standards.${standardCode}.histogram.subtitle`,
+      })}
+      tendency={metricsData?.metrics.average.tendency_percentage}
+      tendencyColor="red"
       options={buildHistogramOptions(
         dates,
         series as SeriesOptionsType[],

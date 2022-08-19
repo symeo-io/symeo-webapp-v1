@@ -25,29 +25,38 @@ function GoalDashboardSection({
 
   return (
     <Box sx={sx}>
-      <Typography
-        variant="h2"
+      <Box
         sx={{
-          marginBottom: (theme) => theme.spacing(4),
           display: "flex",
+          flexWrap: "wrap",
           alignItems: "center",
+          marginBottom: (theme) => theme.spacing(4),
         }}
       >
-        {formatMessage(
-          { id: `standards.${standard.code}.dashboard.title` },
-          { target: goal.value }
-        )}
-        <IconButton
-          sx={{ marginLeft: (theme) => theme.spacing(1) }}
-          onClick={() =>
-            navigate("teamGoalSetting", {
-              params: { standardCode: standard.code },
-            })
-          }
+        <Typography
+          variant="h2"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            flex: 1,
+          }}
         >
-          <SettingsIcon />
-        </IconButton>
-      </Typography>
+          {formatMessage(
+            { id: `standards.${standard.code}.dashboard.title` },
+            { target: goal.value }
+          )}
+          <IconButton
+            sx={{ marginLeft: (theme) => theme.spacing(1) }}
+            onClick={() =>
+              navigate("teamGoalSetting", {
+                params: { standardCode: standard.code },
+              })
+            }
+          >
+            <SettingsIcon />
+          </IconButton>
+        </Typography>
+      </Box>
       <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
         {standard.availableGraphs.map((graphType) => (
           <GoalGraph

@@ -15,8 +15,19 @@ export const graphsQueryApi = api.injectEndpoints({
           end_date: endDate,
         },
       }),
-      providesTags: (_, __, { teamId, type, standardCode }) => [
-        { type: "Graph", graphType: type, teamId, standardCode },
+      providesTags: (
+        _,
+        __,
+        { teamId, type, standardCode, startDate, endDate }
+      ) => [
+        {
+          type: "Graph",
+          graphType: type,
+          teamId,
+          standardCode,
+          startDate,
+          endDate,
+        },
       ],
     }),
   }),

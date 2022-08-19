@@ -9,6 +9,7 @@ import { useIntl } from "react-intl";
 import { useSelectedDateRange } from "hooks/useSelectedDateRange";
 import { buildCurveOptions } from "services/highcharts/HighchartsOptionsBuilder";
 import { buildCurveSeries } from "services/highcharts/HighchartsSeriesBuilder";
+import { useGetMetricsQuery } from "redux/api/goals/metrics/metrics.api";
 
 function Curves({ standardCode, isProcessingInitialJob, sx }: GraphProps) {
   const { formatMessage } = useIntl();
@@ -17,7 +18,7 @@ function Curves({ standardCode, isProcessingInitialJob, sx }: GraphProps) {
 
   const { data, isLoading } = useGetGraphQuery(
     {
-      teamId: selectedTeam?.id,
+      teamId: selectedTeam?.id as string,
       type: "curves",
       standardCode,
       startDate: dayjs(dateRange.startDate).format("YYYY-MM-DD"),
@@ -27,6 +28,18 @@ function Curves({ standardCode, isProcessingInitialJob, sx }: GraphProps) {
       skip: !selectedTeam || isProcessingInitialJob,
     }
   ) as { data: GetCurveResponse | undefined; isLoading: boolean };
+
+  const { data: metricsData } = useGetMetricsQuery(
+    {
+      teamId: selectedTeam?.id as string,
+      standardCode,
+      startDate: dayjs(dateRange.startDate).format("YYYY-MM-DD"),
+      endDate: dayjs(dateRange.endDate).format("YYYY-MM-DD"),
+    },
+    {
+      skip: !selectedTeam || isProcessingInitialJob,
+    }
+  );
 
   const { limit, series } = useMemo(
     () =>
@@ -43,7 +56,19 @@ function Curves({ standardCode, isProcessingInitialJob, sx }: GraphProps) {
           ? formatMessage({ id: "standards.graphs.loading" })
           : undefined
       }
-      title={formatMessage({ id: "standards.graphs.curves.title" })}
+      title={
+        metricsData?.metrics.meeting_goal.percentage !== undefined
+          ? formatMessage(
+              { id: `standards.${standardCode}.curves.title` },
+              { value: metricsData?.metrics.meeting_goal.percentage }
+            )
+          : undefined
+      }
+      subtitle={formatMessage({
+        id: `standards.${standardCode}.curves.subtitle`,
+      })}
+      tendency={metricsData?.metrics.meeting_goal.tendency_percentage}
+      tendencyColor="red"
       options={buildCurveOptions(
         limit,
         series,
