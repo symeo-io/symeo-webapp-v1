@@ -24,7 +24,6 @@ export function applyHighchartsRoundedCorner(H: typeof Highcharts) {
 }
 
 function shouldRoundCorner(point: Highcharts.Point): boolean {
-  console.log("shouldRoundCorner");
   if (
     point.series.chart.options.plotOptions?.series?.stacking === "normal" ||
     point.series.chart.options.plotOptions?.series?.stacking === "percent" ||
@@ -41,7 +40,7 @@ function shouldRoundCorner(point: Highcharts.Point): boolean {
     const aboveCurrentSeries = point.series.chart.series.slice(0, seriesIndex);
     for (const series of aboveCurrentSeries) {
       const abovePoint = series.points[point.index];
-      if (abovePoint.y !== 0) {
+      if (abovePoint.y !== 0 && abovePoint.visible && series.visible) {
         return false;
       }
     }

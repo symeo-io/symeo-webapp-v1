@@ -55,6 +55,12 @@ export const buildHistogramOptions = (
       },
     },
   },
+  legend: {
+    layout: "horizontal",
+    align: "center",
+    enabled: true,
+    verticalAlign: "bottom",
+  },
   ...DEFAULT_COMMON_OPTIONS,
   series,
 });
@@ -99,6 +105,12 @@ export const buildCurveOptions = (
         },
       },
     },
+  },
+  legend: {
+    layout: "horizontal",
+    align: "center",
+    enabled: true,
+    verticalAlign: "bottom",
   },
   ...DEFAULT_COMMON_OPTIONS,
   series,
