@@ -3,6 +3,7 @@ import { colors } from "theme/colors";
 import {
   GetCurveResponse,
   HistogramDataPoint,
+  PieceCurveDataPoint,
 } from "redux/api/goals/graphs/graphs.types";
 import dayjs from "dayjs";
 import cloneDeep from "lodash/cloneDeep";
@@ -42,35 +43,38 @@ export const buildCurveSeries = (
 ): { limit: number; series: SeriesOptionsType[] } => {
   const limit = data.limit;
 
-  const pieces = {
-    name: "Pieces",
-    type: "scatter",
-    marker: {
-      symbol: "circle",
-      fillColor: "#FFFFFF",
-      lineWidth: 2,
-      lineColor: null, // inherit from series
-    },
-    data: data.piece_curve
-      ? cloneDeep(data.piece_curve)
-          .sort(function (a, b) {
-            return (
-              dayjs(a.date, "YYYY-MM-DD").toDate().getTime() -
-              dayjs(b.date, "YYYY-MM-DD").toDate().getTime()
-            );
-          })
-          .map((point) => ({
-            x: dayjs(point.date, "YYYY-MM-DD").toDate().getTime(),
-            y: point.value,
-            color:
-              point.value > limit
-                ? "rgb(255, 28, 82)"
-                : point.open
-                ? (colors.warning.light as string)
-                : "rgb(10, 213, 112)",
-          }))
-      : [],
-  };
+  const sortedPieces = cloneDeep(data.piece_curve).sort(function (a, b) {
+    return (
+      dayjs(a.date, "YYYY-MM-DD").toDate().getTime() -
+      dayjs(b.date, "YYYY-MM-DD").toDate().getTime()
+    );
+  });
+
+  const piecesAboveLimit = sortedPieces.filter((piece) => piece.value >= limit);
+  const piecesUnderLimit = sortedPieces.filter(
+    (piece) => piece.value < limit && !piece.open
+  );
+  const piecesOpen = sortedPieces.filter(
+    (piece) => piece.value < limit && piece.open
+  );
+
+  const aboveLimit = buildPieceScatterSeries(
+    piecesAboveLimit,
+    "Above limit",
+    "rgb(255, 28, 82)"
+  );
+
+  const underLimit = buildPieceScatterSeries(
+    piecesUnderLimit,
+    "Under limit",
+    "rgb(10, 213, 112)"
+  );
+
+  const open = buildPieceScatterSeries(
+    piecesOpen,
+    "Open PRs",
+    colors.warning.light as string
+  );
 
   const average = {
     name: "Average",
@@ -93,22 +97,47 @@ export const buildCurveSeries = (
         enabled: false,
       },
     },
-    data: data.average_curve
-      ? cloneDeep(data.average_curve)
-          .sort(function (a, b) {
-            return (
-              dayjs(a.date, "YYYY-MM-DD").toDate().getTime() -
-              dayjs(b.date, "YYYY-MM-DD").toDate().getTime()
-            );
-          })
-          .map((point) => [
-            dayjs(point.date, "YYYY-MM-DD").toDate().getTime(),
-            point.value,
-          ])
-      : [],
+    data: cloneDeep(data.average_curve)
+      .sort(function (a, b) {
+        return (
+          dayjs(a.date, "YYYY-MM-DD").toDate().getTime() -
+          dayjs(b.date, "YYYY-MM-DD").toDate().getTime()
+        );
+      })
+      .map((point) => [
+        dayjs(point.date, "YYYY-MM-DD").toDate().getTime(),
+        point.value,
+      ]),
   };
 
-  const series = [average as SeriesOptionsType, pieces as SeriesOptionsType];
+  const series = [
+    average as SeriesOptionsType,
+    aboveLimit as SeriesOptionsType,
+    underLimit as SeriesOptionsType,
+    open as SeriesOptionsType,
+  ];
 
   return { limit, series };
 };
+
+function buildPieceScatterSeries(
+  points: PieceCurveDataPoint[],
+  name: string,
+  color: string
+) {
+  return {
+    name,
+    type: "scatter",
+    color,
+    marker: {
+      symbol: "circle",
+      fillColor: "#FFFFFF",
+      lineWidth: 2,
+      lineColor: null, // inherit from series
+    },
+    data: points.map((point) => ({
+      x: dayjs(point.date, "YYYY-MM-DD").toDate().getTime(),
+      y: point.value,
+    })),
+  };
+}
