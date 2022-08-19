@@ -70,11 +70,7 @@ export const buildCurveSeries = (
     "rgb(10, 213, 112)"
   );
 
-  const open = buildPieceScatterSeries(
-    piecesOpen,
-    "Open PRs",
-    colors.warning.light as string
-  );
+  const open = buildPieceScatterSeries(piecesOpen, "Open PRs", "#ffbf29");
 
   const average = {
     name: "Average",
