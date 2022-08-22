@@ -32,7 +32,11 @@ function PullRequestPieceTooltip({
           alignItems: "center",
         }}
       >
-        <img src={branchIcon} style={{ height: "16px", marginRight: "8px" }} />
+        <img
+          src={branchIcon}
+          style={{ height: "16px", marginRight: "8px" }}
+          alt="branch"
+        />
         <span style={{ fontWeight: 600 }}>{branchName}</span>
       </div>
       <div
