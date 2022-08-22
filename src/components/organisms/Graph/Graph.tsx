@@ -3,9 +3,13 @@ import HighchartsReact from "highcharts-react-official";
 import { Box, Card, CircularProgress, Typography } from "@mui/material";
 import { PropsWithSx } from "types/PropsWithSx";
 import Highcharts from "services/highcharts/Highcharts";
+import Status from "components/atoms/Status/Status";
 
 export type GraphProps = PropsWithSx & {
-  title: string;
+  title?: string;
+  subtitle?: string;
+  tendency?: number;
+  tendencyColor?: "red" | "green";
   options: HighchartsReact.Props["options"];
   loading?: boolean;
   loadingMessage?: string;
@@ -13,11 +17,17 @@ export type GraphProps = PropsWithSx & {
 
 function Graph({
   title,
+  subtitle,
+  tendency,
+  tendencyColor,
   options,
   loading = false,
   loadingMessage,
   sx,
 }: GraphProps) {
+  const tendencyLabel =
+    tendency && tendency > 0 ? `+${tendency}%` : `${tendency}%`;
+
   return (
     <Card
       sx={{
@@ -27,12 +37,26 @@ function Graph({
         ...sx,
       }}
     >
-      <Typography
-        variant="h2"
-        sx={{ marginBottom: (theme) => theme.spacing(4) }}
-      >
-        {title}
-      </Typography>
+      {title && (
+        <Box sx={{ marginBottom: (theme) => theme.spacing(4) }}>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Typography variant="h2">{title}</Typography>
+            {tendency && (
+              <Status
+                label={tendencyLabel}
+                variant={tendencyColor === "green" ? "success" : "error"}
+                sx={{ marginLeft: (theme) => theme.spacing(1) }}
+              />
+            )}
+          </Box>
+
+          {subtitle && (
+            <Typography variant="body1" color="secondary">
+              {subtitle}
+            </Typography>
+          )}
+        </Box>
+      )}
       <Box sx={{ position: "relative" }}>
         <HighchartsReact
           highcharts={Highcharts}
