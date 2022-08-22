@@ -1,7 +1,11 @@
 import { SeriesOptionsType } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
+import Highcharts from "services/highcharts/Highcharts";
 import { colors } from "theme/colors";
 import { renderToString } from "react-dom/server";
+import PullRequestPieceTooltip from "services/highcharts/components/PullRequestPieceTooltip/PullRequestPieceTooltip";
+import { StandardCode } from "redux/api/goals/graphs/graphs.types";
+import { intl } from "intl";
 
 export const DEFAULT_COMMON_OPTIONS = {
   scrollbar: { enabled: false },
@@ -59,11 +63,20 @@ export const buildHistogramOptions = (
     enabled: true,
     verticalAlign: "bottom",
   },
+  tooltip: {
+    enabled: true,
+    backgroundColor: "white",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: colors.secondary.borders,
+    shadow: false,
+  },
   ...DEFAULT_COMMON_OPTIONS,
   series,
 });
 
 export const buildCurveOptions = (
+  standardCode: StandardCode,
   limit: number,
   series: SeriesOptionsType[],
   yAxisTitle?: string
@@ -112,13 +125,25 @@ export const buildCurveOptions = (
   },
   tooltip: {
     enabled: true,
+    padding: 0,
     backgroundColor: "transparent",
     borderRadius: 0,
     borderWidth: 0,
     shadow: false,
     useHTML: true,
-    pointFormatter: () => {
-      return renderToString();
+    headerFormat: "",
+    pointFormatter: function (this: Highcharts.Point) {
+      return renderToString(
+        <PullRequestPieceTooltip
+          branchName={this.options.custom?.branchName}
+          open={this.options.custom?.open}
+          valueLabel={intl.formatMessage(
+            { id: `standards.${standardCode}.curves.tooltip.value` },
+            { value: this.y as number }
+          )}
+          date={new Date(this.x)}
+        />
+      );
     },
   },
   ...DEFAULT_COMMON_OPTIONS,

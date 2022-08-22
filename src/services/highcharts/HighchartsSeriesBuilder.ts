@@ -93,6 +93,10 @@ export const buildCurveSeries = (
         enabled: false,
       },
     },
+    enableMouseTracking: false,
+    tooltip: {
+      enabled: false,
+    },
     data: cloneDeep(data.average_curve)
       .sort(function (a, b) {
         return (
@@ -131,9 +135,17 @@ function buildPieceScatterSeries(
       lineWidth: 2,
       lineColor: null, // inherit from series
     },
+    cursor: "pointer",
     data: points.map((point) => ({
       x: dayjs(point.date, "YYYY-MM-DD").toDate().getTime(),
       y: point.value,
+      events: {
+        click: () => window.open(point.link, "_blank"),
+      },
+      custom: {
+        branchName: point.label,
+        open: point.open,
+      },
     })),
   };
 }
