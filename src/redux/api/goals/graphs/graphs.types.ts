@@ -20,6 +20,8 @@ export type PieceCurveDataPoint = {
   value: number;
   date: string;
   open: boolean;
+  label: string;
+  link: string;
 };
 
 export type GetCurveResponse = ResponseWithErrors & {

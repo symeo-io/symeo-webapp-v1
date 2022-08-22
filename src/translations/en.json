@@ -151,7 +151,10 @@
       "curves": {
         "title": "{value}%",
         "subtitle": "PRs meeting goal",
-        "yAxisTitle": "Days to merge"
+        "yAxisTitle": "Days to merge",
+        "tooltip": {
+          "value": "{value, plural, =0 {day} one {# day} other {# days}}"
+        }
       }
     },
     "pull-request-size": {
@@ -174,7 +177,10 @@
       "curves": {
         "title": "{value}%",
         "subtitle": "PRs meeting goal",
-        "yAxisTitle": "Changes per Pull Request"
+        "yAxisTitle": "Changes per Pull Request",
+        "tooltip": {
+          "value": "{value, plural, =0 {line} one {# line} other {# lines}}"
+        }
       }
     }
   }

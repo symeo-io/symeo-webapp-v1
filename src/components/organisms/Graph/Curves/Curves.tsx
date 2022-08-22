@@ -70,6 +70,7 @@ function Curves({ standardCode, isProcessingInitialJob, sx }: GraphProps) {
       tendency={metricsData?.metrics.meeting_goal.tendency_percentage}
       tendencyColor="red"
       options={buildCurveOptions(
+        standardCode,
         limit,
         series,
         formatMessage({ id: `standards.${standardCode}.curves.yAxisTitle` })
