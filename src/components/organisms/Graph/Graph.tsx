@@ -41,7 +41,7 @@ function Graph({
         <Box sx={{ marginBottom: (theme) => theme.spacing(4) }}>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Typography variant="h2">{title}</Typography>
-            {tendency && (
+            {tendency !== undefined && (
               <Status
                 label={tendencyLabel}
                 variant={tendencyColor === "green" ? "success" : "error"}

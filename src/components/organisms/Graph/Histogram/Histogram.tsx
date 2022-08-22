@@ -77,7 +77,12 @@ function Histogram({
         id: `standards.${standardCode}.histogram.subtitle`,
       })}
       tendency={metricsData?.metrics.average.tendency_percentage}
-      tendencyColor="red"
+      tendencyColor={
+        metricsData?.metrics.average.tendency_percentage &&
+        metricsData?.metrics.average.tendency_percentage > 0
+          ? "red"
+          : "green"
+      }
       options={buildHistogramOptions(
         dates,
         series as SeriesOptionsType[],
