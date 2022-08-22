@@ -26,7 +26,7 @@ function Graph({
   sx,
 }: GraphProps) {
   const tendencyLabel =
-    tendency && tendency > 0 ? `+${tendency}%` : `${tendency}%`;
+    tendency !== undefined && tendency >= 0 ? `+${tendency}%` : `${tendency}%`;
 
   return (
     <Card
