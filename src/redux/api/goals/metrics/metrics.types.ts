@@ -15,7 +15,7 @@ export type GetMetricsResponse = ResponseWithErrors & {
       tendency_percentage: number;
     };
     meeting_goal: {
-      percentage: number;
+      value: number;
       tendency_percentage: number;
     };
   };

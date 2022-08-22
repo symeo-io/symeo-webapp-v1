@@ -1,6 +1,7 @@
 import { SeriesOptionsType } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { colors } from "theme/colors";
+import { renderToString } from "react-dom/server";
 
 export const DEFAULT_COMMON_OPTIONS = {
   scrollbar: { enabled: false },
@@ -11,9 +12,6 @@ export const DEFAULT_COMMON_OPTIONS = {
     enabled: false,
   },
   rangeSelector: {
-    enabled: false,
-  },
-  tooltip: {
     enabled: false,
   },
   credits: {
@@ -111,6 +109,17 @@ export const buildCurveOptions = (
     align: "center",
     enabled: true,
     verticalAlign: "bottom",
+  },
+  tooltip: {
+    enabled: true,
+    backgroundColor: "transparent",
+    borderRadius: 0,
+    borderWidth: 0,
+    shadow: false,
+    useHTML: true,
+    pointFormatter: () => {
+      return renderToString();
+    },
   },
   ...DEFAULT_COMMON_OPTIONS,
   series,

@@ -57,10 +57,10 @@ function Curves({ standardCode, isProcessingInitialJob, sx }: GraphProps) {
           : undefined
       }
       title={
-        metricsData?.metrics.meeting_goal.percentage !== undefined
+        metricsData?.metrics.meeting_goal.value !== undefined
           ? formatMessage(
               { id: `standards.${standardCode}.curves.title` },
-              { value: metricsData?.metrics.meeting_goal.percentage }
+              { value: metricsData?.metrics.meeting_goal.value }
             )
           : undefined
       }
