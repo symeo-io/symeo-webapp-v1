@@ -57,20 +57,20 @@ function Curves({ standardCode, isProcessingInitialJob, sx }: GraphProps) {
           : undefined
       }
       title={
-        metricsData?.metrics.meeting_goal.value !== undefined
+        metricsData?.metrics.average.value !== undefined
           ? formatMessage(
               { id: `standards.${standardCode}.curves.title` },
-              { value: metricsData?.metrics.meeting_goal.value }
+              { value: metricsData?.metrics.average.value }
             )
           : undefined
       }
       subtitle={formatMessage({
         id: `standards.${standardCode}.curves.subtitle`,
       })}
-      tendency={metricsData?.metrics.meeting_goal.tendency_percentage}
+      tendency={metricsData?.metrics.average.tendency_percentage}
       tendencyColor={
-        metricsData?.metrics.meeting_goal.tendency_percentage &&
-        metricsData?.metrics.meeting_goal.tendency_percentage > 0
+        metricsData?.metrics.average.tendency_percentage &&
+        metricsData?.metrics.average.tendency_percentage > 0
           ? "red"
           : "green"
       }

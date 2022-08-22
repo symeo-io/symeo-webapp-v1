@@ -66,20 +66,20 @@ function Histogram({
           : undefined
       }
       title={
-        metricsData?.metrics.average.value !== undefined
+        metricsData?.metrics.meeting_goal.value !== undefined
           ? formatMessage(
               { id: `standards.${standardCode}.histogram.title` },
-              { value: metricsData?.metrics.average.value }
+              { value: metricsData?.metrics.meeting_goal.value }
             )
           : undefined
       }
       subtitle={formatMessage({
         id: `standards.${standardCode}.histogram.subtitle`,
       })}
-      tendency={metricsData?.metrics.average.tendency_percentage}
+      tendency={metricsData?.metrics.meeting_goal.tendency_percentage}
       tendencyColor={
-        metricsData?.metrics.average.tendency_percentage &&
-        metricsData?.metrics.average.tendency_percentage > 0
+        metricsData?.metrics.meeting_goal.tendency_percentage &&
+        metricsData?.metrics.meeting_goal.tendency_percentage > 0
           ? "red"
           : "green"
       }
