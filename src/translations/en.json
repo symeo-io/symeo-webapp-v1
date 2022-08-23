@@ -183,5 +183,17 @@
         }
       }
     }
+  },
+  "pull-requests-table": {
+    "title": "Team Pull Requests",
+    "columns": {
+      "repository": "Repo",
+      "name": "Name",
+      "author": "Author",
+      "commits": "Commits",
+      "size": "Size",
+      "days-to-merge": "Days to merge"
+    },
+    "days-to-merge-value": "{value, number, compact-short}"
   }
 }
