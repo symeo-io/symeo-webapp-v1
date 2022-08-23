@@ -11,15 +11,13 @@ import { SeriesOptionsType } from "highcharts";
 import { buildHistogramOptions } from "services/highcharts/HighchartsOptionsBuilder";
 import { buildHistogramSeries } from "services/highcharts/HighchartsSeriesBuilder";
 import { useGetMetricsQuery } from "redux/api/goals/metrics/metrics.api";
+import { useIsProcessingInitialJob } from "hooks/useIsProcessingInitialJob";
 
-function Histogram({
-  standardCode,
-  isProcessingInitialJob = false,
-  sx,
-}: GraphProps) {
+function Histogram({ standardCode, sx }: GraphProps) {
   const { formatMessage } = useIntl();
   const { selectedTeam } = useCurrentUser();
   const [dateRange] = useSelectedDateRange();
+  const { isProcessingInitialJob } = useIsProcessingInitialJob();
 
   const { data: histogramData, isLoading } = useGetGraphQuery(
     {

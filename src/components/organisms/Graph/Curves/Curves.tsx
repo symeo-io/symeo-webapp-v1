@@ -10,11 +10,13 @@ import { useSelectedDateRange } from "hooks/useSelectedDateRange";
 import { buildCurveOptions } from "services/highcharts/HighchartsOptionsBuilder";
 import { buildCurveSeries } from "services/highcharts/HighchartsSeriesBuilder";
 import { useGetMetricsQuery } from "redux/api/goals/metrics/metrics.api";
+import { useIsProcessingInitialJob } from "hooks/useIsProcessingInitialJob";
 
-function Curves({ standardCode, isProcessingInitialJob, sx }: GraphProps) {
+function Curves({ standardCode, sx }: GraphProps) {
   const { formatMessage } = useIntl();
   const { selectedTeam } = useCurrentUser();
   const [dateRange] = useSelectedDateRange();
+  const { isProcessingInitialJob } = useIsProcessingInitialJob();
 
   const { data, isLoading } = useGetGraphQuery(
     {

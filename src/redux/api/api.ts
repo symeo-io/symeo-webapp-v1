@@ -10,6 +10,8 @@ export const apiTagTypes = [
   "User",
   "Curve",
   "Goal",
+  "Metric",
+  "PullRequest",
 ];
 
 export const api = createApi({

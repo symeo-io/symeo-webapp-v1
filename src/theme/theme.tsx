@@ -410,5 +410,41 @@ export const theme = createTheme({
         disableRipple: true,
       },
     },
+    MuiTableContainer: {
+      styleOverrides: {
+        root: {
+          borderRadius: "8px",
+          border: `1px solid #CCCCCC`,
+        },
+      },
+    },
+    MuiTable: {
+      styleOverrides: {
+        root: {
+          "& .MuiTableBody-root .MuiTableRow-root:hover": {
+            background: "#F2F2F4",
+          },
+          "& .MuiTableCell-root": {
+            padding: "16px",
+          },
+          "& .MuiTableCell-head": {
+            borderBottom: `1px solid #CCCCCC`,
+            fontWeight: 400,
+            color: "#242426",
+          },
+          "& .MuiTableCell-body": {
+            borderBottom: `1px solid #F0F0F0`,
+            color: "#545456",
+          },
+          "& .MuiTablePagination-root:last-child": {
+            padding: "0 16px",
+
+            "& .MuiTablePagination-actions .MuiButtonBase-root:first-child": {
+              marginRight: "8px",
+            },
+          },
+        },
+      },
+    },
   },
 });
