@@ -10,7 +10,15 @@ export const pullRequestsQueryApi = api.injectEndpoints({
       GetPullRequestsResponse,
       GetPullRequestsInput
     >({
-      query: ({ teamId, startDate, endDate, pageIndex, pageSize }) => ({
+      query: ({
+        teamId,
+        startDate,
+        endDate,
+        pageIndex,
+        pageSize,
+        sortBy,
+        sortDirection,
+      }) => ({
         url: `/api/v1/teams/pull-requests`,
         params: {
           team_id: teamId,
@@ -18,6 +26,8 @@ export const pullRequestsQueryApi = api.injectEndpoints({
           end_date: endDate,
           page_index: pageIndex,
           page_size: pageSize,
+          sort_by: sortBy,
+          sort_dir: sortDirection,
         },
       }),
       providesTags: (

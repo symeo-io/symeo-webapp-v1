@@ -9,6 +9,7 @@ import {
   TableHead,
   TablePagination,
   TableRow,
+  TableSortLabel,
   Typography,
 } from "@mui/material";
 import { PropsWithSx } from "types/PropsWithSx";
@@ -19,13 +20,68 @@ import { useSelectedDateRange } from "hooks/useSelectedDateRange";
 import dayjs from "dayjs";
 import { useDataStatus } from "hooks/useDataStatus";
 import { PullRequest } from "redux/api/pull-requests/pull-requests.types";
-import { useIntl } from "react-intl";
+import { IntlShape, useIntl } from "react-intl";
 
 export type TeamPullRequestListProps = PropsWithSx;
+
+const COLUMNS = [
+  {
+    key: "vcs_repository",
+    renderCell: (pullRequest: PullRequest) => (
+      <TableCell>{pullRequest.vcs_repository}</TableCell>
+    ),
+  },
+  {
+    key: "title",
+    renderCell: (pullRequest: PullRequest) => (
+      <TableCell>
+        <Link href={pullRequest.vcs_url} target="_blank">
+          {pullRequest.title}
+        </Link>
+      </TableCell>
+    ),
+  },
+  {
+    key: "author",
+    renderCell: (pullRequest: PullRequest) => (
+      <TableCell>{pullRequest.author}</TableCell>
+    ),
+  },
+  {
+    key: "commit_number",
+    renderCell: (pullRequest: PullRequest) => (
+      <TableCell>{pullRequest.commit_number}</TableCell>
+    ),
+  },
+  {
+    key: "size",
+    renderCell: (pullRequest: PullRequest) => (
+      <TableCell>{pullRequest.size}</TableCell>
+    ),
+  },
+  {
+    key: "days_opened",
+    renderCell: (
+      pullRequest: PullRequest,
+      formatMessage: IntlShape["formatMessage"]
+    ) => (
+      <TableCell>
+        {formatMessage(
+          {
+            id: "pull-requests-table.days-to-merge-value",
+          },
+          { value: pullRequest.days_opened }
+        )}
+      </TableCell>
+    ),
+  },
+];
 
 function TeamPullRequestList({ sx }: TeamPullRequestListProps) {
   const { formatMessage } = useIntl();
   const [pageIndex, setPageIndex] = useState<number>(0);
+  const [sortBy, setSortBy] = useState<string>("vcs_repository");
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
   const [pageSize] = useState<number>(5);
   const { selectedTeam } = useCurrentUser();
   const [dateRange] = useSelectedDateRange();
@@ -38,6 +94,8 @@ function TeamPullRequestList({ sx }: TeamPullRequestListProps) {
       endDate: dayjs(dateRange.endDate).format("YYYY-MM-DD"),
       pageIndex,
       pageSize,
+      sortBy,
+      sortDirection,
     },
     {
       skip: !selectedTeam || isProcessingInitialJob,
@@ -53,6 +111,12 @@ function TeamPullRequestList({ sx }: TeamPullRequestListProps) {
     () => data?.pull_requests_page.total_item_number ?? 0,
     [data]
   );
+
+  const createSortHandler = (property: string) => () => {
+    const isAsc = sortBy === property && sortDirection === "asc";
+    setSortDirection(isAsc ? "desc" : "asc");
+    setSortBy(property);
+  };
 
   return (
     <Card
@@ -76,58 +140,29 @@ function TeamPullRequestList({ sx }: TeamPullRequestListProps) {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>
-                {formatMessage({
-                  id: "pull-requests-table.columns.repository",
-                })}
-              </TableCell>
-              <TableCell>
-                {formatMessage({
-                  id: "pull-requests-table.columns.name",
-                })}
-              </TableCell>
-              <TableCell>
-                {formatMessage({
-                  id: "pull-requests-table.columns.author",
-                })}
-              </TableCell>
-              <TableCell>
-                {formatMessage({
-                  id: "pull-requests-table.columns.commits",
-                })}
-              </TableCell>
-              <TableCell>
-                {formatMessage({
-                  id: "pull-requests-table.columns.size",
-                })}
-              </TableCell>
-              <TableCell>
-                {formatMessage({
-                  id: "pull-requests-table.columns.days-to-merge",
-                })}
-              </TableCell>
+              {COLUMNS.map((column) => (
+                <TableCell
+                  sortDirection={sortBy === column.key ? sortDirection : false}
+                >
+                  <TableSortLabel
+                    active={sortBy === column.key}
+                    direction={sortBy === column.key ? sortDirection : "asc"}
+                    onClick={createSortHandler(column.key)}
+                  >
+                    {formatMessage({
+                      id: `pull-requests-table.columns.${column.key}`,
+                    })}
+                  </TableSortLabel>
+                </TableCell>
+              ))}
             </TableRow>
           </TableHead>
           <TableBody>
             {pullRequests.map((pullRequest) => (
               <TableRow key={pullRequest.id}>
-                <TableCell>{pullRequest.vcs_repository}</TableCell>
-                <TableCell>
-                  <Link href={pullRequest.vcs_url} target="_blank">
-                    {pullRequest.title}
-                  </Link>
-                </TableCell>
-                <TableCell>{pullRequest.author}</TableCell>
-                <TableCell>{pullRequest.commit_number}</TableCell>
-                <TableCell>{pullRequest.size}</TableCell>
-                <TableCell>
-                  {formatMessage(
-                    {
-                      id: "pull-requests-table.days-to-merge-value",
-                    },
-                    { value: pullRequest.days_opened }
-                  )}
-                </TableCell>
+                {COLUMNS.map((column) =>
+                  column.renderCell(pullRequest, formatMessage)
+                )}
               </TableRow>
             ))}
           </TableBody>
