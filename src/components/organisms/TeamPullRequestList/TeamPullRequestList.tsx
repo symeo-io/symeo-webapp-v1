@@ -17,7 +17,7 @@ import { useGetPullRequestsQuery } from "redux/api/pull-requests/pull-requests.a
 import { useCurrentUser } from "hooks/useCurrentUser";
 import { useSelectedDateRange } from "hooks/useSelectedDateRange";
 import dayjs from "dayjs";
-import { useIsProcessingInitialJob } from "hooks/useIsProcessingInitialJob";
+import { useDataStatus } from "hooks/useDataStatus";
 import { PullRequest } from "redux/api/pull-requests/pull-requests.types";
 import { useIntl } from "react-intl";
 
@@ -29,7 +29,7 @@ function TeamPullRequestList({ sx }: TeamPullRequestListProps) {
   const [pageSize] = useState<number>(5);
   const { selectedTeam } = useCurrentUser();
   const [dateRange] = useSelectedDateRange();
-  const { isProcessingInitialJob } = useIsProcessingInitialJob();
+  const { isProcessingInitialJob } = useDataStatus();
 
   const { data } = useGetPullRequestsQuery(
     {

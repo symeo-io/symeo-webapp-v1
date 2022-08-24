@@ -10,13 +10,13 @@ import { useSelectedDateRange } from "hooks/useSelectedDateRange";
 import { buildCurveOptions } from "services/highcharts/HighchartsOptionsBuilder";
 import { buildCurveSeries } from "services/highcharts/HighchartsSeriesBuilder";
 import { useGetMetricsQuery } from "redux/api/goals/metrics/metrics.api";
-import { useIsProcessingInitialJob } from "hooks/useIsProcessingInitialJob";
+import { useDataStatus } from "hooks/useDataStatus";
 
 function Curves({ standardCode, sx }: GraphProps) {
   const { formatMessage } = useIntl();
   const { selectedTeam } = useCurrentUser();
   const [dateRange] = useSelectedDateRange();
-  const { isProcessingInitialJob } = useIsProcessingInitialJob();
+  const { isProcessingInitialJob } = useDataStatus();
 
   const { data, isLoading } = useGetGraphQuery(
     {
@@ -49,6 +49,17 @@ function Curves({ standardCode, sx }: GraphProps) {
     [data]
   );
 
+  const options = useMemo(
+    () =>
+      buildCurveOptions(
+        standardCode,
+        limit,
+        series,
+        formatMessage({ id: `standards.${standardCode}.curves.yAxisTitle` })
+      ),
+    [formatMessage, limit, series, standardCode]
+  );
+
   return (
     <Graph
       sx={sx}
@@ -76,12 +87,7 @@ function Curves({ standardCode, sx }: GraphProps) {
           ? "red"
           : "green"
       }
-      options={buildCurveOptions(
-        standardCode,
-        limit,
-        series,
-        formatMessage({ id: `standards.${standardCode}.curves.yAxisTitle` })
-      )}
+      options={options}
     />
   );
 }

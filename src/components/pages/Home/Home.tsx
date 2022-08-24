@@ -8,15 +8,14 @@ import { useIntl } from "react-intl";
 import GoalDashboardSection from "components/organisms/GoalDashboardSection/GoalDashboardSection";
 import DateRangeSelector from "components/molecules/DateRangeSelector/DateRangeSelector";
 import TeamPullRequestList from "components/organisms/TeamPullRequestList/TeamPullRequestList";
-import { useIsProcessingInitialJob } from "hooks/useIsProcessingInitialJob";
+import { useDataStatus } from "hooks/useDataStatus";
 
 const standards = standardsData.standards as Record<StandardCode, Standard>;
 
 function Home() {
   const { formatMessage } = useIntl();
   const { selectedTeam, goals } = useCurrentUser();
-  const { isLoading: isLoadingProcessingInitialJob } =
-    useIsProcessingInitialJob();
+  const { isLoading: isLoadingProcessingInitialJob } = useDataStatus();
 
   return (
     <Box
