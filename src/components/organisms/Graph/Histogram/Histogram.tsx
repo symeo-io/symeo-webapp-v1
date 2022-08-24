@@ -11,13 +11,13 @@ import { SeriesOptionsType } from "highcharts";
 import { buildHistogramOptions } from "services/highcharts/HighchartsOptionsBuilder";
 import { buildHistogramSeries } from "services/highcharts/HighchartsSeriesBuilder";
 import { useGetMetricsQuery } from "redux/api/goals/metrics/metrics.api";
-import { useIsProcessingInitialJob } from "hooks/useIsProcessingInitialJob";
+import { useDataStatus } from "hooks/useDataStatus";
 
 function Histogram({ standardCode, sx }: GraphProps) {
   const { formatMessage } = useIntl();
   const { selectedTeam } = useCurrentUser();
   const [dateRange] = useSelectedDateRange();
-  const { isProcessingInitialJob } = useIsProcessingInitialJob();
+  const { isProcessingInitialJob } = useDataStatus();
 
   const { data: histogramData, isLoading } = useGetGraphQuery(
     {
@@ -54,6 +54,16 @@ function Histogram({ standardCode, sx }: GraphProps) {
     [histogramValues]
   );
 
+  const options = useMemo(
+    () =>
+      buildHistogramOptions(
+        dates,
+        series as SeriesOptionsType[],
+        formatMessage({ id: `standards.${standardCode}.histogram.yAxisTitle` })
+      ),
+    [dates, formatMessage, series, standardCode]
+  );
+
   return (
     <Graph
       sx={sx}
@@ -81,11 +91,7 @@ function Histogram({ standardCode, sx }: GraphProps) {
           ? "red"
           : "green"
       }
-      options={buildHistogramOptions(
-        dates,
-        series as SeriesOptionsType[],
-        formatMessage({ id: `standards.${standardCode}.histogram.yAxisTitle` })
-      )}
+      options={options}
     />
   );
 }
