@@ -3,14 +3,21 @@ import { Routes, Route } from "react-router-dom";
 import routes from "routing";
 import AuthenticatedRoute from "components/atoms/AuthenticatedRoute/AuthenticatedRoute";
 import { withSidebar } from "hoc/withSidebar";
+import { withDataStatus } from "hoc/withDataStatus";
 
 function RoutesWrapper() {
   const routeComponents = useMemo(
     () =>
       Object.values(routes).map((route) => {
-        const Component = route.sidebar
-          ? withSidebar(route.element)
-          : route.element;
+        let Component = route.element;
+
+        if (route.sidebar) {
+          Component = withSidebar(Component);
+        }
+
+        if (route.dataStatus) {
+          Component = withDataStatus(Component, route.sidebar);
+        }
 
         return (
           <Route

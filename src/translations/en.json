@@ -195,5 +195,9 @@
       "days-to-merge": "Days to merge"
     },
     "days-to-merge-value": "{value, number, compact-short}"
+  },
+  "data-status": {
+    "initial-data-processing": "Initial processing of your data",
+    "last-update": "Last data update: {date}"
   }
 }

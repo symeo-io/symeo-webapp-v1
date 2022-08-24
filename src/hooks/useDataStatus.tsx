@@ -51,6 +51,11 @@ export const useDataStatus = () => {
     return undefined;
   }, [jobStatusData]);
 
+  const currentStatus = useMemo(
+    () => jobStatusData && jobStatusData.jobs.current_job.status,
+    [jobStatusData]
+  );
+
   useEffect(() => {
     if (jobStatusData && !isProcessingInitialJob) {
       setPollingInterval(60000);
@@ -70,7 +75,12 @@ export const useDataStatus = () => {
   }, [dispatch, lastUpdateDate]);
 
   return useMemo(
-    () => ({ isProcessingInitialJob, isLoading, lastUpdateDate }),
-    [isLoading, isProcessingInitialJob, lastUpdateDate]
+    () => ({
+      isProcessingInitialJob,
+      isLoading,
+      lastUpdateDate,
+      currentStatus,
+    }),
+    [isLoading, isProcessingInitialJob, lastUpdateDate, currentStatus]
   );
 };
