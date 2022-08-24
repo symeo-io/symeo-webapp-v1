@@ -34,7 +34,7 @@ export const useDataStatus = () => {
     if (jobStatusData.jobs.current_job.status === "FINISHED") {
       return dayjs(
         jobStatusData.jobs.current_job.end_date,
-        "YYYY-MM-DD"
+        "YYYY-MM-DD HH:mm:ss"
       ).toDate();
     }
 
@@ -44,7 +44,7 @@ export const useDataStatus = () => {
     ) {
       return dayjs(
         jobStatusData.jobs.previous_job.end_date,
-        "YYYY-MM-DD"
+        "YYYY-MM-DD HH:mm:ss"
       ).toDate();
     }
 
