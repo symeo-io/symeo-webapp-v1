@@ -12,7 +12,7 @@ export function withDataStatus<T = object>(
         <DataStatus
           sx={{
             position: "absolute",
-            zIndex: 9999,
+            zIndex: 1300,
             bottom: (theme) => theme.spacing(3),
             left: (theme) =>
               hasSidebar

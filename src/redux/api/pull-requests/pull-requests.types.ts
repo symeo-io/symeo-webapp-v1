@@ -20,6 +20,8 @@ export type GetPullRequestsInput = {
   endDate: string;
   pageIndex: number;
   pageSize: number;
+  sortBy: string;
+  sortDirection: "asc" | "desc";
 };
 
 export type GetPullRequestsResponse = ResponseWithErrors & {

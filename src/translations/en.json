@@ -187,12 +187,12 @@
   "pull-requests-table": {
     "title": "Team Pull Requests",
     "columns": {
-      "repository": "Repo",
-      "name": "Name",
+      "vcs_repository": "Repo",
+      "title": "Name",
       "author": "Author",
-      "commits": "Commits",
+      "commit_number": "Commits",
       "size": "Size",
-      "days-to-merge": "Days to merge"
+      "days_opened": "Days to merge"
     },
     "days-to-merge-value": "{value, number, compact-short}"
   },
