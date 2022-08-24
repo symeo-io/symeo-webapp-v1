@@ -9,6 +9,7 @@ import TeamGoalSettings from "components/pages/TeamGoalSettings/TeamGoalSettings
 export type Route = {
   isSecured?: boolean;
   sidebar?: boolean;
+  dataStatus?: boolean;
   path: string;
   element: React.ComponentType<object>;
   defaultParams?: Record<string, string>;
@@ -19,6 +20,7 @@ const routes = {
     path: "/",
     isSecured: true,
     sidebar: true,
+    dataStatus: true,
     element: HomePage,
   } as Route,
   organization: {
