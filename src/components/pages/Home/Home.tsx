@@ -41,7 +41,6 @@ function Home() {
         sx={{
           display: "flex",
           flexWrap: "wrap",
-          justifyContent: "center",
           marginTop: (theme) => theme.spacing(2),
         }}
       >
@@ -51,7 +50,7 @@ function Home() {
               key={goal.id}
               sx={{
                 margin: (theme) => theme.spacing(1),
-                flex: 1,
+                width: "430px",
               }}
               standard={standards[goal.standard_code]}
               goal={goal}
