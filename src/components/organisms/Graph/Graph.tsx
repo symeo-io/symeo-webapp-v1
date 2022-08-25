@@ -103,8 +103,9 @@ function Graph({
         </Box>
         <Box>
           {actions &&
-            actions.map((action) => (
+            actions.map((action, index) => (
               <IconButton
+                key={index}
                 sx={{ marginLeft: (theme) => theme.spacing(1) }}
                 onClick={action.onClick}
               >

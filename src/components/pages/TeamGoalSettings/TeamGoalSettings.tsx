@@ -14,6 +14,8 @@ import { useConfirm } from "providers/confirm/useConfirm";
 import { useNavigate } from "hooks/useNavigate";
 import { standards } from "constants/standards";
 import { StandardCode } from "redux/api/goals/graphs/graphs.types";
+import { useGetMetricsQuery } from "redux/api/goals/metrics/metrics.api";
+import dayjs from "dayjs";
 
 function TeamGoalSettings() {
   const { standardCode } = useParams();
@@ -35,6 +37,33 @@ function TeamGoalSettings() {
   const goal = useMemo(
     () => goals?.find((g) => g.standard_code === standard.code) ?? null,
     [goals, standard.code]
+  );
+
+  const { data: metricsData } = useGetMetricsQuery(
+    {
+      teamId: selectedTeam?.id as string,
+      standardCode: standardCode as StandardCode,
+      startDate: dayjs().subtract(2, "weeks").format("YYYY-MM-DD"),
+      endDate: dayjs().format("YYYY-MM-DD"),
+    },
+    {
+      skip: !selectedTeam,
+    }
+  );
+
+  const average = useMemo(
+    () =>
+      metricsData?.metrics.average.value &&
+      Math.round(metricsData?.metrics.average.value),
+    [metricsData]
+  );
+
+  const max = useMemo(
+    () =>
+      average
+        ? Math.max(average, standard.valueRange[1])
+        : standard.valueRange[1],
+    [average, standard.valueRange]
   );
 
   useEffect(() => {
@@ -96,28 +125,46 @@ function TeamGoalSettings() {
   const marks = useMemo(() => {
     const result: SliderProps["marks"] = [];
 
-    [
-      standard.valueRange[0],
-      standard.recommandedValue,
-      standard.valueRange[1],
-    ].forEach((value) =>
+    result.push({
+      value: standard.valueRange[0],
+      label: <SliderMark value={standard.valueRange[0]} />,
+    });
+
+    result.push({
+      value: standard.valueRange[1],
+      label: <SliderMark value={standard.valueRange[1]} />,
+    });
+
+    if (!average || standard.recommandedValue < average) {
       result.push({
-        value,
+        value: standard.recommandedValue,
         label: (
           <SliderMark
-            value={value}
-            info={
-              standard.recommandedValue === value
-                ? { label: "Recommanded", variant: "success" }
-                : undefined
-            }
+            value={standard.recommandedValue}
+            info={{ label: "Recommanded", variant: "success" }}
           />
         ),
-      })
-    );
+      });
+    }
+
+    if (average) {
+      result.push({
+        value: average,
+        label: (
+          <SliderMark
+            value={average}
+            info={{
+              label: "Your current mean value ",
+              variant:
+                standard.recommandedValue >= average ? "success" : "warning",
+            }}
+          />
+        ),
+      });
+    }
 
     return result;
-  }, [standard.recommandedValue, standard.valueRange]);
+  }, [average, standard.recommandedValue, standard.valueRange]);
 
   return (
     <Box
@@ -151,7 +198,7 @@ function TeamGoalSettings() {
             onChange={handleChange}
             step={standard.valueStep}
             min={standard.valueRange[0]}
-            max={standard.valueRange[1]}
+            max={max}
             marks={marks}
             valueLabelDisplay="on"
             sx={{ marginBottom: "62px" }}
