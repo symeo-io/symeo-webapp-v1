@@ -1,28 +1,52 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Box, IconButton, Typography } from "@mui/material";
+import { useParams } from "react-router-dom";
+import { useCurrentUser } from "hooks/useCurrentUser";
+import SettingsIcon from "@mui/icons-material/Settings";
 import GoalGraph from "components/organisms/GoalGraph/GoalGraph";
 import { useIntl } from "react-intl";
-import { Goal } from "redux/api/goals/goals.types";
-import SettingsIcon from "@mui/icons-material/Settings";
 import { useNavigate } from "hooks/useNavigate";
-import { PropsWithSx } from "types/PropsWithSx";
-import { Standard } from "constants/standards";
+import { standards } from "constants/standards";
+import { StandardCode } from "redux/api/goals/graphs/graphs.types";
+import TeamPullRequestList, {
+  PullRequestColumnName,
+} from "components/organisms/TeamPullRequestList/TeamPullRequestList";
 
-export type GoalDashboardSectionProps = PropsWithSx & {
-  standard: Standard;
-  goal: Goal;
-};
-
-function GoalDashboardSection({
-  standard,
-  goal,
-  sx,
-}: GoalDashboardSectionProps) {
+function TeamGoal() {
+  const { standardCode } = useParams();
   const { formatMessage } = useIntl();
   const navigate = useNavigate();
 
+  const { goals } = useCurrentUser();
+  const standard = useMemo(
+    () => standards[standardCode as StandardCode],
+    [standardCode]
+  );
+  const goal = useMemo(
+    () => goals?.find((goal) => goal.standard_code === standardCode),
+    [goals, standardCode]
+  );
+
+  const pullRequestColumns = [
+    "vcs_repository",
+    "title",
+    "author",
+    "commit_number",
+    ...standard.pullRequestsColumns,
+  ] as PullRequestColumnName[];
+
+  if (!goal) return null; // TODO add loader
+
   return (
-    <Box sx={sx}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        padding: (theme) => theme.spacing(3),
+        flex: 1,
+        maxWidth: "1441px",
+      }}
+    >
       <Box
         sx={{
           display: "flex",
@@ -32,7 +56,7 @@ function GoalDashboardSection({
         }}
       >
         <Typography
-          variant="h2"
+          variant="h1"
           sx={{
             display: "flex",
             alignItems: "center",
@@ -68,8 +92,17 @@ function GoalDashboardSection({
           />
         ))}
       </Box>
+      <Box sx={{ paddingBottom: (theme) => theme.spacing(6) }}>
+        <TeamPullRequestList
+          columns={pullRequestColumns}
+          sx={{
+            marginX: (theme) => theme.spacing(1),
+            marginY: (theme) => theme.spacing(6),
+          }}
+        />
+      </Box>
     </Box>
   );
 }
 
-export default GoalDashboardSection;
+export default TeamGoal;

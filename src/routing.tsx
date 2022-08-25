@@ -5,6 +5,7 @@ import TeamGoalsPage from "components/pages/TeamGoals/TeamGoals";
 import OnBoardingPageVcs from "components/pages/OnBoardingVcs/OnBoardingVcs";
 import OnBoardingPageTeams from "components/pages/OnBoardingTeams/OnBoardingTeams";
 import TeamGoalSettings from "components/pages/TeamGoalSettings/TeamGoalSettings";
+import TeamGoal from "components/pages/TeamGoal/TeamGoal";
 
 export type Route = {
   isSecured?: boolean;
@@ -38,8 +39,14 @@ const routes = {
     sidebar: true,
     element: TeamGoalsPage,
   } as Route,
-  teamGoalSetting: {
+  teamGoal: {
     path: "/team-goals/:standardCode",
+    isSecured: true,
+    sidebar: true,
+    element: TeamGoal,
+  } as Route,
+  teamGoalSetting: {
+    path: "/team-goals/:standardCode/settings",
     isSecured: true,
     sidebar: true,
     element: TeamGoalSettings,

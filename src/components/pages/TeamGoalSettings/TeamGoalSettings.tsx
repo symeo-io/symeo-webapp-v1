@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Box, Divider, Slider, Typography, SliderProps } from "@mui/material";
 import { useIntl } from "react-intl";
 import SliderMark from "components/atoms/SliderMark/SliderMark";
-import standardsData from "standards.json";
 import Button from "components/atoms/Button/Button";
 import { useParams } from "react-router-dom";
 import {
@@ -11,16 +10,16 @@ import {
   useUpdateGoalMutation,
 } from "redux/api/goals/goals.api";
 import { useCurrentUser } from "hooks/useCurrentUser";
-import { Standard } from "components/organisms/StandardCard/StandardCard";
 import { useConfirm } from "providers/confirm/useConfirm";
-import { StandardCode } from "redux/api/goals/graphs/graphs.types";
 import { useNavigate } from "hooks/useNavigate";
+import { standards } from "constants/standards";
+import { StandardCode } from "redux/api/goals/graphs/graphs.types";
 
 function TeamGoalSettings() {
   const { standardCode } = useParams();
   const standard = useMemo(
     // TODO: handle case where no standard is found with code
-    () => standardsData.standards[standardCode as StandardCode] as Standard,
+    () => standards[standardCode as StandardCode],
     [standardCode]
   );
 

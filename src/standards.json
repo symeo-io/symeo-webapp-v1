@@ -9,7 +9,8 @@
       "new": true,
       "active": true,
       "icon": "ShutterSpeed",
-      "availableGraphs": ["histogram", "curves"]
+      "availableGraphs": ["histogram", "curves"],
+      "pullRequestsColumns": ["days_opened"]
     },
     "pull-request-size": {
       "code": "pull-request-size",
@@ -20,7 +21,8 @@
       "new": true,
       "active": true,
       "icon": "ShutterSpeed",
-      "availableGraphs": ["histogram", "curves"]
+      "availableGraphs": ["histogram", "curves"],
+      "pullRequestsColumns": ["size"]
     }
   }
 }

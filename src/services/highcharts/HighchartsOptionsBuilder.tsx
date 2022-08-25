@@ -33,6 +33,7 @@ export const buildHistogramOptions = (
 ): HighchartsReact.Props["options"] => ({
   chart: {
     type: "column",
+    height: 300,
   },
   xAxis: {
     categories,
@@ -81,6 +82,9 @@ export const buildCurveOptions = (
   series: SeriesOptionsType[],
   yAxisTitle?: string
 ): HighchartsReact.Props["options"] => ({
+  chart: {
+    height: 300,
+  },
   xAxis: {
     type: "datetime",
     dateTimeLabelFormats: {
