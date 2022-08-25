@@ -1,12 +1,12 @@
 import SettingsIcon from "@mui/icons-material/Settings";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { PropsWithSx } from "types/PropsWithSx";
-import { Standard } from "components/organisms/StandardCard/StandardCard";
 import { Goal } from "redux/api/goals/goals.types";
 import GoalGraph from "components/organisms/GoalGraph/GoalGraph";
 import React from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "hooks/useNavigate";
+import { Standard } from "constants/standards";
 
 export type TeamGoalDashboardPanelProps = PropsWithSx & {
   standard: Standard;

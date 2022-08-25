@@ -2,11 +2,11 @@ import React from "react";
 import { Box, IconButton, Typography } from "@mui/material";
 import GoalGraph from "components/organisms/GoalGraph/GoalGraph";
 import { useIntl } from "react-intl";
-import { Standard } from "components/organisms/StandardCard/StandardCard";
 import { Goal } from "redux/api/goals/goals.types";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useNavigate } from "hooks/useNavigate";
 import { PropsWithSx } from "types/PropsWithSx";
+import { Standard } from "constants/standards";
 
 export type GoalDashboardSectionProps = PropsWithSx & {
   standard: Standard;

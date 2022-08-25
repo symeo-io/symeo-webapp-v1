@@ -22,17 +22,13 @@ import { useDataStatus } from "hooks/useDataStatus";
 import { PullRequest } from "redux/api/pull-requests/pull-requests.types";
 import { IntlShape, useIntl } from "react-intl";
 
-export type TeamPullRequestListProps = PropsWithSx;
-
-const COLUMNS = [
-  {
-    key: "vcs_repository",
+const COLUMNS = {
+  vcs_repository: {
     renderCell: (pullRequest: PullRequest) => (
       <TableCell>{pullRequest.vcs_repository}</TableCell>
     ),
   },
-  {
-    key: "title",
+  title: {
     renderCell: (pullRequest: PullRequest) => (
       <TableCell>
         <Link href={pullRequest.vcs_url} target="_blank">
@@ -41,26 +37,22 @@ const COLUMNS = [
       </TableCell>
     ),
   },
-  {
-    key: "author",
+  author: {
     renderCell: (pullRequest: PullRequest) => (
       <TableCell>{pullRequest.author}</TableCell>
     ),
   },
-  {
-    key: "commit_number",
+  commit_number: {
     renderCell: (pullRequest: PullRequest) => (
       <TableCell>{pullRequest.commit_number}</TableCell>
     ),
   },
-  {
-    key: "size",
+  size: {
     renderCell: (pullRequest: PullRequest) => (
       <TableCell>{pullRequest.size}</TableCell>
     ),
   },
-  {
-    key: "days_opened",
+  days_opened: {
     renderCell: (
       pullRequest: PullRequest,
       formatMessage: IntlShape["formatMessage"]
@@ -75,9 +67,15 @@ const COLUMNS = [
       </TableCell>
     ),
   },
-];
+};
 
-function TeamPullRequestList({ sx }: TeamPullRequestListProps) {
+export type PullRequestColumnName = keyof typeof COLUMNS;
+
+export type TeamPullRequestListProps = PropsWithSx & {
+  columns?: PullRequestColumnName[];
+};
+
+function TeamPullRequestList({ columns, sx }: TeamPullRequestListProps) {
   const { formatMessage } = useIntl();
   const [pageIndex, setPageIndex] = useState<number>(0);
   const [sortBy, setSortBy] = useState<string>("vcs_repository");
@@ -86,6 +84,11 @@ function TeamPullRequestList({ sx }: TeamPullRequestListProps) {
   const { selectedTeam } = useCurrentUser();
   const [dateRange] = useSelectedDateRange();
   const { isProcessingInitialJob } = useDataStatus();
+
+  const displayedColumns = useMemo(
+    () => columns ?? (Object.keys(COLUMNS) as PullRequestColumnName[]),
+    [columns]
+  );
 
   const { data } = useGetPullRequestsQuery(
     {
@@ -140,17 +143,17 @@ function TeamPullRequestList({ sx }: TeamPullRequestListProps) {
         <Table>
           <TableHead>
             <TableRow>
-              {COLUMNS.map((column) => (
+              {displayedColumns.map((columnKey) => (
                 <TableCell
-                  sortDirection={sortBy === column.key ? sortDirection : false}
+                  sortDirection={sortBy === columnKey ? sortDirection : false}
                 >
                   <TableSortLabel
-                    active={sortBy === column.key}
-                    direction={sortBy === column.key ? sortDirection : "asc"}
-                    onClick={createSortHandler(column.key)}
+                    active={sortBy === columnKey}
+                    direction={sortBy === columnKey ? sortDirection : "asc"}
+                    onClick={createSortHandler(columnKey)}
                   >
                     {formatMessage({
-                      id: `pull-requests-table.columns.${column.key}`,
+                      id: `pull-requests-table.columns.${columnKey}`,
                     })}
                   </TableSortLabel>
                 </TableCell>
@@ -160,8 +163,8 @@ function TeamPullRequestList({ sx }: TeamPullRequestListProps) {
           <TableBody>
             {pullRequests.map((pullRequest) => (
               <TableRow key={pullRequest.id}>
-                {COLUMNS.map((column) =>
-                  column.renderCell(pullRequest, formatMessage)
+                {displayedColumns.map((columnKey) =>
+                  COLUMNS[columnKey].renderCell(pullRequest, formatMessage)
                 )}
               </TableRow>
             ))}

@@ -8,7 +8,9 @@ import { useIntl } from "react-intl";
 import { useNavigate } from "hooks/useNavigate";
 import { standards } from "constants/standards";
 import { StandardCode } from "redux/api/goals/graphs/graphs.types";
-import TeamPullRequestList from "components/organisms/TeamPullRequestList/TeamPullRequestList";
+import TeamPullRequestList, {
+  PullRequestColumnName,
+} from "components/organisms/TeamPullRequestList/TeamPullRequestList";
 
 function TeamGoal() {
   const { standardCode } = useParams();
@@ -24,6 +26,14 @@ function TeamGoal() {
     () => goals?.find((goal) => goal.standard_code === standardCode),
     [goals, standardCode]
   );
+
+  const pullRequestColumns = [
+    "vcs_repository",
+    "title",
+    "author",
+    "commit_number",
+    ...standard.pullRequestsColumns,
+  ] as PullRequestColumnName[];
 
   if (!goal) return null; // TODO add loader
 
@@ -46,7 +56,7 @@ function TeamGoal() {
         }}
       >
         <Typography
-          variant="h2"
+          variant="h1"
           sx={{
             display: "flex",
             alignItems: "center",
@@ -84,6 +94,7 @@ function TeamGoal() {
       </Box>
       <Box sx={{ paddingBottom: (theme) => theme.spacing(6) }}>
         <TeamPullRequestList
+          columns={pullRequestColumns}
           sx={{
             marginX: (theme) => theme.spacing(1),
             marginY: (theme) => theme.spacing(6),
