@@ -3,7 +3,7 @@ import Graph from "components/organisms/Graph/Graph";
 import { useCurrentUser } from "hooks/useCurrentUser";
 import { useGetGraphQuery } from "redux/api/goals/graphs/graphs.api";
 import { GetHistogramResponse } from "redux/api/goals/graphs/graphs.types";
-import { GraphProps } from "components/organisms/Graph/types";
+import { CommonGraphProps } from "components/organisms/Graph/types";
 import { useIntl } from "react-intl";
 import { useSelectedDateRange } from "hooks/useSelectedDateRange";
 import dayjs from "dayjs";
@@ -13,7 +13,13 @@ import { buildHistogramSeries } from "services/highcharts/HighchartsSeriesBuilde
 import { useGetMetricsQuery } from "redux/api/goals/metrics/metrics.api";
 import { useDataStatus } from "hooks/useDataStatus";
 
-function Histogram({ standardCode, sx }: GraphProps) {
+function Histogram({
+  title,
+  subtitle,
+  actions,
+  standardCode,
+  sx,
+}: CommonGraphProps) {
   const { formatMessage } = useIntl();
   const { selectedTeam } = useCurrentUser();
   const [dateRange] = useSelectedDateRange();
@@ -73,24 +79,34 @@ function Histogram({ standardCode, sx }: GraphProps) {
           ? formatMessage({ id: "standards.graphs.loading" })
           : undefined
       }
-      title={
-        metricsData?.metrics.meeting_goal.value !== undefined
-          ? formatMessage(
-              { id: `standards.${standardCode}.histogram.title` },
-              { value: metricsData?.metrics.meeting_goal.value }
-            )
+      titleSection={
+        title
+          ? {
+              title,
+              subtitle,
+            }
           : undefined
       }
-      subtitle={formatMessage({
-        id: `standards.${standardCode}.histogram.subtitle`,
-      })}
-      tendency={metricsData?.metrics.meeting_goal.tendency_percentage}
-      tendencyColor={
-        metricsData?.metrics.meeting_goal.tendency_percentage &&
-        metricsData?.metrics.meeting_goal.tendency_percentage > 0
-          ? "red"
-          : "green"
+      valueSection={
+        metricsData?.metrics.meeting_goal.value !== undefined
+          ? {
+              value: formatMessage(
+                { id: `standards.${standardCode}.histogram.title` },
+                { value: metricsData?.metrics.meeting_goal.value }
+              ),
+              subtitle: formatMessage({
+                id: `standards.${standardCode}.histogram.subtitle`,
+              }),
+              tendency: metricsData?.metrics.meeting_goal.tendency_percentage,
+              tendencyColor:
+                metricsData?.metrics.meeting_goal.tendency_percentage &&
+                metricsData?.metrics.meeting_goal.tendency_percentage > 0
+                  ? "red"
+                  : "green",
+            }
+          : undefined
       }
+      actions={actions}
       options={options}
     />
   );

@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import { useCurrentUser } from "hooks/useCurrentUser";
 import { useGetGraphQuery } from "redux/api/goals/graphs/graphs.api";
 import { GetCurveResponse } from "redux/api/goals/graphs/graphs.types";
-import { GraphProps } from "components/organisms/Graph/types";
+import { CommonGraphProps } from "components/organisms/Graph/types";
 import { useIntl } from "react-intl";
 import { useSelectedDateRange } from "hooks/useSelectedDateRange";
 import { buildCurveOptions } from "services/highcharts/HighchartsOptionsBuilder";
@@ -12,7 +12,13 @@ import { buildCurveSeries } from "services/highcharts/HighchartsSeriesBuilder";
 import { useGetMetricsQuery } from "redux/api/goals/metrics/metrics.api";
 import { useDataStatus } from "hooks/useDataStatus";
 
-function Curves({ standardCode, sx }: GraphProps) {
+function Curves({
+  title,
+  subtitle,
+  actions,
+  standardCode,
+  sx,
+}: CommonGraphProps) {
   const { formatMessage } = useIntl();
   const { selectedTeam } = useCurrentUser();
   const [dateRange] = useSelectedDateRange();
@@ -69,24 +75,34 @@ function Curves({ standardCode, sx }: GraphProps) {
           ? formatMessage({ id: "standards.graphs.loading" })
           : undefined
       }
-      title={
-        metricsData?.metrics.average.value !== undefined
-          ? formatMessage(
-              { id: `standards.${standardCode}.curves.title` },
-              { value: metricsData?.metrics.average.value }
-            )
+      titleSection={
+        title
+          ? {
+              title,
+              subtitle,
+            }
           : undefined
       }
-      subtitle={formatMessage({
-        id: `standards.${standardCode}.curves.subtitle`,
-      })}
-      tendency={metricsData?.metrics.average.tendency_percentage}
-      tendencyColor={
-        metricsData?.metrics.average.tendency_percentage &&
-        metricsData?.metrics.average.tendency_percentage > 0
-          ? "red"
-          : "green"
+      valueSection={
+        metricsData?.metrics.average.value !== undefined
+          ? {
+              value: formatMessage(
+                { id: `standards.${standardCode}.curves.title` },
+                { value: metricsData?.metrics.average.value }
+              ),
+              subtitle: formatMessage({
+                id: `standards.${standardCode}.curves.subtitle`,
+              }),
+              tendency: metricsData?.metrics.average.tendency_percentage,
+              tendencyColor:
+                metricsData?.metrics.average.tendency_percentage &&
+                metricsData?.metrics.average.tendency_percentage > 0
+                  ? "red"
+                  : "green",
+            }
+          : undefined
       }
+      actions={actions}
       options={options}
     />
   );

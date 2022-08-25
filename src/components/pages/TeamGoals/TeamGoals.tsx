@@ -2,14 +2,8 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import { useIntl } from "react-intl";
 import { useCurrentUser } from "hooks/useCurrentUser";
-import standardsData from "standards.json";
-import StandardCard, {
-  Standard,
-} from "components/organisms/StandardCard/StandardCard";
-
-const standards: Standard[] = Object.values(
-  standardsData.standards
-) as Standard[];
+import StandardCard from "components/organisms/StandardCard/StandardCard";
+import { standards } from "constants/standards";
 
 function TeamGoals() {
   const { formatMessage } = useIntl();
@@ -39,7 +33,7 @@ function TeamGoals() {
           flexWrap: "wrap",
         }}
       >
-        {standards.map((standard) => (
+        {Object.values(standards).map((standard) => (
           <StandardCard
             key={standard.code}
             standard={standard}

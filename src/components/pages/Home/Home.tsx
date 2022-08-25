@@ -1,16 +1,11 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import { useCurrentUser } from "hooks/useCurrentUser";
-import standardsData from "standards.json";
-import { StandardCode } from "redux/api/goals/graphs/graphs.types";
-import { Standard } from "components/organisms/StandardCard/StandardCard";
 import { useIntl } from "react-intl";
-import GoalDashboardSection from "components/organisms/GoalDashboardSection/GoalDashboardSection";
 import DateRangeSelector from "components/molecules/DateRangeSelector/DateRangeSelector";
-import TeamPullRequestList from "components/organisms/TeamPullRequestList/TeamPullRequestList";
 import { useDataStatus } from "hooks/useDataStatus";
-
-const standards = standardsData.standards as Record<StandardCode, Standard>;
+import TeamGoalDashboardPanel from "components/organisms/TeamGoalDashboardPanel/TeamGoalDashboardPanel";
+import { standards } from "constants/standards";
 
 function Home() {
   const { formatMessage } = useIntl();
@@ -42,22 +37,26 @@ function Home() {
         </Typography>
         <DateRangeSelector />
       </Box>
-      {!isLoadingProcessingInitialJob &&
-        goals?.map((goal, index) => (
-          <GoalDashboardSection
-            sx={{ marginTop: (theme) => (index !== 0 ? theme.spacing(6) : 0) }}
-            key={goal.id}
-            standard={standards[goal.standard_code]}
-            goal={goal}
-          />
-        ))}
-      <Box sx={{ paddingBottom: (theme) => theme.spacing(6) }}>
-        <TeamPullRequestList
-          sx={{
-            marginX: (theme) => theme.spacing(1),
-            marginY: (theme) => theme.spacing(6),
-          }}
-        />
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          marginTop: (theme) => theme.spacing(2),
+        }}
+      >
+        {!isLoadingProcessingInitialJob &&
+          goals?.map((goal, index) => (
+            <TeamGoalDashboardPanel
+              key={goal.id}
+              sx={{
+                margin: (theme) => theme.spacing(1),
+                flex: 1,
+              }}
+              standard={standards[goal.standard_code]}
+              goal={goal}
+            />
+          ))}
       </Box>
     </Box>
   );
