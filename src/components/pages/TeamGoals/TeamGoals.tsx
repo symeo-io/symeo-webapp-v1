@@ -14,10 +14,6 @@ function TeamGoals() {
       sx={{
         display: "flex",
         flexDirection: "column",
-        padding: (theme) => theme.spacing(3),
-        maxWidth: "1441px",
-        margin: "auto",
-        width: "100%",
         boxSizing: "border-box",
       }}
     >

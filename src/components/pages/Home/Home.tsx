@@ -18,10 +18,6 @@ function Home() {
       sx={{
         display: "flex",
         flexDirection: "column",
-        padding: (theme) => theme.spacing(3),
-        flex: 1,
-        maxWidth: "1441px",
-        margin: "auto",
       }}
     >
       <Box

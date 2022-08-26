@@ -15,7 +15,15 @@ export function withSidebar<T = object>(
             overflow: "auto",
           }}
         >
-          <WrappedComponent {...props} />
+          <Box
+            sx={{
+              padding: (theme) => theme.spacing(3),
+              maxWidth: "1441px",
+              margin: "auto",
+            }}
+          >
+            <WrappedComponent {...props} />
+          </Box>
         </Box>
       </Box>
     );

@@ -25,9 +25,6 @@ function Organization() {
       sx={{
         display: "flex",
         flexDirection: "column",
-        padding: (theme) => theme.spacing(3),
-        maxWidth: "1100px",
-        width: "100%",
         boxSizing: "border-box",
         "& .MuiTabPanel-root": {
           padding: 0,
