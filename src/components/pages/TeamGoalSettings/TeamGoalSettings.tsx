@@ -194,7 +194,7 @@ function TeamGoalSettings() {
         <Box
           sx={{
             marginTop: (theme) => theme.spacing(5),
-            paddingX: (theme) => theme.spacing(2),
+            paddingX: (theme) => theme.spacing(9),
           }}
         >
           <Slider
