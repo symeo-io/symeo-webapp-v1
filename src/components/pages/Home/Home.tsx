@@ -6,6 +6,7 @@ import DateRangeSelector from "components/molecules/DateRangeSelector/DateRangeS
 import { useDataStatus } from "hooks/useDataStatus";
 import TeamGoalDashboardPanel from "components/organisms/TeamGoalDashboardPanel/TeamGoalDashboardPanel";
 import { standards } from "constants/standards";
+import LeadTimeBreakdown from "components/organisms/LeadTimeBreakdown/LeadTimeBreakdown";
 
 function Home() {
   const { formatMessage } = useIntl();
@@ -38,6 +39,18 @@ function Home() {
         <DateRangeSelector />
       </Box>
       <Box>
+        <Typography variant="h2">
+          {formatMessage({ id: "dashboard.lead-time.title" })}
+        </Typography>
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <LeadTimeBreakdown
+            sx={{
+              marginTop: (theme) => theme.spacing(2),
+            }}
+          />
+        </Box>
+      </Box>
+      <Box sx={{ marginTop: (theme) => theme.spacing(6) }}>
         <Typography variant="h2">
           {formatMessage({ id: "dashboard.team-goals.title" })}
         </Typography>

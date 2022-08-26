@@ -65,6 +65,14 @@
       "title": "Lead Time"
     }
   },
+  "lead-time": {
+    "average-subtitle": "Avg. lead time",
+    "coding": "Coding",
+    "review-lag": "Review lag",
+    "review": "Review",
+    "deploy": "Deploy",
+    "improve-button-label": "Improve"
+  },
   "organization": {
     "title": "Organization Settings - {organizationName}",
     "members-tab-label": "Members",

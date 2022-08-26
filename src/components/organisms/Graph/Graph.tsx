@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { PropsWithSx } from "types/PropsWithSx";
 import Highcharts from "services/highcharts/Highcharts";
-import Status from "components/atoms/Status/Status";
+import Tendency from "components/atoms/Tendency";
 
 export type GraphProps = PropsWithSx & {
   titleSection?: {
@@ -30,10 +30,6 @@ export type GraphProps = PropsWithSx & {
   loading?: boolean;
   loadingMessage?: string;
 };
-
-function buildTendencyLabel(tendency: number) {
-  return tendency >= 0 ? `+${tendency}%` : `${tendency}%`;
-}
 
 function Graph({
   titleSection,
@@ -80,17 +76,14 @@ function Graph({
                 <Typography variant="h2" sx={{ fontSize: "1.75rem" }}>
                   {valueSection.value}
                 </Typography>
-                {valueSection.tendency !== undefined && (
-                  <Status
-                    label={buildTendencyLabel(valueSection.tendency)}
-                    variant={
-                      valueSection.tendencyColor === "green"
-                        ? "success"
-                        : "error"
-                    }
-                    sx={{ marginLeft: (theme) => theme.spacing(1) }}
-                  />
-                )}
+                {valueSection.tendency !== undefined &&
+                  valueSection.tendencyColor !== undefined && (
+                    <Tendency
+                      tendency={valueSection.tendency}
+                      positiveTendency="down"
+                      sx={{ marginLeft: (theme) => theme.spacing(1) }}
+                    />
+                  )}
               </Box>
 
               {valueSection.subtitle && (
