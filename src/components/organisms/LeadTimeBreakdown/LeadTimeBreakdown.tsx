@@ -2,7 +2,9 @@ import { Box, Card } from "@mui/material";
 import { PropsWithSx } from "types/PropsWithSx";
 import React, { useCallback } from "react";
 import LeadTimeAverageValue from "components/molecules/LeadTimeAverageValue/LeadTimeAverageValue";
-import LeadTimeBreakdownSection from "components/molecules/LeadTimeBreakdownSection/LeadTimeBreakdownSection";
+import LeadTimeBreakdownSection, {
+  LeadTimeBreakdownSectionProps,
+} from "components/molecules/LeadTimeBreakdownSection/LeadTimeBreakdownSection";
 import { useIntl } from "react-intl";
 import { useNavigate } from "hooks/useNavigate";
 import {
@@ -13,6 +15,43 @@ import { useCurrentUser } from "hooks/useCurrentUser";
 import { useSelectedDateRange } from "hooks/useSelectedDateRange";
 import { useDataStatus } from "hooks/useDataStatus";
 import dayjs from "dayjs";
+
+const breakdownColorsLimits = {
+  coding_time: {
+    green: 1,
+    orange: 2,
+  },
+  review_lag: {
+    green: 0.04,
+    orange: 0.125,
+  },
+  review_time: {
+    green: 0.083,
+    orange: 0.17,
+  },
+  time_to_deploy: {
+    green: 7,
+    orange: 14,
+  },
+};
+
+function buildColor(
+  type: keyof typeof breakdownColorsLimits,
+  value?: number
+): LeadTimeBreakdownSectionProps["color"] {
+  const limits = breakdownColorsLimits[type];
+
+  if (!value) return "green";
+
+  if (value <= limits.green) {
+    return "green";
+  }
+  if (value <= limits.orange) {
+    return "orange";
+  }
+
+  return "red";
+}
 
 export type LeadTimeBreakdownProps = PropsWithSx;
 
@@ -75,7 +114,11 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
             leadTimeBreakdownData?.lead_time_break_down.coding_time.average
               .tendency_percentage ?? 0
           }
-          color="orange"
+          color={buildColor(
+            "coding_time",
+            leadTimeBreakdownData?.lead_time_break_down.coding_time.average
+              .value
+          )}
           action={{
             label: formatMessage({ id: "lead-time.improve-button-label" }),
             onClick,
@@ -96,7 +139,10 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
             leadTimeBreakdownData?.lead_time_break_down.review_lag.average
               .tendency_percentage ?? 0
           }
-          color="orange"
+          color={buildColor(
+            "review_lag",
+            leadTimeBreakdownData?.lead_time_break_down.review_lag.average.value
+          )}
           action={{
             label: formatMessage({ id: "lead-time.improve-button-label" }),
             onClick,
@@ -117,7 +163,11 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
             leadTimeBreakdownData?.lead_time_break_down.review_time.average
               .tendency_percentage ?? 0
           }
-          color="orange"
+          color={buildColor(
+            "review_time",
+            leadTimeBreakdownData?.lead_time_break_down.review_time.average
+              .value
+          )}
           action={{
             label: formatMessage({ id: "lead-time.improve-button-label" }),
             onClick,
@@ -138,7 +188,11 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
             leadTimeBreakdownData?.lead_time_break_down.time_to_deploy.average
               .tendency_percentage ?? 0
           }
-          color="orange"
+          color={buildColor(
+            "time_to_deploy",
+            leadTimeBreakdownData?.lead_time_break_down.time_to_deploy.average
+              .value
+          )}
           action={{
             label: formatMessage({ id: "lead-time.improve-button-label" }),
             onClick,

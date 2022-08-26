@@ -7,7 +7,7 @@ import LeadTimeBreakdownArrow from "components/molecules/LeadTimeBreakdownSectio
 import LeadTimeAverageValue from "components/molecules/LeadTimeAverageValue/LeadTimeAverageValue";
 import Button from "components/atoms/Button/Button";
 
-export type LeadTimeBreakdownBreakdownSectionProps = PropsWithSx & {
+export type LeadTimeBreakdownSectionProps = PropsWithSx & {
   label: string;
   color: "green" | "orange" | "red";
   value: string;
@@ -40,7 +40,7 @@ function LeadTimeBreakdownSection({
   action,
   loading = false,
   sx,
-}: LeadTimeBreakdownBreakdownSectionProps) {
+}: LeadTimeBreakdownSectionProps) {
   const background = useMemo(
     () => buildBackgroundColor(color),
     [color]
