@@ -22,12 +22,12 @@ const breakdownColorsLimits = {
     orange: 2,
   },
   review_lag: {
-    green: 0.04,
-    orange: 0.125,
+    green: 0.04, // 1 hour
+    orange: 0.125, // 3 hour
   },
   review_time: {
-    green: 0.083,
-    orange: 0.17,
+    green: 0.083, // 2 hour
+    orange: 0.17, // 4 hour
   },
   time_to_deploy: {
     green: 7,
