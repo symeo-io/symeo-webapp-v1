@@ -13,9 +13,6 @@ export function withSidebar<T = object>(
           sx={{
             flex: 1,
             overflow: "auto",
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
           }}
         >
           <WrappedComponent {...props} />

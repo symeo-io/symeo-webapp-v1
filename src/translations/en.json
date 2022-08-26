@@ -48,16 +48,28 @@
     "invite": {
       "invite-people-button-label": "Invite People"
     },
-    "team-goals": {
-      "new-team-goal-button-label": "New Team Goal"
-    },
     "account": {
       "your-account": "Your account",
       "logout": "Logout"
     }
   },
   "dashboard": {
-    "title": "{teamName} Team Dashboard"
+    "title": "{teamName} Team Dashboard",
+    "team-goals": {
+      "title": "Team Goals"
+    },
+    "lead-time": {
+      "title": "Lead Time"
+    }
+  },
+  "lead-time": {
+    "value": "{value, plural, =0 {day} one {# day} other {# days}}",
+    "average-subtitle": "Avg. lead time",
+    "coding": "Coding",
+    "review-lag": "Review lag",
+    "review": "Review",
+    "deploy": "Deploy",
+    "improve-button-label": "Improve"
   },
   "organization": {
     "title": "Organization Settings - {organizationName}",

@@ -8,7 +8,6 @@ import CurrentUser from "components/molecules/CurrentUser/CurrentUser";
 import { useIntl } from "react-intl";
 import Button from "components/atoms/Button/Button";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import AddIcon from "@mui/icons-material/Add";
 import { useCurrentUser } from "hooks/useCurrentUser";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useNavigate } from "hooks/useNavigate";
@@ -48,26 +47,11 @@ function Sidebar() {
       )}
       <Box
         sx={{
-          padding: (theme) => theme.spacing(1.5),
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        <Button
-          startIcon={<AddIcon />}
-          color="secondary"
-          onClick={() => navigate("teamGoals")}
-        >
-          {formatMessage({
-            id: "sidebar.team-goals.new-team-goal-button-label",
-          })}
-        </Button>
-      </Box>
-      <Box
-        sx={{
           flex: 1,
           padding: (theme) =>
-            `${theme.spacing(1.5)} 0 theme.spacing(1.5) theme.spacing(1.5)`,
+            `${theme.spacing(1.5)} 0 ${theme.spacing(1.5)} ${theme.spacing(
+              1.5
+            )}`,
         }}
       >
         <MenuList>

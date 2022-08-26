@@ -11,6 +11,7 @@ import { StandardCode } from "redux/api/goals/graphs/graphs.types";
 import TeamPullRequestList, {
   PullRequestColumnName,
 } from "components/organisms/TeamPullRequestList/TeamPullRequestList";
+import DateRangeSelector from "components/molecules/DateRangeSelector/DateRangeSelector";
 
 function TeamGoal() {
   const { standardCode } = useParams();
@@ -45,6 +46,7 @@ function TeamGoal() {
         padding: (theme) => theme.spacing(3),
         flex: 1,
         maxWidth: "1441px",
+        margin: "auto",
       }}
     >
       <Box
@@ -78,6 +80,7 @@ function TeamGoal() {
             <SettingsIcon />
           </IconButton>
         </Typography>
+        <DateRangeSelector />
       </Box>
       <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
         {standard.availableGraphs.map((graphType) => (
@@ -92,15 +95,13 @@ function TeamGoal() {
           />
         ))}
       </Box>
-      <Box sx={{ paddingBottom: (theme) => theme.spacing(6) }}>
-        <TeamPullRequestList
-          columns={pullRequestColumns}
-          sx={{
-            marginX: (theme) => theme.spacing(1),
-            marginY: (theme) => theme.spacing(6),
-          }}
-        />
-      </Box>
+      <TeamPullRequestList
+        columns={pullRequestColumns}
+        sx={{
+          marginX: (theme) => theme.spacing(1),
+          marginY: (theme) => theme.spacing(6),
+        }}
+      />
     </Box>
   );
 }

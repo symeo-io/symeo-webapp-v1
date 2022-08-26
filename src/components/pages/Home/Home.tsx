@@ -6,6 +6,7 @@ import DateRangeSelector from "components/molecules/DateRangeSelector/DateRangeS
 import { useDataStatus } from "hooks/useDataStatus";
 import TeamGoalDashboardPanel from "components/organisms/TeamGoalDashboardPanel/TeamGoalDashboardPanel";
 import { standards } from "constants/standards";
+import LeadTimeBreakdown from "components/organisms/LeadTimeBreakdown/LeadTimeBreakdown";
 
 function Home() {
   const { formatMessage } = useIntl();
@@ -20,6 +21,7 @@ function Home() {
         padding: (theme) => theme.spacing(3),
         flex: 1,
         maxWidth: "1441px",
+        margin: "auto",
       }}
     >
       <Box
@@ -37,25 +39,43 @@ function Home() {
         </Typography>
         <DateRangeSelector />
       </Box>
-      <Box
-        sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          marginTop: (theme) => theme.spacing(2),
-        }}
-      >
-        {!isLoadingProcessingInitialJob &&
-          goals?.map((goal, index) => (
-            <TeamGoalDashboardPanel
-              key={goal.id}
-              sx={{
-                margin: (theme) => theme.spacing(1),
-                width: "430px",
-              }}
-              standard={standards[goal.standard_code]}
-              goal={goal}
-            />
-          ))}
+      <Box>
+        <Typography variant="h2">
+          {formatMessage({ id: "dashboard.lead-time.title" })}
+        </Typography>
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <LeadTimeBreakdown
+            sx={{
+              marginTop: (theme) => theme.spacing(2),
+            }}
+          />
+        </Box>
+      </Box>
+      <Box sx={{ marginTop: (theme) => theme.spacing(6) }}>
+        <Typography variant="h2">
+          {formatMessage({ id: "dashboard.team-goals.title" })}
+        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            marginTop: (theme) => theme.spacing(2),
+            marginBottom: (theme) => theme.spacing(6),
+          }}
+        >
+          {!isLoadingProcessingInitialJob &&
+            goals?.map((goal, index) => (
+              <TeamGoalDashboardPanel
+                key={goal.id}
+                sx={{
+                  margin: (theme) => theme.spacing(1),
+                  width: "430px",
+                }}
+                standard={standards[goal.standard_code]}
+                goal={goal}
+              />
+            ))}
+        </Box>
       </Box>
     </Box>
   );

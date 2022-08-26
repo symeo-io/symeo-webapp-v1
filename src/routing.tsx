@@ -43,6 +43,7 @@ const routes = {
     path: "/team-goals/:standardCode",
     isSecured: true,
     sidebar: true,
+    dataStatus: true,
     element: TeamGoal,
   } as Route,
   teamGoalSetting: {

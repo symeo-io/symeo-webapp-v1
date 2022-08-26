@@ -439,7 +439,7 @@ export const theme = createTheme({
           "& .MuiTablePagination-root:last-child": {
             padding: "0 16px",
 
-            "& .MuiTablePagination-actions .MuiButtonBase-root:first-child": {
+            "& .MuiTablePagination-actions .MuiButtonBase-root:first-of-type": {
               marginRight: "8px",
             },
           },

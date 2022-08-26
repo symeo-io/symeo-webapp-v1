@@ -2,7 +2,14 @@ import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import { config } from "config";
 import { getAccessToken } from "providers/GetTokenProvider";
 
-export const dataTagTypes = ["Graph", "Metric", "Repository", "PullRequest"];
+export const dataTagTypes = [
+  "Graph",
+  "Metric",
+  "Repository",
+  "PullRequest",
+  "LeadTime",
+  "LeadTimeBreakdown",
+];
 
 export const apiTagTypes = [
   "CurrentUser",
