@@ -15,7 +15,8 @@ function TeamGoals() {
         display: "flex",
         flexDirection: "column",
         padding: (theme) => theme.spacing(3),
-        maxWidth: "1100px",
+        maxWidth: "1441px",
+        margin: "auto",
         width: "100%",
         boxSizing: "border-box",
       }}
