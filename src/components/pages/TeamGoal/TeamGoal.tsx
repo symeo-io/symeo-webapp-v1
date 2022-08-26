@@ -46,6 +46,7 @@ function TeamGoal() {
         padding: (theme) => theme.spacing(3),
         flex: 1,
         maxWidth: "1441px",
+        margin: "auto",
       }}
     >
       <Box
@@ -94,15 +95,13 @@ function TeamGoal() {
           />
         ))}
       </Box>
-      <Box sx={{ paddingBottom: (theme) => theme.spacing(6) }}>
-        <TeamPullRequestList
-          columns={pullRequestColumns}
-          sx={{
-            marginX: (theme) => theme.spacing(1),
-            marginY: (theme) => theme.spacing(6),
-          }}
-        />
-      </Box>
+      <TeamPullRequestList
+        columns={pullRequestColumns}
+        sx={{
+          marginX: (theme) => theme.spacing(1),
+          marginY: (theme) => theme.spacing(6),
+        }}
+      />
     </Box>
   );
 }

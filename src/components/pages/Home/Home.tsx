@@ -21,6 +21,7 @@ function Home() {
         padding: (theme) => theme.spacing(3),
         flex: 1,
         maxWidth: "1441px",
+        margin: "auto",
       }}
     >
       <Box
@@ -59,6 +60,7 @@ function Home() {
             display: "flex",
             flexWrap: "wrap",
             marginTop: (theme) => theme.spacing(2),
+            marginBottom: (theme) => theme.spacing(6),
           }}
         >
           {!isLoadingProcessingInitialJob &&
