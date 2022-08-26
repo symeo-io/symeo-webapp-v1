@@ -37,25 +37,30 @@ function Home() {
         </Typography>
         <DateRangeSelector />
       </Box>
-      <Box
-        sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          marginTop: (theme) => theme.spacing(2),
-        }}
-      >
-        {!isLoadingProcessingInitialJob &&
-          goals?.map((goal, index) => (
-            <TeamGoalDashboardPanel
-              key={goal.id}
-              sx={{
-                margin: (theme) => theme.spacing(1),
-                width: "430px",
-              }}
-              standard={standards[goal.standard_code]}
-              goal={goal}
-            />
-          ))}
+      <Box>
+        <Typography variant="h2">
+          {formatMessage({ id: "dashboard.team-goals.title" })}
+        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            marginTop: (theme) => theme.spacing(2),
+          }}
+        >
+          {!isLoadingProcessingInitialJob &&
+            goals?.map((goal, index) => (
+              <TeamGoalDashboardPanel
+                key={goal.id}
+                sx={{
+                  margin: (theme) => theme.spacing(1),
+                  width: "430px",
+                }}
+                standard={standards[goal.standard_code]}
+                goal={goal}
+              />
+            ))}
+        </Box>
       </Box>
     </Box>
   );

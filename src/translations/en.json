@@ -57,7 +57,13 @@
     }
   },
   "dashboard": {
-    "title": "{teamName} Team Dashboard"
+    "title": "{teamName} Team Dashboard",
+    "team-goals": {
+      "title": "Team Goals"
+    },
+    "lead-time": {
+      "title": "Lead Time"
+    }
   },
   "organization": {
     "title": "Organization Settings - {organizationName}",
