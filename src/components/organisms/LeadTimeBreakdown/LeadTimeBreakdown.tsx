@@ -7,10 +7,7 @@ import LeadTimeBreakdownSection, {
 } from "components/molecules/LeadTimeBreakdownSection/LeadTimeBreakdownSection";
 import { useIntl } from "react-intl";
 import { useNavigate } from "hooks/useNavigate";
-import {
-  useGetLeadTimeBreakdownQuery,
-  useGetLeadTimeQuery,
-} from "redux/api/lead-time/lead-time.api";
+import { useGetLeadTimeQuery } from "redux/api/lead-time/lead-time.api";
 import { useCurrentUser } from "hooks/useCurrentUser";
 import { useSelectedDateRange } from "hooks/useSelectedDateRange";
 import { useDataStatus } from "hooks/useDataStatus";
@@ -75,17 +72,6 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
         skip: !selectedTeam || isProcessingInitialJob,
       }
     );
-  const { data: leadTimeBreakdownData, isLoading: isLoadingBreakdownLeadTime } =
-    useGetLeadTimeBreakdownQuery(
-      {
-        teamId: selectedTeam?.id as string,
-        startDate: dayjs(dateRange.startDate).format("YYYY-MM-DD"),
-        endDate: dayjs(dateRange.endDate).format("YYYY-MM-DD"),
-      },
-      {
-        skip: !selectedTeam || isProcessingInitialJob,
-      }
-    );
 
   return (
     <Card sx={{ padding: (theme) => theme.spacing(2), ...sx }}>
@@ -100,24 +86,20 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
       />
       <Box sx={{ display: "flex", padding: (theme) => theme.spacing(3) }}>
         <LeadTimeBreakdownSection
-          loading={isLoadingBreakdownLeadTime}
+          loading={isLoadingLeadTime}
           label={formatMessage({ id: "lead-time.coding" })}
           value={formatMessage(
             { id: "lead-time.value" },
             {
-              value:
-                leadTimeBreakdownData?.lead_time_break_down.coding_time.average
-                  .value,
+              value: leadTimeData?.lead_time.coding_time.value,
             }
           )}
           tendency={
-            leadTimeBreakdownData?.lead_time_break_down.coding_time.average
-              .tendency_percentage ?? 0
+            leadTimeData?.lead_time.coding_time.tendency_percentage ?? 0
           }
           color={buildColor(
             "coding_time",
-            leadTimeBreakdownData?.lead_time_break_down.coding_time.average
-              .value
+            leadTimeData?.lead_time.coding_time.value
           )}
           action={{
             label: formatMessage({ id: "lead-time.improve-button-label" }),
@@ -125,23 +107,18 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
           }}
         />
         <LeadTimeBreakdownSection
-          loading={isLoadingBreakdownLeadTime}
+          loading={isLoadingLeadTime}
           label={formatMessage({ id: "lead-time.review-lag" })}
           value={formatMessage(
             { id: "lead-time.value" },
             {
-              value:
-                leadTimeBreakdownData?.lead_time_break_down.review_lag.average
-                  .value,
+              value: leadTimeData?.lead_time.review_lag.value,
             }
           )}
-          tendency={
-            leadTimeBreakdownData?.lead_time_break_down.review_lag.average
-              .tendency_percentage ?? 0
-          }
+          tendency={leadTimeData?.lead_time.review_lag.tendency_percentage ?? 0}
           color={buildColor(
             "review_lag",
-            leadTimeBreakdownData?.lead_time_break_down.review_lag.average.value
+            leadTimeData?.lead_time.review_lag.value
           )}
           action={{
             label: formatMessage({ id: "lead-time.improve-button-label" }),
@@ -149,24 +126,20 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
           }}
         />
         <LeadTimeBreakdownSection
-          loading={isLoadingBreakdownLeadTime}
+          loading={isLoadingLeadTime}
           label={formatMessage({ id: "lead-time.review" })}
           value={formatMessage(
             { id: "lead-time.value" },
             {
-              value:
-                leadTimeBreakdownData?.lead_time_break_down.review_time.average
-                  .value,
+              value: leadTimeData?.lead_time.review_time.value,
             }
           )}
           tendency={
-            leadTimeBreakdownData?.lead_time_break_down.review_time.average
-              .tendency_percentage ?? 0
+            leadTimeData?.lead_time.review_time.tendency_percentage ?? 0
           }
           color={buildColor(
             "review_time",
-            leadTimeBreakdownData?.lead_time_break_down.review_time.average
-              .value
+            leadTimeData?.lead_time.review_time.value
           )}
           action={{
             label: formatMessage({ id: "lead-time.improve-button-label" }),
@@ -174,24 +147,20 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
           }}
         />
         <LeadTimeBreakdownSection
-          loading={isLoadingBreakdownLeadTime}
+          loading={isLoadingLeadTime}
           label={formatMessage({ id: "lead-time.deploy" })}
           value={formatMessage(
             { id: "lead-time.value" },
             {
-              value:
-                leadTimeBreakdownData?.lead_time_break_down.time_to_deploy
-                  .average.value,
+              value: leadTimeData?.lead_time.time_to_deploy.value,
             }
           )}
           tendency={
-            leadTimeBreakdownData?.lead_time_break_down.time_to_deploy.average
-              .tendency_percentage ?? 0
+            leadTimeData?.lead_time.time_to_deploy.tendency_percentage ?? 0
           }
           color={buildColor(
             "time_to_deploy",
-            leadTimeBreakdownData?.lead_time_break_down.time_to_deploy.average
-              .value
+            leadTimeData?.lead_time.time_to_deploy.value
           )}
           action={{
             label: formatMessage({ id: "lead-time.improve-button-label" }),
