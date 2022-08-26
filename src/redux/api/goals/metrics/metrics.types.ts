@@ -1,5 +1,6 @@
 import { StandardCode } from "redux/api/goals/graphs/graphs.types";
 import { ResponseWithErrors } from "redux/api/errors.type";
+import { Metric } from "redux/api/common.types";
 
 export type GetMetricsInput = {
   teamId: string;
@@ -10,13 +11,7 @@ export type GetMetricsInput = {
 
 export type GetMetricsResponse = ResponseWithErrors & {
   metrics: {
-    average: {
-      value: number;
-      tendency_percentage: number;
-    };
-    meeting_goal: {
-      value: number;
-      tendency_percentage: number;
-    };
+    average: Metric;
+    meeting_goal: Metric;
   };
 };

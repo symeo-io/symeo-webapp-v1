@@ -16,6 +16,7 @@ export type LeadTimeBreakdownBreakdownSectionProps = PropsWithSx & {
     label: string;
     onClick: () => void;
   };
+  loading?: boolean;
 };
 
 function buildBackgroundColor(color: "green" | "orange" | "red") {
@@ -37,6 +38,7 @@ function LeadTimeBreakdownSection({
   value,
   tendency,
   action,
+  loading = false,
   sx,
 }: LeadTimeBreakdownBreakdownSectionProps) {
   const background = useMemo(
@@ -60,7 +62,11 @@ function LeadTimeBreakdownSection({
               alignItems: "center",
             }}
           >
-            <LeadTimeAverageValue value={value} tendency={tendency} />
+            <LeadTimeAverageValue
+              value={value}
+              tendency={tendency}
+              loading={loading}
+            />
             {action && (
               <Button
                 onClick={action.onClick}

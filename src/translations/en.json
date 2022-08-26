@@ -66,6 +66,7 @@
     }
   },
   "lead-time": {
+    "value": "{value, plural, =0 {day} one {# day} other {# days}}",
     "average-subtitle": "Avg. lead time",
     "coding": "Coding",
     "review-lag": "Review lag",
