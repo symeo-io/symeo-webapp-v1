@@ -125,15 +125,19 @@ function TeamGoalSettings() {
   const marks = useMemo(() => {
     const result: SliderProps["marks"] = [];
 
-    result.push({
-      value: standard.valueRange[0],
-      label: <SliderMark value={standard.valueRange[0]} />,
-    });
+    if (!average || average !== standard.valueRange[0]) {
+      result.push({
+        value: standard.valueRange[0],
+        label: <SliderMark value={standard.valueRange[0]} />,
+      });
+    }
 
-    result.push({
-      value: standard.valueRange[1],
-      label: <SliderMark value={standard.valueRange[1]} />,
-    });
+    if (!average || average !== max) {
+      result.push({
+        value: max,
+        label: <SliderMark value={max} />,
+      });
+    }
 
     if (!average || standard.recommandedValue < average) {
       result.push({
@@ -164,7 +168,7 @@ function TeamGoalSettings() {
     }
 
     return result;
-  }, [average, standard.recommandedValue, standard.valueRange]);
+  }, [average, max, standard.recommandedValue, standard.valueRange]);
 
   return (
     <Box

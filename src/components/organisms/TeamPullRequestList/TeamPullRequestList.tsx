@@ -25,12 +25,14 @@ import { IntlShape, useIntl } from "react-intl";
 const COLUMNS = {
   vcs_repository: {
     renderCell: (pullRequest: PullRequest) => (
-      <TableCell>{pullRequest.vcs_repository}</TableCell>
+      <TableCell key={`vcs_repository:${pullRequest.id}`}>
+        {pullRequest.vcs_repository}
+      </TableCell>
     ),
   },
   title: {
     renderCell: (pullRequest: PullRequest) => (
-      <TableCell>
+      <TableCell key={`title:${pullRequest.id}`}>
         <Link href={pullRequest.vcs_url} target="_blank">
           {pullRequest.title}
         </Link>
@@ -39,17 +41,21 @@ const COLUMNS = {
   },
   author: {
     renderCell: (pullRequest: PullRequest) => (
-      <TableCell>{pullRequest.author}</TableCell>
+      <TableCell key={`author:${pullRequest.id}`}>
+        {pullRequest.author}
+      </TableCell>
     ),
   },
   commit_number: {
     renderCell: (pullRequest: PullRequest) => (
-      <TableCell>{pullRequest.commit_number}</TableCell>
+      <TableCell key={`commit_number:${pullRequest.id}`}>
+        {pullRequest.commit_number}
+      </TableCell>
     ),
   },
   size: {
     renderCell: (pullRequest: PullRequest) => (
-      <TableCell>{pullRequest.size}</TableCell>
+      <TableCell key={`size:${pullRequest.id}`}>{pullRequest.size}</TableCell>
     ),
   },
   days_opened: {
@@ -57,7 +63,7 @@ const COLUMNS = {
       pullRequest: PullRequest,
       formatMessage: IntlShape["formatMessage"]
     ) => (
-      <TableCell>
+      <TableCell key={`days_opened:${pullRequest.id}`}>
         {formatMessage(
           {
             id: "pull-requests-table.days-to-merge-value",
@@ -145,6 +151,7 @@ function TeamPullRequestList({ columns, sx }: TeamPullRequestListProps) {
             <TableRow>
               {displayedColumns.map((columnKey) => (
                 <TableCell
+                  key={columnKey}
                   sortDirection={sortBy === columnKey ? sortDirection : false}
                 >
                   <TableSortLabel
