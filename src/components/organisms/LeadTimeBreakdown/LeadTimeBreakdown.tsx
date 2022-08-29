@@ -59,7 +59,7 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
   const [dateRange] = useSelectedDateRange();
   const { isProcessingInitialJob } = useDataStatus();
 
-  const onClick = useCallback(() => navigate("teamGoals"), [navigate]);
+  const onClick = useCallback(() => navigate("teamGoalsLibrary"), [navigate]);
 
   const { data: leadTimeData, isLoading: isLoadingLeadTime } =
     useGetLeadTimeQuery(

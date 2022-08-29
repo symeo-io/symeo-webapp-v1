@@ -304,6 +304,8 @@ export const theme = createTheme({
     MuiMenuItem: {
       styleOverrides: {
         root: {
+          borderRadius: "10px",
+
           "& .MuiListItemIcon-root": {
             color: colors.secondary.bordersHover,
           },
@@ -313,7 +315,7 @@ export const theme = createTheme({
           },
 
           "&:hover": {
-            background: colors.primary.surface,
+            background: "transparent",
 
             "& .MuiListItemIcon-root": {
               color: colors.primary.bordersHover,
@@ -325,21 +327,19 @@ export const theme = createTheme({
           },
 
           "&.Mui-selected": {
-            background: "transparent",
-            borderRight: `2px solid ${colors.primary.main}`,
+            background: colors.primary.surface,
 
             "&:hover": {
-              background: "transparent",
-              borderRight: `2px solid ${colors.primary.shapeActive}`,
+              background: colors.primary.surface,
             },
 
             "& .MuiListItemIcon-root": {
-              color: colors.secondary.bordersHover,
+              color: colors.primary.bordersHover,
             },
 
             "& .MuiListItemText-root .MuiTypography-root": {
               fontWeight: 600,
-              color: colors.secondary.text,
+              color: colors.primary.main,
             },
           },
         },
