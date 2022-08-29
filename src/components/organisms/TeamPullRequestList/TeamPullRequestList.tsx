@@ -1,5 +1,7 @@
 import {
+  Box,
   Card,
+  CircularProgress,
   Link,
   Table,
   TableBody,
@@ -96,7 +98,7 @@ function TeamPullRequestList({ columns, sx }: TeamPullRequestListProps) {
     [columns]
   );
 
-  const { data } = useGetPullRequestsQuery(
+  const { data, isLoading } = useGetPullRequestsQuery(
     {
       teamId: selectedTeam?.id as string,
       startDate: dayjs(dateRange.startDate).format("YYYY-MM-DD"),
@@ -145,50 +147,78 @@ function TeamPullRequestList({ columns, sx }: TeamPullRequestListProps) {
           id: "pull-requests-table.title",
         })}
       </Typography>
-      <TableContainer>
-        <Table>
-          <TableHead>
-            <TableRow>
-              {displayedColumns.map((columnKey) => (
-                <TableCell
-                  key={columnKey}
-                  sortDirection={sortBy === columnKey ? sortDirection : false}
-                >
-                  <TableSortLabel
-                    active={sortBy === columnKey}
-                    direction={sortBy === columnKey ? sortDirection : "asc"}
-                    onClick={createSortHandler(columnKey)}
+      {(isProcessingInitialJob || isLoading) && (
+        <Box
+          sx={{
+            padding: (theme) => theme.spacing(4),
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CircularProgress />
+          {isProcessingInitialJob && (
+            <Typography
+              variant="body1"
+              color="secondary"
+              sx={{
+                marginTop: (theme) => theme.spacing(4),
+                textAlign: "center",
+              }}
+            >
+              {formatMessage({ id: "data-status.loading" })}
+            </Typography>
+          )}
+        </Box>
+      )}
+
+      {!isProcessingInitialJob && !isLoading && (
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                {displayedColumns.map((columnKey) => (
+                  <TableCell
+                    key={columnKey}
+                    sortDirection={sortBy === columnKey ? sortDirection : false}
                   >
-                    {formatMessage({
-                      id: `pull-requests-table.columns.${columnKey}`,
-                    })}
-                  </TableSortLabel>
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {pullRequests.map((pullRequest) => (
-              <TableRow key={pullRequest.id}>
-                {displayedColumns.map((columnKey) =>
-                  COLUMNS[columnKey].renderCell(pullRequest, formatMessage)
-                )}
+                    <TableSortLabel
+                      active={sortBy === columnKey}
+                      direction={sortBy === columnKey ? sortDirection : "asc"}
+                      onClick={createSortHandler(columnKey)}
+                    >
+                      {formatMessage({
+                        id: `pull-requests-table.columns.${columnKey}`,
+                      })}
+                    </TableSortLabel>
+                  </TableCell>
+                ))}
               </TableRow>
-            ))}
-          </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TablePagination
-                count={itemsCount}
-                onPageChange={(_, page) => setPageIndex(page)}
-                page={pageIndex}
-                rowsPerPage={pageSize}
-                rowsPerPageOptions={[]}
-              />
-            </TableRow>
-          </TableFooter>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody>
+              {pullRequests.map((pullRequest) => (
+                <TableRow key={pullRequest.id}>
+                  {displayedColumns.map((columnKey) =>
+                    COLUMNS[columnKey].renderCell(pullRequest, formatMessage)
+                  )}
+                </TableRow>
+              ))}
+            </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  count={itemsCount}
+                  onPageChange={(_, page) => setPageIndex(page)}
+                  page={pageIndex}
+                  rowsPerPage={pageSize}
+                  rowsPerPageOptions={[]}
+                />
+              </TableRow>
+            </TableFooter>
+          </Table>
+        </TableContainer>
+      )}
     </Card>
   );
 }
