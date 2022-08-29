@@ -140,9 +140,6 @@
       }
     },
     "cancel": "Cancel",
-    "graphs": {
-      "loading": "Symeo is performing the initial processing of your data. Graphs will be displayed shortly."
-    },
     "time-to-merge": {
       "title": "Aim for short PR lifecycle",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
@@ -209,6 +206,7 @@
     "days-to-merge-value": "{value, number, compact-short}"
   },
   "data-status": {
+    "loading": "Symeo is performing the initial processing of your data. Graphs will be displayed shortly.",
     "initial-data-processing": "Initial processing of your data",
     "last-update": "Last data update: {date}"
   }

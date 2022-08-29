@@ -76,7 +76,7 @@ function Histogram({
       loading={isLoading || isProcessingInitialJob}
       loadingMessage={
         isProcessingInitialJob
-          ? formatMessage({ id: "standards.graphs.loading" })
+          ? formatMessage({ id: "data-status.loading" })
           : undefined
       }
       titleSection={
