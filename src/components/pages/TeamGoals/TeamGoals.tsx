@@ -48,7 +48,7 @@ function TeamGoals() {
               key={goal.id}
               sx={{
                 margin: (theme) => theme.spacing(1),
-                width: "430px",
+                width: "280px",
               }}
               standard={standards[goal.standard_code]}
               goal={goal}

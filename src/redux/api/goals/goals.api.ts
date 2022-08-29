@@ -1,4 +1,4 @@
-import { api } from "../api";
+import { api, dataTagTypes } from "../api";
 import {
   CreateGoalInput,
   CreateGoalResponse,
@@ -40,7 +40,7 @@ const goalsMutationApi = api.injectEndpoints({
         method: "PATCH",
         body: input,
       }),
-      invalidatesTags: [{ type: "Goal" }, { type: "Graph" }],
+      invalidatesTags: ["Goal", ...dataTagTypes],
     }),
     deleteGoal: builder.mutation<DeleteGoalsResponse, DeleteGoalsInput>({
       query: ({ teamGoalId }) => ({

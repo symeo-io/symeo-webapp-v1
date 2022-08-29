@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { api } from "./redux/api/api";
-import { snackbarMiddleware } from "./redux/api/snackbar.middleware";
+import { api } from "redux/api/api";
+import { snackbarMiddleware } from "redux/api/snackbar.middleware";
 
 export const store = configureStore({
   reducer: {

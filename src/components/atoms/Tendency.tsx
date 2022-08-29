@@ -2,16 +2,21 @@ import Status from "components/atoms/Status/Status";
 import React, { useMemo } from "react";
 import { PropsWithSx } from "types/PropsWithSx";
 
+export type PositiveTendency = "up" | "down";
+
 export type TendencyProps = PropsWithSx & {
   tendency: number;
-  positiveTendency: "up" | "down";
+  positiveTendency: PositiveTendency;
 };
 
 function buildTendencyLabel(tendency: number) {
   return tendency >= 0 ? `+${tendency}%` : `${tendency}%`;
 }
 
-function buildTendencyColor(tendency: number, positiveTendency: "up" | "down") {
+function buildTendencyColor(
+  tendency: number,
+  positiveTendency: PositiveTendency
+) {
   if (positiveTendency === "down") {
     return tendency > 0 ? "error" : "success";
   }

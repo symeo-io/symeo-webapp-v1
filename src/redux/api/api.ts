@@ -4,7 +4,7 @@ import { getAccessToken } from "providers/GetTokenProvider";
 
 export const dataTagTypes = [
   "Graph",
-  "Metric",
+  "Metrics",
   "Repository",
   "PullRequest",
   "LeadTime",

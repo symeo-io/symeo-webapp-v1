@@ -84,8 +84,10 @@ function TeamGoalSettings() {
 
     await updateGoal({ id: goal.id, value });
 
-    return navigate("home");
-  }, [goal, navigate, updateGoal, value]);
+    return navigate("teamGoal", {
+      params: { standardCode: standard.code },
+    });
+  }, [goal, navigate, standard.code, updateGoal, value]);
 
   const handleCreate = useCallback(async () => {
     if (goal || !selectedTeam) return;
@@ -96,14 +98,16 @@ function TeamGoalSettings() {
       team_id: selectedTeam.id,
     });
 
-    return navigate("home");
+    return navigate("teamGoal", {
+      params: { standardCode: standard.code },
+    });
   }, [createGoal, goal, navigate, selectedTeam, standard.code, value]);
 
   const handleDelete = useCallback(async () => {
     if (!goal) return;
 
     await deleteGoal({ teamGoalId: goal.id });
-    return navigate("home");
+    return navigate("teamGoals");
   }, [deleteGoal, goal, navigate]);
 
   const { handleOpen: openConfirmDelete } = useConfirm({
@@ -216,7 +220,13 @@ function TeamGoalSettings() {
       >
         <Button
           variant="outlined"
-          onClick={() => navigate(goal ? "home" : "teamGoalsLibrary")}
+          onClick={() =>
+            goal
+              ? navigate("teamGoal", {
+                  params: { standardCode: standard.code },
+                })
+              : navigate("teamGoalsLibrary")
+          }
         >
           {formatMessage({
             id: "standards.cancel",

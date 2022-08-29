@@ -9,7 +9,8 @@ import {
 } from "@mui/material";
 import { PropsWithSx } from "types/PropsWithSx";
 import Highcharts from "services/highcharts/Highcharts";
-import Tendency from "components/atoms/Tendency";
+import Metric from "components/molecules/Metric/Metric";
+import { PositiveTendency } from "components/atoms/Tendency";
 
 export type GraphProps = PropsWithSx & {
   titleSection?: {
@@ -20,7 +21,7 @@ export type GraphProps = PropsWithSx & {
     value: string;
     subtitle?: string;
     tendency?: number;
-    tendencyColor?: "red" | "green";
+    positiveTendency?: PositiveTendency;
   };
   actions?: {
     icon: React.ReactElement;
@@ -72,25 +73,12 @@ function Graph({
           )}
           {valueSection && (
             <Box sx={{ marginBottom: (theme) => theme.spacing(4) }}>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <Typography variant="h2" sx={{ fontSize: "1.75rem" }}>
-                  {valueSection.value}
-                </Typography>
-                {valueSection.tendency !== undefined &&
-                  valueSection.tendencyColor !== undefined && (
-                    <Tendency
-                      tendency={valueSection.tendency}
-                      positiveTendency="down"
-                      sx={{ marginLeft: (theme) => theme.spacing(1) }}
-                    />
-                  )}
-              </Box>
-
-              {valueSection.subtitle && (
-                <Typography variant="body1" color="secondary">
-                  {valueSection.subtitle}
-                </Typography>
-              )}
+              <Metric
+                value={valueSection.value}
+                tendency={valueSection.tendency}
+                positiveTendency={valueSection.positiveTendency}
+                subtitle={valueSection.subtitle}
+              />
             </Box>
           )}
         </Box>
