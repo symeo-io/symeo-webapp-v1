@@ -216,7 +216,7 @@ function TeamGoalSettings() {
       >
         <Button
           variant="outlined"
-          onClick={() => navigate(goal ? "home" : "teamGoals")}
+          onClick={() => navigate(goal ? "home" : "teamGoalsLibrary")}
         >
           {formatMessage({
             id: "standards.cancel",

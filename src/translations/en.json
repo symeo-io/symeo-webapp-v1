@@ -42,7 +42,9 @@
       "all-teams-label": "All"
     },
     "links": {
-      "dashboard": "Dashboard",
+      "key-indicators": "Key Indicators",
+      "improvement": "Improvement",
+      "team-goals": "Team Goals",
       "organization": "Organization Settings"
     },
     "invite": {
@@ -55,9 +57,6 @@
   },
   "dashboard": {
     "title": "{teamName} Team Dashboard",
-    "team-goals": {
-      "title": "Team Goals"
-    },
     "lead-time": {
       "title": "Lead Time"
     }
@@ -122,8 +121,11 @@
       "code-repositories-provider-title": "code repositories provider"
     }
   },
-  "team-goals": {
+  "team-goals-library": {
     "title": "Choose a new Goal for {teamName} {teamName, select, All {Teams} other {Team}}"
+  },
+  "team-goals": {
+    "title": "{teamName} Team Goals"
   },
   "standards": {
     "new": "New",
