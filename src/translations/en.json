@@ -152,16 +152,20 @@
         }
       },
       "dashboard": {
-        "title": "All Pull Requests are merged in less than {target} days"
+        "title": "All PRs merged in less than {target} days"
+      },
+      "percent": {
+        "value": "{value}%",
+        "subtitle": "PRs meeting goal"
+      },
+      "average": {
+        "value": "{value} days",
+        "subtitle": "Avg. time to merge"
       },
       "histogram": {
-        "title": "{value}%",
-        "subtitle": "PRs meeting goal",
         "yAxisTitle": "Pull Requests"
       },
       "curves": {
-        "title": "{value} days",
-        "subtitle": "Avg. time to merge",
         "yAxisTitle": "Days to merge",
         "tooltip": {
           "value": "{value, plural, =0 {day} one {# day} other {# days}}"
@@ -180,14 +184,18 @@
       "dashboard": {
         "title": "Less than {target} changes per PR"
       },
+      "percent": {
+        "value": "{value}%",
+        "subtitle": "PRs meeting goal"
+      },
+      "average": {
+        "value": "{value} lines",
+        "subtitle": "Avg. number of lines per PR"
+      },
       "histogram": {
-        "title": "{value}%",
-        "subtitle": "PRs meeting goal",
         "yAxisTitle": "Pull Requests"
       },
       "curves": {
-        "title": "{value} lines",
-        "subtitle": "Avg. number of lines per PR",
         "yAxisTitle": "Changes per Pull Request",
         "tooltip": {
           "value": "{value, plural, =0 {line} one {# line} other {# lines}}"

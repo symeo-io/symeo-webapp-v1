@@ -91,18 +91,14 @@ function Histogram({
         metricsData?.metrics.meeting_goal.value !== undefined
           ? {
               value: formatMessage(
-                { id: `standards.${standardCode}.histogram.title` },
+                { id: `standards.${standardCode}.percent.value` },
                 { value: metricsData?.metrics.meeting_goal.value }
               ),
               subtitle: formatMessage({
-                id: `standards.${standardCode}.histogram.subtitle`,
+                id: `standards.${standardCode}.percent.subtitle`,
               }),
               tendency: metricsData?.metrics.meeting_goal.tendency_percentage,
-              tendencyColor:
-                metricsData?.metrics.meeting_goal.tendency_percentage &&
-                metricsData?.metrics.meeting_goal.tendency_percentage > 0
-                  ? "red"
-                  : "green",
+              positiveTendency: "up",
             }
           : undefined
       }

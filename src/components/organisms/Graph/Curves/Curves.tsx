@@ -87,18 +87,14 @@ function Curves({
         metricsData?.metrics.average.value !== undefined
           ? {
               value: formatMessage(
-                { id: `standards.${standardCode}.curves.title` },
+                { id: `standards.${standardCode}.average.value` },
                 { value: metricsData?.metrics.average.value }
               ),
               subtitle: formatMessage({
-                id: `standards.${standardCode}.curves.subtitle`,
+                id: `standards.${standardCode}.average.subtitle`,
               }),
               tendency: metricsData?.metrics.average.tendency_percentage,
-              tendencyColor:
-                metricsData?.metrics.average.tendency_percentage &&
-                metricsData?.metrics.average.tendency_percentage > 0
-                  ? "red"
-                  : "green",
+              positiveTendency: "down",
             }
           : undefined
       }
