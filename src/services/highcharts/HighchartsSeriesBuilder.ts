@@ -1,14 +1,16 @@
 import { SeriesOptionsType } from "highcharts";
 import { colors } from "theme/colors";
 import {
+  AverageCurveDataPoint,
+  CommonPieceCurveDataPoint,
   GetCurveResponse,
   HistogramDataPoint,
-  PieceCurveDataPoint,
 } from "redux/api/goals/graphs/graphs.types";
 import dayjs from "dayjs";
 import cloneDeep from "lodash/cloneDeep";
+import { GetLeadTimeAverageCurveResponse } from "redux/api/lead-time/lead-time.types";
 
-export const buildHistogramSeries = (
+export const buildTeamGoalHistogramSeries = (
   data: HistogramDataPoint[]
 ): { dates: string[]; series: SeriesOptionsType[] } => {
   const dates = data.map((value) =>
@@ -38,7 +40,7 @@ export const buildHistogramSeries = (
   return { dates, series };
 };
 
-export const buildCurveSeries = (
+export const buildTeamGoalCurveSeries = (
   data: GetCurveResponse["curves"]
 ): { limit: number; series: SeriesOptionsType[] } => {
   const limit = data.limit;
@@ -72,7 +74,75 @@ export const buildCurveSeries = (
 
   const open = buildPieceScatterSeries(piecesOpen, "Open PRs", "#ffbf29");
 
-  const average = {
+  const average = buildAverageSeries(cloneDeep(data.average_curve));
+
+  const series = [
+    average as SeriesOptionsType,
+    aboveLimit as SeriesOptionsType,
+    underLimit as SeriesOptionsType,
+    open as SeriesOptionsType,
+  ];
+
+  return { limit, series };
+};
+
+export const buildAverageLeadTimeSeries = (
+  data: GetLeadTimeAverageCurveResponse["curves"]
+): { series: SeriesOptionsType[] } => {
+  const sortedPieces = cloneDeep(data.piece_curve).sort(function (a, b) {
+    return (
+      dayjs(a.date, "YYYY-MM-DD").toDate().getTime() -
+      dayjs(b.date, "YYYY-MM-DD").toDate().getTime()
+    );
+  });
+
+  const piecesSeries = buildPieceScatterSeries(
+    sortedPieces,
+    "Pull Requests",
+    "rgb(10, 213, 112)"
+  );
+
+  const average = buildAverageSeries(cloneDeep(data.average_curve));
+
+  const series = [
+    average as SeriesOptionsType,
+    piecesSeries as SeriesOptionsType,
+  ];
+
+  return { series };
+};
+
+function buildPieceScatterSeries(
+  points: CommonPieceCurveDataPoint[],
+  name: string,
+  color: string
+) {
+  return {
+    name,
+    type: "scatter",
+    color,
+    marker: {
+      symbol: "circle",
+      fillColor: "#FFFFFF",
+      lineWidth: 2,
+      lineColor: null, // inherit from series
+    },
+    cursor: "pointer",
+    data: points.map((point) => ({
+      x: dayjs(point.date, "YYYY-MM-DD").toDate().getTime(),
+      y: point.value,
+      events: {
+        click: () => window.open(point.link, "_blank"),
+      },
+      custom: {
+        ...point,
+      },
+    })),
+  };
+}
+
+function buildAverageSeries(points: AverageCurveDataPoint[]) {
+  return {
     name: "Average",
     type: "areaspline",
     fillColor: {
@@ -97,7 +167,7 @@ export const buildCurveSeries = (
     tooltip: {
       enabled: false,
     },
-    data: cloneDeep(data.average_curve)
+    data: points
       .sort(function (a, b) {
         return (
           dayjs(a.date, "YYYY-MM-DD").toDate().getTime() -
@@ -108,44 +178,5 @@ export const buildCurveSeries = (
         dayjs(point.date, "YYYY-MM-DD").toDate().getTime(),
         point.value,
       ]),
-  };
-
-  const series = [
-    average as SeriesOptionsType,
-    aboveLimit as SeriesOptionsType,
-    underLimit as SeriesOptionsType,
-    open as SeriesOptionsType,
-  ];
-
-  return { limit, series };
-};
-
-function buildPieceScatterSeries(
-  points: PieceCurveDataPoint[],
-  name: string,
-  color: string
-) {
-  return {
-    name,
-    type: "scatter",
-    color,
-    marker: {
-      symbol: "circle",
-      fillColor: "#FFFFFF",
-      lineWidth: 2,
-      lineColor: null, // inherit from series
-    },
-    cursor: "pointer",
-    data: points.map((point) => ({
-      x: dayjs(point.date, "YYYY-MM-DD").toDate().getTime(),
-      y: point.value,
-      events: {
-        click: () => window.open(point.link, "_blank"),
-      },
-      custom: {
-        branchName: point.label,
-        open: point.open,
-      },
-    })),
   };
 }

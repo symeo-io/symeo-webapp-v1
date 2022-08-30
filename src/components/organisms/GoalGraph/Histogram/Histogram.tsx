@@ -8,8 +8,8 @@ import { useIntl } from "react-intl";
 import { useSelectedDateRange } from "hooks/useSelectedDateRange";
 import dayjs from "dayjs";
 import { SeriesOptionsType } from "highcharts";
-import { buildHistogramOptions } from "services/highcharts/HighchartsOptionsBuilder";
-import { buildHistogramSeries } from "services/highcharts/HighchartsSeriesBuilder";
+import { buildTeamGoalHistogramOptions } from "services/highcharts/HighchartsOptionsBuilder";
+import { buildTeamGoalHistogramSeries } from "services/highcharts/HighchartsSeriesBuilder";
 import { useGetMetricsQuery } from "redux/api/goals/metrics/metrics.api";
 import { useDataStatus } from "hooks/useDataStatus";
 
@@ -56,13 +56,13 @@ function Histogram({
   );
 
   const { dates, series } = useMemo(
-    () => buildHistogramSeries(histogramValues),
+    () => buildTeamGoalHistogramSeries(histogramValues),
     [histogramValues]
   );
 
   const options = useMemo(
     () =>
-      buildHistogramOptions(
+      buildTeamGoalHistogramOptions(
         dates,
         series as SeriesOptionsType[],
         formatMessage({ id: `standards.${standardCode}.histogram.yAxisTitle` })

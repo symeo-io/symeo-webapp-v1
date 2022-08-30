@@ -16,12 +16,15 @@ export type AverageCurveDataPoint = {
   date: string;
 };
 
-export type PieceCurveDataPoint = {
+export type CommonPieceCurveDataPoint = {
   value: number;
   date: string;
-  open: boolean;
   label: string;
   link: string;
+};
+
+export type PieceCurveDataPoint = CommonPieceCurveDataPoint & {
+  open: boolean;
 };
 
 export type GetCurveResponse = ResponseWithErrors & {

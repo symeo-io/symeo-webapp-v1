@@ -26,7 +26,7 @@ export const DEFAULT_COMMON_OPTIONS = {
   },
 };
 
-export const buildHistogramOptions = (
+export const buildTeamGoalHistogramOptions = (
   categories: string[],
   series: SeriesOptionsType[],
   yAxisTitle?: string
@@ -76,7 +76,7 @@ export const buildHistogramOptions = (
   series,
 });
 
-export const buildCurveOptions = (
+export const buildTeamGoalCurveOptions = (
   standardCode: StandardCode,
   limit: number,
   series: SeriesOptionsType[],
@@ -139,7 +139,7 @@ export const buildCurveOptions = (
     pointFormatter: function (this: Highcharts.Point) {
       return renderToString(
         <PullRequestPieceTooltip
-          branchName={this.options.custom?.branchName}
+          branchName={this.options.custom?.label}
           open={this.options.custom?.open}
           valueLabel={intl.formatMessage(
             { id: `standards.${standardCode}.curves.tooltip.value` },
@@ -148,6 +148,61 @@ export const buildCurveOptions = (
           date={new Date(this.x)}
         />
       );
+    },
+  },
+  ...DEFAULT_COMMON_OPTIONS,
+  series,
+});
+
+export const buildAverageLeadTimeCurveOptions = (
+  series: SeriesOptionsType[],
+  yAxisTitle?: string
+): HighchartsReact.Props["options"] => ({
+  chart: {
+    height: 300,
+  },
+  xAxis: {
+    type: "datetime",
+    dateTimeLabelFormats: {
+      week: "%b %e",
+      month: "%b %e",
+    },
+  },
+  yAxis: {
+    type: "logarithmic",
+    opposite: false,
+    title: yAxisTitle
+      ? {
+          text: yAxisTitle,
+        }
+      : undefined,
+  },
+  plotOptions: {
+    series: {
+      states: {
+        inactive: {
+          opacity: 1,
+        },
+      },
+    },
+  },
+  legend: {
+    layout: "horizontal",
+    align: "center",
+    enabled: true,
+    verticalAlign: "bottom",
+  },
+  tooltip: {
+    enabled: true,
+    padding: 0,
+    backgroundColor: "transparent",
+    borderRadius: 0,
+    borderWidth: 0,
+    shadow: false,
+    useHTML: true,
+    headerFormat: "",
+    pointFormatter: function (this: Highcharts.Point) {
+      return JSON.stringify(this.options.custom);
     },
   },
   ...DEFAULT_COMMON_OPTIONS,

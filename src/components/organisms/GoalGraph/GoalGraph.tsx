@@ -1,7 +1,7 @@
 import { PropsWithSx } from "types/PropsWithSx";
 import { GraphType } from "redux/api/goals/graphs/graphs.types";
-import Curves from "components/organisms/Graph/Curves/Curves";
-import Histogram from "components/organisms/Graph/Histogram/Histogram";
+import Curves from "components/organisms/GoalGraph/Curves/Curves";
+import Histogram from "components/organisms/GoalGraph/Histogram/Histogram";
 import React from "react";
 import { CommonGraphProps } from "components/organisms/Graph/types";
 

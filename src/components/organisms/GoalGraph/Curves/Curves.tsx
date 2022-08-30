@@ -7,8 +7,8 @@ import { GetCurveResponse } from "redux/api/goals/graphs/graphs.types";
 import { CommonGraphProps } from "components/organisms/Graph/types";
 import { useIntl } from "react-intl";
 import { useSelectedDateRange } from "hooks/useSelectedDateRange";
-import { buildCurveOptions } from "services/highcharts/HighchartsOptionsBuilder";
-import { buildCurveSeries } from "services/highcharts/HighchartsSeriesBuilder";
+import { buildTeamGoalCurveOptions } from "services/highcharts/HighchartsOptionsBuilder";
+import { buildTeamGoalCurveSeries } from "services/highcharts/HighchartsSeriesBuilder";
 import { useGetMetricsQuery } from "redux/api/goals/metrics/metrics.api";
 import { useDataStatus } from "hooks/useDataStatus";
 
@@ -51,13 +51,15 @@ function Curves({
 
   const { limit, series } = useMemo(
     () =>
-      data?.curves ? buildCurveSeries(data.curves) : { limit: 0, series: [] },
+      data?.curves
+        ? buildTeamGoalCurveSeries(data.curves)
+        : { limit: 0, series: [] },
     [data]
   );
 
   const options = useMemo(
     () =>
-      buildCurveOptions(
+      buildTeamGoalCurveOptions(
         standardCode,
         limit,
         series,

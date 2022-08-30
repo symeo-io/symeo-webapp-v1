@@ -69,7 +69,12 @@
     "review-lag": "Review lag",
     "review": "Review",
     "deploy": "Deploy",
-    "improve-button-label": "Improve"
+    "improve-button-label": "Improve",
+    "average": {
+      "curves": {
+        "yAxisTitle": "Pull Requests"
+      }
+    }
   },
   "organization": {
     "title": "Organization Settings - {organizationName}",

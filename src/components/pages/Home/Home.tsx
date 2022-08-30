@@ -4,6 +4,7 @@ import { useCurrentUser } from "hooks/useCurrentUser";
 import { useIntl } from "react-intl";
 import DateRangeSelector from "components/molecules/DateRangeSelector/DateRangeSelector";
 import LeadTimeBreakdown from "components/organisms/LeadTimeBreakdown/LeadTimeBreakdown";
+import AverageLeadTimeGraph from "components/organisms/AverageLeadTimeGraph/AverageLeadTimeGraph";
 
 function Home() {
   const { formatMessage } = useIntl();
@@ -41,6 +42,15 @@ function Home() {
               marginTop: (theme) => theme.spacing(2),
             }}
           />
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: (theme) => theme.spacing(3),
+          }}
+        >
+          <AverageLeadTimeGraph sx={{ width: "500px" }} />
         </Box>
       </Box>
     </Box>

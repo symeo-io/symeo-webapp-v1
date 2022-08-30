@@ -15,20 +15,20 @@ import dayjs from "dayjs";
 
 const breakdownColorsLimits = {
   coding_time: {
-    green: 1,
-    orange: 2,
+    green: 1 * 24 * 60, // 1 day
+    orange: 2 * 24 * 60, // 2 days
   },
   review_lag: {
-    green: 0.04, // 1 hour
-    orange: 0.125, // 3 hour
+    green: 1 * 60, // 1 hour
+    orange: 3 * 60, // 3 hour
   },
   review_time: {
-    green: 0.083, // 2 hour
-    orange: 0.17, // 4 hour
+    green: 2 * 60, // 2 hour
+    orange: 4 * 60, // 4 hour
   },
   time_to_deploy: {
-    green: 7,
-    orange: 14,
+    green: 7 * 24 * 26,
+    orange: 14 * 24 * 60,
   },
 };
 
