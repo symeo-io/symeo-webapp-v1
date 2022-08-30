@@ -11,7 +11,7 @@ export type LeadTimeBreakdownSectionProps = PropsWithSx & {
   label: string;
   color: "green" | "orange" | "red";
   value: string;
-  tendency: number;
+  tendency?: number;
   action?: {
     label: string;
     onClick: () => void;

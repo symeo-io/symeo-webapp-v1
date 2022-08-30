@@ -5,7 +5,7 @@ import LeadTimeAverageValue from "components/molecules/LeadTimeAverageValue/Lead
 import LeadTimeBreakdownSection, {
   LeadTimeBreakdownSectionProps,
 } from "components/molecules/LeadTimeBreakdownSection/LeadTimeBreakdownSection";
-import { useIntl } from "react-intl";
+import { IntlShape, useIntl } from "react-intl";
 import { useNavigate } from "hooks/useNavigate";
 import { useGetLeadTimeQuery } from "redux/api/lead-time/lead-time.api";
 import { useCurrentUser } from "hooks/useCurrentUser";
@@ -50,6 +50,26 @@ function buildColor(
   return "red";
 }
 
+function minutesToDays(value: number) {
+  return value / 60 / 24;
+}
+
+function buildValueDisplay(
+  value: number | undefined,
+  formatMessage: IntlShape["formatMessage"]
+) {
+  if (!value) {
+    return formatMessage({ id: "lead-time.unknown" });
+  }
+
+  return formatMessage(
+    { id: "lead-time.value" },
+    {
+      value: minutesToDays(value),
+    }
+  );
+}
+
 export type LeadTimeBreakdownProps = PropsWithSx;
 
 function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
@@ -77,9 +97,9 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
     <Card sx={{ padding: (theme) => theme.spacing(2), ...sx }}>
       <LeadTimeAverageValue
         loading={isLoadingLeadTime}
-        value={formatMessage(
-          { id: "lead-time.value" },
-          { value: leadTimeData?.lead_time.average.value }
+        value={buildValueDisplay(
+          leadTimeData?.lead_time.average.value,
+          formatMessage
         )}
         tendency={leadTimeData?.lead_time.average.tendency_percentage ?? 0}
         subtitle={formatMessage({ id: "lead-time.average-subtitle" })}
@@ -88,11 +108,9 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
         <LeadTimeBreakdownSection
           loading={isLoadingLeadTime}
           label={formatMessage({ id: "lead-time.coding" })}
-          value={formatMessage(
-            { id: "lead-time.value" },
-            {
-              value: leadTimeData?.lead_time.coding_time.value,
-            }
+          value={buildValueDisplay(
+            leadTimeData?.lead_time.coding_time.value,
+            formatMessage
           )}
           tendency={
             leadTimeData?.lead_time.coding_time.tendency_percentage ?? 0
@@ -109,11 +127,9 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
         <LeadTimeBreakdownSection
           loading={isLoadingLeadTime}
           label={formatMessage({ id: "lead-time.review-lag" })}
-          value={formatMessage(
-            { id: "lead-time.value" },
-            {
-              value: leadTimeData?.lead_time.review_lag.value,
-            }
+          value={buildValueDisplay(
+            leadTimeData?.lead_time.review_lag.value,
+            formatMessage
           )}
           tendency={leadTimeData?.lead_time.review_lag.tendency_percentage ?? 0}
           color={buildColor(
@@ -128,11 +144,9 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
         <LeadTimeBreakdownSection
           loading={isLoadingLeadTime}
           label={formatMessage({ id: "lead-time.review" })}
-          value={formatMessage(
-            { id: "lead-time.value" },
-            {
-              value: leadTimeData?.lead_time.review_time.value,
-            }
+          value={buildValueDisplay(
+            leadTimeData?.lead_time.review_time.value,
+            formatMessage
           )}
           tendency={
             leadTimeData?.lead_time.review_time.tendency_percentage ?? 0
@@ -149,15 +163,11 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
         <LeadTimeBreakdownSection
           loading={isLoadingLeadTime}
           label={formatMessage({ id: "lead-time.deploy" })}
-          value={formatMessage(
-            { id: "lead-time.value" },
-            {
-              value: leadTimeData?.lead_time.time_to_deploy.value,
-            }
+          value={buildValueDisplay(
+            leadTimeData?.lead_time.time_to_deploy.value,
+            formatMessage
           )}
-          tendency={
-            leadTimeData?.lead_time.time_to_deploy.tendency_percentage ?? 0
-          }
+          tendency={leadTimeData?.lead_time.time_to_deploy.tendency_percentage}
           color={buildColor(
             "time_to_deploy",
             leadTimeData?.lead_time.time_to_deploy.value

@@ -5,7 +5,7 @@ import Tendency from "components/atoms/Tendency";
 
 export type LeadTimeAverageValueProps = PropsWithSx & {
   value: string;
-  tendency: number;
+  tendency?: number;
   subtitle?: string;
   loading?: boolean;
 };
@@ -22,11 +22,13 @@ function LeadTimeAverageValue({
       {!loading && (
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Typography variant="h2">{value}</Typography>
-          <Tendency
-            tendency={tendency}
-            positiveTendency="down"
-            sx={{ marginLeft: (theme) => theme.spacing(1) }}
-          />
+          {tendency !== undefined && (
+            <Tendency
+              tendency={tendency}
+              positiveTendency="down"
+              sx={{ marginLeft: (theme) => theme.spacing(1) }}
+            />
+          )}
         </Box>
       )}
       {loading && <CircularProgress size={20} />}
