@@ -1,4 +1,4 @@
-import { Box, Card } from "@mui/material";
+import { Box, Card, CircularProgress, Typography } from "@mui/material";
 import { PropsWithSx } from "types/PropsWithSx";
 import React, { useCallback } from "react";
 import LeadTimeAverageValue from "components/molecules/LeadTimeAverageValue/LeadTimeAverageValue";
@@ -95,89 +95,120 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
 
   return (
     <Card sx={{ padding: (theme) => theme.spacing(2), ...sx }}>
-      <LeadTimeAverageValue
-        loading={isLoadingLeadTime}
-        value={buildValueDisplay(
-          leadTimeData?.lead_time.average.value,
-          formatMessage
-        )}
-        tendency={leadTimeData?.lead_time.average.tendency_percentage ?? 0}
-        subtitle={formatMessage({ id: "lead-time.average-subtitle" })}
-      />
-      <Box sx={{ display: "flex", padding: (theme) => theme.spacing(3) }}>
-        <LeadTimeBreakdownSection
-          loading={isLoadingLeadTime}
-          label={formatMessage({ id: "lead-time.coding" })}
-          value={buildValueDisplay(
-            leadTimeData?.lead_time.coding_time.value,
-            formatMessage
-          )}
-          tendency={
-            leadTimeData?.lead_time.coding_time.tendency_percentage ?? 0
-          }
-          color={buildColor(
-            "coding_time",
-            leadTimeData?.lead_time.coding_time.value
-          )}
-          action={{
-            label: formatMessage({ id: "lead-time.improve-button-label" }),
-            onClick,
+      {isProcessingInitialJob && (
+        <Box
+          sx={{
+            padding: (theme) => theme.spacing(4),
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
           }}
-        />
-        <LeadTimeBreakdownSection
-          loading={isLoadingLeadTime}
-          label={formatMessage({ id: "lead-time.review-lag" })}
-          value={buildValueDisplay(
-            leadTimeData?.lead_time.review_lag.value,
-            formatMessage
-          )}
-          tendency={leadTimeData?.lead_time.review_lag.tendency_percentage ?? 0}
-          color={buildColor(
-            "review_lag",
-            leadTimeData?.lead_time.review_lag.value
-          )}
-          action={{
-            label: formatMessage({ id: "lead-time.improve-button-label" }),
-            onClick,
-          }}
-        />
-        <LeadTimeBreakdownSection
-          loading={isLoadingLeadTime}
-          label={formatMessage({ id: "lead-time.review" })}
-          value={buildValueDisplay(
-            leadTimeData?.lead_time.review_time.value,
-            formatMessage
-          )}
-          tendency={
-            leadTimeData?.lead_time.review_time.tendency_percentage ?? 0
-          }
-          color={buildColor(
-            "review_time",
-            leadTimeData?.lead_time.review_time.value
-          )}
-          action={{
-            label: formatMessage({ id: "lead-time.improve-button-label" }),
-            onClick,
-          }}
-        />
-        <LeadTimeBreakdownSection
-          loading={isLoadingLeadTime}
-          label={formatMessage({ id: "lead-time.deploy" })}
-          value={buildValueDisplay(
-            leadTimeData?.lead_time.time_to_deploy.value,
-            formatMessage
-          )}
-          tendency={leadTimeData?.lead_time.time_to_deploy.tendency_percentage}
-          color={buildColor(
-            "time_to_deploy",
-            leadTimeData?.lead_time.time_to_deploy.value
-          )}
-          action={{
-            label: formatMessage({ id: "lead-time.improve-button-label" }),
-            onClick,
-          }}
-        />
-      </Box>
+        >
+          <CircularProgress />
+          <Typography
+            variant="body1"
+            color="secondary"
+            sx={{
+              marginTop: (theme) => theme.spacing(4),
+              textAlign: "center",
+            }}
+          >
+            {formatMessage({ id: "data-status.loading" })}
+          </Typography>
+        </Box>
+      )}
+      {!isProcessingInitialJob && (
+        <>
+          <LeadTimeAverageValue
+            loading={isLoadingLeadTime}
+            value={buildValueDisplay(
+              leadTimeData?.lead_time.average.value,
+              formatMessage
+            )}
+            tendency={leadTimeData?.lead_time.average.tendency_percentage ?? 0}
+            subtitle={formatMessage({ id: "lead-time.average-subtitle" })}
+          />
+          <Box sx={{ display: "flex", padding: (theme) => theme.spacing(3) }}>
+            <LeadTimeBreakdownSection
+              loading={isLoadingLeadTime}
+              label={formatMessage({ id: "lead-time.coding" })}
+              value={buildValueDisplay(
+                leadTimeData?.lead_time.coding_time.value,
+                formatMessage
+              )}
+              tendency={
+                leadTimeData?.lead_time.coding_time.tendency_percentage ?? 0
+              }
+              color={buildColor(
+                "coding_time",
+                leadTimeData?.lead_time.coding_time.value
+              )}
+              action={{
+                label: formatMessage({ id: "lead-time.improve-button-label" }),
+                onClick,
+              }}
+            />
+            <LeadTimeBreakdownSection
+              loading={isLoadingLeadTime}
+              label={formatMessage({ id: "lead-time.review-lag" })}
+              value={buildValueDisplay(
+                leadTimeData?.lead_time.review_lag.value,
+                formatMessage
+              )}
+              tendency={
+                leadTimeData?.lead_time.review_lag.tendency_percentage ?? 0
+              }
+              color={buildColor(
+                "review_lag",
+                leadTimeData?.lead_time.review_lag.value
+              )}
+              action={{
+                label: formatMessage({ id: "lead-time.improve-button-label" }),
+                onClick,
+              }}
+            />
+            <LeadTimeBreakdownSection
+              loading={isLoadingLeadTime}
+              label={formatMessage({ id: "lead-time.review" })}
+              value={buildValueDisplay(
+                leadTimeData?.lead_time.review_time.value,
+                formatMessage
+              )}
+              tendency={
+                leadTimeData?.lead_time.review_time.tendency_percentage ?? 0
+              }
+              color={buildColor(
+                "review_time",
+                leadTimeData?.lead_time.review_time.value
+              )}
+              action={{
+                label: formatMessage({ id: "lead-time.improve-button-label" }),
+                onClick,
+              }}
+            />
+            <LeadTimeBreakdownSection
+              loading={isLoadingLeadTime}
+              label={formatMessage({ id: "lead-time.deploy" })}
+              value={buildValueDisplay(
+                leadTimeData?.lead_time.time_to_deploy.value,
+                formatMessage
+              )}
+              tendency={
+                leadTimeData?.lead_time.time_to_deploy.tendency_percentage
+              }
+              color={buildColor(
+                "time_to_deploy",
+                leadTimeData?.lead_time.time_to_deploy.value
+              )}
+              action={{
+                label: formatMessage({ id: "lead-time.improve-button-label" }),
+                onClick,
+              }}
+            />
+          </Box>
+        </>
+      )}
     </Card>
   );
 }
