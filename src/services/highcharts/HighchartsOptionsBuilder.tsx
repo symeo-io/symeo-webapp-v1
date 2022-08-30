@@ -159,7 +159,7 @@ export const buildAverageLeadTimeCurveOptions = (
   yAxisTitle?: string
 ): HighchartsReact.Props["options"] => ({
   chart: {
-    height: 300,
+    height: 600,
   },
   xAxis: {
     type: "datetime",
@@ -202,7 +202,17 @@ export const buildAverageLeadTimeCurveOptions = (
     useHTML: true,
     headerFormat: "",
     pointFormatter: function (this: Highcharts.Point) {
-      return JSON.stringify(this.options.custom);
+      return renderToString(
+        <div
+          style={{
+            padding: "8px",
+            background: "white",
+            border: `1px solid ${colors.secondary.borders}`,
+          }}
+        >
+          {JSON.stringify(this.options.custom)}
+        </div>
+      );
     },
   },
   ...DEFAULT_COMMON_OPTIONS,

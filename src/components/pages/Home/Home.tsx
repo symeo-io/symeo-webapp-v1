@@ -50,7 +50,7 @@ function Home() {
             marginTop: (theme) => theme.spacing(3),
           }}
         >
-          <AverageLeadTimeGraph sx={{ width: "500px" }} />
+          <AverageLeadTimeGraph sx={{ width: "1000px" }} />
         </Box>
       </Box>
     </Box>
