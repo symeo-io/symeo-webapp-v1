@@ -123,10 +123,10 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
           <LeadTimeAverageValue
             loading={isLoadingLeadTime}
             value={buildValueDisplay(
-              leadTimeData?.lead_time.average.value,
+              leadTimeData?.lead_time?.average.value,
               formatMessage
             )}
-            tendency={leadTimeData?.lead_time.average.tendency_percentage ?? 0}
+            tendency={leadTimeData?.lead_time?.average.tendency_percentage ?? 0}
             subtitle={formatMessage({ id: "lead-time.average-subtitle" })}
           />
           <Box sx={{ display: "flex", padding: (theme) => theme.spacing(3) }}>
@@ -134,15 +134,15 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
               loading={isLoadingLeadTime}
               label={formatMessage({ id: "lead-time.coding" })}
               value={buildValueDisplay(
-                leadTimeData?.lead_time.coding_time.value,
+                leadTimeData?.lead_time?.coding_time.value,
                 formatMessage
               )}
               tendency={
-                leadTimeData?.lead_time.coding_time.tendency_percentage ?? 0
+                leadTimeData?.lead_time?.coding_time.tendency_percentage ?? 0
               }
               color={buildColor(
                 "coding_time",
-                leadTimeData?.lead_time.coding_time.value
+                leadTimeData?.lead_time?.coding_time.value
               )}
               action={{
                 label: formatMessage({ id: "lead-time.improve-button-label" }),
@@ -153,15 +153,15 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
               loading={isLoadingLeadTime}
               label={formatMessage({ id: "lead-time.review-lag" })}
               value={buildValueDisplay(
-                leadTimeData?.lead_time.review_lag.value,
+                leadTimeData?.lead_time?.review_lag.value,
                 formatMessage
               )}
               tendency={
-                leadTimeData?.lead_time.review_lag.tendency_percentage ?? 0
+                leadTimeData?.lead_time?.review_lag.tendency_percentage ?? 0
               }
               color={buildColor(
                 "review_lag",
-                leadTimeData?.lead_time.review_lag.value
+                leadTimeData?.lead_time?.review_lag.value
               )}
               action={{
                 label: formatMessage({ id: "lead-time.improve-button-label" }),
@@ -172,15 +172,15 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
               loading={isLoadingLeadTime}
               label={formatMessage({ id: "lead-time.review" })}
               value={buildValueDisplay(
-                leadTimeData?.lead_time.review_time.value,
+                leadTimeData?.lead_time?.review_time.value,
                 formatMessage
               )}
               tendency={
-                leadTimeData?.lead_time.review_time.tendency_percentage ?? 0
+                leadTimeData?.lead_time?.review_time.tendency_percentage ?? 0
               }
               color={buildColor(
                 "review_time",
-                leadTimeData?.lead_time.review_time.value
+                leadTimeData?.lead_time?.review_time.value
               )}
               action={{
                 label: formatMessage({ id: "lead-time.improve-button-label" }),
@@ -191,15 +191,15 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
               loading={isLoadingLeadTime}
               label={formatMessage({ id: "lead-time.deploy" })}
               value={buildValueDisplay(
-                leadTimeData?.lead_time.time_to_deploy.value,
+                leadTimeData?.lead_time?.time_to_deploy.value,
                 formatMessage
               )}
               tendency={
-                leadTimeData?.lead_time.time_to_deploy.tendency_percentage
+                leadTimeData?.lead_time?.time_to_deploy.tendency_percentage
               }
               color={buildColor(
                 "time_to_deploy",
-                leadTimeData?.lead_time.time_to_deploy.value
+                leadTimeData?.lead_time?.time_to_deploy.value
               )}
               action={{
                 label: formatMessage({ id: "lead-time.improve-button-label" }),

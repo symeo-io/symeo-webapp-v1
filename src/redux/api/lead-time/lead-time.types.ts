@@ -14,5 +14,5 @@ export type GetLeadTimeResponse = ResponseWithErrors & {
     review_lag: Metric;
     review_time: Metric;
     time_to_deploy: Metric;
-  };
+  } | null;
 };
