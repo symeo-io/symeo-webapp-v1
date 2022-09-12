@@ -9,6 +9,7 @@ export type SliderMarkProps = {
   value: number;
   info?: {
     label: string;
+    tooltipMessage?: string;
     variant?: ArrowInfoProps["variant"];
   };
 };
@@ -23,7 +24,13 @@ function SliderMark({ value, info }: SliderMarkProps) {
       }}
     >
       <Box sx={{ color: colors.primary.text, fontWeight: 700 }}>{value}</Box>
-      {info && <ArrowInfo label={info.label} variant={info.variant} />}
+      {info && (
+        <ArrowInfo
+          label={info.label}
+          variant={info.variant}
+          tooltipMessage={info.tooltipMessage}
+        />
+      )}
     </Box>
   );
 }

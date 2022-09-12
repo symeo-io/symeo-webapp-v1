@@ -134,6 +134,11 @@
     "configure-button-label": "Configure",
     "save": "Save changes",
     "create": "Set up team goal",
+    "value": {
+      "recommanded": "Recommanded",
+      "mean": "Your current mean value",
+      "mean-tooltip": "Calculated over the last two weeks"
+    },
     "delete": {
       "button-label": "Delete team goal",
       "confirm": {
