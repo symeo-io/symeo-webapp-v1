@@ -304,6 +304,8 @@ export const theme = createTheme({
     MuiMenuItem: {
       styleOverrides: {
         root: {
+          borderRadius: "10px",
+
           "& .MuiListItemIcon-root": {
             color: colors.secondary.bordersHover,
           },
@@ -313,7 +315,7 @@ export const theme = createTheme({
           },
 
           "&:hover": {
-            background: colors.primary.surface,
+            background: "transparent",
 
             "& .MuiListItemIcon-root": {
               color: colors.primary.bordersHover,
@@ -325,21 +327,19 @@ export const theme = createTheme({
           },
 
           "&.Mui-selected": {
-            background: "transparent",
-            borderRight: `2px solid ${colors.primary.main}`,
+            background: colors.primary.surface,
 
             "&:hover": {
-              background: "transparent",
-              borderRight: `2px solid ${colors.primary.shapeActive}`,
+              background: colors.primary.surface,
             },
 
             "& .MuiListItemIcon-root": {
-              color: colors.secondary.bordersHover,
+              color: colors.primary.bordersHover,
             },
 
             "& .MuiListItemText-root .MuiTypography-root": {
               fontWeight: 600,
-              color: colors.secondary.text,
+              color: colors.primary.main,
             },
           },
         },
@@ -408,6 +408,42 @@ export const theme = createTheme({
       },
       defaultProps: {
         disableRipple: true,
+      },
+    },
+    MuiTableContainer: {
+      styleOverrides: {
+        root: {
+          borderRadius: "8px",
+          border: `1px solid #CCCCCC`,
+        },
+      },
+    },
+    MuiTable: {
+      styleOverrides: {
+        root: {
+          "& .MuiTableBody-root .MuiTableRow-root:hover": {
+            background: "#F2F2F4",
+          },
+          "& .MuiTableCell-root": {
+            padding: "16px",
+          },
+          "& .MuiTableCell-head": {
+            borderBottom: `1px solid #CCCCCC`,
+            fontWeight: 400,
+            color: "#242426",
+          },
+          "& .MuiTableCell-body": {
+            borderBottom: `1px solid #F0F0F0`,
+            color: "#545456",
+          },
+          "& .MuiTablePagination-root:last-child": {
+            padding: "0 16px",
+
+            "& .MuiTablePagination-actions .MuiButtonBase-root:first-of-type": {
+              marginRight: "8px",
+            },
+          },
+        },
       },
     },
   },

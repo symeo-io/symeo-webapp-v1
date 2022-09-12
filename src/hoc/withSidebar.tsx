@@ -13,12 +13,17 @@ export function withSidebar<T = object>(
           sx={{
             flex: 1,
             overflow: "auto",
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
           }}
         >
-          <WrappedComponent {...props} />
+          <Box
+            sx={{
+              padding: (theme) => theme.spacing(3),
+              maxWidth: "1441px",
+              margin: "auto",
+            }}
+          >
+            <WrappedComponent {...props} />
+          </Box>
         </Box>
       </Box>
     );

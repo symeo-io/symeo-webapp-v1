@@ -42,14 +42,13 @@
       "all-teams-label": "All"
     },
     "links": {
-      "dashboard": "Dashboard",
+      "key-indicators": "Key Indicators",
+      "improvement": "Improvement",
+      "team-goals": "Team Goals",
       "organization": "Organization Settings"
     },
     "invite": {
       "invite-people-button-label": "Invite People"
-    },
-    "team-goals": {
-      "new-team-goal-button-label": "New Team Goal"
     },
     "account": {
       "your-account": "Your account",
@@ -57,7 +56,20 @@
     }
   },
   "dashboard": {
-    "title": "{teamName} Team Dashboard"
+    "title": "{teamName} Team Dashboard",
+    "lead-time": {
+      "title": "Lead Time"
+    }
+  },
+  "lead-time": {
+    "value": "{value, number, ::.##} {value, plural, =0 {day} one {day} other {days}}",
+    "unknown": "Unknown",
+    "average-subtitle": "Avg. lead time",
+    "coding": "Coding",
+    "review-lag": "Review lag",
+    "review": "Review",
+    "deploy": "Deploy",
+    "improve-button-label": "Improve"
   },
   "organization": {
     "title": "Organization Settings - {organizationName}",
@@ -110,8 +122,11 @@
       "code-repositories-provider-title": "code repositories provider"
     }
   },
-  "team-goals": {
+  "team-goals-library": {
     "title": "Choose a new Goal for {teamName} {teamName, select, All {Teams} other {Team}}"
+  },
+  "team-goals": {
+    "title": "{teamName} Team Goals"
   },
   "standards": {
     "new": "New",
@@ -128,15 +143,6 @@
       }
     },
     "cancel": "Cancel",
-    "graphs": {
-      "loading": "Symeo is performing the initial processing of your data. Graphs will be displayed shortly.",
-      "histogram": {
-        "title": "Tendency"
-      },
-      "curves": {
-        "title": "Pieces"
-      }
-    },
     "time-to-merge": {
       "title": "Aim for short PR lifecycle",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
@@ -147,13 +153,24 @@
         }
       },
       "dashboard": {
-        "title": "All Pull Requests are merged in less than {target} days"
+        "title": "All PRs merged in less than {target} days"
+      },
+      "percent": {
+        "value": "{value}%",
+        "subtitle": "PRs meeting goal"
+      },
+      "average": {
+        "value": "{value} days",
+        "subtitle": "Avg. time to merge"
       },
       "histogram": {
         "yAxisTitle": "Pull Requests"
       },
       "curves": {
-        "yAxisTitle": "Days to merge"
+        "yAxisTitle": "Days to merge",
+        "tooltip": {
+          "value": "{value, plural, =0 {day} one {# day} other {# days}}"
+        }
       }
     },
     "pull-request-size": {
@@ -168,12 +185,40 @@
       "dashboard": {
         "title": "Less than {target} changes per PR"
       },
+      "percent": {
+        "value": "{value}%",
+        "subtitle": "PRs meeting goal"
+      },
+      "average": {
+        "value": "{value} lines",
+        "subtitle": "Avg. number of lines per PR"
+      },
       "histogram": {
         "yAxisTitle": "Pull Requests"
       },
       "curves": {
-        "yAxisTitle": "Changes per Pull Request"
+        "yAxisTitle": "Changes per Pull Request",
+        "tooltip": {
+          "value": "{value, plural, =0 {line} one {# line} other {# lines}}"
+        }
       }
     }
+  },
+  "pull-requests-table": {
+    "title": "Team Pull Requests",
+    "columns": {
+      "vcs_repository": "Repo",
+      "title": "Name",
+      "author": "Author",
+      "commit_number": "Commits",
+      "size": "Size",
+      "days_opened": "Days to merge"
+    },
+    "days-to-merge-value": "{value, number, compact-short}"
+  },
+  "data-status": {
+    "loading": "Symeo is performing the initial processing of your data. Graphs will be displayed shortly.",
+    "initial-data-processing": "Initial processing of your data",
+    "last-update": "Last data update: {date}"
   }
 }

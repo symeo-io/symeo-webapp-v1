@@ -1,18 +1,41 @@
 import React from "react";
 import HighchartsReact from "highcharts-react-official";
-import { Box, Card, CircularProgress, Typography } from "@mui/material";
+import {
+  Box,
+  Card,
+  CircularProgress,
+  IconButton,
+  Typography,
+} from "@mui/material";
 import { PropsWithSx } from "types/PropsWithSx";
 import Highcharts from "services/highcharts/Highcharts";
+import Metric from "components/molecules/Metric/Metric";
+import { PositiveTendency } from "components/atoms/Tendency";
 
 export type GraphProps = PropsWithSx & {
-  title: string;
+  titleSection?: {
+    title: string;
+    subtitle?: string;
+  };
+  valueSection?: {
+    value: string;
+    subtitle?: string;
+    tendency?: number;
+    positiveTendency?: PositiveTendency;
+  };
+  actions?: {
+    icon: React.ReactElement;
+    onClick: () => void;
+  }[];
   options: HighchartsReact.Props["options"];
   loading?: boolean;
   loadingMessage?: string;
 };
 
 function Graph({
-  title,
+  titleSection,
+  valueSection,
+  actions,
   options,
   loading = false,
   loadingMessage,
@@ -27,12 +50,51 @@ function Graph({
         ...sx,
       }}
     >
-      <Typography
-        variant="h2"
-        sx={{ marginBottom: (theme) => theme.spacing(4) }}
+      <Box
+        sx={{ display: "flex", justifyContent: "space-between", width: "100%" }}
       >
-        {title}
-      </Typography>
+        <Box>
+          {titleSection && (
+            <Box sx={{ marginBottom: (theme) => theme.spacing(2) }}>
+              <Typography
+                variant="h2"
+                sx={{
+                  fontWeight: 400,
+                  textTransform: "uppercase",
+                  fontSize: "1.25rem",
+                }}
+              >
+                {titleSection.title}
+              </Typography>
+              <Typography variant="body1" color="secondary">
+                {titleSection.subtitle}
+              </Typography>
+            </Box>
+          )}
+          {valueSection && (
+            <Box sx={{ marginBottom: (theme) => theme.spacing(4) }}>
+              <Metric
+                value={valueSection.value}
+                tendency={valueSection.tendency}
+                positiveTendency={valueSection.positiveTendency}
+                subtitle={valueSection.subtitle}
+              />
+            </Box>
+          )}
+        </Box>
+        <Box>
+          {actions &&
+            actions.map((action, index) => (
+              <IconButton
+                key={index}
+                sx={{ marginLeft: (theme) => theme.spacing(1) }}
+                onClick={action.onClick}
+              >
+                {action.icon}
+              </IconButton>
+            ))}
+        </Box>
+      </Box>
       <Box sx={{ position: "relative" }}>
         <HighchartsReact
           highcharts={Highcharts}

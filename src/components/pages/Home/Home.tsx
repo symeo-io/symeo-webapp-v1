@@ -1,54 +1,19 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React from "react";
 import { Box, Typography } from "@mui/material";
 import { useCurrentUser } from "hooks/useCurrentUser";
-import standardsData from "standards.json";
-import { StandardCode } from "redux/api/goals/graphs/graphs.types";
-import { Standard } from "components/organisms/StandardCard/StandardCard";
 import { useIntl } from "react-intl";
-import GoalDashboardSection from "components/organisms/GoalDashboardSection/GoalDashboardSection";
-import { useGetJobStatusQuery } from "redux/api/jobs/jobs.api";
 import DateRangeSelector from "components/molecules/DateRangeSelector/DateRangeSelector";
-
-const standards = standardsData.standards as Record<StandardCode, Standard>;
-
-const INITIAL_PROCESSING_JOB_CODE =
-  "COLLECT_PULL_REQUESTS_FOR_ORGANIZATION_JOB";
+import LeadTimeBreakdown from "components/organisms/LeadTimeBreakdown/LeadTimeBreakdown";
 
 function Home() {
   const { formatMessage } = useIntl();
-  const { selectedTeam, goals } = useCurrentUser();
-  const [pollingInterval, setPollingInterval] = useState<number | undefined>(
-    5000
-  );
-
-  const { data: jobStatusData } = useGetJobStatusQuery(
-    {
-      jobCode: INITIAL_PROCESSING_JOB_CODE,
-    },
-    { pollingInterval }
-  );
-  const isProcessingInitialJob = useMemo(
-    () =>
-      !jobStatusData ||
-      (!jobStatusData.jobs.previous_job &&
-        jobStatusData.jobs.current_job.status !== "FINISHED"),
-    [jobStatusData]
-  );
-
-  useEffect(() => {
-    if (jobStatusData && !isProcessingInitialJob) {
-      setPollingInterval(undefined);
-    }
-  }, [jobStatusData, isProcessingInitialJob]);
+  const { selectedTeam } = useCurrentUser();
 
   return (
     <Box
       sx={{
         display: "flex",
         flexDirection: "column",
-        padding: (theme) => theme.spacing(3),
-        flex: 1,
-        maxWidth: "1441px",
       }}
     >
       <Box
@@ -66,16 +31,18 @@ function Home() {
         </Typography>
         <DateRangeSelector />
       </Box>
-      {jobStatusData &&
-        goals?.map((goal, index) => (
-          <GoalDashboardSection
-            sx={{ marginTop: (theme) => (index !== 0 ? theme.spacing(6) : 0) }}
-            key={goal.id}
-            standard={standards[goal.standard_code]}
-            goal={goal}
-            isProcessingInitialJob={isProcessingInitialJob}
+      <Box>
+        <Typography variant="h2">
+          {formatMessage({ id: "dashboard.lead-time.title" })}
+        </Typography>
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <LeadTimeBreakdown
+            sx={{
+              marginTop: (theme) => theme.spacing(2),
+            }}
           />
-        ))}
+        </Box>
+      </Box>
     </Box>
   );
 }

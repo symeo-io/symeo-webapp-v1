@@ -6,20 +6,8 @@ import { colors } from "theme/colors";
 import * as icons from "@mui/icons-material";
 import Status from "components/atoms/Status/Status";
 import Button from "components/atoms/Button/Button";
-import { GraphType, StandardCode } from "redux/api/goals/graphs/graphs.types";
 import { useNavigate } from "hooks/useNavigate";
-
-export type Standard = {
-  code: StandardCode;
-  recommandedValue: number;
-  valueRange: [number, number];
-  valueStep: number;
-  unit: string;
-  new: boolean;
-  active: boolean;
-  availableGraphs: GraphType[];
-  icon: keyof typeof icons;
-};
+import { Standard } from "constants/standards";
 
 export type StandardCardProps = PropsWithSx & {
   standard: Standard;

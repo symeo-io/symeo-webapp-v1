@@ -37,7 +37,7 @@ function Status({ label, variant = "info", sx }: StatusProps) {
         border: `1px solid ${color.borders}`,
         borderRadius: "4px",
         fontWeight: 700,
-        fontSize: "10px",
+        fontSize: "12px",
         ...sx,
       }}
     >

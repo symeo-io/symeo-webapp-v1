@@ -4,20 +4,29 @@ import dayjs from "dayjs";
 import { useCurrentUser } from "hooks/useCurrentUser";
 import { useGetGraphQuery } from "redux/api/goals/graphs/graphs.api";
 import { GetCurveResponse } from "redux/api/goals/graphs/graphs.types";
-import { GraphProps } from "components/organisms/Graph/types";
+import { CommonGraphProps } from "components/organisms/Graph/types";
 import { useIntl } from "react-intl";
 import { useSelectedDateRange } from "hooks/useSelectedDateRange";
 import { buildCurveOptions } from "services/highcharts/HighchartsOptionsBuilder";
 import { buildCurveSeries } from "services/highcharts/HighchartsSeriesBuilder";
+import { useGetMetricsQuery } from "redux/api/goals/metrics/metrics.api";
+import { useDataStatus } from "hooks/useDataStatus";
 
-function Curves({ standardCode, isProcessingInitialJob, sx }: GraphProps) {
+function Curves({
+  title,
+  subtitle,
+  actions,
+  standardCode,
+  sx,
+}: CommonGraphProps) {
   const { formatMessage } = useIntl();
   const { selectedTeam } = useCurrentUser();
   const [dateRange] = useSelectedDateRange();
+  const { isProcessingInitialJob } = useDataStatus();
 
   const { data, isLoading } = useGetGraphQuery(
     {
-      teamId: selectedTeam?.id,
+      teamId: selectedTeam?.id as string,
       type: "curves",
       standardCode,
       startDate: dayjs(dateRange.startDate).format("YYYY-MM-DD"),
@@ -28,10 +37,33 @@ function Curves({ standardCode, isProcessingInitialJob, sx }: GraphProps) {
     }
   ) as { data: GetCurveResponse | undefined; isLoading: boolean };
 
+  const { data: metricsData } = useGetMetricsQuery(
+    {
+      teamId: selectedTeam?.id as string,
+      standardCode,
+      startDate: dayjs(dateRange.startDate).format("YYYY-MM-DD"),
+      endDate: dayjs(dateRange.endDate).format("YYYY-MM-DD"),
+    },
+    {
+      skip: !selectedTeam || isProcessingInitialJob,
+    }
+  );
+
   const { limit, series } = useMemo(
     () =>
       data?.curves ? buildCurveSeries(data.curves) : { limit: 0, series: [] },
     [data]
+  );
+
+  const options = useMemo(
+    () =>
+      buildCurveOptions(
+        standardCode,
+        limit,
+        series,
+        formatMessage({ id: `standards.${standardCode}.curves.yAxisTitle` })
+      ),
+    [formatMessage, limit, series, standardCode]
   );
 
   return (
@@ -40,15 +72,34 @@ function Curves({ standardCode, isProcessingInitialJob, sx }: GraphProps) {
       loading={isLoading || isProcessingInitialJob}
       loadingMessage={
         isProcessingInitialJob
-          ? formatMessage({ id: "standards.graphs.loading" })
+          ? formatMessage({ id: "data-status.loading" })
           : undefined
       }
-      title={formatMessage({ id: "standards.graphs.curves.title" })}
-      options={buildCurveOptions(
-        limit,
-        series,
-        formatMessage({ id: `standards.${standardCode}.curves.yAxisTitle` })
-      )}
+      titleSection={
+        title
+          ? {
+              title,
+              subtitle,
+            }
+          : undefined
+      }
+      valueSection={
+        metricsData?.metrics.average.value !== undefined
+          ? {
+              value: formatMessage(
+                { id: `standards.${standardCode}.average.value` },
+                { value: metricsData?.metrics.average.value }
+              ),
+              subtitle: formatMessage({
+                id: `standards.${standardCode}.average.subtitle`,
+              }),
+              tendency: metricsData?.metrics.average.tendency_percentage,
+              positiveTendency: "down",
+            }
+          : undefined
+      }
+      actions={actions}
+      options={options}
     />
   );
 }

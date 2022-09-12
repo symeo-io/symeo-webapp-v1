@@ -2,22 +2,20 @@ import React from "react";
 import { Box, IconButton, Typography } from "@mui/material";
 import GoalGraph from "components/organisms/GoalGraph/GoalGraph";
 import { useIntl } from "react-intl";
-import { Standard } from "components/organisms/StandardCard/StandardCard";
 import { Goal } from "redux/api/goals/goals.types";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useNavigate } from "hooks/useNavigate";
 import { PropsWithSx } from "types/PropsWithSx";
+import { Standard } from "constants/standards";
 
 export type GoalDashboardSectionProps = PropsWithSx & {
   standard: Standard;
   goal: Goal;
-  isProcessingInitialJob?: boolean;
 };
 
 function GoalDashboardSection({
   standard,
   goal,
-  isProcessingInitialJob = false,
   sx,
 }: GoalDashboardSectionProps) {
   const { formatMessage } = useIntl();
@@ -25,36 +23,44 @@ function GoalDashboardSection({
 
   return (
     <Box sx={sx}>
-      <Typography
-        variant="h2"
+      <Box
         sx={{
-          marginBottom: (theme) => theme.spacing(4),
           display: "flex",
+          flexWrap: "wrap",
           alignItems: "center",
+          marginBottom: (theme) => theme.spacing(4),
         }}
       >
-        {formatMessage(
-          { id: `standards.${standard.code}.dashboard.title` },
-          { target: goal.value }
-        )}
-        <IconButton
-          sx={{ marginLeft: (theme) => theme.spacing(1) }}
-          onClick={() =>
-            navigate("teamGoalSetting", {
-              params: { standardCode: standard.code },
-            })
-          }
+        <Typography
+          variant="h2"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            flex: 1,
+          }}
         >
-          <SettingsIcon />
-        </IconButton>
-      </Typography>
+          {formatMessage(
+            { id: `standards.${standard.code}.dashboard.title` },
+            { target: goal.value }
+          )}
+          <IconButton
+            sx={{ marginLeft: (theme) => theme.spacing(1) }}
+            onClick={() =>
+              navigate("teamGoalSetting", {
+                params: { standardCode: standard.code },
+              })
+            }
+          >
+            <SettingsIcon />
+          </IconButton>
+        </Typography>
+      </Box>
       <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
         {standard.availableGraphs.map((graphType) => (
           <GoalGraph
             key={graphType}
             type={graphType}
             standardCode={standard.code}
-            isProcessingInitialJob={isProcessingInitialJob}
             sx={{
               margin: (theme) => theme.spacing(1),
               flex: 1,

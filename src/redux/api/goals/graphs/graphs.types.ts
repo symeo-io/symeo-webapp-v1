@@ -4,7 +4,7 @@ export type GraphType = "curves" | "histogram";
 export type StandardCode = "time-to-merge" | "pull-request-size";
 
 export type GetGraphsInput = {
-  teamId?: string;
+  teamId: string;
   type: GraphType;
   standardCode: StandardCode;
   startDate: string;
@@ -20,6 +20,8 @@ export type PieceCurveDataPoint = {
   value: number;
   date: string;
   open: boolean;
+  label: string;
+  link: string;
 };
 
 export type GetCurveResponse = ResponseWithErrors & {

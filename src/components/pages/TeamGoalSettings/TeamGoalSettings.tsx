@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Box, Divider, Slider, Typography, SliderProps } from "@mui/material";
 import { useIntl } from "react-intl";
 import SliderMark from "components/atoms/SliderMark/SliderMark";
-import standardsData from "standards.json";
 import Button from "components/atoms/Button/Button";
 import { useParams } from "react-router-dom";
 import {
@@ -11,16 +10,18 @@ import {
   useUpdateGoalMutation,
 } from "redux/api/goals/goals.api";
 import { useCurrentUser } from "hooks/useCurrentUser";
-import { Standard } from "components/organisms/StandardCard/StandardCard";
 import { useConfirm } from "providers/confirm/useConfirm";
-import { StandardCode } from "redux/api/goals/graphs/graphs.types";
 import { useNavigate } from "hooks/useNavigate";
+import { standards } from "constants/standards";
+import { StandardCode } from "redux/api/goals/graphs/graphs.types";
+import { useGetMetricsQuery } from "redux/api/goals/metrics/metrics.api";
+import dayjs from "dayjs";
 
 function TeamGoalSettings() {
   const { standardCode } = useParams();
   const standard = useMemo(
     // TODO: handle case where no standard is found with code
-    () => standardsData.standards[standardCode as StandardCode] as Standard,
+    () => standards[standardCode as StandardCode],
     [standardCode]
   );
 
@@ -36,6 +37,33 @@ function TeamGoalSettings() {
   const goal = useMemo(
     () => goals?.find((g) => g.standard_code === standard.code) ?? null,
     [goals, standard.code]
+  );
+
+  const { data: metricsData } = useGetMetricsQuery(
+    {
+      teamId: selectedTeam?.id as string,
+      standardCode: standardCode as StandardCode,
+      startDate: dayjs().subtract(2, "weeks").format("YYYY-MM-DD"),
+      endDate: dayjs().format("YYYY-MM-DD"),
+    },
+    {
+      skip: !selectedTeam,
+    }
+  );
+
+  const average = useMemo(
+    () =>
+      metricsData?.metrics.average.value &&
+      Math.round(metricsData?.metrics.average.value),
+    [metricsData]
+  );
+
+  const max = useMemo(
+    () =>
+      average
+        ? Math.max(average, standard.valueRange[1])
+        : standard.valueRange[1],
+    [average, standard.valueRange]
   );
 
   useEffect(() => {
@@ -56,8 +84,10 @@ function TeamGoalSettings() {
 
     await updateGoal({ id: goal.id, value });
 
-    return navigate("home");
-  }, [goal, navigate, updateGoal, value]);
+    return navigate("teamGoal", {
+      params: { standardCode: standard.code },
+    });
+  }, [goal, navigate, standard.code, updateGoal, value]);
 
   const handleCreate = useCallback(async () => {
     if (goal || !selectedTeam) return;
@@ -68,14 +98,16 @@ function TeamGoalSettings() {
       team_id: selectedTeam.id,
     });
 
-    return navigate("home");
+    return navigate("teamGoal", {
+      params: { standardCode: standard.code },
+    });
   }, [createGoal, goal, navigate, selectedTeam, standard.code, value]);
 
   const handleDelete = useCallback(async () => {
     if (!goal) return;
 
     await deleteGoal({ teamGoalId: goal.id });
-    return navigate("home");
+    return navigate("teamGoals");
   }, [deleteGoal, goal, navigate]);
 
   const { handleOpen: openConfirmDelete } = useConfirm({
@@ -97,37 +129,56 @@ function TeamGoalSettings() {
   const marks = useMemo(() => {
     const result: SliderProps["marks"] = [];
 
-    [
-      standard.valueRange[0],
-      standard.recommandedValue,
-      standard.valueRange[1],
-    ].forEach((value) =>
+    if (!average || average !== standard.valueRange[0]) {
       result.push({
-        value,
+        value: standard.valueRange[0],
+        label: <SliderMark value={standard.valueRange[0]} />,
+      });
+    }
+
+    if (!average || average !== max) {
+      result.push({
+        value: max,
+        label: <SliderMark value={max} />,
+      });
+    }
+
+    if (!average || standard.recommandedValue < average) {
+      result.push({
+        value: standard.recommandedValue,
         label: (
           <SliderMark
-            value={value}
-            info={
-              standard.recommandedValue === value
-                ? { label: "Recommanded", variant: "success" }
-                : undefined
-            }
+            value={standard.recommandedValue}
+            info={{ label: "Recommanded", variant: "success" }}
           />
         ),
-      })
-    );
+      });
+    }
+
+    if (average) {
+      result.push({
+        value: average,
+        label: (
+          <SliderMark
+            value={average}
+            info={{
+              label: "Your current mean value ",
+              variant:
+                standard.recommandedValue >= average ? "success" : "warning",
+            }}
+          />
+        ),
+      });
+    }
 
     return result;
-  }, [standard.recommandedValue, standard.valueRange]);
+  }, [average, max, standard.recommandedValue, standard.valueRange]);
 
   return (
     <Box
       sx={{
         display: "flex",
         flexDirection: "column",
-        padding: (theme) => theme.spacing(3),
-        maxWidth: "1100px",
-        width: "100%",
         boxSizing: "border-box",
       }}
     >
@@ -143,7 +194,7 @@ function TeamGoalSettings() {
         <Box
           sx={{
             marginTop: (theme) => theme.spacing(5),
-            paddingX: (theme) => theme.spacing(2),
+            paddingX: (theme) => theme.spacing(9),
           }}
         >
           <Slider
@@ -152,7 +203,7 @@ function TeamGoalSettings() {
             onChange={handleChange}
             step={standard.valueStep}
             min={standard.valueRange[0]}
-            max={standard.valueRange[1]}
+            max={max}
             marks={marks}
             valueLabelDisplay="on"
             sx={{ marginBottom: "62px" }}
@@ -169,7 +220,13 @@ function TeamGoalSettings() {
       >
         <Button
           variant="outlined"
-          onClick={() => navigate(goal ? "home" : "teamGoals")}
+          onClick={() =>
+            goal
+              ? navigate("teamGoal", {
+                  params: { standardCode: standard.code },
+                })
+              : navigate("teamGoalsLibrary")
+          }
         >
           {formatMessage({
             id: "standards.cancel",
