@@ -128,8 +128,9 @@ function TeamGoalSettings() {
 
   const marks = useMemo(() => {
     const result: SliderProps["marks"] = [];
+    console.log("average", average);
 
-    if (!average || average !== standard.valueRange[0]) {
+    if (average === undefined || average !== standard.valueRange[0]) {
       result.push({
         value: standard.valueRange[0],
         label: <SliderMark value={standard.valueRange[0]} />,
@@ -143,26 +144,36 @@ function TeamGoalSettings() {
       });
     }
 
-    if (!average || standard.recommandedValue < average) {
+    if (average === undefined || standard.recommandedValue < average) {
       result.push({
         value: standard.recommandedValue,
         label: (
           <SliderMark
             value={standard.recommandedValue}
-            info={{ label: "Recommanded", variant: "success" }}
+            info={{
+              label: formatMessage({
+                id: "standards.value.recommanded",
+              }),
+              variant: "success",
+            }}
           />
         ),
       });
     }
 
-    if (average) {
+    if (average !== undefined) {
       result.push({
         value: average,
         label: (
           <SliderMark
             value={average}
             info={{
-              label: "Your current mean value ",
+              label: formatMessage({
+                id: "standards.value.mean",
+              }),
+              tooltipMessage: formatMessage({
+                id: "standards.value.mean-tooltip",
+              }),
               variant:
                 standard.recommandedValue >= average ? "success" : "warning",
             }}
@@ -172,7 +183,13 @@ function TeamGoalSettings() {
     }
 
     return result;
-  }, [average, max, standard.recommandedValue, standard.valueRange]);
+  }, [
+    average,
+    formatMessage,
+    max,
+    standard.recommandedValue,
+    standard.valueRange,
+  ]);
 
   return (
     <Box
