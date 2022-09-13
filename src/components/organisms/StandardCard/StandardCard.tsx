@@ -20,7 +20,15 @@ function StandardCard({ standard, configured = false, sx }: StandardCardProps) {
   const IconComponent = useMemo(() => icons[standard.icon], [standard.icon]);
 
   return (
-    <Card sx={{ padding: (theme) => theme.spacing(2), width: "300px", ...sx }}>
+    <Card
+      sx={{
+        padding: (theme) => theme.spacing(2),
+        width: "300px",
+        display: "flex",
+        flexDirection: "column",
+        ...sx,
+      }}
+    >
       <Typography variant="h3" sx={{ display: "flex", alignItems: "center" }}>
         {<IconComponent sx={{ marginRight: (theme) => theme.spacing(1) }} />}
         {formatMessage({ id: `standards.${standard.code}.title` })}
@@ -35,6 +43,7 @@ function StandardCard({ standard, configured = false, sx }: StandardCardProps) {
       <Typography
         variant="body1"
         sx={{
+          flex: 1,
           color: colors.secondary.text,
           marginTop: (theme) => theme.spacing(1),
         }}
