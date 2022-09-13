@@ -8,6 +8,8 @@ import { standards } from "constants/standards";
 import React from "react";
 import EmptyState from "components/organisms/EmptyState/EmptyState";
 import { useNavigate } from "hooks/useNavigate";
+import Button from "components/atoms/Button/Button";
+import AddIcon from "@mui/icons-material/Add";
 
 function TeamGoals() {
   const navigate = useNavigate();
@@ -36,6 +38,15 @@ function TeamGoals() {
           )}
         </Typography>
         <DateRangeSelector />
+      </Box>
+      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <Button
+          sx={{ marginLeft: (theme) => theme.spacing(1) }}
+          startIcon={<AddIcon />}
+          onClick={() => navigate("teamGoalsLibrary")}
+        >
+          New Team Goal
+        </Button>
       </Box>
       {!isLoadingProcessingInitialJob && (
         <>
@@ -79,6 +90,7 @@ function TeamGoals() {
                     id: "team-goals.empty-state.button-label",
                   }),
                   onClick: () => navigate("teamGoalsLibrary"),
+                  startIcon: <AddIcon />,
                 }}
               />
             </Box>

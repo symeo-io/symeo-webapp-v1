@@ -9,6 +9,7 @@ export type EmptyStateProps = PropsWithSx & {
   button: {
     label: string;
     onClick: ButtonProps["onClick"];
+    startIcon?: ButtonProps["startIcon"];
   };
 };
 
@@ -26,7 +27,12 @@ function EmptyState({ title, message, button, sx }: EmptyStateProps) {
         {message}
       </Typography>
       <Box sx={{ marginTop: (theme) => theme.spacing(3) }}>
-        <Button variant="contained" color="primary" onClick={button.onClick}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={button.onClick}
+          startIcon={button.startIcon}
+        >
           {button.label}
         </Button>
       </Box>
