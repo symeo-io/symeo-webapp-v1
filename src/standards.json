@@ -18,7 +18,7 @@
       "recommandedValue": 1000,
       "unit": "days",
       "valueRange": [200, 5000],
-      "valueStep": 1,
+      "valueStep": 10,
       "new": true,
       "active": true,
       "icon": "ShutterSpeed",
