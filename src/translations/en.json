@@ -158,7 +158,7 @@
     "cancel": "Cancel",
     "time-to-merge": {
       "title": "Aim for short PR lifecycle",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "description": "Long opened pull requests run the risk to be more difficult to merge, due to conflicts or forgotten context. Also, they can be the symptom of communication issues, too large PR or low PR quality.",
       "page": {
         "title": "Aim for short PR lifecycle - Settings",
         "limit-config": {
@@ -189,7 +189,7 @@
     },
     "pull-request-size": {
       "title": "Avoid large pull request",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "description": "It’s easier for humans to work on smaller tasks. Small pull requests are easier to read, which increase the review quality and reduce the risk of errors.",
       "page": {
         "title": "Avoid large pull request - Settings",
         "limit-config": {
