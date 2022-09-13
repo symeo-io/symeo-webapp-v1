@@ -18,8 +18,11 @@ import cloneDeep from "lodash/cloneDeep";
 import { useCreateTeamsMutation } from "redux/api/teams/teams.api";
 import { formValuesToCreateTeamInput } from "redux/api/teams/teams.types";
 import { useNavigate } from "hooks/useNavigate";
+import { useCurrentUser } from "hooks/useCurrentUser";
+import OrganizationAvatar from "components/atoms/OrganizationAvatar/OrganizationAvatar";
 
 function OnBoardingTeams() {
+  const { currentUser } = useCurrentUser();
   const { formatMessage } = useIntl();
   const navigate = useNavigate();
   const [createTeams, { isLoading: isLoadingCreateTeams }] =
@@ -80,11 +83,41 @@ function OnBoardingTeams() {
     }
   }, [createTeams, navigate, teams]);
 
+  if (!currentUser?.organization) {
+    return null;
+  }
+
   return (
     <OnBoardingPageContainer>
       <OnBoardingCard
+        title={formatMessage(
+          {
+            id: "on-boarding.create-teams.title",
+          },
+          { organizationName: currentUser.organization.name }
+        )}
+      >
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <Box
+            sx={{
+              marginTop: (theme) => theme.spacing(2),
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <OrganizationAvatar organization={currentUser.organization} />
+            <Box sx={{ flex: 1, marginLeft: (theme) => theme.spacing(1) }}>
+              <Box sx={{ fontWeight: 700 }}>
+                {currentUser.organization.name}
+              </Box>
+            </Box>
+          </Box>
+        </Box>
+      </OnBoardingCard>
+      <OnBoardingCard
+        sx={{ marginTop: (theme) => theme.spacing(2) }}
         title={formatMessage({
-          id: "on-boarding.create-teams.title",
+          id: "on-boarding.create-teams.subtitle",
         })}
         subtitle={formatMessage({
           id: "on-boarding.create-teams.message",
