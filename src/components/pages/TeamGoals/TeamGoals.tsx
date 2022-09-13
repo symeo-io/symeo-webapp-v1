@@ -39,15 +39,17 @@ function TeamGoals() {
         </Typography>
         <DateRangeSelector />
       </Box>
-      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-        <Button
-          sx={{ marginLeft: (theme) => theme.spacing(1) }}
-          startIcon={<AddIcon />}
-          onClick={() => navigate("teamGoalsLibrary")}
-        >
-          New Team Goal
-        </Button>
-      </Box>
+      {goals && goals.length > 0 && (
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <Button
+            sx={{ marginLeft: (theme) => theme.spacing(1) }}
+            startIcon={<AddIcon />}
+            onClick={() => navigate("teamGoalsLibrary")}
+          >
+            New Team Goal
+          </Button>
+        </Box>
+      )}
       {!isLoadingProcessingInitialJob && (
         <>
           <Box
