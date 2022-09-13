@@ -126,7 +126,12 @@
     "title": "Choose a new Goal for {teamName} {teamName, select, All {Teams} other {Team}}"
   },
   "team-goals": {
-    "title": "{teamName} Team Goals"
+    "title": "{teamName} Team Goals",
+    "empty-state": {
+      "title": "No Team Goals configured",
+      "message": "Set up a 'New Team Goal' to start improving your key indicators",
+      "button-label": "New Team Goal"
+    }
   },
   "standards": {
     "new": "New",
