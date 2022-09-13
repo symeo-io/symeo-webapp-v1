@@ -10,7 +10,10 @@ import {
 import { PropsWithSx } from "types/PropsWithSx";
 import Highcharts from "services/highcharts/Highcharts";
 import Metric from "components/molecules/Metric/Metric";
-import { PositiveTendency } from "components/atoms/Tendency";
+import {
+  PositiveTendency,
+  TendencyProps,
+} from "components/atoms/Tendency/Tendency";
 import cloneDeep from "lodash/cloneDeep";
 
 export type GraphProps = PropsWithSx & {
@@ -22,6 +25,7 @@ export type GraphProps = PropsWithSx & {
     value: string;
     subtitle?: string;
     tendency?: number;
+    tendencyDates?: TendencyProps["tendencyDates"];
     positiveTendency?: PositiveTendency;
   };
   actions?: {
@@ -77,6 +81,7 @@ function Graph({
               <Metric
                 value={valueSection.value}
                 tendency={valueSection.tendency}
+                tendencyDates={valueSection.tendencyDates}
                 positiveTendency={valueSection.positiveTendency}
                 subtitle={valueSection.subtitle}
               />

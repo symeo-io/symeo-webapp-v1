@@ -1,11 +1,11 @@
 import React, { useMemo } from "react";
-import { Box } from "@mui/material";
+import { Box, BoxProps } from "@mui/material";
 import { colors } from "theme/colors";
 import { Color } from "theme/colors/color.type";
 import { PropsWithSx } from "types/PropsWithSx";
 
 export type StatusProps = PropsWithSx & {
-  label: string;
+  label: BoxProps["children"];
   variant?: "success" | "info" | "warning" | "error";
 };
 

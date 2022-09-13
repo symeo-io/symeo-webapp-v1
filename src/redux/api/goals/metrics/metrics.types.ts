@@ -11,6 +11,10 @@ export type GetMetricsInput = {
 
 export type GetMetricsResponse = ResponseWithErrors & {
   metrics: {
+    current_end_date: string;
+    current_start_date: string;
+    previous_end_date: string;
+    previous_start_date: string;
     average: Metric;
     meeting_goal: Metric;
   };

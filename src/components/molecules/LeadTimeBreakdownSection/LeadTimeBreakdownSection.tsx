@@ -6,12 +6,14 @@ import LeadTimeBreakdownTile from "components/molecules/LeadTimeBreakdownSection
 import LeadTimeBreakdownArrow from "components/molecules/LeadTimeBreakdownSection/LeadTimeBreakdownArrow";
 import LeadTimeAverageValue from "components/molecules/LeadTimeAverageValue/LeadTimeAverageValue";
 import Button from "components/atoms/Button/Button";
+import { TendencyProps } from "components/atoms/Tendency/Tendency";
 
 export type LeadTimeBreakdownSectionProps = PropsWithSx & {
   label: string;
   color: "green" | "orange" | "red";
   value: string;
   tendency?: number;
+  tendencyDates?: TendencyProps["tendencyDates"];
   action?: {
     label: string;
     onClick: () => void;
@@ -37,6 +39,7 @@ function LeadTimeBreakdownSection({
   color,
   value,
   tendency,
+  tendencyDates,
   action,
   loading = false,
   sx,
@@ -65,6 +68,7 @@ function LeadTimeBreakdownSection({
             <LeadTimeAverageValue
               value={value}
               tendency={tendency}
+              tendencyDates={tendencyDates}
               loading={loading}
             />
             {action && (

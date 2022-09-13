@@ -66,6 +66,17 @@ function Curves({
     [formatMessage, limit, series, standardCode]
   );
 
+  const tendencyDates = {
+    current: {
+      startDate: metricsData?.metrics?.current_start_date,
+      endDate: metricsData?.metrics?.current_end_date,
+    },
+    previous: {
+      startDate: metricsData?.metrics?.previous_start_date,
+      endDate: metricsData?.metrics?.previous_end_date,
+    },
+  };
+
   return (
     <Graph
       sx={sx}
@@ -94,6 +105,7 @@ function Curves({
                 id: `standards.${standardCode}.average.subtitle`,
               }),
               tendency: metricsData?.metrics.average.tendency_percentage,
+              tendencyDates,
               positiveTendency: "down",
             }
           : undefined

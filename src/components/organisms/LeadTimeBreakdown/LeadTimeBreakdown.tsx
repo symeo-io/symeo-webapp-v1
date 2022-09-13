@@ -113,6 +113,17 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
       }
     );
 
+  const tendencyDates = {
+    current: {
+      startDate: leadTimeData?.lead_time?.current_start_date,
+      endDate: leadTimeData?.lead_time?.current_end_date,
+    },
+    previous: {
+      startDate: leadTimeData?.lead_time?.previous_start_date,
+      endDate: leadTimeData?.lead_time?.previous_end_date,
+    },
+  };
+
   return (
     <Card sx={{ padding: (theme) => theme.spacing(2), ...sx }}>
       {isProcessingInitialJob && (
@@ -147,6 +158,7 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
               formatMessage
             )}
             tendency={leadTimeData?.lead_time?.average.tendency_percentage ?? 0}
+            tendencyDates={tendencyDates}
             subtitle={formatMessage({ id: "lead-time.average-subtitle" })}
           />
           <Box sx={{ display: "flex", padding: (theme) => theme.spacing(3) }}>
@@ -160,6 +172,7 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
               tendency={
                 leadTimeData?.lead_time?.coding_time.tendency_percentage ?? 0
               }
+              tendencyDates={tendencyDates}
               color={buildColor(
                 "coding_time",
                 leadTimeData?.lead_time?.coding_time.value
@@ -179,6 +192,7 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
               tendency={
                 leadTimeData?.lead_time?.review_lag.tendency_percentage ?? 0
               }
+              tendencyDates={tendencyDates}
               color={buildColor(
                 "review_lag",
                 leadTimeData?.lead_time?.review_lag.value
@@ -198,6 +212,7 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
               tendency={
                 leadTimeData?.lead_time?.review_time.tendency_percentage ?? 0
               }
+              tendencyDates={tendencyDates}
               color={buildColor(
                 "review_time",
                 leadTimeData?.lead_time?.review_time.value
@@ -217,6 +232,7 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
               tendency={
                 leadTimeData?.lead_time?.time_to_deploy.tendency_percentage
               }
+              tendencyDates={tendencyDates}
               color={buildColor(
                 "time_to_deploy",
                 leadTimeData?.lead_time?.time_to_deploy.value

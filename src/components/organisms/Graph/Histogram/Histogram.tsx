@@ -70,6 +70,17 @@ function Histogram({
     [dates, formatMessage, series, standardCode]
   );
 
+  const tendencyDates = {
+    current: {
+      startDate: metricsData?.metrics?.current_start_date,
+      endDate: metricsData?.metrics?.current_end_date,
+    },
+    previous: {
+      startDate: metricsData?.metrics?.previous_start_date,
+      endDate: metricsData?.metrics?.previous_end_date,
+    },
+  };
+
   return (
     <Graph
       sx={sx}
@@ -98,6 +109,7 @@ function Histogram({
                 id: `standards.${standardCode}.percent.subtitle`,
               }),
               tendency: metricsData?.metrics.meeting_goal.tendency_percentage,
+              tendencyDates,
               positiveTendency: "up",
             }
           : undefined
