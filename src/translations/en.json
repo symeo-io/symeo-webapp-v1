@@ -15,7 +15,8 @@
       }
     },
     "create-teams": {
-      "title": "Organize your repositories into teams",
+      "title": "Congratulations! You just created the {organizationName} organization",
+      "subtitle": "Now, organize your repositories into teams",
       "message": "Splitting your repositories into specific teams is the best way to get relevant insights.",
       "add-team-button-label": "Add another team",
       "skip-button-label": "Skip",

@@ -28,7 +28,10 @@ function OnBoardingCard({
       {title && (
         <Typography
           variant="h2"
-          sx={{ marginBottom: (theme) => theme.spacing(3) }}
+          sx={{
+            marginBottom: (theme) => theme.spacing(3),
+            textAlign: "center",
+          }}
         >
           {title}
         </Typography>
