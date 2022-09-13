@@ -16,15 +16,17 @@ dayjs.extend(customParseFormat);
 dayjs.extend(quarterOfYear);
 
 if (config.datadog.clientToken) {
-  datadogRum.init({
-    applicationId: config.datadog.applicationId,
-    clientToken: config.datadog.clientToken,
-    site: config.datadog.site,
-    service: "symeo-webapp",
-    env: config.env,
-    sampleRate: 100,
-    trackInteractions: true,
-  });
+  if (config.env === "production") {
+    datadogRum.init({
+      applicationId: config.datadog.applicationId,
+      clientToken: config.datadog.clientToken,
+      site: config.datadog.site,
+      service: "symeo-webapp",
+      env: config.env,
+      sampleRate: 100,
+      trackInteractions: true,
+    });
+  }
 
   datadogLogs.init({
     clientToken: config.datadog.clientToken,

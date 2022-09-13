@@ -7,6 +7,8 @@ import ArrowInfo, {
 
 export type SliderMarkProps = {
   value: number;
+  setValue: (value: number) => void;
+  position?: "top" | "bottom";
   info?: {
     label: string;
     tooltipMessage?: string;
@@ -14,10 +16,17 @@ export type SliderMarkProps = {
   };
 };
 
-function SliderMark({ value, info }: SliderMarkProps) {
+function SliderMark({
+  value,
+  info,
+  position = "bottom",
+  setValue,
+}: SliderMarkProps) {
   return (
     <Box
+      onClick={() => setValue(value)}
       sx={{
+        transform: position === "bottom" ? "unset" : "translateY(-52px)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -26,9 +35,15 @@ function SliderMark({ value, info }: SliderMarkProps) {
       <Box sx={{ color: colors.primary.text, fontWeight: 700 }}>{value}</Box>
       {info && (
         <ArrowInfo
+          onClick={() => setValue(value)}
           label={info.label}
           variant={info.variant}
           tooltipMessage={info.tooltipMessage}
+          position={position}
+          sx={{
+            position: "absolute",
+            top: position === "bottom" ? "24px" : "-52px",
+          }}
         />
       )}
     </Box>

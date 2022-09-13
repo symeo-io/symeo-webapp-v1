@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Box, Divider, Slider, Typography, SliderProps } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 import { useIntl } from "react-intl";
-import SliderMark from "components/atoms/SliderMark/SliderMark";
 import Button from "components/atoms/Button/Button";
 import { useParams } from "react-router-dom";
 import {
@@ -16,6 +15,7 @@ import { standards } from "constants/standards";
 import { StandardCode } from "redux/api/goals/graphs/graphs.types";
 import { useGetMetricsQuery } from "redux/api/goals/metrics/metrics.api";
 import dayjs from "dayjs";
+import TeamGoalSettingsSlider from "components/organisms/TeamGoalSettingsSlider/TeamGoalSettingsSlider";
 
 function TeamGoalSettings() {
   const { standardCode } = useParams();
@@ -58,26 +58,11 @@ function TeamGoalSettings() {
     [metricsData]
   );
 
-  const max = useMemo(
-    () =>
-      average
-        ? Math.max(average, standard.valueRange[1])
-        : standard.valueRange[1],
-    [average, standard.valueRange]
-  );
-
   useEffect(() => {
     if (goal) {
       setValue(goal.value);
     }
   }, [goal]);
-
-  const handleChange = useCallback(
-    (event: Event, newValue: number | number[]) => {
-      setValue(newValue as number);
-    },
-    []
-  );
 
   const handleSave = useCallback(async () => {
     if (!goal) return;
@@ -126,71 +111,6 @@ function TeamGoalSettings() {
     },
   });
 
-  const marks = useMemo(() => {
-    const result: SliderProps["marks"] = [];
-    console.log("average", average);
-
-    if (average === undefined || average !== standard.valueRange[0]) {
-      result.push({
-        value: standard.valueRange[0],
-        label: <SliderMark value={standard.valueRange[0]} />,
-      });
-    }
-
-    if (!average || average !== max) {
-      result.push({
-        value: max,
-        label: <SliderMark value={max} />,
-      });
-    }
-
-    if (average === undefined || standard.recommandedValue < average) {
-      result.push({
-        value: standard.recommandedValue,
-        label: (
-          <SliderMark
-            value={standard.recommandedValue}
-            info={{
-              label: formatMessage({
-                id: "standards.value.recommanded",
-              }),
-              variant: "success",
-            }}
-          />
-        ),
-      });
-    }
-
-    if (average !== undefined) {
-      result.push({
-        value: average,
-        label: (
-          <SliderMark
-            value={average}
-            info={{
-              label: formatMessage({
-                id: "standards.value.mean",
-              }),
-              tooltipMessage: formatMessage({
-                id: "standards.value.mean-tooltip",
-              }),
-              variant:
-                standard.recommandedValue >= average ? "success" : "warning",
-            }}
-          />
-        ),
-      });
-    }
-
-    return result;
-  }, [
-    average,
-    formatMessage,
-    max,
-    standard.recommandedValue,
-    standard.valueRange,
-  ]);
-
   return (
     <Box
       sx={{
@@ -202,30 +122,20 @@ function TeamGoalSettings() {
       <Typography variant="h1">
         {formatMessage({ id: `standards.${standard.code}.page.title` })}
       </Typography>
-      <Box sx={{ marginTop: (theme) => theme.spacing(8) }}>
-        <Typography variant="h2">
-          {formatMessage({
-            id: `standards.${standard.code}.page.limit-config.title`,
-          })}
-        </Typography>
-        <Box
+      <Box
+        sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+      >
+        <TeamGoalSettingsSlider
           sx={{
-            marginTop: (theme) => theme.spacing(5),
-            paddingX: (theme) => theme.spacing(9),
+            marginTop: (theme) => theme.spacing(8),
+            maxWidth: "600px",
+            width: "100%",
           }}
-        >
-          <Slider
-            track={false}
-            value={value}
-            onChange={handleChange}
-            step={standard.valueStep}
-            min={standard.valueRange[0]}
-            max={max}
-            marks={marks}
-            valueLabelDisplay="on"
-            sx={{ marginBottom: "62px" }}
-          />
-        </Box>
+          average={average}
+          value={value}
+          setValue={setValue}
+          standard={standard}
+        />
       </Box>
       <Divider sx={{ marginTop: (theme) => theme.spacing(3) }} />
       <Box
