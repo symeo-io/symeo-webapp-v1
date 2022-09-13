@@ -62,11 +62,13 @@
     }
   },
   "lead-time": {
-    "value": "{value, number, ::.##} {value, plural, =0 {day} one {day} other {days}}",
+    "value-days": "{value, number, ::.##} {value, plural, =0 {day} one {day} other {days}}",
+    "value-hours": "{value, number, ::.##} {value, plural, =0 {hour} one {hour} other {hours}}",
+    "value-minutes": "{value, number, ::.##} {value, plural, =0 {minute} one {minute} other {minutes}}",
     "unknown": "Unknown",
     "average-subtitle": "Avg. lead time",
     "coding": "Coding",
-    "review-lag": "Review lag",
+    "review-lag": "Waiting for review",
     "review": "Review",
     "deploy": "Deploy",
     "improve-button-label": "Improve"
