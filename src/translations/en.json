@@ -15,7 +15,7 @@
       }
     },
     "create-teams": {
-      "title": "Organise your repositories into teams",
+      "title": "Organize your repositories into teams",
       "message": "Splitting your repositories into specific teams is the best way to get relevant insights.",
       "add-team-button-label": "Add another team",
       "skip-button-label": "Skip",
@@ -154,7 +154,8 @@
       "page": {
         "title": "Aim for short PR lifecycle - Settings",
         "limit-config": {
-          "title": "Choose the number of days before a PR should be merged"
+          "title-before-input": "A pull request should be merged in less than",
+          "title-after-input": "days"
         }
       },
       "dashboard": {
