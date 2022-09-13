@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, IconButton, Link, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useCurrentUser } from "hooks/useCurrentUser";
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -45,6 +45,15 @@ function TeamGoal() {
         flexDirection: "column",
       }}
     >
+      <Box sx={{ marginBottom: (theme) => theme.spacing(1) }}>
+        <Link
+          onClick={() => navigate("teamGoals")}
+          color="secondary"
+          sx={{ cursor: "pointer" }}
+        >
+          Back to your Team Goals
+        </Link>
+      </Box>
       <Box
         sx={{
           display: "flex",
