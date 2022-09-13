@@ -1,5 +1,8 @@
 import { Box, Typography } from "@mui/material";
-import Tendency, { PositiveTendency } from "components/atoms/Tendency/Tendency";
+import Tendency, {
+  PositiveTendency,
+  TendencyProps,
+} from "components/atoms/Tendency/Tendency";
 import React from "react";
 import { PropsWithSx } from "types/PropsWithSx";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
@@ -13,6 +16,7 @@ export type MetricProps = PropsWithSx & {
   value: string;
   subtitle?: string;
   tendency?: number;
+  tendencyDates?: TendencyProps["tendencyDates"];
   positiveTendency?: PositiveTendency;
   status?: MetricStatus;
 };
@@ -38,6 +42,7 @@ function Metric({
   value,
   subtitle,
   tendency,
+  tendencyDates,
   positiveTendency,
   status,
   sx,
@@ -68,6 +73,7 @@ function Metric({
             {tendency !== undefined && positiveTendency !== undefined && (
               <Tendency
                 tendency={tendency}
+                tendencyDates={tendencyDates}
                 positiveTendency={positiveTendency}
                 sx={{ marginLeft: (theme) => theme.spacing(1) }}
               />

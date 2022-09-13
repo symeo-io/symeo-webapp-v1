@@ -61,6 +61,17 @@ function TeamGoalDashboardPanel({
     }
   );
 
+  const tendencyDates = {
+    current: {
+      startDate: metricsData?.metrics?.current_start_date,
+      endDate: metricsData?.metrics?.current_end_date,
+    },
+    previous: {
+      startDate: metricsData?.metrics?.previous_start_date,
+      endDate: metricsData?.metrics?.previous_end_date,
+    },
+  };
+
   return (
     <Card
       sx={{
@@ -123,6 +134,7 @@ function TeamGoalDashboardPanel({
               { value: metricsData.metrics.average.value }
             )}
             tendency={metricsData.metrics.average.tendency_percentage}
+            tendencyDates={tendencyDates}
             positiveTendency="down"
             subtitle={formatMessage({
               id: `standards.${standard.code}.average.subtitle`,
@@ -140,6 +152,7 @@ function TeamGoalDashboardPanel({
               { value: metricsData.metrics.meeting_goal.value }
             )}
             tendency={metricsData.metrics.meeting_goal.tendency_percentage}
+            tendencyDates={tendencyDates}
             positiveTendency="up"
             subtitle={formatMessage({
               id: `standards.${standard.code}.percent.subtitle`,
