@@ -54,6 +54,10 @@ function minutesToDays(value: number) {
   return value / 60 / 24;
 }
 
+function minutesToHours(value: number) {
+  return value / 60;
+}
+
 function buildValueDisplay(
   value: number | undefined,
   formatMessage: IntlShape["formatMessage"]
@@ -62,12 +66,28 @@ function buildValueDisplay(
     return formatMessage({ id: "lead-time.unknown" });
   }
 
-  return formatMessage(
-    { id: "lead-time.value" },
-    {
-      value: minutesToDays(value),
-    }
-  );
+  if (value < 60) {
+    return formatMessage(
+      { id: "lead-time.value-minutes" },
+      {
+        value,
+      }
+    );
+  } else if (value < 60 * 24) {
+    return formatMessage(
+      { id: "lead-time.value-hours" },
+      {
+        value: minutesToHours(value),
+      }
+    );
+  } else {
+    return formatMessage(
+      { id: "lead-time.value-days" },
+      {
+        value: minutesToDays(value),
+      }
+    );
+  }
 }
 
 export type LeadTimeBreakdownProps = PropsWithSx;
