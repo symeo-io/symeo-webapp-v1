@@ -1,11 +1,12 @@
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { PropsWithSx } from "types/PropsWithSx";
 import React from "react";
-import Tendency from "components/atoms/Tendency";
+import Tendency, { TendencyProps } from "components/atoms/Tendency/Tendency";
 
 export type LeadTimeAverageValueProps = PropsWithSx & {
   value: string;
   tendency?: number;
+  tendencyDates?: TendencyProps["tendencyDates"];
   subtitle?: string;
   loading?: boolean;
 };
@@ -13,6 +14,7 @@ export type LeadTimeAverageValueProps = PropsWithSx & {
 function LeadTimeAverageValue({
   value,
   tendency,
+  tendencyDates,
   subtitle,
   loading = false,
   sx,
@@ -25,6 +27,7 @@ function LeadTimeAverageValue({
           {tendency !== undefined && (
             <Tendency
               tendency={tendency}
+              tendencyDates={tendencyDates}
               positiveTendency="down"
               sx={{ marginLeft: (theme) => theme.spacing(1) }}
             />

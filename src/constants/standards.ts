@@ -2,7 +2,7 @@ import standardsData from "standards.json";
 import { GraphType, StandardCode } from "redux/api/goals/graphs/graphs.types";
 import * as icons from "@mui/icons-material";
 import { PullRequestColumnName } from "components/organisms/TeamPullRequestList/TeamPullRequestList";
-import { PositiveTendency } from "components/atoms/Tendency";
+import { PositiveTendency } from "components/atoms/Tendency/Tendency";
 
 export type Standard = {
   code: StandardCode;

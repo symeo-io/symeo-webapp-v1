@@ -10,7 +10,7 @@ import {
 import { PropsWithSx } from "types/PropsWithSx";
 import Highcharts from "services/highcharts/Highcharts";
 import Metric from "components/molecules/Metric/Metric";
-import { PositiveTendency } from "components/atoms/Tendency";
+import { PositiveTendency } from "components/atoms/Tendency/Tendency";
 import cloneDeep from "lodash/cloneDeep";
 
 export type GraphProps = PropsWithSx & {

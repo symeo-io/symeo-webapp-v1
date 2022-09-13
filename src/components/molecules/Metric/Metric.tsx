@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import Tendency, { PositiveTendency } from "components/atoms/Tendency";
+import Tendency, { PositiveTendency } from "components/atoms/Tendency/Tendency";
 import React from "react";
 import { PropsWithSx } from "types/PropsWithSx";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";

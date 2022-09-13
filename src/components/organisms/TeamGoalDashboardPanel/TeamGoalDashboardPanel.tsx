@@ -11,7 +11,7 @@ import { useSelectedDateRange } from "hooks/useSelectedDateRange";
 import { useDataStatus } from "hooks/useDataStatus";
 import { useCurrentUser } from "hooks/useCurrentUser";
 import Metric from "components/molecules/Metric/Metric";
-import { PositiveTendency } from "components/atoms/Tendency";
+import { PositiveTendency } from "components/atoms/Tendency/Tendency";
 
 export type TeamGoalDashboardPanelProps = PropsWithSx & {
   standard: Standard;

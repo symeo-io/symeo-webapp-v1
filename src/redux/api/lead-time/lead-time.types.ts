@@ -9,6 +9,10 @@ export type GetLeadTimeInput = {
 
 export type GetLeadTimeResponse = ResponseWithErrors & {
   lead_time: {
+    current_end_date: string;
+    current_start_date: string;
+    previous_end_date: string;
+    previous_start_date: string;
     average: Metric;
     coding_time: Metric;
     review_lag: Metric;
