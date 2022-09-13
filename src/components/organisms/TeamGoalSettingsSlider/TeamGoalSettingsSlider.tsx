@@ -96,6 +96,7 @@ function TeamGoalSettingsSlider({
     average,
     formatMessage,
     max,
+    setValue,
     standard.recommandedValue,
     standard.valueRange,
   ]);
