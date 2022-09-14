@@ -29,9 +29,11 @@ function StandardCard({ standard, configured = false, sx }: StandardCardProps) {
         ...sx,
       }}
     >
-      <Typography variant="h3" sx={{ display: "flex", alignItems: "center" }}>
+      <Box sx={{ display: "flex", alignItems: "center" }}>
         {<IconComponent sx={{ marginRight: (theme) => theme.spacing(1) }} />}
-        {formatMessage({ id: `standards.${standard.code}.title` })}
+        <Typography variant="h3" sx={{ display: "flex", alignItems: "center" }}>
+          {formatMessage({ id: `standards.${standard.code}.title` })}
+        </Typography>
         {standard.new && (
           <Status
             label={formatMessage({
@@ -50,7 +52,7 @@ function StandardCard({ standard, configured = false, sx }: StandardCardProps) {
             sx={{ marginLeft: (theme) => theme.spacing(1) }}
           />
         )}
-      </Typography>
+      </Box>
       <Typography
         variant="body1"
         sx={{
