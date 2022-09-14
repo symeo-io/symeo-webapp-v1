@@ -126,7 +126,12 @@
     }
   },
   "team-goals-library": {
-    "title": "Choose a new Goal for {teamName} {teamName, select, All {Teams} other {Team}}"
+    "title": "Choose a new Goal for {teamName} {teamName, select, All {Teams} other {Team}}",
+    "categories": {
+      "delivery": "Delivery",
+      "code-quality": "Code Quality",
+      "ci-cd": "CI/CD"
+    }
   },
   "team-goals": {
     "title": "{teamName} Team Goals",
