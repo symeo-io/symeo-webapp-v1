@@ -3,7 +3,7 @@ import { Box, Typography } from "@mui/material";
 import { useIntl } from "react-intl";
 import { useCurrentUser } from "hooks/useCurrentUser";
 import StandardCard from "components/organisms/StandardCard/StandardCard";
-import { standards } from "constants/standards";
+import { standardCategories, standards } from "constants/standards";
 
 function TeamGoalsLibrary() {
   const { formatMessage } = useIntl();
@@ -26,21 +26,40 @@ function TeamGoalsLibrary() {
       <Box
         sx={{
           marginTop: (theme) => theme.spacing(6),
-          display: "flex",
-          flexWrap: "wrap",
         }}
       >
-        {Object.values(standards).map((standard) => (
-          <StandardCard
-            key={standard.code}
-            standard={standard}
-            configured={
-              !!goals?.find((goal) => goal.standard_code === standard.code)
-            }
-            sx={{
-              margin: (theme) => `${theme.spacing(2)} ${theme.spacing(1)}`,
-            }}
-          />
+        {standardCategories.map((category) => (
+          <Box sx={{ marginBottom: (theme) => theme.spacing(3) }}>
+            <Typography variant="h2">
+              {formatMessage({
+                id: `team-goals-library.categories.${category}`,
+              })}
+            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                flexWrap: "wrap",
+              }}
+            >
+              {Object.values(standards)
+                .filter((standard) => standard.category === category)
+                .map((standard) => (
+                  <StandardCard
+                    key={standard.code}
+                    standard={standard}
+                    configured={
+                      !!goals?.find(
+                        (goal) => goal.standard_code === standard.code
+                      )
+                    }
+                    sx={{
+                      margin: (theme) =>
+                        `${theme.spacing(2)} ${theme.spacing(1)}`,
+                    }}
+                  />
+                ))}
+            </Box>
+          </Box>
         ))}
       </Box>
     </Box>

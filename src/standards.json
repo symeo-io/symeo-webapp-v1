@@ -2,9 +2,13 @@
   "standards": {
     "time-to-merge": {
       "code": "time-to-merge",
+      "category": "delivery",
       "recommandedValue": 5,
       "unit": "days",
-      "valueRange": [1, 15],
+      "valueRange": {
+        "start": 1,
+        "end": 15
+      },
       "valueStep": 1,
       "new": true,
       "active": true,
@@ -15,9 +19,13 @@
     },
     "pull-request-size": {
       "code": "pull-request-size",
+      "category": "delivery",
       "recommandedValue": 1000,
       "unit": "days",
-      "valueRange": [200, 5000],
+      "valueRange": {
+        "start": 200,
+        "end": 5000
+      },
       "valueStep": 10,
       "new": true,
       "active": true,
@@ -25,6 +33,74 @@
       "availableGraphs": ["histogram", "curves"],
       "pullRequestsColumns": ["size"],
       "positiveTendency": "down"
+    },
+    "regular-production-deployments": {
+      "code": "regular-production-deployments",
+      "category": "delivery",
+      "recommandedValue": 1,
+      "unit": "deployments",
+      "valueRange": {
+        "start": 1,
+        "end": 2
+      },
+      "valueStep": 1,
+      "new": false,
+      "active": false,
+      "icon": "ShutterSpeed",
+      "availableGraphs": ["histogram"],
+      "pullRequestsColumns": ["size"],
+      "positiveTendency": "up"
+    },
+    "small-coding-tasks": {
+      "code": "small-coding-tasks",
+      "category": "delivery",
+      "recommandedValue": 1,
+      "unit": "days",
+      "valueRange": {
+        "start": 1,
+        "end": 2
+      },
+      "valueStep": 1,
+      "new": false,
+      "active": false,
+      "icon": "ShutterSpeed",
+      "availableGraphs": ["histogram", "curves"],
+      "pullRequestsColumns": ["size"],
+      "positiveTendency": "up"
+    },
+    "strong-test-coverage": {
+      "code": "strong-test-coverage",
+      "category": "code-quality",
+      "recommandedValue": 1,
+      "unit": "days",
+      "valueRange": {
+        "start": 1,
+        "end": 2
+      },
+      "valueStep": 1,
+      "new": false,
+      "active": false,
+      "icon": "GppGood",
+      "availableGraphs": ["histogram", "curves"],
+      "pullRequestsColumns": ["size"],
+      "positiveTendency": "up"
+    },
+    "short-deployment-time": {
+      "code": "short-deployment-time",
+      "category": "ci-cd",
+      "recommandedValue": 1,
+      "unit": "days",
+      "valueRange": {
+        "start": 1,
+        "end": 2
+      },
+      "valueStep": 1,
+      "new": false,
+      "active": false,
+      "icon": "CloudUpload",
+      "availableGraphs": ["histogram", "curves"],
+      "pullRequestsColumns": ["size"],
+      "positiveTendency": "up"
     }
   }
 }

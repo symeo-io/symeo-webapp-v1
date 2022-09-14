@@ -25,19 +25,19 @@ function TeamGoalSettingsSlider({
   const max = useMemo(
     () =>
       average
-        ? Math.max(average, standard.valueRange[1])
-        : standard.valueRange[1],
+        ? Math.max(average, standard.valueRange.end)
+        : standard.valueRange.end,
     [average, standard.valueRange]
   );
 
   const marks = useMemo(() => {
     const result: SliderProps["marks"] = [];
 
-    if (average === undefined || average !== standard.valueRange[0]) {
+    if (average === undefined || average !== standard.valueRange.start) {
       result.push({
-        value: standard.valueRange[0],
+        value: standard.valueRange.start,
         label: (
-          <SliderMark value={standard.valueRange[0]} setValue={setValue} />
+          <SliderMark value={standard.valueRange.start} setValue={setValue} />
         ),
       });
     }
@@ -159,7 +159,7 @@ function TeamGoalSettingsSlider({
           value={value}
           onChange={handleSliderChange}
           step={standard.valueStep}
-          min={standard.valueRange[0]}
+          min={standard.valueRange.start}
           max={max}
           marks={marks}
           valueLabelDisplay="off"

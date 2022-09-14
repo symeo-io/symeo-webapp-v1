@@ -126,7 +126,12 @@
     }
   },
   "team-goals-library": {
-    "title": "Choose a new Goal for {teamName} {teamName, select, All {Teams} other {Team}}"
+    "title": "Choose a new Goal for {teamName} {teamName, select, All {Teams} other {Team}}",
+    "categories": {
+      "delivery": "Delivery",
+      "code-quality": "Code Quality",
+      "ci-cd": "CI/CD"
+    }
   },
   "team-goals": {
     "title": "{teamName} Team Goals",
@@ -138,6 +143,7 @@
   },
   "standards": {
     "new": "New",
+    "comming-soon": "Soon",
     "start-improving-button-label": "Start Improving",
     "configure-button-label": "Configure",
     "save": "Save changes",
@@ -217,6 +223,22 @@
           "value": "{value, plural, =0 {line} one {# line} other {# lines}}"
         }
       }
+    },
+    "regular-production-deployments": {
+      "title": "Regular production deployments",
+      "description": "A high deployment frequency means delivering value to end users more quickly. Also, studies show that high functioning teams have higher deployment frequency than their peers."
+    },
+    "small-coding-tasks": {
+      "title": "Aim for small coding tasks",
+      "description": "Splitting tasks into small units means getting technical and functional feedbacks quicker. This allows to detect defective technical strategies or misunderstood specifications early."
+    },
+    "strong-test-coverage": {
+      "title": "Aim for strong test coverage",
+      "description": "Code coverage measures the effectiveness of your tests. Higher code coverage increases your chances of finding bugs and reduces the risk and cost of refactoring."
+    },
+    "short-deployment-time": {
+      "title": "Aim for short deployment time",
+      "description": "Having a fast deployment pipeline means you get quicker feedbacks on deployments problems. It also reduces the cost of deployment and allows you to deploy more often."
     }
   },
   "pull-requests-table": {

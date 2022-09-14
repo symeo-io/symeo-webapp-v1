@@ -29,17 +29,30 @@ function StandardCard({ standard, configured = false, sx }: StandardCardProps) {
         ...sx,
       }}
     >
-      <Typography variant="h3" sx={{ display: "flex", alignItems: "center" }}>
+      <Box sx={{ display: "flex", alignItems: "center" }}>
         {<IconComponent sx={{ marginRight: (theme) => theme.spacing(1) }} />}
-        {formatMessage({ id: `standards.${standard.code}.title` })}
-        <Status
-          label={formatMessage({
-            id: "standards.new",
-          })}
-          variant="success"
-          sx={{ marginLeft: (theme) => theme.spacing(1) }}
-        />
-      </Typography>
+        <Typography variant="h3" sx={{ display: "flex", alignItems: "center" }}>
+          {formatMessage({ id: `standards.${standard.code}.title` })}
+        </Typography>
+        {standard.new && (
+          <Status
+            label={formatMessage({
+              id: "standards.new",
+            })}
+            variant="success"
+            sx={{ marginLeft: (theme) => theme.spacing(1) }}
+          />
+        )}
+        {!standard.active && (
+          <Status
+            label={formatMessage({
+              id: "standards.comming-soon",
+            })}
+            variant="warning"
+            sx={{ marginLeft: (theme) => theme.spacing(1) }}
+          />
+        )}
+      </Box>
       <Typography
         variant="body1"
         sx={{
@@ -64,6 +77,7 @@ function StandardCard({ standard, configured = false, sx }: StandardCardProps) {
             })
           }
           variant={configured ? "outlined" : "contained"}
+          disabled={!standard.active}
         >
           {formatMessage({
             id: configured

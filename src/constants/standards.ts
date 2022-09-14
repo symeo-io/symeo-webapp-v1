@@ -4,10 +4,17 @@ import * as icons from "@mui/icons-material";
 import { PullRequestColumnName } from "components/organisms/TeamPullRequestList/TeamPullRequestList";
 import { PositiveTendency } from "components/atoms/Tendency/Tendency";
 
+export const standardCategories = ["delivery", "code-quality", "ci-cd"];
+export type StandardCategory = typeof standardCategories[number];
+
 export type Standard = {
   code: StandardCode;
+  category: StandardCategory;
   recommandedValue: number;
-  valueRange: [number, number];
+  valueRange: {
+    start: number;
+    end: number;
+  };
   valueStep: number;
   unit: string;
   new: boolean;
