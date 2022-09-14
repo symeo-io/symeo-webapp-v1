@@ -221,6 +221,7 @@
   },
   "pull-requests-table": {
     "title": "Team Pull Requests",
+    "empty-message": "No pull requests for the selected time period",
     "columns": {
       "vcs_repository": "Repo",
       "title": "Name",

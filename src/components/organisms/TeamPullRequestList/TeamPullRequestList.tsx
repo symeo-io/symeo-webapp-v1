@@ -204,6 +204,20 @@ function TeamPullRequestList({ columns, sx }: TeamPullRequestListProps) {
                   )}
                 </TableRow>
               ))}
+              {pullRequests.length === 0 && (
+                <TableRow>
+                  <TableCell
+                    colSpan={displayedColumns.length}
+                    sx={{ textAlign: "center" }}
+                  >
+                    <Typography variant="body2">
+                      {formatMessage({
+                        id: `pull-requests-table.empty-message`,
+                      })}
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
             <TableFooter>
               <TableRow>
