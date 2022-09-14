@@ -7,7 +7,10 @@ import { PositiveTendency } from "components/atoms/Tendency/Tendency";
 export type Standard = {
   code: StandardCode;
   recommandedValue: number;
-  valueRange: [number, number];
+  valueRange: {
+    start: number;
+    end: number;
+  };
   valueStep: number;
   unit: string;
   new: boolean;
