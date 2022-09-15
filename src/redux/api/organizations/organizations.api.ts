@@ -4,6 +4,7 @@ import {
   GetOrganizationUsersResponse,
   InviteUsersToOrganizationInput,
   InviteUsersToOrganizationResponse,
+  UpdateOrganizationSettingsInput,
 } from "redux/api/organizations/organizations.types";
 import { ResponseWithErrors } from "redux/api/errors.type";
 
@@ -83,6 +84,17 @@ const organizationsMutationApi = api.injectEndpoints({
         );
       },
     }),
+    updateOrganizationSettings: builder.mutation<
+      void,
+      UpdateOrganizationSettingsInput
+    >({
+      query: (input) => ({
+        url: `/api/v1/organization/settings`,
+        method: "PATCH",
+        body: input,
+      }),
+      invalidatesTags: ["OrganizationSettings"],
+    }),
   }),
 });
 
@@ -91,4 +103,5 @@ export const { useGetOrganizationUsersQuery, useGetOrganizationSettingsQuery } =
 export const {
   useDeleteUserFromOrganizationMutation,
   useInviteUserToOrganizationMutation,
+  useUpdateOrganizationSettingsMutation,
 } = organizationsMutationApi;

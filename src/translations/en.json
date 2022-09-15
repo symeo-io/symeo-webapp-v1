@@ -137,7 +137,9 @@
         "tags": {
           "title": "Detect my releases using tags",
           "message": "Please specify a regular expression to identify your release tags"
-        }
+        },
+        "reset": "Restore Default",
+        "save": "Save"
       }
     }
   },

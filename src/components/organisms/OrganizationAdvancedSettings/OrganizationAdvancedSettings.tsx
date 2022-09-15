@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Box, Divider, Typography } from "@mui/material";
 import { useIntl } from "react-intl";
 import { PropsWithSx } from "types/PropsWithSx";
 import RadioWithTextField from "components/molecules/RadioWithTextField/RadioWithTextField";
 import { OrganizationSettings } from "redux/api/organizations/organizations.types";
+import Button from "components/atoms/Button/Button";
+import { useUpdateOrganizationSettingsMutation } from "redux/api/organizations/organizations.api";
 
 export type ReleaseDetectionStrategy = "branch" | "tags";
 
@@ -19,6 +21,8 @@ function OrganizationAdvancedSettings({
   settings,
 }: OrganizationMembersProps) {
   const { formatMessage } = useIntl();
+  const [updateOrganizationSettings, { isLoading }] =
+    useUpdateOrganizationSettingsMutation();
 
   const deployDetectionSettings = settings.delivery.deploy_detection;
 
@@ -34,6 +38,30 @@ function OrganizationAdvancedSettings({
   const [tagsValue, setTagsValue] = useState<string>(
     deployDetectionSettings.tag_regex ?? TAGS_REGEX_DEFAULT_VALUE
   );
+
+  const handleReset = useCallback(() => {
+    setBranchValue(BRANCH_REGEX_DEFAULT_VALUE);
+    setTagsValue(TAGS_REGEX_DEFAULT_VALUE);
+  }, []);
+
+  const handleSave = useCallback(() => {
+    updateOrganizationSettings({
+      settings: {
+        delivery: {
+          deploy_detection: {
+            pull_request_merged_on_branch_regex:
+              selectedReleaseDetection === "branch" ? branchValue : null,
+            tag_regex: selectedReleaseDetection === "tags" ? tagsValue : null,
+          },
+        },
+      },
+    });
+  }, [
+    branchValue,
+    selectedReleaseDetection,
+    tagsValue,
+    updateOrganizationSettings,
+  ]);
 
   return (
     <Box sx={sx}>
@@ -91,6 +119,28 @@ function OrganizationAdvancedSettings({
             fieldValue={tagsValue}
             setFieldValue={setTagsValue}
           />
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "right",
+            marginTop: (theme) => theme.spacing(2),
+          }}
+        >
+          <Button variant="outlined" onClick={handleReset}>
+            {formatMessage({
+              id: "organization.advanced.releases-detection.reset",
+            })}
+          </Button>
+          <Button
+            sx={{ marginLeft: (theme) => theme.spacing(1) }}
+            onClick={handleSave}
+            loading={isLoading}
+          >
+            {formatMessage({
+              id: "organization.advanced.releases-detection.save",
+            })}
+          </Button>
         </Box>
       </Box>
     </Box>

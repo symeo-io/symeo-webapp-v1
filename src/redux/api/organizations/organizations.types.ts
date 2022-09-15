@@ -19,6 +19,10 @@ export type OrganizationSettings = {
   delivery: DeliverySettings;
 };
 
+export type UpdateOrganizationSettingsInput = {
+  settings: OrganizationSettings;
+};
+
 export type GetOrganizationSettingsResponse = ResponseWithErrors & {
   settings: OrganizationSettings;
 };
