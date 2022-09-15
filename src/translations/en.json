@@ -68,10 +68,24 @@
     "value-minutes": "{value, number, ::.##} {value, plural, =0 {minute} one {minute} other {minutes}}",
     "unknown": "Unknown",
     "average-subtitle": "Avg. lead time",
-    "coding": "Coding",
-    "review-lag": "Waiting for review",
-    "review": "Review",
-    "deploy": "Deploy",
+    "coding": {
+      "title": "Coding",
+      "tooltip": "Computed as the time between the first and the last commit (before any pull request event)."
+    },
+    "review-lag": {
+      "title": "Waiting for review",
+      "tooltip": "Computed as the time between the last commit and the first pull request review event (comment from another dev for example)."
+    },
+    "review": {
+      "title": "Review",
+      "tooltip": "Computed as the time between the first pull request review event and the approval of the pull request."
+    },
+    "deploy": {
+      "title": "Deploy",
+      "tooltip-branch": "Computed as the time between the pull request approval and the moment the branch commits arrive on the production branch with pattern \"{branchPattern}\".",
+      "tooltip-tags": "Computed as the time between the pull request approval and the moment the branch commits are pushed on a tag matching \"{tagsPattern}\"."
+    },
+    "configure-link-label": "configure",
     "improve-button-label": "Improve"
   },
   "organization": {

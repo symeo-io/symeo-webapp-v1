@@ -55,7 +55,7 @@ function Tendency({
       <Tooltip
         title={
           <Box sx={{ textAlign: "center" }}>
-            <Typography component="span" sx={{ fontSize: "10px" }}>
+            <Typography component="span" sx={{ fontSize: "12px" }}>
               {dayjs(tendencyDates.current.startDate).format("MMM D")}
               {" - "}
               {dayjs(tendencyDates.current.endDate).format("MMM D")}

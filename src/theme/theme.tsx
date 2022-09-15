@@ -446,5 +446,16 @@ export const theme = createTheme({
         },
       },
     },
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          background: "white",
+          color: "black",
+          border: `1px solid ${colors.secondary.borders}`,
+          fontWeight: 300,
+          fontSize: "0.875rem",
+        },
+      },
+    },
   },
 });

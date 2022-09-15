@@ -12,6 +12,9 @@ import { useCurrentUser } from "hooks/useCurrentUser";
 import { useSelectedDateRange } from "hooks/useSelectedDateRange";
 import { useDataStatus } from "hooks/useDataStatus";
 import dayjs from "dayjs";
+import { Link } from "react-router-dom";
+import { colors } from "theme/colors";
+import { useGetOrganizationSettingsQuery } from "redux/api/organizations/organizations.api";
 
 const breakdownColorsLimits = {
   coding_time: {
@@ -98,6 +101,7 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
   const { selectedTeam } = useCurrentUser();
   const [dateRange] = useSelectedDateRange();
   const { isProcessingInitialJob } = useDataStatus();
+  const { data: organizationSettingsData } = useGetOrganizationSettingsQuery();
 
   const onClick = useCallback(() => navigate("teamGoalsLibrary"), [navigate]);
 
@@ -164,7 +168,7 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
           <Box sx={{ display: "flex", padding: (theme) => theme.spacing(3) }}>
             <LeadTimeBreakdownSection
               loading={isLoadingLeadTime}
-              label={formatMessage({ id: "lead-time.coding" })}
+              label={formatMessage({ id: "lead-time.coding.title" })}
               value={buildValueDisplay(
                 leadTimeData?.lead_time?.coding_time.value,
                 formatMessage
@@ -181,10 +185,13 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
                 label: formatMessage({ id: "lead-time.improve-button-label" }),
                 onClick,
               }}
+              tooltipContent={formatMessage({
+                id: "lead-time.coding.tooltip",
+              })}
             />
             <LeadTimeBreakdownSection
               loading={isLoadingLeadTime}
-              label={formatMessage({ id: "lead-time.review-lag" })}
+              label={formatMessage({ id: "lead-time.review-lag.title" })}
               value={buildValueDisplay(
                 leadTimeData?.lead_time?.review_lag.value,
                 formatMessage
@@ -201,10 +208,13 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
                 label: formatMessage({ id: "lead-time.improve-button-label" }),
                 onClick,
               }}
+              tooltipContent={formatMessage({
+                id: "lead-time.review-lag.tooltip",
+              })}
             />
             <LeadTimeBreakdownSection
               loading={isLoadingLeadTime}
-              label={formatMessage({ id: "lead-time.review" })}
+              label={formatMessage({ id: "lead-time.review.title" })}
               value={buildValueDisplay(
                 leadTimeData?.lead_time?.review_time.value,
                 formatMessage
@@ -221,10 +231,13 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
                 label: formatMessage({ id: "lead-time.improve-button-label" }),
                 onClick,
               }}
+              tooltipContent={formatMessage({
+                id: "lead-time.review.tooltip",
+              })}
             />
             <LeadTimeBreakdownSection
               loading={isLoadingLeadTime}
-              label={formatMessage({ id: "lead-time.deploy" })}
+              label={formatMessage({ id: "lead-time.deploy.title" })}
               value={buildValueDisplay(
                 leadTimeData?.lead_time?.time_to_deploy.value,
                 formatMessage
@@ -241,6 +254,34 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
                 label: formatMessage({ id: "lead-time.improve-button-label" }),
                 onClick,
               }}
+              tooltipContent={
+                <Box>
+                  {formatMessage(
+                    {
+                      id: organizationSettingsData?.settings.delivery
+                        .deploy_detection.pull_request_merged_on_branch_regex
+                        ? "lead-time.deploy.tooltip-branch"
+                        : "lead-time.deploy.tooltip-tags",
+                    },
+                    {
+                      branchPattern:
+                        organizationSettingsData?.settings.delivery
+                          .deploy_detection.pull_request_merged_on_branch_regex,
+                      tagsPattern:
+                        organizationSettingsData?.settings.delivery
+                          .deploy_detection.tag_regex,
+                    }
+                  )}{" "}
+                  <Link
+                    to="organization/advanced"
+                    style={{ color: colors.primary.text }}
+                  >
+                    {formatMessage({
+                      id: "lead-time.configure-link-label",
+                    })}
+                  </Link>
+                </Box>
+              }
             />
           </Box>
         </>
