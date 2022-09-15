@@ -1,12 +1,13 @@
+import React, { useMemo } from "react";
 import { PropsWithSx } from "types/PropsWithSx";
-import { Box, Typography } from "@mui/material";
+import { Box, Tooltip, TooltipProps, Typography } from "@mui/material";
 import { colors } from "theme/colors";
-import { useMemo } from "react";
 import LeadTimeBreakdownTile from "components/molecules/LeadTimeBreakdownSection/LeadTimeBreakdownTile";
 import LeadTimeBreakdownArrow from "components/molecules/LeadTimeBreakdownSection/LeadTimeBreakdownArrow";
 import LeadTimeAverageValue from "components/molecules/LeadTimeAverageValue/LeadTimeAverageValue";
 import Button from "components/atoms/Button/Button";
 import { TendencyProps } from "components/atoms/Tendency/Tendency";
+import InfoIcon from "@mui/icons-material/InfoOutlined";
 
 export type LeadTimeBreakdownSectionProps = PropsWithSx & {
   label: string;
@@ -19,6 +20,7 @@ export type LeadTimeBreakdownSectionProps = PropsWithSx & {
     onClick: () => void;
   };
   loading?: boolean;
+  tooltipContent?: TooltipProps["title"];
 };
 
 function buildBackgroundColor(color: "green" | "orange" | "red") {
@@ -41,6 +43,7 @@ function LeadTimeBreakdownSection({
   tendency,
   tendencyDates,
   action,
+  tooltipContent,
   loading = false,
   sx,
 }: LeadTimeBreakdownSectionProps) {
@@ -52,9 +55,23 @@ function LeadTimeBreakdownSection({
   return (
     <Box sx={{ display: "flex", ...sx }}>
       <Box sx={{ display: "flex", flexDirection: "column", minWidth: "150px" }}>
-        <Typography sx={{ fontSize: "1.5rem" }} color="secondary">
-          {label}
-        </Typography>
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Typography sx={{ fontSize: "1.5rem" }} color="secondary">
+            {label}
+          </Typography>
+          {tooltipContent && (
+            <Tooltip title={tooltipContent}>
+              <InfoIcon
+                color="secondary"
+                sx={{
+                  marginLeft: (theme) => theme.spacing(1),
+                  cursor: "pointer",
+                  fontSize: "1.3rem",
+                }}
+              />
+            </Tooltip>
+          )}
+        </Box>
         <Box sx={{ flex: 1 }}>
           <LeadTimeBreakdownTile background={background} />
           <Box
