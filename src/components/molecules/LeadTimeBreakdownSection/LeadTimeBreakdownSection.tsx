@@ -66,6 +66,7 @@ function LeadTimeBreakdownSection({
                 sx={{
                   marginLeft: (theme) => theme.spacing(1),
                   cursor: "pointer",
+                  fontSize: "1.3rem",
                 }}
               />
             </Tooltip>

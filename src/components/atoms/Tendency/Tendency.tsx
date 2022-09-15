@@ -2,7 +2,6 @@ import Status from "components/atoms/Status/Status";
 import React, { useMemo } from "react";
 import { PropsWithSx } from "types/PropsWithSx";
 import { Box, Tooltip, Typography } from "@mui/material";
-import InfoIcon from "@mui/icons-material/InfoOutlined";
 import dayjs from "dayjs";
 
 export type PositiveTendency = "up" | "down";
@@ -51,7 +50,6 @@ function Tendency({
 
   const labelComponent = tendencyDates ? (
     <Box sx={{ display: "flex", alignItems: "center" }}>
-      {label}
       <Tooltip
         title={
           <Box sx={{ textAlign: "center" }}>
@@ -68,13 +66,7 @@ function Tendency({
           </Box>
         }
       >
-        <InfoIcon
-          sx={{
-            cursor: "pointer",
-            marginLeft: (theme) => theme.spacing(0.5),
-            fontSize: "18px",
-          }}
-        />
+        <Box>{label}</Box>
       </Tooltip>
     </Box>
   ) : (

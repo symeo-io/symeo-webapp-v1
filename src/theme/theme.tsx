@@ -450,10 +450,12 @@ export const theme = createTheme({
       styleOverrides: {
         tooltip: {
           background: "white",
-          color: "black",
+          color: colors.secondary.text,
           border: `1px solid ${colors.secondary.borders}`,
           fontWeight: 300,
-          fontSize: "0.875rem",
+          fontSize: "0.9rem",
+          lineHeight: "1.2rem",
+          boxShadow: "0px 0px 12px -4px rgba(0,0,0,0.75)",
         },
       },
     },
