@@ -1,8 +1,10 @@
 import { api } from "../api";
 import {
+  GetOrganizationSettingsResponse,
   GetOrganizationUsersResponse,
   InviteUsersToOrganizationInput,
   InviteUsersToOrganizationResponse,
+  UpdateOrganizationSettingsInput,
 } from "redux/api/organizations/organizations.types";
 import { ResponseWithErrors } from "redux/api/errors.type";
 
@@ -22,6 +24,15 @@ export const organizationsQueryApi = api.injectEndpoints({
               "User",
             ]
           : ["User"],
+    }),
+    getOrganizationSettings: builder.query<
+      GetOrganizationSettingsResponse,
+      void
+    >({
+      query: () => ({
+        url: `/api/v1/organization/settings`,
+      }),
+      providesTags: ["OrganizationSettings"],
     }),
   }),
 });
@@ -73,11 +84,24 @@ const organizationsMutationApi = api.injectEndpoints({
         );
       },
     }),
+    updateOrganizationSettings: builder.mutation<
+      void,
+      UpdateOrganizationSettingsInput
+    >({
+      query: (input) => ({
+        url: `/api/v1/organization/settings`,
+        method: "PATCH",
+        body: input,
+      }),
+      invalidatesTags: ["OrganizationSettings"],
+    }),
   }),
 });
 
-export const { useGetOrganizationUsersQuery } = organizationsQueryApi;
+export const { useGetOrganizationUsersQuery, useGetOrganizationSettingsQuery } =
+  organizationsQueryApi;
 export const {
   useDeleteUserFromOrganizationMutation,
   useInviteUserToOrganizationMutation,
+  useUpdateOrganizationSettingsMutation,
 } = organizationsMutationApi;

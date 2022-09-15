@@ -79,6 +79,7 @@
     "members-tab-label": "Members",
     "teams-tab-label": "Teams",
     "integrations-tab-label": "Integrations",
+    "advanced-tab-label": "Advanced",
     "members": {
       "title": "Manage your organization's members",
       "invite-button-label": "Invite new members",
@@ -123,6 +124,23 @@
     "integrations": {
       "title": "Manage your organization's integrations",
       "code-repositories-provider-title": "code repositories provider"
+    },
+    "advanced": {
+      "title": "Advanced settings",
+      "releases-detection": {
+        "title": "Releases detection",
+        "message": "Select the way you would like Symeo to detect releases.",
+        "branch": {
+          "title": "Detect my releases by Pull Requests to a dedicated branch",
+          "message": "Please specify a regular expression to identify your release branch"
+        },
+        "tags": {
+          "title": "Detect my releases using tags",
+          "message": "Please specify a regular expression to identify your release tags"
+        },
+        "reset": "Restore Default",
+        "save": "Save"
+      }
     }
   },
   "team-goals-library": {
