@@ -1,5 +1,6 @@
 import { api } from "../api";
 import {
+  GetOrganizationSettingsResponse,
   GetOrganizationUsersResponse,
   InviteUsersToOrganizationInput,
   InviteUsersToOrganizationResponse,
@@ -22,6 +23,15 @@ export const organizationsQueryApi = api.injectEndpoints({
               "User",
             ]
           : ["User"],
+    }),
+    getOrganizationSettings: builder.query<
+      GetOrganizationSettingsResponse,
+      void
+    >({
+      query: () => ({
+        url: `/api/v1/organization/settings`,
+      }),
+      providesTags: ["OrganizationSettings"],
     }),
   }),
 });
@@ -76,7 +86,8 @@ const organizationsMutationApi = api.injectEndpoints({
   }),
 });
 
-export const { useGetOrganizationUsersQuery } = organizationsQueryApi;
+export const { useGetOrganizationUsersQuery, useGetOrganizationSettingsQuery } =
+  organizationsQueryApi;
 export const {
   useDeleteUserFromOrganizationMutation,
   useInviteUserToOrganizationMutation,

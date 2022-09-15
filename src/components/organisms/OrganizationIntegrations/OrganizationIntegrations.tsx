@@ -5,14 +5,9 @@ import { PropsWithSx } from "types/PropsWithSx";
 import gitHubLogo from "components/molecules/IntegrationPanel/github.svg";
 import IntegrationPanel from "components/molecules/IntegrationPanel/IntegrationPanel";
 
-export type OrganizationMembersProps = PropsWithSx & {
-  organizationName: string;
-};
+export type OrganizationMembersProps = PropsWithSx;
 
-function OrganizationIntegrations({
-  organizationName,
-  sx,
-}: OrganizationMembersProps) {
+function OrganizationIntegrations({ sx }: OrganizationMembersProps) {
   const { formatMessage } = useIntl();
   return (
     <Box sx={sx}>

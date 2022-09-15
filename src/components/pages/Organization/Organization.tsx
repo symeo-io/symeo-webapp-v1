@@ -5,10 +5,12 @@ import { useCurrentUser } from "hooks/useCurrentUser";
 import OrganizationMembers from "components/organisms/OrganizationMembers/OrganizationMembers";
 import OrganizationTeams from "components/organisms/OrganizationTeams/OrganizationTeams";
 import OrganizationIntegrations from "components/organisms/OrganizationIntegrations/OrganizationIntegrations";
+import OrganizationAdvancedSettings from "components/organisms/OrganizationAdvancedSettings/OrganizationAdvancedSettings";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "hooks/useNavigate";
 import TabPanel from "@mui/lab/TabPanel";
 import { TabContext, TabList } from "@mui/lab";
+import { useGetOrganizationSettingsQuery } from "redux/api/organizations/organizations.api";
 
 function Organization() {
   const { formatMessage } = useIntl();
@@ -19,6 +21,8 @@ function Organization() {
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     navigate("organization", { params: { tab: newValue } });
   };
+
+  const { data: settingsData } = useGetOrganizationSettingsQuery();
 
   return (
     <Box
@@ -57,6 +61,10 @@ function Organization() {
             label={formatMessage({ id: "organization.integrations-tab-label" })}
             value="integrations"
           />
+          <Tab
+            label={formatMessage({ id: "organization.advanced-tab-label" })}
+            value="advanced"
+          />
         </TabList>
         <TabPanel value="members">
           <OrganizationMembers
@@ -69,9 +77,12 @@ function Organization() {
           />
         </TabPanel>
         <TabPanel value="integrations">
-          <OrganizationIntegrations
-            organizationName={currentUser?.organization?.name ?? ""}
-          />
+          <OrganizationIntegrations />
+        </TabPanel>
+        <TabPanel value="advanced">
+          {settingsData && (
+            <OrganizationAdvancedSettings settings={settingsData.settings} />
+          )}
         </TabPanel>
       </TabContext>
     </Box>
