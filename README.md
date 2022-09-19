@@ -155,6 +155,10 @@ Frontend is served using an OVH DNS, AWS Cloudfront CDN and an AWS S3 bucket:
 
 ![](./documentation/infrastructure.png)
 
+### Create a new environment
+
+Follow [this documentation](./documentation/new-environment.md).
+
 ### Infrastructure as code
 
 The infrastructure is created and deployed using the [AWS CloudFormation](https://aws.amazon.com/fr/cloudformation/) IaC framework. Scripts are located in the [.aws](./.aws) folder.
