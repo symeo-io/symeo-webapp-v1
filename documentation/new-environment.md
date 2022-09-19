@@ -4,6 +4,8 @@
 
 The build infrastructure scripts and pipeline need several env variables to run:
 
+- `AWS_ACCESS_KEY_ID`: The access key id for the AWS IAM user which will deploy
+- `AWS_SECRET_ACCESS_KEY`: The secret access key for the AWS IAM user which will deploy
 - `AWS_REGION`: The aws region to deploy to (here we use the one for Paris: eu-west-3)
 - `ENVIRONMENT`: The name of the env (staging, demo or production for example)
 - `PREFIX_URL_FRONTEND`: The prefix for the frontend subdomain (app-staging, app-demo or app)
