@@ -8,7 +8,7 @@ The build infrastructure scripts and pipeline need several env variables to run:
 - `ENVIRONMENT`: The name of the env (staging, demo or production for example)
 - `PREFIX_URL_FRONTEND`: The prefix for the frontend subdomain (app-staging, app-demo or app)
 - `DOMAIN`: The domain name to use (here symeo.io).
-- `ACM_ARN`: The ARN for the AWS certificate, corresponding to the chosen domain. This can be found in the [AWS console](https://eu-west-3.console.aws.amazon.com/acm/home?region=eu-west-3#/certificates/list):
+- `ACM_ARN`: The ARN for the AWS certificate (in us-east-1 region), corresponding to the chosen domain. This can be found in the [AWS console](https://us-east-1.console.aws.amazon.com/acm/home?region=us-east-1#/certificates/list):
 
 ![](./acm-1.png)
 ![](./acm-2.png)
