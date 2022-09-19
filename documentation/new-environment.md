@@ -1,6 +1,6 @@
 # How to create a new environment
 
-## Gather necessary environment variables
+## Gather necessary environment variables for infrastructure
 
 The build infrastructure scripts and pipeline need several env variables to run:
 
@@ -43,6 +43,18 @@ Once the circleci configuration is up-to-date, tag your commit with the pattern 
 - `git push origin infrastructure-demo-01-01-1970-1` for example
 
 This will trigger the infrastructure build on circleci
+
+## Create the new .env file
+
+- Duplicate the `.env.example` file and rename it with your new env name (`.env.demo` for example)
+- Fill the necessary env variables:
+  - `REACT_APP_AUTH0_DOMAIN`: In [auth0 Console](https://manage.auth0.com/dashboard/eu/symeo-demo/), under `Applications` > `Applications` > `Symeo-webapp` > `Setting` > `Domain`
+  - `REACT_APP_AUTH0_CLIENT_ID`: In [auth0 Console](https://manage.auth0.com/dashboard/eu/symeo-demo/), under `Applications` > `Applications` > `Symeo-webapp` > `Setting` > `Client ID`
+  - `REACT_APP_AUTH0_AUDIENCE`: In [auth0 Console](https://manage.auth0.com/dashboard/eu/symeo-demo/), under `Applications` > `APIs` > `Symeo-backend` > `API Audience`
+  - `REACT_APP_API_URL`: The url of your backend (https://api-demo.symeo.io for example)
+  - `REACT_APP_GITHUB_APP_NAME`: The name of your [GitHub App](https://github.com/organizations/symeo-io/settings/apps) (Symeo-demo-io for example)
+  - `REACT_APP_DATADOG_APPLICATION_ID`: Go to [Datadog rum section](https://app.datadoghq.eu/rum/list) and for `catlean-webapp`, select `Copy App ID`
+  - `REACT_APP_DATADOG_CLIENT_TOKEN`: Go to [Datadog client tokens](https://app.datadoghq.eu/organization-settings/client-tokens) and for `[RUM] catlean-webapp`, copy the Client Token
 
 ## Deploy frontend
 
