@@ -1,24 +1,23 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useGetJobStatusQuery } from "redux/api/jobs/jobs.api";
+import { useGetVcsDataCollectionStatusQuery } from "redux/api/jobs/jobs.api";
 import { api, dataTagTypes } from "redux/api/api";
 import dayjs from "dayjs";
 import { useDispatch } from "react-redux";
-
-const INITIAL_PROCESSING_JOB_CODE =
-  "COLLECT_PULL_REQUESTS_FOR_ORGANIZATION_JOB";
+import { useCurrentUser } from "hooks/useCurrentUser";
 
 export const useDataStatus = () => {
   const dispatch = useDispatch();
+  const { selectedTeam } = useCurrentUser();
   const [pollingInterval, setPollingInterval] = useState<number | undefined>(
     5000
   );
   const previousLastUpdateDate = useRef<Date | undefined>(undefined);
 
-  const { data: jobStatusData, isLoading } = useGetJobStatusQuery(
+  const { data: jobStatusData, isLoading } = useGetVcsDataCollectionStatusQuery(
     {
-      jobCode: INITIAL_PROCESSING_JOB_CODE,
+      teamId: selectedTeam?.id ?? "",
     },
-    { pollingInterval }
+    { pollingInterval, skip: !selectedTeam }
   );
   const isProcessingInitialJob = useMemo(
     () =>

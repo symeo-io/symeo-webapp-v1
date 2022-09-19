@@ -1,17 +1,23 @@
 import { api } from "redux/api/api";
-import { JobStatusInput, JobStatusResponse } from "redux/api/jobs/jobs.types";
+import {
+  VcsDataCollectionStatusInput,
+  VcsDataCollectionStatusResponse,
+} from "redux/api/jobs/jobs.types";
 
 export const jobsQueryApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getJobStatus: builder.query<JobStatusResponse, JobStatusInput>({
-      query: ({ jobCode }) => ({
-        url: `/api/v1/jobs/status`,
+    getVcsDataCollectionStatus: builder.query<
+      VcsDataCollectionStatusResponse,
+      VcsDataCollectionStatusInput
+    >({
+      query: ({ teamId }) => ({
+        url: `/api/v1/jobs/vcs-data-collection/status`,
         params: {
-          job_code: jobCode,
+          team_id: teamId,
         },
       }),
     }),
   }),
 });
 
-export const { useGetJobStatusQuery } = jobsQueryApi;
+export const { useGetVcsDataCollectionStatusQuery } = jobsQueryApi;

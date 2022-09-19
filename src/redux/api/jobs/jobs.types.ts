@@ -6,13 +6,14 @@ export type Job = {
   status: "CREATED" | "STARTED" | "FAILED" | "FINISHED";
   creation_date: string;
   end_date: string;
+  progression_percentage: number;
 };
 
-export type JobStatusInput = {
-  jobCode: string;
+export type VcsDataCollectionStatusInput = {
+  teamId: string;
 };
 
-export type JobStatusResponse = ResponseWithErrors & {
+export type VcsDataCollectionStatusResponse = ResponseWithErrors & {
   jobs: {
     current_job: Job;
     previous_job?: Job;
