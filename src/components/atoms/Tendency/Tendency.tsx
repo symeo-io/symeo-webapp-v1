@@ -73,7 +73,13 @@ function Tendency({
     label
   );
 
-  return <Status sx={{ ...sx }} label={labelComponent} variant={variant} />;
+  return (
+    <Status
+      sx={{ display: "inline-block", ...sx }}
+      label={labelComponent}
+      variant={variant}
+    />
+  );
 }
 
 export default Tendency;
