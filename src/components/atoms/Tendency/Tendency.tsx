@@ -1,9 +1,10 @@
-import Status from "components/atoms/Status/Status";
 import React, { useMemo } from "react";
 import { PropsWithSx } from "types/PropsWithSx";
 import { Box, Tooltip, Typography } from "@mui/material";
 import dayjs from "dayjs";
-
+import { colors } from "theme/colors";
+import TrendingDownIcon from "@mui/icons-material/TrendingDown";
+import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 export type PositiveTendency = "up" | "down";
 
 export type TendencyProps = PropsWithSx & {
@@ -43,42 +44,61 @@ function Tendency({
   sx,
 }: TendencyProps) {
   const label = useMemo(() => buildTendencyLabel(tendency), [tendency]);
-  const variant = useMemo(
+  const tendencyColor = useMemo(
     () => buildTendencyColor(tendency, positiveTendency),
     [tendency, positiveTendency]
   );
+  const TendencyIcon = tendency > 0 ? TrendingUpIcon : TrendingDownIcon;
 
-  const labelComponent = tendencyDates ? (
-    <Box sx={{ display: "flex", alignItems: "center" }}>
-      <Tooltip
-        title={
-          <Box sx={{ textAlign: "center" }}>
-            <Typography component="span" sx={{ fontSize: "12px" }}>
-              {dayjs(tendencyDates.current.startDate).format("MMM D")}
-              {" - "}
-              {dayjs(tendencyDates.current.endDate).format("MMM D")}
-              <br />
-              {" vs. "}
-              {dayjs(tendencyDates.previous.startDate).format("MMM D")}
-              {" - "}
-              {dayjs(tendencyDates.previous.endDate).format("MMM D")}
-            </Typography>
-          </Box>
-        }
+  const content = (
+    <Box
+      sx={{
+        color: colors[tendencyColor].text,
+        display: "flex",
+        alignItems: "center",
+        padding: (theme) => theme.spacing(0.25),
+        ...sx,
+      }}
+    >
+      <Box
+        sx={{
+          background: colors[tendencyColor].surface,
+          borderRadius: "50%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "16px",
+          width: "16px",
+          marginRight: (theme) => theme.spacing(0.5),
+        }}
       >
-        <Box>{label}</Box>
-      </Tooltip>
+        <TendencyIcon sx={{ fontSize: "12px" }} />
+      </Box>
+      <Typography variant="body1">{label}</Typography>
     </Box>
-  ) : (
-    label
   );
 
-  return (
-    <Status
-      sx={{ display: "inline-block", ...sx }}
-      label={labelComponent}
-      variant={variant}
-    />
+  return tendencyDates ? (
+    <Tooltip
+      title={
+        <Box sx={{ textAlign: "center" }}>
+          <Typography component="span" sx={{ fontSize: "12px" }}>
+            {dayjs(tendencyDates.current.startDate).format("MMM D")}
+            {" - "}
+            {dayjs(tendencyDates.current.endDate).format("MMM D")}
+            <br />
+            {" vs. "}
+            {dayjs(tendencyDates.previous.startDate).format("MMM D")}
+            {" - "}
+            {dayjs(tendencyDates.previous.endDate).format("MMM D")}
+          </Typography>
+        </Box>
+      }
+    >
+      {content}
+    </Tooltip>
+  ) : (
+    content
   );
 }
 
