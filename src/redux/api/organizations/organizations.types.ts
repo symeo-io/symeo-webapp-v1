@@ -16,12 +16,11 @@ export type DeliverySettings = {
 };
 
 export type OrganizationSettings = {
+  id: string;
   delivery: DeliverySettings;
 };
 
-export type UpdateOrganizationSettingsInput = {
-  settings: OrganizationSettings;
-};
+export type UpdateOrganizationSettingsInput = OrganizationSettings;
 
 export type GetOrganizationSettingsResponse = ResponseWithErrors & {
   settings: OrganizationSettings;

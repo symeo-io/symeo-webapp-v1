@@ -46,19 +46,19 @@ function OrganizationAdvancedSettings({
 
   const handleSave = useCallback(() => {
     updateOrganizationSettings({
-      settings: {
-        delivery: {
-          deploy_detection: {
-            pull_request_merged_on_branch_regex:
-              selectedReleaseDetection === "branch" ? branchValue : null,
-            tag_regex: selectedReleaseDetection === "tags" ? tagsValue : null,
-          },
+      id: settings.id,
+      delivery: {
+        deploy_detection: {
+          pull_request_merged_on_branch_regex:
+            selectedReleaseDetection === "branch" ? branchValue : null,
+          tag_regex: selectedReleaseDetection === "tags" ? tagsValue : null,
         },
       },
     });
   }, [
     branchValue,
     selectedReleaseDetection,
+    settings.id,
     tagsValue,
     updateOrganizationSettings,
   ]);
