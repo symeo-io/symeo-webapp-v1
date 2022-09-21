@@ -209,10 +209,12 @@
       },
       "percent": {
         "value": "{value}%",
+        "unit": "%",
         "subtitle": "PRs meeting goal"
       },
       "average": {
         "value": "{value} days",
+        "unit": "days",
         "subtitle": "Avg. time to merge"
       },
       "histogram": {
@@ -240,10 +242,12 @@
       },
       "percent": {
         "value": "{value}%",
+        "unit": "%",
         "subtitle": "PRs meeting goal"
       },
       "average": {
         "value": "{value} lines",
+        "unit": "lines",
         "subtitle": "Avg. number of lines per PR"
       },
       "histogram": {

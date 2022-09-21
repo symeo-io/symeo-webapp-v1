@@ -4,13 +4,13 @@ import React from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "hooks/useNavigate";
 import { Standard } from "constants/standards";
-import { Box, Card, Typography } from "@mui/material";
+import { Box, Card, Divider, Typography } from "@mui/material";
 import { useGetMetricsQuery } from "redux/api/goals/metrics/metrics.api";
 import dayjs from "dayjs";
 import { useSelectedDateRange } from "hooks/useSelectedDateRange";
 import { useDataStatus } from "hooks/useDataStatus";
 import { useCurrentUser } from "hooks/useCurrentUser";
-import Metric from "components/molecules/Metric/Metric";
+import TeamGoalMetric from "components/organisms/TeamGoalMetric/TeamGoalMetric";
 import { PositiveTendency } from "components/atoms/Tendency/Tendency";
 
 export type TeamGoalDashboardPanelProps = PropsWithSx & {
@@ -22,6 +22,8 @@ function getMetricStatusForPercentage(value: number) {
   if (value === 100) return "success";
   if (value >= 80) return "warning";
   if (value < 80) return "error";
+
+  return "success";
 }
 
 function getMetricStatusForAverage(
@@ -36,6 +38,8 @@ function getMetricStatusForAverage(
   if (positiveTendency === "down") {
     return value <= limit ? "success" : "error";
   }
+
+  return "success";
 }
 
 function TeamGoalDashboardPanel({
@@ -89,10 +93,7 @@ function TeamGoalDashboardPanel({
     >
       <Box
         sx={{
-          display: "flex",
-          justifyContent: "space-between",
           width: "100%",
-          alignItems: "center",
           textAlign: "center",
         }}
       >
@@ -108,58 +109,46 @@ function TeamGoalDashboardPanel({
           sx={{
             marginTop: (theme) => theme.spacing(4),
             display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            paddingX: (theme) => theme.spacing(1),
-            paddingBottom: (theme) => theme.spacing(3),
-
-            "& .metric-root": {
-              width: "100%",
-              "& .metric-container": {
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                flex: 1,
-              },
-
-              "& .value": {
-                fontSize: "1.4rem",
-              },
-            },
+            flexDirection: "row",
+            justifyContent: "space-around",
           }}
         >
-          <Metric
-            value={formatMessage(
-              { id: `standards.${standard.code}.average.value` },
-              { value: metricsData.metrics.average.value }
-            )}
-            tendency={metricsData.metrics.average.tendency_percentage}
-            tendencyDates={tendencyDates}
-            positiveTendency="down"
-            subtitle={formatMessage({
-              id: `standards.${standard.code}.average.subtitle`,
-            })}
+          <TeamGoalMetric
+            sx={{ width: "150px" }}
             status={getMetricStatusForAverage(
               metricsData.metrics.average.value,
               goal.value,
               standard.positiveTendency
             )}
-          />
-          <Metric
-            sx={{ marginTop: (theme) => theme.spacing(6) }}
-            value={formatMessage(
-              { id: `standards.${standard.code}.percent.value` },
-              { value: metricsData.metrics.meeting_goal.value }
-            )}
-            tendency={metricsData.metrics.meeting_goal.tendency_percentage}
-            tendencyDates={tendencyDates}
-            positiveTendency="up"
             subtitle={formatMessage({
-              id: `standards.${standard.code}.percent.subtitle`,
+              id: `standards.${standard.code}.average.subtitle`,
             })}
+            value={metricsData.metrics.average.value}
+            unit={formatMessage({
+              id: `standards.${standard.code}.average.unit`,
+            })}
+            tendencyPercentage={metricsData.metrics.average.tendency_percentage}
+            positiveTendency={standard.positiveTendency}
+            tendencyDates={tendencyDates}
+          />
+          <Divider orientation="vertical" sx={{ height: "auto" }} />
+          <TeamGoalMetric
+            sx={{ width: "150px" }}
             status={getMetricStatusForPercentage(
               metricsData.metrics.meeting_goal.value
             )}
+            subtitle={formatMessage({
+              id: `standards.${standard.code}.percent.subtitle`,
+            })}
+            value={metricsData.metrics.meeting_goal.value}
+            unit={formatMessage({
+              id: `standards.${standard.code}.percent.unit`,
+            })}
+            tendencyPercentage={
+              metricsData.metrics.meeting_goal.tendency_percentage
+            }
+            positiveTendency="up"
+            tendencyDates={tendencyDates}
           />
         </Box>
       )}
