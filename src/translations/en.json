@@ -94,6 +94,10 @@
   "testing": {
     "coverage": {
       "title": "Coverage"
+    },
+    "count": {
+      "title": "Tests count",
+      "message": "Over {testSuitesCount} test suites"
     }
   },
   "organization": {
