@@ -60,6 +60,7 @@ function TestingBreakdownCount({
               {value}
             </Typography>
             <Tendency
+              sx={{ marginLeft: (theme) => theme.spacing(0.5) }}
               tendency={tendency * 100}
               tendencyDates={tendencyDates}
               positiveTendency={positiveTendency}

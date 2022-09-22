@@ -29,8 +29,8 @@ function BreakdownSectionContainer({
     >
       <Typography variant="h2">{title}</Typography>
       <Box
-        flex={1}
         sx={{
+          flex: 1,
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",

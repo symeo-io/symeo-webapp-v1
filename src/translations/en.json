@@ -98,6 +98,12 @@
     "count": {
       "title": "Tests count",
       "message": "Over {testSuitesCount} test suites"
+    },
+    "ratio": {
+      "title": "Tests code ratio",
+      "production": "Production",
+      "tests": "Tests",
+      "lines": "lines"
     }
   },
   "organization": {

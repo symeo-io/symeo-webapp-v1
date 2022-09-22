@@ -3,6 +3,7 @@ import { PropsWithSx } from "types/PropsWithSx";
 import TestingBreakdownCoverage from "components/organisms/TestingBreakdownCoverage/TestingBreakdownCoverage";
 import TestingBreakdownCount from "components/organisms/TestingBreakdownCount/TestingBreakdownCount";
 import { colors } from "theme/colors";
+import TestingBreakdownTestCodeRatio from "components/organisms/TestingBreakdownTestCodeRatio/TestingBreakdownTestCodeRatio";
 
 const mockValues = {
   coverage: {
@@ -13,6 +14,12 @@ const mockValues = {
     value: 158,
     tendency: 0.09,
     testSuitesCount: 9,
+  },
+  testCodePercentage: {
+    value: 0.25,
+    tendency: 0.05,
+    productionLines: 30265,
+    testLines: 10265,
   },
 };
 
@@ -36,6 +43,15 @@ function TestingBreakdown({ sx }: TestingBreakdownProps) {
         tendencyDates={undefined}
         positiveTendency="up"
         testSuitesCount={mockValues.count.testSuitesCount}
+        sx={{ borderRight: `1px solid ${colors.secondary.borders}` }}
+      />
+      <TestingBreakdownTestCodeRatio
+        value={mockValues.testCodePercentage.value}
+        tendency={mockValues.testCodePercentage.tendency}
+        tendencyDates={undefined}
+        positiveTendency="up"
+        productionLines={mockValues.testCodePercentage.productionLines}
+        testLines={mockValues.testCodePercentage.testLines}
       />
     </Card>
   );
