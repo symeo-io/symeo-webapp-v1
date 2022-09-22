@@ -104,6 +104,12 @@
       "production": "Production",
       "tests": "Tests",
       "lines": "lines"
+    },
+    "test-pyramid": {
+      "title": "Tests types",
+      "unit": "Unit",
+      "integration": "Integration",
+      "end-to-end": "E2E"
     }
   },
   "organization": {

@@ -4,6 +4,7 @@ import TestingBreakdownCoverage from "components/organisms/TestingBreakdownCover
 import TestingBreakdownCount from "components/organisms/TestingBreakdownCount/TestingBreakdownCount";
 import { colors } from "theme/colors";
 import TestingBreakdownTestCodeRatio from "components/organisms/TestingBreakdownTestCodeRatio/TestingBreakdownTestCodeRatio";
+import TestingBreakdownTestPyramid from "components/organisms/TestingBreakdownTestPyramid/TestingBreakdownTestPyramid";
 
 const mockValues = {
   coverage: {
@@ -20,6 +21,11 @@ const mockValues = {
     tendency: 0.05,
     productionLines: 30265,
     testLines: 10265,
+  },
+  testPyramid: {
+    unit: 100,
+    integration: 58,
+    endToEnd: 0,
   },
 };
 
@@ -52,6 +58,12 @@ function TestingBreakdown({ sx }: TestingBreakdownProps) {
         positiveTendency="up"
         productionLines={mockValues.testCodePercentage.productionLines}
         testLines={mockValues.testCodePercentage.testLines}
+        sx={{ borderRight: `1px solid ${colors.secondary.borders}` }}
+      />
+      <TestingBreakdownTestPyramid
+        unit={mockValues.testPyramid.unit}
+        integration={mockValues.testPyramid.integration}
+        endToEnd={mockValues.testPyramid.endToEnd}
       />
     </Card>
   );

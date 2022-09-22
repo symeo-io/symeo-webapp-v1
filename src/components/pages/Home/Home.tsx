@@ -49,7 +49,11 @@ function Home() {
           {formatMessage({ id: "dashboard.testing.title" })}
         </Typography>
         <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <TestingBreakdown />
+          <TestingBreakdown
+            sx={{
+              marginTop: (theme) => theme.spacing(2),
+            }}
+          />
         </Box>
       </Box>
     </Box>
