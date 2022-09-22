@@ -59,6 +59,7 @@
   "dashboard": {
     "title": "{teamName} Team Dashboard",
     "improve-button-label": "Improve",
+    "coming-soon": "Coming soon",
     "cycle-time": {
       "title": "Cycle Time"
     },
@@ -199,7 +200,7 @@
   },
   "standards": {
     "new": "New",
-    "comming-soon": "Soon",
+    "coming-soon": "Soon",
     "start-improving-button-label": "Start Improving",
     "configure-button-label": "Configure",
     "save": "Save changes",

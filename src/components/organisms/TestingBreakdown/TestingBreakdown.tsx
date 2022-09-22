@@ -34,7 +34,16 @@ export type TestingBreakdownProps = PropsWithSx;
 function TestingBreakdown({ sx }: TestingBreakdownProps) {
   return (
     <Card
-      sx={{ paddingY: (theme) => theme.spacing(2), display: "flex", ...sx }}
+      sx={{
+        paddingY: (theme) => theme.spacing(2),
+        display: "flex",
+        pointerEvents: "none",
+        userSelect: "none",
+        "& > *": {
+          opacity: 0.5,
+        },
+        ...sx,
+      }}
     >
       <TestingBreakdownCoverage
         value={mockValues.coverage.value}
