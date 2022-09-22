@@ -45,7 +45,7 @@ function Home() {
           />
         </Box>
       </Box>
-      <Box sx={{ marginTop: (theme) => theme.spacing(6) }}>
+      <Box sx={{ marginY: (theme) => theme.spacing(6) }}>
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Typography variant="h2">
             {formatMessage({ id: "dashboard.testing.title" })}

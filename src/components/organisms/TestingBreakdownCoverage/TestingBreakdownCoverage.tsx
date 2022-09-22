@@ -28,7 +28,7 @@ function TestingBreakdownCoverage({
 
   return (
     <BreakdownSectionContainer
-      sx={{ width: "178px", ...sx }}
+      sx={{ width: "240px", ...sx }}
       title={formatMessage({ id: "testing.coverage.title" })}
     >
       <Box

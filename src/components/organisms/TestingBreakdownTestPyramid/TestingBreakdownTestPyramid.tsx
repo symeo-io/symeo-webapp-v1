@@ -21,7 +21,7 @@ function TestingBreakdownTestPyramid({
 
   return (
     <BreakdownSectionContainer
-      sx={{ width: "178px", ...sx }}
+      sx={{ width: "240px", ...sx }}
       title={formatMessage({ id: "testing.test-pyramid.title" })}
     >
       <Box
