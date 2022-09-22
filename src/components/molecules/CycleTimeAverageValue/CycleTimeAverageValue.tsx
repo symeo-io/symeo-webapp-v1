@@ -3,7 +3,7 @@ import { PropsWithSx } from "types/PropsWithSx";
 import React from "react";
 import Tendency, { TendencyProps } from "components/atoms/Tendency/Tendency";
 
-export type LeadTimeAverageValueProps = PropsWithSx & {
+export type CycleTimeAverageValueProps = PropsWithSx & {
   value: string;
   tendency?: number;
   tendencyDates?: TendencyProps["tendencyDates"];
@@ -11,14 +11,14 @@ export type LeadTimeAverageValueProps = PropsWithSx & {
   loading?: boolean;
 };
 
-function LeadTimeAverageValue({
+function CycleTimeAverageValue({
   value,
   tendency,
   tendencyDates,
   subtitle,
   loading = false,
   sx,
-}: LeadTimeAverageValueProps) {
+}: CycleTimeAverageValueProps) {
   return (
     <Box sx={sx}>
       {!loading && (
@@ -44,4 +44,4 @@ function LeadTimeAverageValue({
   );
 }
 
-export default LeadTimeAverageValue;
+export default CycleTimeAverageValue;

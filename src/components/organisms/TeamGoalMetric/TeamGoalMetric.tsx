@@ -3,7 +3,10 @@ import { Box, Typography } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import CloseIcon from "@mui/icons-material/Close";
-import Tendency, { PositiveTendency } from "components/atoms/Tendency/Tendency";
+import Tendency, {
+  PositiveTendency,
+  TendencyProps,
+} from "components/atoms/Tendency/Tendency";
 import React, { useMemo } from "react";
 import { PropsWithSx } from "types/PropsWithSx";
 import { MetricStatus } from "components/molecules/Metric/Metric";
@@ -28,16 +31,7 @@ export type TeamGoalMetricProps = PropsWithSx & {
   unit: string;
   tendencyPercentage: number;
   positiveTendency: PositiveTendency;
-  tendencyDates: {
-    current: {
-      startDate?: string;
-      endDate?: string;
-    };
-    previous: {
-      startDate?: string;
-      endDate?: string;
-    };
-  };
+  tendencyDates: TendencyProps["tendencyDates"];
 };
 
 function TeamGoalMetric({

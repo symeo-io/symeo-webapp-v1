@@ -3,7 +3,9 @@ import { Box, Typography } from "@mui/material";
 import { useCurrentUser } from "hooks/useCurrentUser";
 import { useIntl } from "react-intl";
 import DateRangeSelector from "components/molecules/DateRangeSelector/DateRangeSelector";
-import LeadTimeBreakdown from "components/organisms/LeadTimeBreakdown/LeadTimeBreakdown";
+import CycleTimeBreakdown from "components/organisms/CycleTimeBreakdown/CycleTimeBreakdown";
+import TestingBreakdown from "components/organisms/TestingBreakdown/TestingBreakdown";
+import Status from "components/atoms/Status/Status";
 
 function Home() {
   const { formatMessage } = useIntl();
@@ -33,10 +35,29 @@ function Home() {
       </Box>
       <Box>
         <Typography variant="h2">
-          {formatMessage({ id: "dashboard.lead-time.title" })}
+          {formatMessage({ id: "dashboard.cycle-time.title" })}
         </Typography>
         <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <LeadTimeBreakdown
+          <CycleTimeBreakdown
+            sx={{
+              marginTop: (theme) => theme.spacing(2),
+            }}
+          />
+        </Box>
+      </Box>
+      <Box sx={{ marginTop: (theme) => theme.spacing(6) }}>
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Typography variant="h2">
+            {formatMessage({ id: "dashboard.testing.title" })}
+          </Typography>
+          <Status
+            sx={{ marginLeft: (theme) => theme.spacing(1) }}
+            label={formatMessage({ id: "dashboard.coming-soon" })}
+            variant="warning"
+          />
+        </Box>
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <TestingBreakdown
             sx={{
               marginTop: (theme) => theme.spacing(2),
             }}

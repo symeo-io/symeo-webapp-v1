@@ -1,11 +1,14 @@
 import { Box } from "@mui/material";
 import { PropsWithSx } from "types/PropsWithSx";
 
-export type LeadTimeBreakdownTileProps = PropsWithSx & {
+export type CycleTimeBreakdownTileProps = PropsWithSx & {
   background: string;
 };
 
-function LeadTimeBreakdownTile({ background, sx }: LeadTimeBreakdownTileProps) {
+function CycleTimeBreakdownTile({
+  background,
+  sx,
+}: CycleTimeBreakdownTileProps) {
   return (
     <Box sx={{ display: "flex", ...sx }}>
       <Box
@@ -29,4 +32,4 @@ function LeadTimeBreakdownTile({ background, sx }: LeadTimeBreakdownTileProps) {
   );
 }
 
-export default LeadTimeBreakdownTile;
+export default CycleTimeBreakdownTile;
