@@ -58,8 +58,12 @@
   },
   "dashboard": {
     "title": "{teamName} Team Dashboard",
+    "improve-button-label": "Improve",
     "cycle-time": {
       "title": "Cycle Time"
+    },
+    "testing": {
+      "title": "Testing"
     }
   },
   "cycle-time": {
@@ -85,8 +89,12 @@
       "tooltip-branch": "Computed as the time between the pull request approval and the moment the branch commits arrive on the production branch with pattern \"{branchPattern}\".",
       "tooltip-tags": "Computed as the time between the pull request approval and the moment the branch commits are pushed on a tag matching \"{tagsPattern}\"."
     },
-    "configure-link-label": "configure",
-    "improve-button-label": "Improve"
+    "configure-link-label": "configure"
+  },
+  "testing": {
+    "coverage": {
+      "title": "Coverage"
+    }
   },
   "organization": {
     "title": "Organization Settings - {organizationName}",

@@ -4,6 +4,7 @@ import { useCurrentUser } from "hooks/useCurrentUser";
 import { useIntl } from "react-intl";
 import DateRangeSelector from "components/molecules/DateRangeSelector/DateRangeSelector";
 import CycleTimeBreakdown from "components/organisms/CycleTimeBreakdown/CycleTimeBreakdown";
+import TestingBreakdown from "components/organisms/TestingBreakdown/TestingBreakdown";
 
 function Home() {
   const { formatMessage } = useIntl();
@@ -41,6 +42,14 @@ function Home() {
               marginTop: (theme) => theme.spacing(2),
             }}
           />
+        </Box>
+      </Box>
+      <Box sx={{ marginTop: (theme) => theme.spacing(6) }}>
+        <Typography variant="h2">
+          {formatMessage({ id: "dashboard.testing.title" })}
+        </Typography>
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <TestingBreakdown />
         </Box>
       </Box>
     </Box>

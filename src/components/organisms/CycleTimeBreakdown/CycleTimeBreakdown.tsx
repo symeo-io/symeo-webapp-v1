@@ -184,7 +184,7 @@ function CycleTimeBreakdown({ sx }: CycleTimeBreakdownProps) {
                 CycleTimeData?.lead_time?.coding_time.value
               )}
               action={{
-                label: formatMessage({ id: "cycle-time.improve-button-label" }),
+                label: formatMessage({ id: "dashboard.improve-button-label" }),
                 onClick,
               }}
               tooltipContent={formatMessage({
@@ -207,7 +207,7 @@ function CycleTimeBreakdown({ sx }: CycleTimeBreakdownProps) {
                 CycleTimeData?.lead_time?.review_lag.value
               )}
               action={{
-                label: formatMessage({ id: "cycle-time.improve-button-label" }),
+                label: formatMessage({ id: "dashboard.improve-button-label" }),
                 onClick,
               }}
               tooltipContent={formatMessage({
@@ -230,7 +230,7 @@ function CycleTimeBreakdown({ sx }: CycleTimeBreakdownProps) {
                 CycleTimeData?.lead_time?.review_time.value
               )}
               action={{
-                label: formatMessage({ id: "cycle-time.improve-button-label" }),
+                label: formatMessage({ id: "dashboard.improve-button-label" }),
                 onClick,
               }}
               tooltipContent={formatMessage({
@@ -253,7 +253,7 @@ function CycleTimeBreakdown({ sx }: CycleTimeBreakdownProps) {
                 CycleTimeData?.lead_time?.time_to_deploy.value
               )}
               action={{
-                label: formatMessage({ id: "cycle-time.improve-button-label" }),
+                label: formatMessage({ id: "dashboard.improve-button-label" }),
                 onClick,
               }}
               tooltipContent={
