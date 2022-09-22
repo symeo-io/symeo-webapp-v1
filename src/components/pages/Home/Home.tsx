@@ -3,7 +3,7 @@ import { Box, Typography } from "@mui/material";
 import { useCurrentUser } from "hooks/useCurrentUser";
 import { useIntl } from "react-intl";
 import DateRangeSelector from "components/molecules/DateRangeSelector/DateRangeSelector";
-import LeadTimeBreakdown from "components/organisms/LeadTimeBreakdown/LeadTimeBreakdown";
+import CycleTimeBreakdown from "components/organisms/CycleTimeBreakdown/CycleTimeBreakdown";
 
 function Home() {
   const { formatMessage } = useIntl();
@@ -33,10 +33,10 @@ function Home() {
       </Box>
       <Box>
         <Typography variant="h2">
-          {formatMessage({ id: "dashboard.lead-time.title" })}
+          {formatMessage({ id: "dashboard.cycle-time.title" })}
         </Typography>
         <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <LeadTimeBreakdown
+          <CycleTimeBreakdown
             sx={{
               marginTop: (theme) => theme.spacing(2),
             }}

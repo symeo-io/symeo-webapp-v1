@@ -7,8 +7,8 @@ export const dataTagTypes = [
   "Metrics",
   "Repository",
   "PullRequest",
-  "LeadTime",
-  "LeadTimeBreakdown",
+  "CycleTime",
+  "CycleTimeBreakdown",
 ];
 
 export const apiTagTypes = [

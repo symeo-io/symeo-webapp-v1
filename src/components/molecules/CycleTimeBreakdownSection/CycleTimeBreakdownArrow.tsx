@@ -1,9 +1,9 @@
 import { Box } from "@mui/material";
 import { PropsWithSx } from "types/PropsWithSx";
 
-export type LeadTimeBreakdownArrowProps = PropsWithSx;
+export type CycleTimeBreakdownArrowProps = PropsWithSx;
 
-function LeadTimeBreakdownArrow({ sx }: LeadTimeBreakdownArrowProps) {
+function CycleTimeBreakdownArrow({ sx }: CycleTimeBreakdownArrowProps) {
   return (
     <Box sx={{ position: "relative", width: "50px", height: "85px" }}>
       <Box
@@ -54,4 +54,4 @@ function LeadTimeBreakdownArrow({ sx }: LeadTimeBreakdownArrowProps) {
   );
 }
 
-export default LeadTimeBreakdownArrow;
+export default CycleTimeBreakdownArrow;

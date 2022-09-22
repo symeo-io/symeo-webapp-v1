@@ -1,13 +1,13 @@
 import { ResponseWithErrors } from "redux/api/errors.type";
 import { Metric } from "redux/api/common.types";
 
-export type GetLeadTimeInput = {
+export type GetCycleTimeInput = {
   teamId: string;
   startDate: string;
   endDate: string;
 };
 
-export type GetLeadTimeResponse = ResponseWithErrors & {
+export type GetCycleTimeResponse = ResponseWithErrors & {
   lead_time: {
     current_end_date: string;
     current_start_date: string;
