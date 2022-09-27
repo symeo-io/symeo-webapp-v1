@@ -1,4 +1,4 @@
-import { Box, Card, CircularProgress, Typography } from "@mui/material";
+import { Box, Card, CircularProgress } from "@mui/material";
 import { PropsWithSx } from "types/PropsWithSx";
 import React, { useCallback } from "react";
 import CycleTimeAverageValue from "components/molecules/CycleTimeAverageValue/CycleTimeAverageValue";
@@ -15,6 +15,7 @@ import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import { colors } from "theme/colors";
 import { useGetOrganizationSettingsQuery } from "redux/api/organizations/organizations.api";
+import InitialProcessingLoader from "components/molecules/InitialProcessingLoader/InitialProcessingLoader";
 
 const breakdownColorsLimits = {
   coding_time: {
@@ -100,7 +101,7 @@ function CycleTimeBreakdown({ sx }: CycleTimeBreakdownProps) {
   const navigate = useNavigate();
   const { selectedTeam } = useCurrentUser();
   const [dateRange] = useSelectedDateRange();
-  const { isProcessingInitialJob } = useDataStatus();
+  const { isProcessingInitialJob, currentProgression } = useDataStatus();
   const { data: organizationSettingsData } = useGetOrganizationSettingsQuery();
 
   const onClick = useCallback(() => navigate("teamGoalsLibrary"), [navigate]);
@@ -141,16 +142,7 @@ function CycleTimeBreakdown({ sx }: CycleTimeBreakdownProps) {
           }}
         >
           <CircularProgress />
-          <Typography
-            variant="body1"
-            color="secondary"
-            sx={{
-              marginTop: (theme) => theme.spacing(4),
-              textAlign: "center",
-            }}
-          >
-            {formatMessage({ id: "data-status.loading" })}
-          </Typography>
+          <InitialProcessingLoader value={currentProgression} />
         </Box>
       )}
       {!isProcessingInitialJob && (

@@ -23,6 +23,7 @@ import dayjs from "dayjs";
 import { useDataStatus } from "hooks/useDataStatus";
 import { PullRequest } from "redux/api/pull-requests/pull-requests.types";
 import { IntlShape, useIntl } from "react-intl";
+import InitialProcessingLoader from "components/molecules/InitialProcessingLoader/InitialProcessingLoader";
 
 const COLUMNS = {
   vcs_repository: {
@@ -91,7 +92,7 @@ function TeamPullRequestList({ columns, sx }: TeamPullRequestListProps) {
   const [pageSize] = useState<number>(5);
   const { selectedTeam } = useCurrentUser();
   const [dateRange] = useSelectedDateRange();
-  const { isProcessingInitialJob } = useDataStatus();
+  const { isProcessingInitialJob, currentProgression } = useDataStatus();
 
   const displayedColumns = useMemo(
     () => columns ?? (Object.keys(COLUMNS) as PullRequestColumnName[]),
@@ -159,16 +160,7 @@ function TeamPullRequestList({ columns, sx }: TeamPullRequestListProps) {
         >
           <CircularProgress />
           {isProcessingInitialJob && (
-            <Typography
-              variant="body1"
-              color="secondary"
-              sx={{
-                marginTop: (theme) => theme.spacing(4),
-                textAlign: "center",
-              }}
-            >
-              {formatMessage({ id: "data-status.loading" })}
-            </Typography>
+            <InitialProcessingLoader value={currentProgression} />
           )}
         </Box>
       )}

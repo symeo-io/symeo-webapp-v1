@@ -11,7 +11,12 @@ export type DataStatusProps = PropsWithSx;
 
 function DataStatus({ sx }: DataStatusProps) {
   const { formatMessage } = useIntl();
-  const { lastUpdateDate, isProcessingInitialJob } = useDataStatus();
+  const {
+    lastUpdateDate,
+    isProcessingInitialJob,
+    currentStatus,
+    currentProgression,
+  } = useDataStatus();
 
   return (
     <MessageBox
@@ -21,9 +26,10 @@ function DataStatus({ sx }: DataStatusProps) {
         paddingY: (theme) => theme.spacing(1),
 
         "& .MuiSvgIcon-root": {
-          animation: isProcessingInitialJob
-            ? "spin 1.5s linear infinite"
-            : undefined,
+          animation:
+            isProcessingInitialJob || currentStatus === "STARTED"
+              ? "spin 1.5s linear infinite"
+              : undefined,
 
           "@keyframes spin": {
             "0%": {
@@ -38,14 +44,24 @@ function DataStatus({ sx }: DataStatusProps) {
       }}
       message={
         isProcessingInitialJob
-          ? formatMessage({ id: "data-status.initial-data-processing" })
+          ? formatMessage(
+              { id: "data-status.initial-data-processing" },
+              { progression: currentProgression && currentProgression * 100 }
+            )
+          : currentStatus === "STARTED"
+          ? formatMessage(
+              { id: "data-status.data-processing" },
+              { progression: currentProgression && currentProgression * 100 }
+            )
           : formatMessage(
               { id: "data-status.last-update" },
-              { date: dayjs(lastUpdateDate).format("MMM D, HH:mm") }
+              {
+                date: dayjs(lastUpdateDate).format("MMM D, HH:mm"),
+              }
             )
       }
       variant="secondary"
-      Icon={isProcessingInitialJob ? RefreshIcon : UpdateIcon}
+      Icon={isProcessingInitialJob || currentStatus ? RefreshIcon : UpdateIcon}
     />
   );
 }
