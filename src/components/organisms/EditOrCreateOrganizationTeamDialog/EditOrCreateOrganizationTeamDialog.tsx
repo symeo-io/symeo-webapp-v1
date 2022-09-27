@@ -25,11 +25,13 @@ import {
 } from "components/organisms/CreateTeamForm/utils";
 import GroupsIcon from "@mui/icons-material/Groups";
 import {
+  CreateTeamsResponse,
   formValuesToCreateTeamInput,
   formValuesToEditTeamInput,
   Team,
   teamToFormValues,
 } from "redux/api/teams/teams.types";
+import { useCurrentUser } from "hooks/useCurrentUser";
 
 export type CreateOrganizationTeamDialogProps = PropsWithSx & {
   team?: Team;
@@ -46,6 +48,7 @@ function EditOrCreateOrganizationTeamDialog({
   sx,
 }: CreateOrganizationTeamDialogProps) {
   const { formatMessage } = useIntl();
+  const { setSelectedTeam } = useCurrentUser();
   const [value, setValue] = useState<EditOrCreateTeamFormValues>(
     team ? teamToFormValues(team) : cloneDeep(EMPTY_TEAM)
   );
@@ -69,12 +72,19 @@ function EditOrCreateOrganizationTeamDialog({
       if (team) {
         await editTeam(formValuesToEditTeamInput(team.id, value));
       } else {
-        await createTeams(formValuesToCreateTeamInput([value]));
+        const { data } = (await createTeams(
+          formValuesToCreateTeamInput([value])
+        )) as { data: CreateTeamsResponse };
+
+        if (data?.teams && data.teams[0]) {
+          setSelectedTeam(data.teams[0]);
+        }
+
         reset();
       }
       handleClose();
     }
-  }, [createTeams, editTeam, handleClose, reset, team, value]);
+  }, [createTeams, editTeam, handleClose, reset, setSelectedTeam, team, value]);
 
   const handleCloseAndReset = useCallback(() => {
     reset();
