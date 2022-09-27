@@ -34,7 +34,7 @@ export type GraphProps = PropsWithSx & {
   }[];
   options: HighchartsReact.Props["options"];
   loading?: boolean;
-  loadingMessage?: string;
+  loadingMessage?: React.ReactElement;
 };
 
 function Graph({
@@ -123,18 +123,7 @@ function Graph({
             }}
           >
             <CircularProgress />
-            {loadingMessage && (
-              <Typography
-                variant="body1"
-                color="secondary"
-                sx={{
-                  marginTop: (theme) => theme.spacing(4),
-                  textAlign: "center",
-                }}
-              >
-                {loadingMessage}
-              </Typography>
-            )}
+            {loadingMessage}
           </Box>
         )}
       </Box>

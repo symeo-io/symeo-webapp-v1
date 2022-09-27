@@ -11,6 +11,7 @@ import { buildCurveOptions } from "services/highcharts/HighchartsOptionsBuilder"
 import { buildCurveSeries } from "services/highcharts/HighchartsSeriesBuilder";
 import { useGetMetricsQuery } from "redux/api/goals/metrics/metrics.api";
 import { useDataStatus } from "hooks/useDataStatus";
+import InitialProcessingLoader from "components/molecules/InitialProcessingLoader/InitialProcessingLoader";
 
 function Curves({
   title,
@@ -22,7 +23,7 @@ function Curves({
   const { formatMessage } = useIntl();
   const { selectedTeam } = useCurrentUser();
   const [dateRange] = useSelectedDateRange();
-  const { isProcessingInitialJob } = useDataStatus();
+  const { isProcessingInitialJob, currentProgression } = useDataStatus();
 
   const { data, isLoading } = useGetGraphQuery(
     {
@@ -82,9 +83,9 @@ function Curves({
       sx={sx}
       loading={isLoading || isProcessingInitialJob}
       loadingMessage={
-        isProcessingInitialJob
-          ? formatMessage({ id: "data-status.loading" })
-          : undefined
+        isProcessingInitialJob ? (
+          <InitialProcessingLoader value={currentProgression} />
+        ) : undefined
       }
       titleSection={
         title
