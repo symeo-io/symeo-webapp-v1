@@ -22,10 +22,6 @@ const breakdownColorsLimits = {
     green: 24 * 60, // 1 day
     orange: 2 * 24 * 60, // 2 days
   },
-  review_lag: {
-    green: 60, // 1 hour
-    orange: 3 * 60, // 3 hour
-  },
   review_time: {
     green: 2 * 60, // 2 hour
     orange: 4 * 60, // 4 hour
@@ -102,7 +98,10 @@ function CycleTimeBreakdown({ sx }: CycleTimeBreakdownProps) {
   const { selectedTeam } = useCurrentUser();
   const [dateRange] = useSelectedDateRange();
   const { isProcessingInitialJob, currentProgression } = useDataStatus();
-  const { data: organizationSettingsData } = useGetOrganizationSettingsQuery();
+  const { data: organizationSettingsData } = useGetOrganizationSettingsQuery(
+    undefined,
+    { skip: isProcessingInitialJob }
+  );
 
   const onClick = useCallback(() => navigate("teamGoalsLibrary"), [navigate]);
 
@@ -120,12 +119,12 @@ function CycleTimeBreakdown({ sx }: CycleTimeBreakdownProps) {
 
   const tendencyDates = {
     current: {
-      startDate: CycleTimeData?.lead_time?.current_start_date,
-      endDate: CycleTimeData?.lead_time?.current_end_date,
+      startDate: CycleTimeData?.cycle_time?.current_start_date,
+      endDate: CycleTimeData?.cycle_time?.current_end_date,
     },
     previous: {
-      startDate: CycleTimeData?.lead_time?.previous_start_date,
-      endDate: CycleTimeData?.lead_time?.previous_end_date,
+      startDate: CycleTimeData?.cycle_time?.previous_start_date,
+      endDate: CycleTimeData?.cycle_time?.previous_end_date,
     },
   };
 
@@ -150,12 +149,10 @@ function CycleTimeBreakdown({ sx }: CycleTimeBreakdownProps) {
           <CycleTimeAverageValue
             loading={isLoadingCycleTime}
             value={buildValueDisplay(
-              CycleTimeData?.lead_time?.average.value,
+              CycleTimeData?.cycle_time?.average.value,
               formatMessage
             )}
-            tendency={
-              CycleTimeData?.lead_time?.average.tendency_percentage ?? 0
-            }
+            tendency={CycleTimeData?.cycle_time?.average.tendency_percentage}
             tendencyDates={tendencyDates}
             subtitle={formatMessage({ id: "cycle-time.average-subtitle" })}
           />
@@ -164,16 +161,16 @@ function CycleTimeBreakdown({ sx }: CycleTimeBreakdownProps) {
               loading={isLoadingCycleTime}
               label={formatMessage({ id: "cycle-time.coding.title" })}
               value={buildValueDisplay(
-                CycleTimeData?.lead_time?.coding_time.value,
+                CycleTimeData?.cycle_time?.coding_time.value,
                 formatMessage
               )}
               tendency={
-                CycleTimeData?.lead_time?.coding_time.tendency_percentage ?? 0
+                CycleTimeData?.cycle_time?.coding_time.tendency_percentage
               }
               tendencyDates={tendencyDates}
               color={buildColor(
                 "coding_time",
-                CycleTimeData?.lead_time?.coding_time.value
+                CycleTimeData?.cycle_time?.coding_time.value
               )}
               action={{
                 label: formatMessage({ id: "dashboard.improve-button-label" }),
@@ -185,41 +182,18 @@ function CycleTimeBreakdown({ sx }: CycleTimeBreakdownProps) {
             />
             <CycleTimeBreakdownSection
               loading={isLoadingCycleTime}
-              label={formatMessage({ id: "cycle-time.review-lag.title" })}
-              value={buildValueDisplay(
-                CycleTimeData?.lead_time?.review_lag.value,
-                formatMessage
-              )}
-              tendency={
-                CycleTimeData?.lead_time?.review_lag.tendency_percentage ?? 0
-              }
-              tendencyDates={tendencyDates}
-              color={buildColor(
-                "review_lag",
-                CycleTimeData?.lead_time?.review_lag.value
-              )}
-              action={{
-                label: formatMessage({ id: "dashboard.improve-button-label" }),
-                onClick,
-              }}
-              tooltipContent={formatMessage({
-                id: "cycle-time.review-lag.tooltip",
-              })}
-            />
-            <CycleTimeBreakdownSection
-              loading={isLoadingCycleTime}
               label={formatMessage({ id: "cycle-time.review.title" })}
               value={buildValueDisplay(
-                CycleTimeData?.lead_time?.review_time.value,
+                CycleTimeData?.cycle_time?.review_time.value,
                 formatMessage
               )}
               tendency={
-                CycleTimeData?.lead_time?.review_time.tendency_percentage ?? 0
+                CycleTimeData?.cycle_time?.review_time.tendency_percentage
               }
               tendencyDates={tendencyDates}
               color={buildColor(
                 "review_time",
-                CycleTimeData?.lead_time?.review_time.value
+                CycleTimeData?.cycle_time?.review_time.value
               )}
               action={{
                 label: formatMessage({ id: "dashboard.improve-button-label" }),
@@ -233,16 +207,16 @@ function CycleTimeBreakdown({ sx }: CycleTimeBreakdownProps) {
               loading={isLoadingCycleTime}
               label={formatMessage({ id: "cycle-time.deploy.title" })}
               value={buildValueDisplay(
-                CycleTimeData?.lead_time?.time_to_deploy.value,
+                CycleTimeData?.cycle_time?.time_to_deploy.value,
                 formatMessage
               )}
               tendency={
-                CycleTimeData?.lead_time?.time_to_deploy.tendency_percentage
+                CycleTimeData?.cycle_time?.time_to_deploy.tendency_percentage
               }
               tendencyDates={tendencyDates}
               color={buildColor(
                 "time_to_deploy",
-                CycleTimeData?.lead_time?.time_to_deploy.value
+                CycleTimeData?.cycle_time?.time_to_deploy.value
               )}
               action={{
                 label: formatMessage({ id: "dashboard.improve-button-label" }),

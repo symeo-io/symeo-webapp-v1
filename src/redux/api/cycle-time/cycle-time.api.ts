@@ -8,7 +8,7 @@ export const CycleTimeQueryApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getCycleTime: builder.query<GetCycleTimeResponse, GetCycleTimeInput>({
       query: ({ teamId, startDate, endDate }) => ({
-        url: `/api/v1/teams/lead-time`,
+        url: `/api/v1/teams/cycle-time`,
         params: {
           team_id: teamId,
           start_date: startDate,

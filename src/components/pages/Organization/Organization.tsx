@@ -11,18 +11,22 @@ import { useNavigate } from "hooks/useNavigate";
 import TabPanel from "@mui/lab/TabPanel";
 import { TabContext, TabList } from "@mui/lab";
 import { useGetOrganizationSettingsQuery } from "redux/api/organizations/organizations.api";
+import { useDataStatus } from "hooks/useDataStatus";
 
 function Organization() {
   const { formatMessage } = useIntl();
   const { currentUser } = useCurrentUser();
   const { tab } = useParams();
   const navigate = useNavigate();
+  const { isProcessingInitialJob } = useDataStatus();
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     navigate("organization", { params: { tab: newValue } });
   };
 
-  const { data: settingsData } = useGetOrganizationSettingsQuery();
+  const { data: settingsData } = useGetOrganizationSettingsQuery(undefined, {
+    skip: isProcessingInitialJob,
+  });
 
   return (
     <Box

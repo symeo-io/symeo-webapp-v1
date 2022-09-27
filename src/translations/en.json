@@ -36,7 +36,16 @@
     }
   },
   "errors": {
-    "F.ORGANIZATION_NAME_NOT_FOUND": "Organization not found"
+    "F.ORGANIZATION_NAME_NOT_FOUND": "Organization not found",
+    "F.ORGANISATION_NOT_FOUND": "Organization not found",
+    "F.TEAM_STANDARD_NOT_FOUND": "Team goal not found",
+    "F.TEAM_NOT_FOUND": "Team not found",
+    "F.ORGANIZATION_SETTINGS_NOT_FOUND": "Organization settings not found",
+    "F.INVALID_TEAM_STANDARD_CODE": "Invalid team standard code",
+    "F.FAILED_TO_PARSE_DATE": "Invalid date",
+    "F.PAGINATION_MAXIMUM_SIZE_EXCEEDED": "Pagination maximum exceeded",
+    "F.INVALID_SORTING_PARAMETER": "Invalid sorting parameter",
+    "F.INVALID_SORTING_DIRECTION": "Invalid sorting direction"
   },
   "sidebar": {
     "organization": {
@@ -77,13 +86,9 @@
       "title": "Coding",
       "tooltip": "Computed as the time between the first and the last commit (before any pull request event)."
     },
-    "review-lag": {
-      "title": "Waiting for review",
-      "tooltip": "Computed as the time between the last commit and the first pull request review event (comment from another dev for example)."
-    },
     "review": {
       "title": "Review",
-      "tooltip": "Computed as the time between the first pull request review event and the approval of the pull request."
+      "tooltip": "Computed as the time between the last commit and the approval of the pull request."
     },
     "deploy": {
       "title": "Deploy",
