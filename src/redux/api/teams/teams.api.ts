@@ -38,9 +38,9 @@ const teamsMutationApi = api.injectEndpoints({
         method: "POST",
         body: input,
       }),
-      invalidatesTags: [{ type: "CurrentUser" }, { type: "Team" }],
+      invalidatesTags: [{ type: "CurrentUser" }],
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
-        const updateResult = dispatch(
+        const updateCurrentUserResult = dispatch(
           usersQueryApi.util.updateQueryData(
             "getCurrentUser",
             undefined,
@@ -51,9 +51,21 @@ const teamsMutationApi = api.injectEndpoints({
         );
 
         try {
-          await queryFulfilled;
+          const result = await queryFulfilled;
+
+          if (result?.data?.teams) {
+            dispatch(
+              teamsQueryApi.util.updateQueryData(
+                "getTeams",
+                undefined,
+                (draft) => {
+                  draft.teams = [...draft.teams, ...result.data.teams];
+                }
+              )
+            );
+          }
         } catch (e) {
-          updateResult.undo();
+          updateCurrentUserResult.undo();
         }
       },
     }),
