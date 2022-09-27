@@ -29,9 +29,12 @@ function StandardCard({ standard, configured = false, sx }: StandardCardProps) {
         ...sx,
       }}
     >
-      <Box sx={{ display: "flex", alignItems: "center" }}>
+      <Box sx={{ display: "flex", alignItems: "flex-start" }}>
         {<IconComponent sx={{ marginRight: (theme) => theme.spacing(1) }} />}
-        <Typography variant="h3" sx={{ display: "flex", alignItems: "center" }}>
+        <Typography
+          variant="h3"
+          sx={{ display: "flex", alignItems: "center", flex: 1 }}
+        >
           {formatMessage({ id: `standards.${standard.code}.title` })}
         </Typography>
         {standard.new && (
@@ -43,6 +46,13 @@ function StandardCard({ standard, configured = false, sx }: StandardCardProps) {
             sx={{ marginLeft: (theme) => theme.spacing(1) }}
           />
         )}
+        <Status
+          label={formatMessage({
+            id: `team-goals-library.categories.${standard.category}`,
+          })}
+          variant="success"
+          sx={{ marginLeft: (theme) => theme.spacing(1) }}
+        />
         {!standard.active && (
           <Status
             label={formatMessage({

@@ -6,13 +6,15 @@ import { PropsWithSx } from "types/PropsWithSx";
 
 export type StatusProps = PropsWithSx & {
   label: BoxProps["children"];
-  variant?: "success" | "info" | "warning" | "error";
+  variant?: "success" | "info" | "warning" | "error" | "secondary";
 };
 
 function getColor(variant: StatusProps["variant"]): Color {
   switch (variant) {
     case "info":
       return colors.primary;
+    case "secondary":
+      return colors.secondary;
     case "success":
       return colors.success;
     case "warning":
@@ -31,6 +33,7 @@ function Status({ label, variant = "info", sx }: StatusProps) {
     <Box
       component="span"
       sx={{
+        whiteSpace: "nowrap",
         padding: "2px 4px",
         color: color.main,
         background: color.surface,

@@ -20,8 +20,8 @@ export type TeamGoalDashboardPanelProps = PropsWithSx & {
 
 function getMetricStatusForPercentage(value: number) {
   if (value === 100) return "success";
-  if (value >= 80) return "warning";
-  if (value < 80) return "error";
+  if (value >= 90) return "warning";
+  if (value < 90) return "error";
 
   return "success";
 }
