@@ -46,7 +46,7 @@ function StandardCard({ standard, configured = false, sx }: StandardCardProps) {
         {!standard.active && (
           <Status
             label={formatMessage({
-              id: "standards.comming-soon",
+              id: "standards.coming-soon",
             })}
             variant="warning"
             sx={{ marginLeft: (theme) => theme.spacing(1) }}

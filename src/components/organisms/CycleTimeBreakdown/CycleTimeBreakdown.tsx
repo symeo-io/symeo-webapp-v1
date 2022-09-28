@@ -1,13 +1,13 @@
-import { Box, Card, CircularProgress, Typography } from "@mui/material";
+import { Box, Card, CircularProgress } from "@mui/material";
 import { PropsWithSx } from "types/PropsWithSx";
 import React, { useCallback } from "react";
-import LeadTimeAverageValue from "components/molecules/LeadTimeAverageValue/LeadTimeAverageValue";
-import LeadTimeBreakdownSection, {
-  LeadTimeBreakdownSectionProps,
-} from "components/molecules/LeadTimeBreakdownSection/LeadTimeBreakdownSection";
+import CycleTimeAverageValue from "components/molecules/CycleTimeAverageValue/CycleTimeAverageValue";
+import CycleTimeBreakdownSection, {
+  CycleTimeBreakdownSectionProps,
+} from "components/molecules/CycleTimeBreakdownSection/CycleTimeBreakdownSection";
 import { IntlShape, useIntl } from "react-intl";
 import { useNavigate } from "hooks/useNavigate";
-import { useGetLeadTimeQuery } from "redux/api/lead-time/lead-time.api";
+import { useGetCycleTimeQuery } from "redux/api/cycle-time/cycle-time.api";
 import { useCurrentUser } from "hooks/useCurrentUser";
 import { useSelectedDateRange } from "hooks/useSelectedDateRange";
 import { useDataStatus } from "hooks/useDataStatus";
@@ -15,15 +15,12 @@ import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import { colors } from "theme/colors";
 import { useGetOrganizationSettingsQuery } from "redux/api/organizations/organizations.api";
+import InitialProcessingLoader from "components/molecules/InitialProcessingLoader/InitialProcessingLoader";
 
 const breakdownColorsLimits = {
   coding_time: {
     green: 24 * 60, // 1 day
     orange: 2 * 24 * 60, // 2 days
-  },
-  review_lag: {
-    green: 60, // 1 hour
-    orange: 3 * 60, // 3 hour
   },
   review_time: {
     green: 2 * 60, // 2 hour
@@ -38,7 +35,7 @@ const breakdownColorsLimits = {
 function buildColor(
   type: keyof typeof breakdownColorsLimits,
   value?: number
-): LeadTimeBreakdownSectionProps["color"] {
+): CycleTimeBreakdownSectionProps["color"] {
   const limits = breakdownColorsLimits[type];
 
   if (!value) return "green";
@@ -62,30 +59,30 @@ function minutesToHours(value: number) {
 }
 
 function buildValueDisplay(
-  value: number | undefined,
+  value: number | undefined | null,
   formatMessage: IntlShape["formatMessage"]
 ) {
-  if (!value) {
-    return formatMessage({ id: "lead-time.unknown" });
+  if (value === undefined || value === null) {
+    return formatMessage({ id: "cycle-time.unknown" });
   }
 
   if (value < 60) {
     return formatMessage(
-      { id: "lead-time.value-minutes" },
+      { id: "cycle-time.value-minutes" },
       {
         value,
       }
     );
   } else if (value < 60 * 24) {
     return formatMessage(
-      { id: "lead-time.value-hours" },
+      { id: "cycle-time.value-hours" },
       {
         value: minutesToHours(value),
       }
     );
   } else {
     return formatMessage(
-      { id: "lead-time.value-days" },
+      { id: "cycle-time.value-days" },
       {
         value: minutesToDays(value),
       }
@@ -93,20 +90,23 @@ function buildValueDisplay(
   }
 }
 
-export type LeadTimeBreakdownProps = PropsWithSx;
+export type CycleTimeBreakdownProps = PropsWithSx;
 
-function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
+function CycleTimeBreakdown({ sx }: CycleTimeBreakdownProps) {
   const { formatMessage } = useIntl();
   const navigate = useNavigate();
   const { selectedTeam } = useCurrentUser();
   const [dateRange] = useSelectedDateRange();
-  const { isProcessingInitialJob } = useDataStatus();
-  const { data: organizationSettingsData } = useGetOrganizationSettingsQuery();
+  const { isProcessingInitialJob, currentProgression } = useDataStatus();
+  const { data: organizationSettingsData } = useGetOrganizationSettingsQuery(
+    undefined,
+    { skip: isProcessingInitialJob }
+  );
 
   const onClick = useCallback(() => navigate("teamGoalsLibrary"), [navigate]);
 
-  const { data: leadTimeData, isLoading: isLoadingLeadTime } =
-    useGetLeadTimeQuery(
+  const { data: CycleTimeData, isLoading: isLoadingCycleTime } =
+    useGetCycleTimeQuery(
       {
         teamId: selectedTeam?.id as string,
         startDate: dayjs(dateRange.startDate).format("YYYY-MM-DD"),
@@ -119,12 +119,12 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
 
   const tendencyDates = {
     current: {
-      startDate: leadTimeData?.lead_time?.current_start_date,
-      endDate: leadTimeData?.lead_time?.current_end_date,
+      startDate: CycleTimeData?.cycle_time?.current_start_date,
+      endDate: CycleTimeData?.cycle_time?.current_end_date,
     },
     previous: {
-      startDate: leadTimeData?.lead_time?.previous_start_date,
-      endDate: leadTimeData?.lead_time?.previous_end_date,
+      startDate: CycleTimeData?.cycle_time?.previous_start_date,
+      endDate: CycleTimeData?.cycle_time?.previous_end_date,
     },
   };
 
@@ -141,117 +141,85 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
           }}
         >
           <CircularProgress />
-          <Typography
-            variant="body1"
-            color="secondary"
-            sx={{
-              marginTop: (theme) => theme.spacing(4),
-              textAlign: "center",
-            }}
-          >
-            {formatMessage({ id: "data-status.loading" })}
-          </Typography>
+          <InitialProcessingLoader value={currentProgression} />
         </Box>
       )}
       {!isProcessingInitialJob && (
         <>
-          <LeadTimeAverageValue
-            loading={isLoadingLeadTime}
+          <CycleTimeAverageValue
+            loading={isLoadingCycleTime}
             value={buildValueDisplay(
-              leadTimeData?.lead_time?.average.value,
+              CycleTimeData?.cycle_time?.average.value,
               formatMessage
             )}
-            tendency={leadTimeData?.lead_time?.average.tendency_percentage ?? 0}
+            tendency={CycleTimeData?.cycle_time?.average.tendency_percentage}
             tendencyDates={tendencyDates}
-            subtitle={formatMessage({ id: "lead-time.average-subtitle" })}
+            subtitle={formatMessage({ id: "cycle-time.average-subtitle" })}
           />
           <Box sx={{ display: "flex", padding: (theme) => theme.spacing(3) }}>
-            <LeadTimeBreakdownSection
-              loading={isLoadingLeadTime}
-              label={formatMessage({ id: "lead-time.coding.title" })}
+            <CycleTimeBreakdownSection
+              loading={isLoadingCycleTime}
+              label={formatMessage({ id: "cycle-time.coding.title" })}
               value={buildValueDisplay(
-                leadTimeData?.lead_time?.coding_time.value,
+                CycleTimeData?.cycle_time?.coding_time.value,
                 formatMessage
               )}
               tendency={
-                leadTimeData?.lead_time?.coding_time.tendency_percentage ?? 0
+                CycleTimeData?.cycle_time?.coding_time.tendency_percentage
               }
               tendencyDates={tendencyDates}
               color={buildColor(
                 "coding_time",
-                leadTimeData?.lead_time?.coding_time.value
+                CycleTimeData?.cycle_time?.coding_time.value
               )}
               action={{
-                label: formatMessage({ id: "lead-time.improve-button-label" }),
+                label: formatMessage({ id: "dashboard.improve-button-label" }),
                 onClick,
               }}
               tooltipContent={formatMessage({
-                id: "lead-time.coding.tooltip",
+                id: "cycle-time.coding.tooltip",
               })}
             />
-            <LeadTimeBreakdownSection
-              loading={isLoadingLeadTime}
-              label={formatMessage({ id: "lead-time.review-lag.title" })}
+            <CycleTimeBreakdownSection
+              loading={isLoadingCycleTime}
+              label={formatMessage({ id: "cycle-time.review.title" })}
               value={buildValueDisplay(
-                leadTimeData?.lead_time?.review_lag.value,
+                CycleTimeData?.cycle_time?.review_time.value,
                 formatMessage
               )}
               tendency={
-                leadTimeData?.lead_time?.review_lag.tendency_percentage ?? 0
-              }
-              tendencyDates={tendencyDates}
-              color={buildColor(
-                "review_lag",
-                leadTimeData?.lead_time?.review_lag.value
-              )}
-              action={{
-                label: formatMessage({ id: "lead-time.improve-button-label" }),
-                onClick,
-              }}
-              tooltipContent={formatMessage({
-                id: "lead-time.review-lag.tooltip",
-              })}
-            />
-            <LeadTimeBreakdownSection
-              loading={isLoadingLeadTime}
-              label={formatMessage({ id: "lead-time.review.title" })}
-              value={buildValueDisplay(
-                leadTimeData?.lead_time?.review_time.value,
-                formatMessage
-              )}
-              tendency={
-                leadTimeData?.lead_time?.review_time.tendency_percentage ?? 0
+                CycleTimeData?.cycle_time?.review_time.tendency_percentage
               }
               tendencyDates={tendencyDates}
               color={buildColor(
                 "review_time",
-                leadTimeData?.lead_time?.review_time.value
+                CycleTimeData?.cycle_time?.review_time.value
               )}
               action={{
-                label: formatMessage({ id: "lead-time.improve-button-label" }),
+                label: formatMessage({ id: "dashboard.improve-button-label" }),
                 onClick,
               }}
               tooltipContent={formatMessage({
-                id: "lead-time.review.tooltip",
+                id: "cycle-time.review.tooltip",
               })}
             />
-            <LeadTimeBreakdownSection
-              loading={isLoadingLeadTime}
-              label={formatMessage({ id: "lead-time.deploy.title" })}
+            <CycleTimeBreakdownSection
+              loading={isLoadingCycleTime}
+              label={formatMessage({ id: "cycle-time.deploy.title" })}
               value={buildValueDisplay(
-                leadTimeData?.lead_time?.time_to_deploy.value,
+                CycleTimeData?.cycle_time?.time_to_deploy.value,
                 formatMessage
               )}
               tendency={
-                leadTimeData?.lead_time?.time_to_deploy.tendency_percentage
+                CycleTimeData?.cycle_time?.time_to_deploy.tendency_percentage
               }
               tendencyDates={tendencyDates}
               color={buildColor(
                 "time_to_deploy",
-                leadTimeData?.lead_time?.time_to_deploy.value
+                CycleTimeData?.cycle_time?.time_to_deploy.value
               )}
               action={{
-                label: formatMessage({ id: "lead-time.improve-button-label" }),
+                label: formatMessage({ id: "dashboard.improve-button-label" }),
                 onClick,
               }}
               tooltipContent={
@@ -260,8 +228,8 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
                     {
                       id: organizationSettingsData?.settings.delivery
                         .deploy_detection.pull_request_merged_on_branch_regex
-                        ? "lead-time.deploy.tooltip-branch"
-                        : "lead-time.deploy.tooltip-tags",
+                        ? "cycle-time.deploy.tooltip-branch"
+                        : "cycle-time.deploy.tooltip-tags",
                     },
                     {
                       branchPattern:
@@ -277,7 +245,7 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
                     style={{ color: colors.primary.text }}
                   >
                     {formatMessage({
-                      id: "lead-time.configure-link-label",
+                      id: "cycle-time.configure-link-label",
                     })}
                   </Link>
                 </Box>
@@ -290,4 +258,4 @@ function LeadTimeBreakdown({ sx }: LeadTimeBreakdownProps) {
   );
 }
 
-export default LeadTimeBreakdown;
+export default CycleTimeBreakdown;

@@ -6,6 +6,8 @@ import RadioWithTextField from "components/molecules/RadioWithTextField/RadioWit
 import { OrganizationSettings } from "redux/api/organizations/organizations.types";
 import Button from "components/atoms/Button/Button";
 import { useUpdateOrganizationSettingsMutation } from "redux/api/organizations/organizations.api";
+import { api, dataTagTypes } from "redux/api/api";
+import { useDispatch } from "react-redux";
 
 export type ReleaseDetectionStrategy = "branch" | "tags";
 
@@ -20,6 +22,7 @@ function OrganizationAdvancedSettings({
   sx,
   settings,
 }: OrganizationMembersProps) {
+  const dispatch = useDispatch();
   const { formatMessage } = useIntl();
   const [updateOrganizationSettings, { isLoading }] =
     useUpdateOrganizationSettingsMutation();
@@ -44,21 +47,23 @@ function OrganizationAdvancedSettings({
     setTagsValue(TAGS_REGEX_DEFAULT_VALUE);
   }, []);
 
-  const handleSave = useCallback(() => {
-    updateOrganizationSettings({
-      settings: {
-        delivery: {
-          deploy_detection: {
-            pull_request_merged_on_branch_regex:
-              selectedReleaseDetection === "branch" ? branchValue : null,
-            tag_regex: selectedReleaseDetection === "tags" ? tagsValue : null,
-          },
+  const handleSave = useCallback(async () => {
+    await updateOrganizationSettings({
+      id: settings.id,
+      delivery: {
+        deploy_detection: {
+          pull_request_merged_on_branch_regex:
+            selectedReleaseDetection === "branch" ? branchValue : null,
+          tag_regex: selectedReleaseDetection === "tags" ? tagsValue : null,
         },
       },
     });
+    dispatch(api.util.invalidateTags(dataTagTypes));
   }, [
     branchValue,
+    dispatch,
     selectedReleaseDetection,
+    settings.id,
     tagsValue,
     updateOrganizationSettings,
   ]);

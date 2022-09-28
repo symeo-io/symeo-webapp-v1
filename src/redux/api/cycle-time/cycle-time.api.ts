@@ -1,14 +1,14 @@
 import { api } from "redux/api/api";
 import {
-  GetLeadTimeInput,
-  GetLeadTimeResponse,
-} from "redux/api/lead-time/lead-time.types";
+  GetCycleTimeInput,
+  GetCycleTimeResponse,
+} from "redux/api/cycle-time/cycle-time.types";
 
-export const leadTimeQueryApi = api.injectEndpoints({
+export const CycleTimeQueryApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getLeadTime: builder.query<GetLeadTimeResponse, GetLeadTimeInput>({
+    getCycleTime: builder.query<GetCycleTimeResponse, GetCycleTimeInput>({
       query: ({ teamId, startDate, endDate }) => ({
-        url: `/api/v1/teams/lead-time`,
+        url: `/api/v1/teams/cycle-time`,
         params: {
           team_id: teamId,
           start_date: startDate,
@@ -17,7 +17,7 @@ export const leadTimeQueryApi = api.injectEndpoints({
       }),
       providesTags: (_, __, { teamId, startDate, endDate }) => [
         {
-          type: "LeadTime",
+          type: "CycleTime",
           graphType: teamId,
           startDate,
           endDate,
@@ -27,4 +27,4 @@ export const leadTimeQueryApi = api.injectEndpoints({
   }),
 });
 
-export const { useGetLeadTimeQuery } = leadTimeQueryApi;
+export const { useGetCycleTimeQuery } = CycleTimeQueryApi;

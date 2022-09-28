@@ -10,7 +10,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import ErrorIcon from "@mui/icons-material/Error";
 import { colors } from "theme/colors";
 
-type MetricStatus = "success" | "warning" | "error";
+export type MetricStatus = "success" | "warning" | "error";
 
 export type MetricProps = PropsWithSx & {
   value: string;

@@ -12,6 +12,7 @@ import { buildHistogramOptions } from "services/highcharts/HighchartsOptionsBuil
 import { buildHistogramSeries } from "services/highcharts/HighchartsSeriesBuilder";
 import { useGetMetricsQuery } from "redux/api/goals/metrics/metrics.api";
 import { useDataStatus } from "hooks/useDataStatus";
+import InitialProcessingLoader from "components/molecules/InitialProcessingLoader/InitialProcessingLoader";
 
 function Histogram({
   title,
@@ -23,7 +24,7 @@ function Histogram({
   const { formatMessage } = useIntl();
   const { selectedTeam } = useCurrentUser();
   const [dateRange] = useSelectedDateRange();
-  const { isProcessingInitialJob } = useDataStatus();
+  const { isProcessingInitialJob, currentProgression } = useDataStatus();
 
   const { data: histogramData, isLoading } = useGetGraphQuery(
     {
@@ -86,9 +87,9 @@ function Histogram({
       sx={sx}
       loading={isLoading || isProcessingInitialJob}
       loadingMessage={
-        isProcessingInitialJob
-          ? formatMessage({ id: "data-status.loading" })
-          : undefined
+        isProcessingInitialJob ? (
+          <InitialProcessingLoader value={currentProgression} />
+        ) : undefined
       }
       titleSection={
         title

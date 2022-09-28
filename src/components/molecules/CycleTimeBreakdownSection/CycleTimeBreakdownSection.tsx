@@ -2,18 +2,18 @@ import React, { useMemo } from "react";
 import { PropsWithSx } from "types/PropsWithSx";
 import { Box, Tooltip, TooltipProps, Typography } from "@mui/material";
 import { colors } from "theme/colors";
-import LeadTimeBreakdownTile from "components/molecules/LeadTimeBreakdownSection/LeadTimeBreakdownTile";
-import LeadTimeBreakdownArrow from "components/molecules/LeadTimeBreakdownSection/LeadTimeBreakdownArrow";
-import LeadTimeAverageValue from "components/molecules/LeadTimeAverageValue/LeadTimeAverageValue";
+import CycleTimeBreakdownTile from "components/molecules/CycleTimeBreakdownSection/CycleTimeBreakdownTile";
+import CycleTimeBreakdownArrow from "components/molecules/CycleTimeBreakdownSection/CycleTimeBreakdownArrow";
+import CycleTimeAverageValue from "components/molecules/CycleTimeAverageValue/CycleTimeAverageValue";
 import Button from "components/atoms/Button/Button";
 import { TendencyProps } from "components/atoms/Tendency/Tendency";
 import InfoIcon from "@mui/icons-material/InfoOutlined";
 
-export type LeadTimeBreakdownSectionProps = PropsWithSx & {
+export type CycleTimeBreakdownSectionProps = PropsWithSx & {
   label: string;
   color: "green" | "orange" | "red";
   value: string;
-  tendency?: number;
+  tendency?: number | null;
   tendencyDates?: TendencyProps["tendencyDates"];
   action?: {
     label: string;
@@ -36,7 +36,7 @@ function buildBackgroundColor(color: "green" | "orange" | "red") {
   }
 }
 
-function LeadTimeBreakdownSection({
+function CycleTimeBreakdownSection({
   label,
   color,
   value,
@@ -46,7 +46,7 @@ function LeadTimeBreakdownSection({
   tooltipContent,
   loading = false,
   sx,
-}: LeadTimeBreakdownSectionProps) {
+}: CycleTimeBreakdownSectionProps) {
   const background = useMemo(
     () => buildBackgroundColor(color),
     [color]
@@ -73,7 +73,7 @@ function LeadTimeBreakdownSection({
           )}
         </Box>
         <Box sx={{ flex: 1 }}>
-          <LeadTimeBreakdownTile background={background} />
+          <CycleTimeBreakdownTile background={background} />
           <Box
             sx={{
               padding: (theme) => theme.spacing(1),
@@ -82,7 +82,7 @@ function LeadTimeBreakdownSection({
               alignItems: "center",
             }}
           >
-            <LeadTimeAverageValue
+            <CycleTimeAverageValue
               value={value}
               tendency={tendency}
               tendencyDates={tendencyDates}
@@ -105,10 +105,10 @@ function LeadTimeBreakdownSection({
       </Box>
       <Box sx={{ display: "flex", flexDirection: "column" }}>
         <Box sx={{ height: "36px" }} />
-        <LeadTimeBreakdownArrow />
+        <CycleTimeBreakdownArrow />
       </Box>
     </Box>
   );
 }
 
-export default LeadTimeBreakdownSection;
+export default CycleTimeBreakdownSection;
