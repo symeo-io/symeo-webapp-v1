@@ -59,10 +59,10 @@ function minutesToHours(value: number) {
 }
 
 function buildValueDisplay(
-  value: number | undefined,
+  value: number | undefined | null,
   formatMessage: IntlShape["formatMessage"]
 ) {
-  if (!value) {
+  if (value === undefined || value === null) {
     return formatMessage({ id: "cycle-time.unknown" });
   }
 
