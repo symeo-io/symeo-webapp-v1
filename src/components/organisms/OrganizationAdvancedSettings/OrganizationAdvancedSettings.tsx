@@ -2,21 +2,24 @@ import React, { useCallback, useState } from "react";
 import { Box, Divider, Typography } from "@mui/material";
 import { useIntl } from "react-intl";
 import { PropsWithSx } from "types/PropsWithSx";
-import RadioWithTextField from "components/molecules/RadioWithTextField/RadioWithTextField";
 import { OrganizationSettings } from "redux/api/organizations/organizations.types";
-import Button from "components/atoms/Button/Button";
-import { useUpdateOrganizationSettingsMutation } from "redux/api/organizations/organizations.api";
+import OrganizationReleaseDetectionSettings from "components/organisms/OrganizationReleaseDetectionSettings/OrganizationReleaseDetectionSettings";
+import OrganizationExcludeBranchesSettings from "components/organisms/OrganizationExcludeBranchesSettings/OrganizationExcludeBranchesSettings";
 import { api, dataTagTypes } from "redux/api/api";
+import { useUpdateOrganizationSettingsMutation } from "redux/api/organizations/organizations.api";
+import Button from "components/atoms/Button/Button";
 import { useDispatch } from "react-redux";
+import { enqueueSnackbar } from "notistack";
 
 export type ReleaseDetectionStrategy = "branch" | "tags";
+
+const BRANCH_REGEX_DEFAULT_VALUE = "^master$";
+const TAGS_REGEX_DEFAULT_VALUE = ".*";
+const BRANCH_REGEXES_TO_EXCLUDE_DEFAULT_VALUE = ["^staging$", "^main$"];
 
 export type OrganizationMembersProps = PropsWithSx & {
   settings: OrganizationSettings;
 };
-
-const BRANCH_REGEX_DEFAULT_VALUE = "^master$";
-const TAGS_REGEX_DEFAULT_VALUE = ".*";
 
 function OrganizationAdvancedSettings({
   sx,
@@ -41,10 +44,16 @@ function OrganizationAdvancedSettings({
   const [tagsValue, setTagsValue] = useState<string>(
     deployDetectionSettings.tag_regex ?? TAGS_REGEX_DEFAULT_VALUE
   );
+  const [branchRegexesToExcludeValue, setBranchRegexesToExcludeValue] =
+    useState<string[]>(
+      deployDetectionSettings.branch_regexes_to_exclude ??
+        BRANCH_REGEXES_TO_EXCLUDE_DEFAULT_VALUE
+    );
 
   const handleReset = useCallback(() => {
     setBranchValue(BRANCH_REGEX_DEFAULT_VALUE);
     setTagsValue(TAGS_REGEX_DEFAULT_VALUE);
+    setBranchRegexesToExcludeValue(BRANCH_REGEXES_TO_EXCLUDE_DEFAULT_VALUE);
   }, []);
 
   const handleSave = useCallback(async () => {
@@ -55,13 +64,22 @@ function OrganizationAdvancedSettings({
           pull_request_merged_on_branch_regex:
             selectedReleaseDetection === "branch" ? branchValue : null,
           tag_regex: selectedReleaseDetection === "tags" ? tagsValue : null,
+          branch_regexes_to_exclude: branchRegexesToExcludeValue,
         },
       },
     });
+    enqueueSnackbar(
+      formatMessage({
+        id: `organization.advanced.settings-saved-message`,
+      }),
+      { variant: "success" }
+    );
     dispatch(api.util.invalidateTags(dataTagTypes));
   }, [
+    branchRegexesToExcludeValue,
     branchValue,
     dispatch,
+    formatMessage,
     selectedReleaseDetection,
     settings.id,
     tagsValue,
@@ -69,7 +87,7 @@ function OrganizationAdvancedSettings({
   ]);
 
   return (
-    <Box sx={sx}>
+    <Box sx={{ paddingBottom: (theme) => theme.spacing(8), ...sx }}>
       <Typography
         variant="h2"
         sx={{ paddingBottom: (theme) => theme.spacing(1) }}
@@ -77,76 +95,50 @@ function OrganizationAdvancedSettings({
         {formatMessage({ id: "organization.advanced.title" })}
       </Typography>
       <Divider />
+      <OrganizationReleaseDetectionSettings
+        sx={{
+          marginTop: (theme) => theme.spacing(2),
+        }}
+        selectedReleaseDetection={selectedReleaseDetection}
+        setSelectedReleaseDetection={setSelectedReleaseDetection}
+        branchValue={branchValue}
+        setBranchValue={setBranchValue}
+        tagsValue={tagsValue}
+        setTagsValue={setTagsValue}
+      />
+      <Divider
+        sx={{
+          marginTop: (theme) => theme.spacing(2),
+        }}
+      />
+      <OrganizationExcludeBranchesSettings
+        sx={{
+          marginTop: (theme) => theme.spacing(2),
+        }}
+        branchRegexesToExcludeValue={branchRegexesToExcludeValue}
+        setBranchRegexesToExcludeValue={setBranchRegexesToExcludeValue}
+      />
       <Box
         sx={{
-          padding: (theme) => theme.spacing(1),
+          display: "flex",
+          justifyContent: "right",
           marginTop: (theme) => theme.spacing(2),
         }}
       >
-        <Typography variant="h3">
+        <Button variant="outlined" onClick={handleReset}>
           {formatMessage({
-            id: "organization.advanced.releases-detection.title",
+            id: "organization.advanced.releases-detection.reset",
           })}
-        </Typography>
-        <Typography
-          variant="body2"
-          sx={{ marginTop: (theme) => theme.spacing(2) }}
+        </Button>
+        <Button
+          sx={{ marginLeft: (theme) => theme.spacing(1) }}
+          onClick={handleSave}
+          loading={isLoading}
         >
           {formatMessage({
-            id: "organization.advanced.releases-detection.message",
+            id: "organization.advanced.releases-detection.save",
           })}
-        </Typography>
-        <Box sx={{ marginTop: (theme) => theme.spacing(2) }}>
-          <RadioWithTextField
-            checked={selectedReleaseDetection === "branch"}
-            onSelect={setSelectedReleaseDetection}
-            radioValue="branch"
-            title={formatMessage({
-              id: "organization.advanced.releases-detection.branch.title",
-            })}
-            message={formatMessage({
-              id: "organization.advanced.releases-detection.branch.message",
-            })}
-            fieldValue={branchValue}
-            setFieldValue={setBranchValue}
-          />
-          <RadioWithTextField
-            sx={{ marginTop: (theme) => theme.spacing(2) }}
-            checked={selectedReleaseDetection === "tags"}
-            onSelect={setSelectedReleaseDetection}
-            radioValue="tags"
-            title={formatMessage({
-              id: "organization.advanced.releases-detection.tags.title",
-            })}
-            message={formatMessage({
-              id: "organization.advanced.releases-detection.tags.message",
-            })}
-            fieldValue={tagsValue}
-            setFieldValue={setTagsValue}
-          />
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "right",
-            marginTop: (theme) => theme.spacing(2),
-          }}
-        >
-          <Button variant="outlined" onClick={handleReset}>
-            {formatMessage({
-              id: "organization.advanced.releases-detection.reset",
-            })}
-          </Button>
-          <Button
-            sx={{ marginLeft: (theme) => theme.spacing(1) }}
-            onClick={handleSave}
-            loading={isLoading}
-          >
-            {formatMessage({
-              id: "organization.advanced.releases-detection.save",
-            })}
-          </Button>
-        </Box>
+        </Button>
       </Box>
     </Box>
   );
