@@ -5,7 +5,7 @@ import Tendency, { TendencyProps } from "components/atoms/Tendency/Tendency";
 
 export type CycleTimeAverageValueProps = PropsWithSx & {
   value: string;
-  tendency?: number;
+  tendency?: number | null;
   tendencyDates?: TendencyProps["tendencyDates"];
   subtitle?: string;
   loading?: boolean;
@@ -24,7 +24,7 @@ function CycleTimeAverageValue({
       {!loading && (
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Typography variant="h2">{value}</Typography>
-          {tendency !== undefined && (
+          {tendency !== undefined && tendency !== null && (
             <Tendency
               tendency={tendency}
               tendencyDates={tendencyDates}

@@ -13,7 +13,7 @@ export type CycleTimeBreakdownSectionProps = PropsWithSx & {
   label: string;
   color: "green" | "orange" | "red";
   value: string;
-  tendency?: number;
+  tendency?: number | null;
   tendencyDates?: TendencyProps["tendencyDates"];
   action?: {
     label: string;
