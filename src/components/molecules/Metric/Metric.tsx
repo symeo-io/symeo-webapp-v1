@@ -70,7 +70,7 @@ function Metric({
             >
               {value}
             </Typography>
-            {tendency !== undefined && positiveTendency !== undefined && (
+            {positiveTendency !== undefined && (
               <Tendency
                 tendency={tendency}
                 tendencyDates={tendencyDates}

@@ -3,6 +3,9 @@
   "confirm": {
     "cancel": "Cancel"
   },
+  "tendency": {
+    "unknown": "N/A"
+  },
   "on-boarding": {
     "connect-repositories-provider": {
       "title": "Connect your code repositories provider",
@@ -80,7 +83,7 @@
     "value-days": "{value, number, ::.##} {value, plural, =0 {day} one {day} other {days}}",
     "value-hours": "{value, number, ::.##} {value, plural, =0 {hour} one {hour} other {hours}}",
     "value-minutes": "{value, number, ::.##} {value, plural, =0 {minute} one {minute} other {minutes}}",
-    "unknown": "Unknown",
+    "unknown": "N/A",
     "average-subtitle": "Avg. Cycle time",
     "coding": {
       "title": "Coding",
