@@ -54,7 +54,14 @@ function CycleTimeBreakdownSection({
 
   return (
     <Box sx={{ display: "flex", ...sx }}>
-      <Box sx={{ display: "flex", flexDirection: "column", minWidth: "150px" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          minWidth: "150px",
+          width: "255px",
+        }}
+      >
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Typography sx={{ fontSize: "1.5rem" }} color="secondary">
             {label}

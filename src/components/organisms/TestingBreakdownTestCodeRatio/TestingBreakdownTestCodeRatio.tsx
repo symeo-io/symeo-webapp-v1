@@ -31,7 +31,7 @@ function TestingBreakdownTestCodeRatio({
 
   return (
     <BreakdownSectionContainer
-      sx={{ width: "240px", ...sx }}
+      sx={{ width: "200px", ...sx }}
       title={formatMessage({ id: "testing.ratio.title" })}
     >
       <Box
