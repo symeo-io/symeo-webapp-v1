@@ -5,10 +5,11 @@ import dayjs from "dayjs";
 import { colors } from "theme/colors";
 import TrendingDownIcon from "@mui/icons-material/TrendingDown";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
+import { intl } from "intl";
 export type PositiveTendency = "up" | "down";
 
 export type TendencyProps = PropsWithSx & {
-  tendency: number;
+  tendency?: number | null;
   tendencyDates?: {
     current: {
       startDate?: string;
@@ -22,19 +23,34 @@ export type TendencyProps = PropsWithSx & {
   positiveTendency: PositiveTendency;
 };
 
-function buildTendencyLabel(tendency: number) {
+function buildTendencyLabel(tendency: number | undefined | null) {
+  if (tendency === undefined || tendency === null)
+    return intl.formatMessage({ id: "tendency.unknown" });
+
   return tendency >= 0 ? `+${tendency}%` : `${tendency}%`;
 }
 
 function buildTendencyColor(
-  tendency: number,
+  tendency: number | undefined | null,
   positiveTendency: PositiveTendency
 ) {
+  if (tendency === undefined || tendency === null) {
+    return "secondary";
+  }
+
   if (positiveTendency === "down") {
     return tendency > 0 ? "error" : "success";
   }
 
   return tendency < 0 ? "error" : "success";
+}
+
+function buildTendencyIcon(tendency: number | undefined | null) {
+  if (tendency === undefined || tendency === null) {
+    return TrendingUpIcon;
+  }
+
+  return tendency > 0 ? TrendingUpIcon : TrendingDownIcon;
 }
 
 function Tendency({
@@ -48,7 +64,7 @@ function Tendency({
     () => buildTendencyColor(tendency, positiveTendency),
     [tendency, positiveTendency]
   );
-  const TendencyIcon = tendency > 0 ? TrendingUpIcon : TrendingDownIcon;
+  const TendencyIcon = buildTendencyIcon(tendency);
 
   const content = (
     <Box

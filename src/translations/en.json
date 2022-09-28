@@ -3,6 +3,9 @@
   "confirm": {
     "cancel": "Cancel"
   },
+  "tendency": {
+    "unknown": "N/A"
+  },
   "on-boarding": {
     "connect-repositories-provider": {
       "title": "Connect your code repositories provider",
@@ -80,7 +83,7 @@
     "value-days": "{value, number, ::.##} {value, plural, =0 {day} one {day} other {days}}",
     "value-hours": "{value, number, ::.##} {value, plural, =0 {hour} one {hour} other {hours}}",
     "value-minutes": "{value, number, ::.##} {value, plural, =0 {minute} one {minute} other {minutes}}",
-    "unknown": "Unknown",
+    "unknown": "N/A",
     "average-subtitle": "Avg. Cycle time",
     "coding": {
       "title": "Coding",
@@ -171,6 +174,7 @@
     },
     "advanced": {
       "title": "Advanced settings",
+      "settings-saved-message": "Settings saved",
       "releases-detection": {
         "title": "Releases detection",
         "message": "Select the way you would like Symeo to detect releases.",
@@ -184,6 +188,10 @@
         },
         "reset": "Restore Default",
         "save": "Save"
+      },
+      "exclude-branches": {
+        "title": "Exclude branches",
+        "message": "If your work is done with feature branches you should add to this list all the branches that are not a target to a direct commit and used only as a baseline branch (e.g. Master, Staging, Development etc.)"
       }
     }
   },

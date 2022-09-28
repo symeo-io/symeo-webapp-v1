@@ -24,14 +24,12 @@ function CycleTimeAverageValue({
       {!loading && (
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Typography variant="h2">{value}</Typography>
-          {tendency !== undefined && tendency !== null && (
-            <Tendency
-              tendency={tendency}
-              tendencyDates={tendencyDates}
-              positiveTendency="down"
-              sx={{ marginLeft: (theme) => theme.spacing(1) }}
-            />
-          )}
+          <Tendency
+            tendency={tendency}
+            tendencyDates={tendencyDates}
+            positiveTendency="down"
+            sx={{ marginLeft: (theme) => theme.spacing(1) }}
+          />
         </Box>
       )}
       {loading && <CircularProgress size={20} />}
