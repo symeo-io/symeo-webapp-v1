@@ -69,11 +69,11 @@
     }
   },
   "dashboard": {
-    "title": "{teamName} Team Dashboard",
+    "title": "Dashboard - {teamName}",
     "improve-button-label": "Improve",
     "coming-soon": "Coming soon",
     "cycle-time": {
-      "title": "Cycle Time"
+      "title": "Cycle time"
     },
     "testing": {
       "title": "Testing"
@@ -84,7 +84,7 @@
     "value-hours": "{value, number, ::.##} {value, plural, =0 {hour} one {hour} other {hours}}",
     "value-minutes": "{value, number, ::.##} {value, plural, =0 {minute} one {minute} other {minutes}}",
     "unknown": "N/A",
-    "average-subtitle": "Avg. Cycle time",
+    "average-subtitle": "Avg. cycle time",
     "coding": {
       "title": "Coding",
       "tooltip": "Computed as the time between the first and the last commit (before any pull request event)."
@@ -94,7 +94,7 @@
       "tooltip": "Computed as the time between the last commit and the approval of the pull request."
     },
     "deploy": {
-      "title": "Deploy",
+      "title": "Deployment",
       "tooltip-branch": "Computed as the time between the pull request approval and the moment the branch commits arrive on the production branch with pattern \"{branchPattern}\".",
       "tooltip-tags": "Computed as the time between the pull request approval and the moment the branch commits are pushed on a tag matching \"{tagsPattern}\"."
     },
@@ -105,11 +105,11 @@
       "title": "Coverage"
     },
     "count": {
-      "title": "Tests count",
+      "title": "Number of Tests",
       "message": "Over {testSuitesCount} test suites"
     },
     "ratio": {
-      "title": "Tests code ratio",
+      "title": "Test to code ratio",
       "production": "Production",
       "tests": "Tests",
       "lines": "lines"
@@ -196,7 +196,7 @@
     }
   },
   "team-goals-library": {
-    "title": "Choose a new Goal for {teamName} {teamName, select, All {Teams} other {Team}}",
+    "title": "Choose a new goal for {teamName} team",
     "categories": {
       "delivery": "Delivery",
       "code-quality": "Code Quality",
@@ -204,7 +204,7 @@
     }
   },
   "team-goals": {
-    "title": "{teamName} Team Goals",
+    "title": "Team Goals - {teamName}",
     "empty-state": {
       "title": "No Team Goals configured",
       "message": "Set up a 'New Team Goal' to start improving your key indicators",
@@ -227,14 +227,14 @@
       "button-label": "Delete team goal",
       "confirm": {
         "title": "Deleting Team Goal",
-        "message": "Goal \"{standardName}\" will be removed from {teamName} Team",
+        "message": "Goal \"{standardName}\" will be removed from {teamName} team",
         "confirm-label": "Delete team goal"
       }
     },
     "cancel": "Cancel",
     "time-to-merge": {
       "title": "Aim for short PR lifecycle",
-      "description": "Long opened pull requests run the risk to be more difficult to merge, due to conflicts or forgotten context. Also, they can be the symptom of communication issues, too large PR or low PR quality.",
+      "description": "Pull requests that are open for a long time run the risk of being more difficult to merge, due to conflicts or forgotten context. They can also be the symptom of communication issues, too large PR or low PR quality.",
       "page": {
         "title": "Aim for short PR lifecycle - Settings",
         "limit-config": {
@@ -243,7 +243,7 @@
         }
       },
       "dashboard": {
-        "title": "All PRs merged in less than {target} days"
+        "title": "All PRs merged in less than {target, plural, =0 {day} one {# day} other {# days}}"
       },
       "percent": {
         "value": "{value}%",
@@ -267,7 +267,7 @@
     },
     "pull-request-size": {
       "title": "Avoid large pull request",
-      "description": "It’s easier for humans to work on smaller tasks. Small pull requests are easier to read, which increase the review quality and reduce the risk of errors.",
+      "description": "It’s easier for humans to work on smaller tasks. Small pull requests are easier to read, which increases the review quality and reduces the risk of errors.",
       "page": {
         "title": "Avoid large pull request - Settings",
         "limit-config": {
@@ -299,12 +299,12 @@
       }
     },
     "regular-production-deployments": {
-      "title": "Regular production deployments",
-      "description": "A high deployment frequency means delivering value to end users more quickly. Also, studies show that high functioning teams have higher deployment frequency than their peers."
+      "title": "Aim for regular production deployments",
+      "description": "A high deployment frequency means delivering value to end users more quickly. Also, studies show that high-functioning teams have higher deployment frequency."
     },
     "small-coding-tasks": {
       "title": "Aim for small coding tasks",
-      "description": "Splitting tasks into small units means getting technical and functional feedbacks quicker. This allows to detect defective technical strategies or misunderstood specifications early."
+      "description": "Splitting tasks into small units means getting technical and functional feedback quicker. This allows detection of defective technical strategies or misunderstood specifications early on."
     },
     "strong-test-coverage": {
       "title": "Aim for strong test coverage",
@@ -312,7 +312,7 @@
     },
     "short-deployment-time": {
       "title": "Aim for short deployment time",
-      "description": "Having a fast deployment pipeline means you get quicker feedbacks on deployments problems. It also reduces the cost of deployment and allows you to deploy more often."
+      "description": "Having a fast deployment pipeline means you get quicker feedback on deployment problems. It also reduces the cost of deployment and allows you to deploy more often."
     }
   },
   "pull-requests-table": {
