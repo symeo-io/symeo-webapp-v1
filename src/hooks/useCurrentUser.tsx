@@ -7,6 +7,7 @@ import { useCallback, useEffect, useMemo } from "react";
 import { Goal } from "redux/api/goals/goals.types";
 import { useGetGoalsQuery } from "redux/api/goals/goals.api";
 import { useLocalStorage } from "hooks/useLocalStorage";
+import { datadogRum } from "@datadog/browser-rum";
 
 const SELECTED_TEAM_LOCAL_STORAGE_KEY = "SELECTED_TEAM";
 
@@ -58,6 +59,17 @@ export function useCurrentUser(): UseCurrentUserOutput {
       goalData?.team_goals?.filter((goal) => goal.team_id === selectedTeamId),
     [goalData?.team_goals, selectedTeamId]
   );
+
+  useEffect(() => {
+    if (currentUserData?.user && auth0User) {
+      datadogRum.setUser({
+        id: currentUserData.user.id,
+        name: auth0User.name,
+        email: currentUserData.user.email,
+        organization: currentUserData.user.organization,
+      });
+    }
+  }, [auth0User, currentUserData?.user]);
 
   return useMemo(
     () => ({
