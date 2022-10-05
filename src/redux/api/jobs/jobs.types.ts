@@ -15,7 +15,7 @@ export type VcsDataCollectionStatusInput = {
 
 export type VcsDataCollectionStatusResponse = ResponseWithErrors & {
   jobs: {
-    current_job: Job;
+    current_job?: Job;
     previous_job?: Job;
   };
 };
