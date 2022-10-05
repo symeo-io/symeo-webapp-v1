@@ -6,6 +6,11 @@ import { withSidebar } from "hoc/withSidebar";
 import { withDataStatus } from "hoc/withDataStatus";
 
 function RoutesWrapper() {
+  const redirectToSignUp = useMemo(
+    () => window.location.search.includes("screen_hint=signup"),
+    []
+  );
+
   const routeComponents = useMemo(
     () =>
       Object.values(routes).map((route) => {
@@ -25,7 +30,12 @@ function RoutesWrapper() {
             path={route.path}
             element={
               route.isSecured ? (
-                <AuthenticatedRoute component={Component} />
+                <AuthenticatedRoute
+                  component={Component}
+                  loginOptions={{
+                    screen_hint: redirectToSignUp ? "signup" : "login",
+                  }}
+                />
               ) : (
                 <Component />
               )
@@ -33,7 +43,7 @@ function RoutesWrapper() {
           />
         );
       }),
-    []
+    [redirectToSignUp]
   );
 
   return <Routes>{routeComponents}</Routes>;
