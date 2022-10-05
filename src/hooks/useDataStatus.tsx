@@ -23,16 +23,16 @@ export const useDataStatus = () => {
     () =>
       !jobStatusData ||
       (!jobStatusData.jobs.previous_job &&
-        jobStatusData.jobs.current_job.status !== "FINISHED"),
+        jobStatusData.jobs.current_job?.status !== "FINISHED"),
     [jobStatusData]
   );
 
   const lastUpdateDate = useMemo(() => {
     if (!jobStatusData) return undefined;
 
-    if (jobStatusData.jobs.current_job.status === "FINISHED") {
+    if (jobStatusData.jobs.current_job?.status === "FINISHED") {
       return dayjs(
-        jobStatusData.jobs.current_job.end_date,
+        jobStatusData.jobs.current_job?.end_date,
         "YYYY-MM-DD HH:mm:ss"
       ).toDate();
     }
@@ -51,13 +51,13 @@ export const useDataStatus = () => {
   }, [jobStatusData]);
 
   const currentStatus = useMemo(
-    () => jobStatusData && jobStatusData.jobs.current_job.status,
+    () => jobStatusData && jobStatusData.jobs.current_job?.status,
     [jobStatusData]
   );
 
   const currentProgression = useMemo(
     () =>
-      jobStatusData && jobStatusData.jobs.current_job.progression_percentage,
+      jobStatusData && jobStatusData.jobs.current_job?.progression_percentage,
     [jobStatusData]
   );
 
