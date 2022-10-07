@@ -5,6 +5,9 @@ import Button from "components/atoms/Button/Button";
 import { useIntl } from "react-intl";
 import { PropsWithSx } from "types/PropsWithSx";
 import CheckIcon from "@mui/icons-material/Check";
+import MessageBox, {
+  MessageBoxProps,
+} from "components/atoms/MessageBox/MessageBox";
 
 export type IntegrationPanelProps = PropsWithSx & {
   name: string;
@@ -13,6 +16,11 @@ export type IntegrationPanelProps = PropsWithSx & {
   enabled?: boolean;
   onClick?: () => void;
   loading?: boolean;
+  message?: {
+    message: MessageBoxProps["message"];
+    Icon: MessageBoxProps["Icon"];
+    variant?: MessageBoxProps["variant"];
+  };
 };
 
 function getButtonLabel(supported: boolean, enabled: boolean): string {
@@ -33,6 +41,7 @@ export function IntegrationPanel({
   enabled = false,
   onClick,
   loading = false,
+  message,
   sx,
 }: IntegrationPanelProps) {
   const { formatMessage } = useIntl();
@@ -63,6 +72,18 @@ export function IntegrationPanel({
         >
           {name}
         </Typography>
+        {message && (
+          <MessageBox
+            Icon={message.Icon}
+            message={message.message}
+            variant={message.variant}
+            sx={{
+              padding: (theme) => theme.spacing(1),
+              marginLeft: (theme) => theme.spacing(1),
+              background: "transparent",
+            }}
+          />
+        )}
       </Box>
       <Box
         sx={{

@@ -6,7 +6,7 @@ import { PropsWithSx } from "types/PropsWithSx";
 export type MessageBoxProps = PropsWithSx & {
   Icon?: typeof SvgIcon;
   message: string;
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "success" | "warning" | "error";
 };
 
 export function MessageBox({
@@ -27,7 +27,7 @@ export function MessageBox({
         ...sx,
       }}
     >
-      {Icon && <Icon sx={{ marginRight: (theme) => theme.spacing(2) }} />}
+      {Icon && <Icon sx={{ marginRight: (theme) => theme.spacing(1) }} />}
       <Typography variant="caption">{message}</Typography>
     </Box>
   );
