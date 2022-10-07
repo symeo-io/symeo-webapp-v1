@@ -21,7 +21,7 @@ function OnBoardingCard({
         flexDirection: "column",
         alignItems: "center",
         padding: (theme) => theme.spacing(4),
-        width: "550px",
+        width: "560px",
         ...sx,
       }}
     >
