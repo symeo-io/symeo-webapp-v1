@@ -66,8 +66,7 @@ export function useCurrentUser(): UseCurrentUserOutput {
         id: currentUserData.user.id,
         name: auth0User.name,
         email: currentUserData.user.email,
-        organizationId: currentUserData.user.organization?.id,
-        organizationName: currentUserData.user.organization?.name,
+        organization: currentUserData.user.organization,
       });
     }
   }, [auth0User, currentUserData?.user]);
