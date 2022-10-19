@@ -74,7 +74,7 @@ function DeploymentBreakdown({ sx }: DeploymentBreakdownProps) {
             }
             tendencyDates={tendencyDates}
             positiveTendency="up"
-            repositoriesCount={0}
+            repositoriesCount={selectedTeam?.repository_ids.length ?? 0}
             loading={isLoadingCycleTime}
             sx={{ borderRight: `1px solid ${colors.secondary.borders}` }}
           />
