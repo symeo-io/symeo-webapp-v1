@@ -5,7 +5,7 @@ import CycleTimeAverageValue from "components/molecules/CycleTimeAverageValue/Cy
 import CycleTimeBreakdownSection, {
   CycleTimeBreakdownSectionProps,
 } from "components/molecules/CycleTimeBreakdownSection/CycleTimeBreakdownSection";
-import { IntlShape, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import { useNavigate } from "hooks/useNavigate";
 import { useGetCycleTimeQuery } from "redux/api/cycle-time/cycle-time.api";
 import { useCurrentUser } from "hooks/useCurrentUser";
@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 import { colors } from "theme/colors";
 import { useGetOrganizationSettingsQuery } from "redux/api/organizations/organizations.api";
 import InitialProcessingLoader from "components/molecules/InitialProcessingLoader/InitialProcessingLoader";
+import { DurationService } from "services/time/DurationService";
 
 const breakdownColorsLimits = {
   coding_time: {
@@ -48,46 +49,6 @@ function buildColor(
   }
 
   return "red";
-}
-
-function minutesToDays(value: number) {
-  return value / 60 / 24;
-}
-
-function minutesToHours(value: number) {
-  return value / 60;
-}
-
-function buildValueDisplay(
-  value: number | undefined | null,
-  formatMessage: IntlShape["formatMessage"]
-) {
-  if (value === undefined || value === null) {
-    return formatMessage({ id: "cycle-time.unknown" });
-  }
-
-  if (value < 60) {
-    return formatMessage(
-      { id: "cycle-time.value-minutes" },
-      {
-        value,
-      }
-    );
-  } else if (value < 60 * 24) {
-    return formatMessage(
-      { id: "cycle-time.value-hours" },
-      {
-        value: minutesToHours(value),
-      }
-    );
-  } else {
-    return formatMessage(
-      { id: "cycle-time.value-days" },
-      {
-        value: minutesToDays(value),
-      }
-    );
-  }
 }
 
 export type CycleTimeBreakdownProps = PropsWithSx;
@@ -148,9 +109,8 @@ function CycleTimeBreakdown({ sx }: CycleTimeBreakdownProps) {
         <>
           <CycleTimeAverageValue
             loading={isLoadingCycleTime}
-            value={buildValueDisplay(
-              CycleTimeData?.cycle_time?.average.value,
-              formatMessage
+            value={DurationService.minutesToDisplayString(
+              CycleTimeData?.cycle_time?.average.value
             )}
             tendency={CycleTimeData?.cycle_time?.average.tendency_percentage}
             tendencyDates={tendencyDates}
@@ -160,9 +120,8 @@ function CycleTimeBreakdown({ sx }: CycleTimeBreakdownProps) {
             <CycleTimeBreakdownSection
               loading={isLoadingCycleTime}
               label={formatMessage({ id: "cycle-time.coding.title" })}
-              value={buildValueDisplay(
-                CycleTimeData?.cycle_time?.coding_time.value,
-                formatMessage
+              value={DurationService.minutesToDisplayString(
+                CycleTimeData?.cycle_time?.coding_time.value
               )}
               tendency={
                 CycleTimeData?.cycle_time?.coding_time.tendency_percentage
@@ -183,9 +142,8 @@ function CycleTimeBreakdown({ sx }: CycleTimeBreakdownProps) {
             <CycleTimeBreakdownSection
               loading={isLoadingCycleTime}
               label={formatMessage({ id: "cycle-time.review.title" })}
-              value={buildValueDisplay(
-                CycleTimeData?.cycle_time?.review_time.value,
-                formatMessage
+              value={DurationService.minutesToDisplayString(
+                CycleTimeData?.cycle_time?.review_time.value
               )}
               tendency={
                 CycleTimeData?.cycle_time?.review_time.tendency_percentage
@@ -206,9 +164,8 @@ function CycleTimeBreakdown({ sx }: CycleTimeBreakdownProps) {
             <CycleTimeBreakdownSection
               loading={isLoadingCycleTime}
               label={formatMessage({ id: "cycle-time.deploy.title" })}
-              value={buildValueDisplay(
-                CycleTimeData?.cycle_time?.time_to_deploy.value,
-                formatMessage
+              value={DurationService.minutesToDisplayString(
+                CycleTimeData?.cycle_time?.time_to_deploy.value
               )}
               tendency={
                 CycleTimeData?.cycle_time?.time_to_deploy.tendency_percentage

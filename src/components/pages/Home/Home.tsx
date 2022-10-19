@@ -6,6 +6,7 @@ import DateRangeSelector from "components/molecules/DateRangeSelector/DateRangeS
 import CycleTimeBreakdown from "components/organisms/CycleTimeBreakdown/CycleTimeBreakdown";
 import TestingBreakdown from "components/organisms/TestingBreakdown/TestingBreakdown";
 import Status from "components/atoms/Status/Status";
+import DeploymentBreakdown from "components/organisms/DeploymentBreakdown/DeploymentBreakdown";
 
 function Home() {
   const { formatMessage } = useIntl();
@@ -39,6 +40,20 @@ function Home() {
         </Typography>
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <CycleTimeBreakdown
+            sx={{
+              marginTop: (theme) => theme.spacing(2),
+            }}
+          />
+        </Box>
+      </Box>
+      <Box sx={{ marginY: (theme) => theme.spacing(6) }}>
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Typography variant="h2">
+            {formatMessage({ id: "dashboard.deployment.title" })}
+          </Typography>
+        </Box>
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <DeploymentBreakdown
             sx={{
               marginTop: (theme) => theme.spacing(2),
             }}

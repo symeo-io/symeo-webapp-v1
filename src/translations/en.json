@@ -78,13 +78,12 @@
     },
     "testing": {
       "title": "Testing"
+    },
+    "deployment": {
+      "title": "Deployment"
     }
   },
   "cycle-time": {
-    "value-days": "{value, number, ::.##} {value, plural, =0 {day} one {day} other {days}}",
-    "value-hours": "{value, number, ::.##} {value, plural, =0 {hour} one {hour} other {hours}}",
-    "value-minutes": "{value, number, ::.##} {value, plural, =0 {minute} one {minute} other {minutes}}",
-    "unknown": "N/A",
     "average-subtitle": "Avg. cycle time",
     "coding": {
       "title": "Coding",
@@ -120,6 +119,24 @@
       "unit": "Unit",
       "integration": "Integration",
       "end-to-end": "E2E"
+    }
+  },
+  "deployment": {
+    "count": {
+      "title": "Deployment count",
+      "date-message": "Between {startDate} and {endDate}",
+      "repositories-message": "Over {repositoriesCount} repositories"
+    },
+    "per-day": {
+      "title": "Deployment per day"
+    },
+    "time-between-deploys": {
+      "title": "Avg. time between deployments",
+      "unit": "{value, plural, =0 {day} one {day} other {days}}"
+    },
+    "last-deploy": {
+      "title": "Last deploy",
+      "on": "On"
     }
   },
   "organization": {
@@ -334,5 +351,16 @@
     "initial-data-processing": "Initial processing of your data {progression}%",
     "data-processing": "Updating your data {progression}%",
     "last-update": "Last data update: {date}"
+  },
+  "time": {
+    "value": "{value, number, ::.##}",
+    "ago": "ago",
+    "value-days": "{value, number, ::.##} {value, plural, =0 {day} one {day} other {days}}",
+    "value-hours": "{value, number, ::.##} {value, plural, =0 {hour} one {hour} other {hours}}",
+    "value-minutes": "{value, number, ::.##} {value, plural, =0 {minute} one {minute} other {minutes}}",
+    "unit-days": "{value, plural, =0 {day} one {day} other {days}}",
+    "unit-hours": "{value, plural, =0 {hour} one {hour} other {hours}}",
+    "unit-minutes": "{value, plural, =0 {minute} one {minute} other {minutes}}",
+    "unknown": "N/A"
   }
 }
