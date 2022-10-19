@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import { PropsWithSx } from "types/PropsWithSx";
 import React, { PropsWithChildren } from "react";
 import Button from "components/atoms/Button/Button";
@@ -6,6 +6,7 @@ import { useIntl } from "react-intl";
 
 export type BreakdownSectionContainerProps = PropsWithSx &
   PropsWithChildren & {
+    loading?: boolean;
     title: string;
   };
 
@@ -13,6 +14,7 @@ function BreakdownSectionContainer({
   sx,
   children,
   title,
+  loading = false,
 }: BreakdownSectionContainerProps) {
   const { formatMessage } = useIntl();
 
@@ -37,7 +39,8 @@ function BreakdownSectionContainer({
           alignItems: "center",
         }}
       >
-        {children}
+        {loading && <CircularProgress size={20} />}
+        {!loading && children}
       </Box>
       <Box>
         <Button

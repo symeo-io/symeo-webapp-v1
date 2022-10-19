@@ -6,15 +6,17 @@ import React, { useMemo } from "react";
 import { DurationService } from "services/time/DurationService";
 
 export type DeploymentBreakdownLastDeployProps = PropsWithSx & {
-  value: number;
-  repositoryName: string;
-  pullRequestLink: string;
+  value: number | undefined | null;
+  repositoryName: string | undefined | null;
+  pullRequestLink: string | undefined | null;
+  loading?: boolean;
 };
 
 function DeploymentBreakdownLastDeploy({
   value,
   repositoryName,
   pullRequestLink,
+  loading,
   sx,
 }: DeploymentBreakdownLastDeployProps) {
   const { formatMessage } = useIntl();
@@ -27,6 +29,7 @@ function DeploymentBreakdownLastDeploy({
   return (
     <BreakdownSectionContainer
       sx={{ width: "200px", ...sx }}
+      loading={loading}
       title={formatMessage({ id: "deployment.last-deploy.title" })}
     >
       <Box
@@ -71,18 +74,23 @@ function DeploymentBreakdownLastDeploy({
               {formatMessage({ id: "time.ago" })}
             </Typography>
           </Box>
-          <Typography
-            variant="body1"
-            sx={{
-              fontStyle: "italic",
-              marginTop: (theme) => theme.spacing(0.5),
-            }}
-          >
-            {formatMessage({ id: "deployment.last-deploy.on" })}{" "}
-            <Link target="_blank" href={pullRequestLink}>
-              {repositoryName}
-            </Link>
-          </Typography>
+          {repositoryName && (
+            <Typography
+              variant="body1"
+              sx={{
+                fontStyle: "italic",
+                marginTop: (theme) => theme.spacing(0.5),
+              }}
+            >
+              {formatMessage({ id: "deployment.last-deploy.on" })}{" "}
+              {pullRequestLink && (
+                <Link target="_blank" href={pullRequestLink}>
+                  {repositoryName}
+                </Link>
+              )}
+              {!pullRequestLink && repositoryName}
+            </Typography>
+          )}
         </Box>
       </Box>
     </BreakdownSectionContainer>

@@ -10,10 +10,11 @@ import React, { useMemo } from "react";
 import { DurationService } from "services/time/DurationService";
 
 export type DeploymentBreakdownTimeBetweenDeploysProps = PropsWithSx & {
-  value: number;
-  tendency: number;
+  value: number | undefined | null;
+  tendency: number | undefined | null;
   tendencyDates?: TendencyProps["tendencyDates"];
   positiveTendency: PositiveTendency;
+  loading?: boolean;
 };
 
 function DeploymentBreakdownTimeBetweenDeploys({
@@ -21,6 +22,7 @@ function DeploymentBreakdownTimeBetweenDeploys({
   tendencyDates,
   tendency,
   positiveTendency,
+  loading,
   sx,
 }: DeploymentBreakdownTimeBetweenDeploysProps) {
   const { formatMessage } = useIntl();
@@ -33,6 +35,7 @@ function DeploymentBreakdownTimeBetweenDeploys({
   return (
     <BreakdownSectionContainer
       sx={{ width: "200px", ...sx }}
+      loading={loading}
       title={formatMessage({ id: "deployment.time-between-deploys.title" })}
     >
       <Box
@@ -62,22 +65,26 @@ function DeploymentBreakdownTimeBetweenDeploys({
                 lineHeight: "2.5rem",
               }}
             >
-              {formatMessage({ id: "time.value" }, { value: displayedValue })}
+              {displayedValue
+                ? formatMessage({ id: "time.value" }, { value: displayedValue })
+                : formatMessage({ id: "time.unknown" })}
             </Typography>
-            <Typography
-              sx={{
-                fontWeight: 600,
-                fontSize: "1.2rem",
-              }}
-            >
-              {formatMessage(
-                { id: `time.unit-${unit}` },
-                { value: displayedValue }
-              )}
-            </Typography>
+            {unit && (
+              <Typography
+                sx={{
+                  fontWeight: 600,
+                  fontSize: "1.2rem",
+                }}
+              >
+                {formatMessage(
+                  { id: `time.unit-${unit}` },
+                  { value: displayedValue }
+                )}
+              </Typography>
+            )}
             <Tendency
               sx={{ marginLeft: (theme) => theme.spacing(0.5) }}
-              tendency={tendency * 100}
+              tendency={tendency && tendency * 100}
               tendencyDates={tendencyDates}
               positiveTendency={positiveTendency}
             />

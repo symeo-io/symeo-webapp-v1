@@ -9,10 +9,11 @@ import Tendency, {
 import React from "react";
 
 export type DeploymentBreakdownPerDayProps = PropsWithSx & {
-  value: number;
-  tendency: number;
+  value: number | undefined | null;
+  tendency: number | undefined | null;
   tendencyDates?: TendencyProps["tendencyDates"];
   positiveTendency: PositiveTendency;
+  loading?: boolean;
 };
 
 function DeploymentBreakdownPerDay({
@@ -20,6 +21,7 @@ function DeploymentBreakdownPerDay({
   tendencyDates,
   tendency,
   positiveTendency,
+  loading,
   sx,
 }: DeploymentBreakdownPerDayProps) {
   const { formatMessage } = useIntl();
@@ -27,6 +29,7 @@ function DeploymentBreakdownPerDay({
   return (
     <BreakdownSectionContainer
       sx={{ width: "200px", ...sx }}
+      loading={loading}
       title={formatMessage({ id: "deployment.per-day.title" })}
     >
       <Box
@@ -56,11 +59,11 @@ function DeploymentBreakdownPerDay({
                 lineHeight: "2.5rem",
               }}
             >
-              {value}
+              {value ?? formatMessage({ id: "time.unknown" })}
             </Typography>
             <Tendency
               sx={{ marginLeft: (theme) => theme.spacing(0.5) }}
-              tendency={tendency * 100}
+              tendency={tendency && tendency * 100}
               tendencyDates={tendencyDates}
               positiveTendency={positiveTendency}
             />
