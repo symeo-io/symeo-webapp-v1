@@ -59,20 +59,24 @@ function DeploymentBreakdownLastDeploy({
                 lineHeight: "2.5rem",
               }}
             >
-              {formatMessage({ id: "time.value" }, { value: displayedValue })}
+              {displayedValue
+                ? formatMessage({ id: "time.value" }, { value: displayedValue })
+                : formatMessage({ id: "time.unknown" })}
             </Typography>
-            <Typography
-              sx={{
-                fontWeight: 600,
-                fontSize: "1.2rem",
-              }}
-            >
-              {formatMessage(
-                { id: `time.unit-${unit}` },
-                { value: displayedValue }
-              )}{" "}
-              {formatMessage({ id: "time.ago" })}
-            </Typography>
+            {displayedValue && (
+              <Typography
+                sx={{
+                  fontWeight: 600,
+                  fontSize: "1.2rem",
+                }}
+              >
+                {formatMessage(
+                  { id: `time.unit-${unit}` },
+                  { value: displayedValue }
+                )}{" "}
+                {formatMessage({ id: "time.ago" })}
+              </Typography>
+            )}
           </Box>
           {repositoryName && (
             <Typography
