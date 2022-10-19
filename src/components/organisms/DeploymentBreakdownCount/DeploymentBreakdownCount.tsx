@@ -10,11 +10,12 @@ import React from "react";
 import dayjs from "dayjs";
 
 export type DeploymentBreakdownCountProps = PropsWithSx & {
-  value: number;
-  tendency: number;
+  value: number | undefined | null;
+  tendency: number | undefined | null;
   tendencyDates?: TendencyProps["tendencyDates"];
   positiveTendency: PositiveTendency;
   repositoriesCount: number;
+  loading?: boolean;
 };
 
 function DeploymentBreakdownCount({
@@ -23,6 +24,7 @@ function DeploymentBreakdownCount({
   tendency,
   positiveTendency,
   repositoriesCount,
+  loading,
   sx,
 }: DeploymentBreakdownCountProps) {
   const { formatMessage } = useIntl();
@@ -30,6 +32,7 @@ function DeploymentBreakdownCount({
   return (
     <BreakdownSectionContainer
       sx={{ width: "200px", ...sx }}
+      loading={loading}
       title={formatMessage({ id: "deployment.count.title" })}
     >
       <Box
@@ -59,11 +62,11 @@ function DeploymentBreakdownCount({
                 lineHeight: "2.5rem",
               }}
             >
-              {value}
+              {value ?? formatMessage({ id: "time.unknown" })}
             </Typography>
             <Tendency
               sx={{ marginLeft: (theme) => theme.spacing(0.5) }}
-              tendency={tendency * 100}
+              tendency={tendency && tendency * 100}
               tendencyDates={tendencyDates}
               positiveTendency={positiveTendency}
             />
@@ -74,7 +77,7 @@ function DeploymentBreakdownCount({
             variant="body1"
             sx={{
               fontStyle: "italic",
-              marginTop: (theme) => theme.spacing(0.5),
+              marginTop: (theme) => theme.spacing(1),
             }}
           >
             {formatMessage(
@@ -88,10 +91,7 @@ function DeploymentBreakdownCount({
             )}
           </Typography>
         )}
-        <Typography
-          variant="body1"
-          sx={{ fontStyle: "italic", marginTop: (theme) => theme.spacing(0.5) }}
-        >
+        <Typography variant="body1" sx={{ fontStyle: "italic" }}>
           {formatMessage(
             { id: "deployment.count.repositories-message" },
             { repositoriesCount }
