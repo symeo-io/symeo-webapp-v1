@@ -106,7 +106,6 @@ function DeploymentBreakdown({ sx }: DeploymentBreakdownProps) {
             repositoryName={deploymentData?.deployment?.last_deploy.label}
             pullRequestLink={deploymentData?.deployment?.last_deploy.link}
             loading={isLoadingCycleTime}
-            sx={{ borderRight: `1px solid ${colors.secondary.borders}` }}
           />
         </>
       )}
