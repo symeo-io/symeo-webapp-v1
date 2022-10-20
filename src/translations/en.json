@@ -26,6 +26,8 @@
       "skip-button-label": "Skip",
       "next-button-label": "Next",
       "form": {
+        "select-all-label": "Select all",
+        "deselect-all-label": "Deselect all",
         "name-field-label": "Team name",
         "name-field-placeholder": "Your team name",
         "repositories-field-label": "Select your team repositories",
