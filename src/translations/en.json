@@ -354,6 +354,7 @@
   },
   "time": {
     "value": "{value, number, ::.##}",
+    "percent-value": "{value, number, ::.##}%",
     "ago": "ago",
     "value-days": "{value, number, ::.##} {value, plural, =0 {day} one {day} other {days}}",
     "value-hours": "{value, number, ::.##} {value, plural, =0 {hour} one {hour} other {hours}}",

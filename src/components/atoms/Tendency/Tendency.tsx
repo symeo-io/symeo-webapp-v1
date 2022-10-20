@@ -27,7 +27,11 @@ function buildTendencyLabel(tendency: number | undefined | null) {
   if (tendency === undefined || tendency === null)
     return intl.formatMessage({ id: "tendency.unknown" });
 
-  return tendency >= 0 ? `+${tendency}%` : `${tendency}%`;
+  const label = intl.formatMessage(
+    { id: "time.percent-value" },
+    { value: tendency }
+  );
+  return tendency >= 0 ? `+${label}` : label;
 }
 
 function buildTendencyColor(

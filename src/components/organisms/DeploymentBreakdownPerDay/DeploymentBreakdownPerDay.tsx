@@ -63,7 +63,7 @@ function DeploymentBreakdownPerDay({
             </Typography>
             <Tendency
               sx={{ marginLeft: (theme) => theme.spacing(0.5) }}
-              tendency={tendency && tendency * 100}
+              tendency={tendency}
               tendencyDates={tendencyDates}
               positiveTendency={positiveTendency}
             />
