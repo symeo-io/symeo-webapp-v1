@@ -36,34 +36,39 @@ function Home() {
       </Box>
       <Box>
         <Typography variant="h2">
-          {formatMessage({ id: "dashboard.cycle-time.title" })}
+          {formatMessage({ id: "dashboard.delivery.title" })}
         </Typography>
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <CycleTimeBreakdown
-            sx={{
-              marginTop: (theme) => theme.spacing(2),
-            }}
-          />
-        </Box>
-      </Box>
-      <Box sx={{ marginY: (theme) => theme.spacing(6) }}>
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Typography variant="h2">
-            {formatMessage({ id: "dashboard.deployment.title" })}
+        <Box sx={{ marginTop: (theme) => theme.spacing(2) }}>
+          <Typography variant="h3">
+            {formatMessage({ id: "dashboard.delivery.cycle-time.title" })}
           </Typography>
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <CycleTimeBreakdown
+              sx={{
+                marginTop: (theme) => theme.spacing(2),
+              }}
+            />
+          </Box>
         </Box>
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <DeploymentBreakdown
-            sx={{
-              marginTop: (theme) => theme.spacing(2),
-            }}
-          />
+        <Box sx={{ marginY: (theme) => theme.spacing(6) }}>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Typography variant="h3">
+              {formatMessage({ id: "dashboard.delivery.deployment.title" })}
+            </Typography>
+          </Box>
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <DeploymentBreakdown
+              sx={{
+                marginTop: (theme) => theme.spacing(2),
+              }}
+            />
+          </Box>
         </Box>
       </Box>
       <Box sx={{ marginY: (theme) => theme.spacing(6) }}>
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Typography variant="h2">
-            {formatMessage({ id: "dashboard.testing.title" })}
+            {formatMessage({ id: "dashboard.quality.title" })}
           </Typography>
           <Status
             sx={{ marginLeft: (theme) => theme.spacing(1) }}
@@ -71,12 +76,19 @@ function Home() {
             variant="warning"
           />
         </Box>
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <TestingBreakdown
-            sx={{
-              marginTop: (theme) => theme.spacing(2),
-            }}
-          />
+        <Box sx={{ marginTop: (theme) => theme.spacing(2) }}>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Typography variant="h3">
+              {formatMessage({ id: "dashboard.quality.testing.title" })}
+            </Typography>
+          </Box>
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <TestingBreakdown
+              sx={{
+                marginTop: (theme) => theme.spacing(2),
+              }}
+            />
+          </Box>
         </Box>
       </Box>
     </Box>

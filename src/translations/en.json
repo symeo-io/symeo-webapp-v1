@@ -75,14 +75,20 @@
     "title": "Dashboard - {teamName}",
     "improve-button-label": "Improve",
     "coming-soon": "Coming soon",
-    "cycle-time": {
-      "title": "Cycle time"
+    "delivery": {
+      "title": "Delivery",
+      "cycle-time": {
+        "title": "Cycle time"
+      },
+      "deployment": {
+        "title": "Deployment"
+      }
     },
-    "testing": {
-      "title": "Testing"
-    },
-    "deployment": {
-      "title": "Deployment"
+    "quality": {
+      "title": "Quality",
+      "testing": {
+        "title": "Testing"
+      }
     }
   },
   "cycle-time": {
