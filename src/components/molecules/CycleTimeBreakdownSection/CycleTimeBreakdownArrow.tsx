@@ -5,7 +5,7 @@ export type CycleTimeBreakdownArrowProps = PropsWithSx;
 
 function CycleTimeBreakdownArrow({ sx }: CycleTimeBreakdownArrowProps) {
   return (
-    <Box sx={{ position: "relative", width: "50px", height: "85px" }}>
+    <Box sx={{ position: "relative", width: "50px", height: "85px", ...sx }}>
       <Box
         sx={{
           display: "flex",
@@ -13,7 +13,6 @@ function CycleTimeBreakdownArrow({ sx }: CycleTimeBreakdownArrowProps) {
           position: "absolute",
           top: "19px",
           left: "-7px",
-          ...sx,
         }}
       >
         <Box
@@ -35,7 +34,6 @@ function CycleTimeBreakdownArrow({ sx }: CycleTimeBreakdownArrowProps) {
           position: "absolute",
           top: "62px",
           left: "-7px",
-          ...sx,
         }}
       >
         <Box

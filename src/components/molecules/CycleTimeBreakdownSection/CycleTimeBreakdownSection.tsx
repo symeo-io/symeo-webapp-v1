@@ -1,17 +1,20 @@
 import React, { useMemo } from "react";
 import { PropsWithSx } from "types/PropsWithSx";
 import { Box, Tooltip, TooltipProps, Typography } from "@mui/material";
-import { colors } from "theme/colors";
 import CycleTimeBreakdownTile from "components/molecules/CycleTimeBreakdownSection/CycleTimeBreakdownTile";
 import CycleTimeBreakdownArrow from "components/molecules/CycleTimeBreakdownSection/CycleTimeBreakdownArrow";
 import CycleTimeAverageValue from "components/molecules/CycleTimeAverageValue/CycleTimeAverageValue";
 import Button from "components/atoms/Button/Button";
 import { TendencyProps } from "components/atoms/Tendency/Tendency";
 import InfoIcon from "@mui/icons-material/InfoOutlined";
+import {
+  CycleTimeColor,
+  CycleTimeColorService,
+} from "services/cycle-time/CycleTimeColorService";
 
 export type CycleTimeBreakdownSectionProps = PropsWithSx & {
   label: string;
-  color: "green" | "orange" | "red";
+  color: CycleTimeColor;
   value: string;
   tendency?: number | null;
   tendencyDates?: TendencyProps["tendencyDates"];
@@ -22,19 +25,6 @@ export type CycleTimeBreakdownSectionProps = PropsWithSx & {
   loading?: boolean;
   tooltipContent?: TooltipProps["title"];
 };
-
-function buildBackgroundColor(color: "green" | "orange" | "red") {
-  switch (color) {
-    case "green":
-      return colors.success.main;
-    case "orange":
-      return colors.warning.main;
-    case "red":
-      return colors.error.main;
-    default:
-      return colors.success.main;
-  }
-}
 
 function CycleTimeBreakdownSection({
   label,
@@ -48,7 +38,7 @@ function CycleTimeBreakdownSection({
   sx,
 }: CycleTimeBreakdownSectionProps) {
   const background = useMemo(
-    () => buildBackgroundColor(color),
+    () => CycleTimeColorService.buildBackgroundColorFromColor(color),
     [color]
   ) as string;
 
