@@ -8,7 +8,7 @@ import dayjs from "dayjs";
 import { useDataStatus } from "hooks/useDataStatus";
 import { PullRequest } from "redux/api/pull-requests/pull-requests.types";
 import { useIntl } from "react-intl";
-import PaginatedTable from "components/organisms/PaginatedTable/PaginatedTable";
+import PaginatedTable from "components/molecules/PaginatedTable/PaginatedTable";
 import { intl } from "intl";
 
 const COLUMNS = [

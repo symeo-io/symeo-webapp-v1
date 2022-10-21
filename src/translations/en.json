@@ -361,6 +361,19 @@
     },
     "days-to-merge-value": "{value, number, compact-short}"
   },
+  "cycle-time-piece-table": {
+    "title": "Pull Request cycle time values",
+    "empty-message": "No pull requests for the selected time period",
+    "columns": {
+      "vcs_repository": "Repo",
+      "title": "Name",
+      "author": "Author",
+      "cycle_time": "Cycle time",
+      "coding_time": "Coding",
+      "review_time": "Review",
+      "time_to_deploy": "Deployment"
+    }
+  },
   "data-status": {
     "loading": "Symeo is performing the initial processing of your data. Graphs will be displayed shortly.",
     "initial-data-processing": "Initial processing of your data {progression}%",

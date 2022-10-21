@@ -3,6 +3,7 @@ import { Box, Link, Typography } from "@mui/material";
 import { useIntl } from "react-intl";
 import { useNavigate } from "hooks/useNavigate";
 import DateRangeSelector from "components/molecules/DateRangeSelector/DateRangeSelector";
+import CycleTimePiecesList from "components/organisms/CycleTimePiecesList/CycleTimePiecesList";
 
 function CycleTime() {
   const { formatMessage } = useIntl();
@@ -45,7 +46,7 @@ function CycleTime() {
         <DateRangeSelector />
       </Box>
       <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
-        test
+        <CycleTimePiecesList sx={{ width: "100%" }} />
       </Box>
     </Box>
   );

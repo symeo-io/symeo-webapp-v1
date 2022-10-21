@@ -13,7 +13,7 @@ export type CycleTimePiece = {
   cycle_time: number;
   coding_time: number;
   review_time: number;
-  deploy_time: number;
+  time_to_deploy: number;
 };
 
 export type GetCycleTimeInput = {
