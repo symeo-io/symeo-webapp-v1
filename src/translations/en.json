@@ -108,6 +108,10 @@
     },
     "configure-link-label": "configure"
   },
+  "cycle-time-page": {
+    "back-to-key-metrics": "Back to key metrics",
+    "title": "Cycle time details"
+  },
   "testing": {
     "coverage": {
       "title": "Coverage"
@@ -236,6 +240,9 @@
       "message": "Set up a 'New Team Goal' to start improving your key indicators",
       "button-label": "New Team Goal"
     }
+  },
+  "team-goal": {
+    "back-to-team-goals": "Back to your Team Goals"
   },
   "standards": {
     "new": "New",

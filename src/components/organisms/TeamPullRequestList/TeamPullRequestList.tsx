@@ -1,19 +1,4 @@
-import {
-  Box,
-  Card,
-  CircularProgress,
-  Link,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableFooter,
-  TableHead,
-  TablePagination,
-  TableRow,
-  TableSortLabel,
-  Typography,
-} from "@mui/material";
+import { Link, TableCell } from "@mui/material";
 import { PropsWithSx } from "types/PropsWithSx";
 import React, { useMemo, useState } from "react";
 import { useGetPullRequestsQuery } from "redux/api/pull-requests/pull-requests.api";
@@ -22,18 +7,25 @@ import { useSelectedDateRange } from "hooks/useSelectedDateRange";
 import dayjs from "dayjs";
 import { useDataStatus } from "hooks/useDataStatus";
 import { PullRequest } from "redux/api/pull-requests/pull-requests.types";
-import { IntlShape, useIntl } from "react-intl";
-import InitialProcessingLoader from "components/molecules/InitialProcessingLoader/InitialProcessingLoader";
+import { useIntl } from "react-intl";
+import PaginatedTable from "components/organisms/PaginatedTable/PaginatedTable";
+import { intl } from "intl";
 
-const COLUMNS = {
-  vcs_repository: {
+const COLUMNS = [
+  {
+    key: "vcs_repository",
+    label: intl.formatMessage({
+      id: `pull-requests-table.columns.vcs_repository`,
+    }),
     renderCell: (pullRequest: PullRequest) => (
       <TableCell key={`vcs_repository:${pullRequest.id}`}>
         {pullRequest.vcs_repository}
       </TableCell>
     ),
   },
-  title: {
+  {
+    key: "title",
+    label: intl.formatMessage({ id: `pull-requests-table.columns.title` }),
     renderCell: (pullRequest: PullRequest) => (
       <TableCell key={`title:${pullRequest.id}`}>
         <Link href={pullRequest.vcs_url} target="_blank">
@@ -42,32 +34,41 @@ const COLUMNS = {
       </TableCell>
     ),
   },
-  author: {
+  {
+    key: "author",
+    label: intl.formatMessage({ id: `pull-requests-table.columns.author` }),
     renderCell: (pullRequest: PullRequest) => (
       <TableCell key={`author:${pullRequest.id}`}>
         {pullRequest.author}
       </TableCell>
     ),
   },
-  commit_number: {
+  {
+    key: "commit_number",
+    label: intl.formatMessage({
+      id: `pull-requests-table.columns.commit_number`,
+    }),
     renderCell: (pullRequest: PullRequest) => (
       <TableCell key={`commit_number:${pullRequest.id}`}>
         {pullRequest.commit_number}
       </TableCell>
     ),
   },
-  size: {
+  {
+    key: "size",
+    label: intl.formatMessage({ id: `pull-requests-table.columns.size` }),
     renderCell: (pullRequest: PullRequest) => (
       <TableCell key={`size:${pullRequest.id}`}>{pullRequest.size}</TableCell>
     ),
   },
-  days_opened: {
-    renderCell: (
-      pullRequest: PullRequest,
-      formatMessage: IntlShape["formatMessage"]
-    ) => (
+  {
+    key: "days_opened",
+    label: intl.formatMessage({
+      id: `pull-requests-table.columns.days_opened`,
+    }),
+    renderCell: (pullRequest: PullRequest) => (
       <TableCell key={`days_opened:${pullRequest.id}`}>
-        {formatMessage(
+        {intl.formatMessage(
           {
             id: "pull-requests-table.days-to-merge-value",
           },
@@ -76,7 +77,7 @@ const COLUMNS = {
       </TableCell>
     ),
   },
-};
+];
 
 export type PullRequestColumnName = keyof typeof COLUMNS;
 
@@ -92,12 +93,7 @@ function TeamPullRequestList({ columns, sx }: TeamPullRequestListProps) {
   const [pageSize] = useState<number>(5);
   const { selectedTeam } = useCurrentUser();
   const [dateRange] = useSelectedDateRange();
-  const { isProcessingInitialJob, currentProgression } = useDataStatus();
-
-  const displayedColumns = useMemo(
-    () => columns ?? (Object.keys(COLUMNS) as PullRequestColumnName[]),
-    [columns]
-  );
+  const { isProcessingInitialJob } = useDataStatus();
 
   const { data, isLoading } = useGetPullRequestsQuery(
     {
@@ -124,108 +120,27 @@ function TeamPullRequestList({ columns, sx }: TeamPullRequestListProps) {
     [data]
   );
 
-  const createSortHandler = (property: string) => () => {
-    const isAsc = sortBy === property && sortDirection === "asc";
-    setSortDirection(isAsc ? "desc" : "asc");
-    setSortBy(property);
-  };
-
   return (
-    <Card
-      sx={{
-        background: "white",
-        borderRadius: "8px",
-        padding: (theme) => theme.spacing(2),
-        overflow: "visible",
-        ...sx,
-      }}
-    >
-      <Typography
-        sx={{ marginBottom: (theme) => theme.spacing(4) }}
-        variant="h2"
-      >
-        {formatMessage({
-          id: "pull-requests-table.title",
-        })}
-      </Typography>
-      {(isProcessingInitialJob || isLoading) && (
-        <Box
-          sx={{
-            padding: (theme) => theme.spacing(4),
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <CircularProgress />
-          {isProcessingInitialJob && (
-            <InitialProcessingLoader value={currentProgression} />
-          )}
-        </Box>
-      )}
-
-      {!isProcessingInitialJob && !isLoading && (
-        <TableContainer>
-          <Table>
-            <TableHead>
-              <TableRow>
-                {displayedColumns.map((columnKey) => (
-                  <TableCell
-                    key={columnKey}
-                    sortDirection={sortBy === columnKey ? sortDirection : false}
-                  >
-                    <TableSortLabel
-                      active={sortBy === columnKey}
-                      direction={sortBy === columnKey ? sortDirection : "asc"}
-                      onClick={createSortHandler(columnKey)}
-                    >
-                      {formatMessage({
-                        id: `pull-requests-table.columns.${columnKey}`,
-                      })}
-                    </TableSortLabel>
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {pullRequests.map((pullRequest) => (
-                <TableRow key={pullRequest.id}>
-                  {displayedColumns.map((columnKey) =>
-                    COLUMNS[columnKey].renderCell(pullRequest, formatMessage)
-                  )}
-                </TableRow>
-              ))}
-              {pullRequests.length === 0 && (
-                <TableRow>
-                  <TableCell
-                    colSpan={displayedColumns.length}
-                    sx={{ textAlign: "center" }}
-                  >
-                    <Typography variant="body2">
-                      {formatMessage({
-                        id: `pull-requests-table.empty-message`,
-                      })}
-                    </Typography>
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TablePagination
-                  count={itemsCount}
-                  onPageChange={(_, page) => setPageIndex(page)}
-                  page={pageIndex}
-                  rowsPerPage={pageSize}
-                  rowsPerPageOptions={[]}
-                />
-              </TableRow>
-            </TableFooter>
-          </Table>
-        </TableContainer>
-      )}
-    </Card>
+    <PaginatedTable<PullRequest>
+      sx={sx}
+      title={formatMessage({
+        id: "pull-requests-table.title",
+      })}
+      data={pullRequests}
+      columns={COLUMNS}
+      totalItemCount={itemsCount}
+      isLoading={isLoading}
+      emptyMessage={formatMessage({
+        id: `pull-requests-table.empty-message`,
+      })}
+      pageIndex={pageIndex}
+      pageSize={pageSize}
+      setPageIndex={setPageIndex}
+      sortBy={sortBy}
+      sortDirection={sortDirection}
+      setSortBy={setSortBy}
+      setSortDirection={setSortDirection}
+    />
   );
 }
 

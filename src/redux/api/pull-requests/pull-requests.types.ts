@@ -26,7 +26,7 @@ export type GetPullRequestsInput = {
 
 export type GetPullRequestsResponse = ResponseWithErrors & {
   pull_requests_page: {
-    pull_requests: [];
+    pull_requests: PullRequest[];
     total_page_number: number;
     total_item_number: number;
   };
