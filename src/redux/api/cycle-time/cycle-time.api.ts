@@ -1,6 +1,8 @@
 import { api } from "redux/api/api";
 import {
   GetCyclePiecesTimeResponse,
+  GetCycleTimeCurveInput,
+  GetCycleTimeCurveResponse,
   GetCycleTimeInput,
   GetCycleTimePiecesInput,
   GetCycleTimeResponse,
@@ -20,6 +22,27 @@ export const CycleTimeQueryApi = api.injectEndpoints({
       providesTags: (_, __, { teamId, startDate, endDate }) => [
         {
           type: "CycleTime",
+          graphType: teamId,
+          startDate,
+          endDate,
+        },
+      ],
+    }),
+    getCycleTimeCurve: builder.query<
+      GetCycleTimeCurveResponse,
+      GetCycleTimeCurveInput
+    >({
+      query: ({ teamId, startDate, endDate }) => ({
+        url: `/api/v1/teams/cycle-time/curve`,
+        params: {
+          team_id: teamId,
+          start_date: startDate,
+          end_date: endDate,
+        },
+      }),
+      providesTags: (_, __, { teamId, startDate, endDate }) => [
+        {
+          type: "CycleTimeCurve",
           graphType: teamId,
           startDate,
           endDate,
@@ -78,5 +101,8 @@ export const CycleTimeQueryApi = api.injectEndpoints({
   }),
 });
 
-export const { useGetCycleTimeQuery, useGetCycleTimePiecesQuery } =
-  CycleTimeQueryApi;
+export const {
+  useGetCycleTimeQuery,
+  useGetCycleTimeCurveQuery,
+  useGetCycleTimePiecesQuery,
+} = CycleTimeQueryApi;

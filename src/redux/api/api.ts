@@ -8,6 +8,7 @@ export const dataTagTypes = [
   "Repository",
   "PullRequest",
   "CycleTime",
+  "CycleTimeCurve",
   "CycleTimePieces",
   "Deployment",
 ];
