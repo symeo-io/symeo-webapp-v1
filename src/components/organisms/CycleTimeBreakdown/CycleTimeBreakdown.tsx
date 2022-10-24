@@ -2,9 +2,7 @@ import { Box, Card, CircularProgress } from "@mui/material";
 import { PropsWithSx } from "types/PropsWithSx";
 import React, { useCallback } from "react";
 import CycleTimeAverageValue from "components/molecules/CycleTimeAverageValue/CycleTimeAverageValue";
-import CycleTimeBreakdownSection, {
-  CycleTimeBreakdownSectionProps,
-} from "components/molecules/CycleTimeBreakdownSection/CycleTimeBreakdownSection";
+import CycleTimeBreakdownSection from "components/molecules/CycleTimeBreakdownSection/CycleTimeBreakdownSection";
 import { useIntl } from "react-intl";
 import { useNavigate } from "hooks/useNavigate";
 import { useGetCycleTimeQuery } from "redux/api/cycle-time/cycle-time.api";
@@ -17,39 +15,7 @@ import { colors } from "theme/colors";
 import { useGetOrganizationSettingsQuery } from "redux/api/organizations/organizations.api";
 import InitialProcessingLoader from "components/molecules/InitialProcessingLoader/InitialProcessingLoader";
 import { DurationService } from "services/time/DurationService";
-
-const breakdownColorsLimits = {
-  coding_time: {
-    green: 24 * 60, // 1 day
-    orange: 2 * 24 * 60, // 2 days
-  },
-  review_time: {
-    green: 2 * 60, // 2 hour
-    orange: 4 * 60, // 4 hour
-  },
-  time_to_deploy: {
-    green: 7 * 24 * 60, // 7 days
-    orange: 14 * 24 * 60, // 14 days
-  },
-};
-
-function buildColor(
-  type: keyof typeof breakdownColorsLimits,
-  value?: number
-): CycleTimeBreakdownSectionProps["color"] {
-  const limits = breakdownColorsLimits[type];
-
-  if (!value) return "green";
-
-  if (value <= limits.green) {
-    return "green";
-  }
-  if (value <= limits.orange) {
-    return "orange";
-  }
-
-  return "red";
-}
+import { CycleTimeColorService } from "services/cycle-time/CycleTimeColorService";
 
 export type CycleTimeBreakdownProps = PropsWithSx;
 
@@ -127,7 +93,7 @@ function CycleTimeBreakdown({ sx }: CycleTimeBreakdownProps) {
                 CycleTimeData?.cycle_time?.coding_time.tendency_percentage
               }
               tendencyDates={tendencyDates}
-              color={buildColor(
+              color={CycleTimeColorService.buildColorFromValue(
                 "coding_time",
                 CycleTimeData?.cycle_time?.coding_time.value
               )}
@@ -149,7 +115,7 @@ function CycleTimeBreakdown({ sx }: CycleTimeBreakdownProps) {
                 CycleTimeData?.cycle_time?.review_time.tendency_percentage
               }
               tendencyDates={tendencyDates}
-              color={buildColor(
+              color={CycleTimeColorService.buildColorFromValue(
                 "review_time",
                 CycleTimeData?.cycle_time?.review_time.value
               )}
@@ -171,7 +137,7 @@ function CycleTimeBreakdown({ sx }: CycleTimeBreakdownProps) {
                 CycleTimeData?.cycle_time?.time_to_deploy.tendency_percentage
               }
               tendencyDates={tendencyDates}
-              color={buildColor(
+              color={CycleTimeColorService.buildColorFromValue(
                 "time_to_deploy",
                 CycleTimeData?.cycle_time?.time_to_deploy.value
               )}

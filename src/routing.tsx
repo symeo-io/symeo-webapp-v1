@@ -1,5 +1,6 @@
 import React from "react";
 import HomePage from "components/pages/Home/Home";
+import CycleTimePage from "components/pages/CycleTime/CycleTime";
 import OrganizationPage from "components/pages/Organization/Organization";
 import TeamGoalsLibraryPage from "components/pages/TeamGoalsLibrary/TeamGoalsLibrary";
 import OnBoardingPageVcs from "components/pages/OnBoardingVcs/OnBoardingVcs";
@@ -24,6 +25,13 @@ const routes = {
     sidebar: true,
     dataStatus: true,
     element: HomePage,
+  } as Route,
+  cycleTime: {
+    path: "/cycle-time",
+    isSecured: true,
+    sidebar: true,
+    dataStatus: true,
+    element: CycleTimePage,
   } as Route,
   organization: {
     path: "/organization/:tab",

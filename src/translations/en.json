@@ -108,6 +108,10 @@
     },
     "configure-link-label": "configure"
   },
+  "cycle-time-page": {
+    "back-to-key-metrics": "Back to key metrics",
+    "title": "Cycle time details"
+  },
   "testing": {
     "coverage": {
       "title": "Coverage"
@@ -237,6 +241,9 @@
       "button-label": "New Team Goal"
     }
   },
+  "team-goal": {
+    "back-to-team-goals": "Back to your Team Goals"
+  },
   "standards": {
     "new": "New",
     "coming-soon": "Soon",
@@ -353,6 +360,19 @@
       "days_opened": "Days to merge"
     },
     "days-to-merge-value": "{value, number, compact-short}"
+  },
+  "cycle-time-piece-table": {
+    "title": "Pull Request cycle time values",
+    "empty-message": "No pull requests for the selected time period",
+    "columns": {
+      "vcs_repository": "Repo",
+      "title": "Name",
+      "author": "Author",
+      "cycle_time": "Cycle time",
+      "coding_time": "Coding",
+      "review_time": "Review",
+      "time_to_deploy": "Deployment"
+    }
   },
   "data-status": {
     "loading": "Symeo is performing the initial processing of your data. Graphs will be displayed shortly.",
