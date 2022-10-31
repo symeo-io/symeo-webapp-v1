@@ -4,6 +4,7 @@ import { useIntl } from "react-intl";
 import { useNavigate } from "hooks/useNavigate";
 import DateRangeSelector from "components/molecules/DateRangeSelector/DateRangeSelector";
 import CycleTimePiecesList from "components/organisms/CycleTimePiecesList/CycleTimePiecesList";
+import CycleTimePiecesCurve from "components/organisms/CycleTimePiecesCurve/CycleTimePiecesCurve";
 
 function CycleTime() {
   const { formatMessage } = useIntl();
@@ -14,6 +15,7 @@ function CycleTime() {
       sx={{
         display: "flex",
         flexDirection: "column",
+        paddingBottom: (theme) => theme.spacing(8),
       }}
     >
       <Box sx={{ marginBottom: (theme) => theme.spacing(1) }}>
@@ -46,6 +48,16 @@ function CycleTime() {
         <DateRangeSelector />
       </Box>
       <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
+        <CycleTimePiecesCurve sx={{ width: "100%" }} />
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          marginTop: (theme) => theme.spacing(3),
+        }}
+      >
         <CycleTimePiecesList sx={{ width: "100%" }} />
       </Box>
     </Box>

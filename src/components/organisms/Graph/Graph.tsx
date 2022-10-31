@@ -61,16 +61,7 @@ function Graph({
         <Box>
           {titleSection && (
             <Box sx={{ marginBottom: (theme) => theme.spacing(2) }}>
-              <Typography
-                variant="h2"
-                sx={{
-                  fontWeight: 400,
-                  textTransform: "uppercase",
-                  fontSize: "1.25rem",
-                }}
-              >
-                {titleSection.title}
-              </Typography>
+              <Typography variant="h2">{titleSection.title}</Typography>
               <Typography variant="body1" color="secondary">
                 {titleSection.subtitle}
               </Typography>

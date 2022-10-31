@@ -1,5 +1,6 @@
 import { ResponseWithErrors } from "redux/api/errors.type";
 import { Metric } from "redux/api/common.types";
+import { AverageCurveDataPoint } from "redux/api/goals/graphs/graphs.types";
 
 export type CycleTimePiece = {
   id: string;
@@ -16,7 +17,23 @@ export type CycleTimePiece = {
   time_to_deploy: number;
 };
 
+export type CycleTimePieceCurveDataPoint = {
+  value: number;
+  coding_time: number;
+  review_time: number;
+  time_to_deploy: number;
+  date: string;
+  label: string;
+  link: string;
+};
+
 export type GetCycleTimeInput = {
+  teamId: string;
+  startDate: string;
+  endDate: string;
+};
+
+export type GetCycleTimeCurveInput = {
   teamId: string;
   startDate: string;
   endDate: string;
@@ -43,6 +60,13 @@ export type GetCycleTimeResponse = ResponseWithErrors & {
     review_time: Metric;
     time_to_deploy: Metric;
   } | null;
+};
+
+export type GetCycleTimeCurveResponse = ResponseWithErrors & {
+  curves: {
+    average_curve: AverageCurveDataPoint[];
+    piece_curve: CycleTimePieceCurveDataPoint[];
+  };
 };
 
 export type GetCyclePiecesTimeResponse = ResponseWithErrors & {

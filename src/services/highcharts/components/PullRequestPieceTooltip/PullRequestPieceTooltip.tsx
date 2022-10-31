@@ -1,3 +1,4 @@
+import React from "react";
 import { colors } from "theme/colors";
 import dayjs from "dayjs";
 import branchIcon from "./branch-icon.svg";
@@ -5,6 +6,7 @@ import branchIcon from "./branch-icon.svg";
 export type PullRequestPieceTooltipProps = {
   branchName: string;
   valueLabel: string;
+  subValue?: React.ReactNode;
   date: Date;
   open: boolean;
 };
@@ -12,6 +14,7 @@ export type PullRequestPieceTooltipProps = {
 function PullRequestPieceTooltip({
   branchName,
   valueLabel,
+  subValue,
   date,
   open,
 }: PullRequestPieceTooltipProps) {
@@ -48,6 +51,11 @@ function PullRequestPieceTooltip({
         }}
       >
         <div style={{ fontWeight: 600, fontSize: "1.25rem" }}>{valueLabel}</div>
+        {subValue && (
+          <div style={{ marginTop: "8px", marginBottom: "8px" }}>
+            {subValue}
+          </div>
+        )}
         <div
           style={{
             marginTop: "8px",

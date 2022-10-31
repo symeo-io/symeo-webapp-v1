@@ -362,7 +362,7 @@
     "days-to-merge-value": "{value, number, compact-short}"
   },
   "cycle-time-piece-table": {
-    "title": "Pull Request cycle time values",
+    "title": "Pull Requests cycle time values",
     "empty-message": "No pull requests for the selected time period",
     "columns": {
       "vcs_repository": "Repo",
@@ -373,6 +373,10 @@
       "review_time": "Review",
       "time_to_deploy": "Deployment"
     }
+  },
+  "cycle-time-curve": {
+    "title": "Cycle time",
+    "yAxisTitle": "Pull Requests"
   },
   "data-status": {
     "loading": "Symeo is performing the initial processing of your data. Graphs will be displayed shortly.",
