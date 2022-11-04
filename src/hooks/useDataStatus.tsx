@@ -23,7 +23,8 @@ export const useDataStatus = () => {
     () =>
       !jobStatusData ||
       (!jobStatusData.jobs.previous_job &&
-        jobStatusData.jobs.current_job?.status !== "FINISHED"),
+        jobStatusData.jobs.current_job?.progression_percentage !== undefined &&
+        jobStatusData.jobs.current_job?.progression_percentage === 0),
     [jobStatusData]
   );
 

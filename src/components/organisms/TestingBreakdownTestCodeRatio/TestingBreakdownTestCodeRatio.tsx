@@ -10,12 +10,13 @@ import React from "react";
 import { colors } from "theme/colors";
 
 export type TestingBreakdownTestCodeRatioProps = PropsWithSx & {
-  value: number;
-  tendency: number;
+  value?: number;
+  tendency?: number;
   tendencyDates?: TendencyProps["tendencyDates"];
   positiveTendency: PositiveTendency;
-  productionLines: number;
-  testLines: number;
+  productionLines?: number;
+  testLines?: number;
+  loading?: boolean;
 };
 
 function TestingBreakdownTestCodeRatio({
@@ -25,6 +26,7 @@ function TestingBreakdownTestCodeRatio({
   positiveTendency,
   productionLines,
   testLines,
+  loading,
   sx,
 }: TestingBreakdownTestCodeRatioProps) {
   const { formatMessage } = useIntl();
@@ -32,6 +34,7 @@ function TestingBreakdownTestCodeRatio({
   return (
     <BreakdownSectionContainer
       sx={{ width: "200px", ...sx }}
+      loading={loading}
       title={formatMessage({ id: "testing.ratio.title" })}
     >
       <Box
@@ -61,7 +64,9 @@ function TestingBreakdownTestCodeRatio({
                 lineHeight: "2.5rem",
               }}
             >
-              {value * 100}
+              {value
+                ? formatMessage({ id: "time.value" }, { value: value * 100 })
+                : formatMessage({ id: "time.unknown" })}
             </Typography>
             <Typography
               sx={{
@@ -74,7 +79,7 @@ function TestingBreakdownTestCodeRatio({
             </Typography>
             <Tendency
               sx={{ marginLeft: (theme) => theme.spacing(0.5) }}
-              tendency={tendency * 100}
+              tendency={tendency}
               tendencyDates={tendencyDates}
               positiveTendency={positiveTendency}
             />
@@ -92,7 +97,7 @@ function TestingBreakdownTestCodeRatio({
                   {formatMessage({ id: "testing.ratio.production" })}
                 </Typography>
                 <Typography sx={{ fontSize: "14px", fontWeight: 600 }}>
-                  {productionLines}{" "}
+                  {productionLines ?? formatMessage({ id: "time.unknown" })}{" "}
                   {formatMessage({ id: "testing.ratio.lines" })}
                 </Typography>
               </Box>
@@ -101,7 +106,8 @@ function TestingBreakdownTestCodeRatio({
                   {formatMessage({ id: "testing.ratio.tests" })}
                 </Typography>
                 <Typography sx={{ fontSize: "14px", fontWeight: 600 }}>
-                  {testLines} {formatMessage({ id: "testing.ratio.lines" })}
+                  {testLines ?? formatMessage({ id: "time.unknown" })}{" "}
+                  {formatMessage({ id: "testing.ratio.lines" })}
                 </Typography>
               </Box>
             </Box>
@@ -122,7 +128,7 @@ function TestingBreakdownTestCodeRatio({
               />
               <Box
                 sx={{
-                  width: `${value * 100}%`,
+                  width: `${value ? value * 100 : 0}%`,
                   height: "8px",
                   background: colors.primary.main,
                   borderRadius: "4px",
@@ -140,10 +146,20 @@ function TestingBreakdownTestCodeRatio({
               }}
             >
               <Box sx={{ fontSize: "11px", color: colors.secondary.text }}>
-                {(1 - value) * 100}%
+                {value
+                  ? formatMessage(
+                      { id: "time.percent-value" },
+                      { value: (1 - value) * 100 }
+                    )
+                  : formatMessage({ id: "time.unknown" })}
               </Box>
               <Box sx={{ fontSize: "11px", color: colors.secondary.text }}>
-                {value * 100}%
+                {value
+                  ? formatMessage(
+                      { id: "time.percent-value" },
+                      { value: value * 100 }
+                    )
+                  : formatMessage({ id: "time.unknown" })}
               </Box>
             </Box>
           </Box>

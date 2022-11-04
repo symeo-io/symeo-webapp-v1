@@ -20,7 +20,7 @@ function DeploymentBreakdown({ sx }: DeploymentBreakdownProps) {
   const [dateRange] = useSelectedDateRange();
   const { isProcessingInitialJob, currentProgression } = useDataStatus();
 
-  const { data: deploymentData, isLoading: isLoadingCycleTime } =
+  const { data: deploymentData, isLoading: isLoadingDeployment } =
     useGetDeploymentDataQuery(
       {
         teamId: selectedTeam?.id as string,
@@ -75,7 +75,7 @@ function DeploymentBreakdown({ sx }: DeploymentBreakdownProps) {
             tendencyDates={tendencyDates}
             positiveTendency="up"
             repositoriesCount={selectedTeam?.repository_ids.length ?? 0}
-            loading={isLoadingCycleTime}
+            loading={isLoadingDeployment}
             sx={{ borderRight: `1px solid ${colors.secondary.borders}` }}
           />
           <DeploymentBreakdownPerDay
@@ -85,7 +85,7 @@ function DeploymentBreakdown({ sx }: DeploymentBreakdownProps) {
             }
             tendencyDates={tendencyDates}
             positiveTendency="up"
-            loading={isLoadingCycleTime}
+            loading={isLoadingDeployment}
             sx={{ borderRight: `1px solid ${colors.secondary.borders}` }}
           />
           <DeploymentBreakdownTimeBetweenDeploys
@@ -98,14 +98,14 @@ function DeploymentBreakdown({ sx }: DeploymentBreakdownProps) {
             }
             tendencyDates={tendencyDates}
             positiveTendency="down"
-            loading={isLoadingCycleTime}
+            loading={isLoadingDeployment}
             sx={{ borderRight: `1px solid ${colors.secondary.borders}` }}
           />
           <DeploymentBreakdownLastDeploy
             value={deploymentData?.deployment?.last_deploy.value}
             repositoryName={deploymentData?.deployment?.last_deploy.label}
             pullRequestLink={deploymentData?.deployment?.last_deploy.link}
-            loading={isLoadingCycleTime}
+            loading={isLoadingDeployment}
           />
         </>
       )}
