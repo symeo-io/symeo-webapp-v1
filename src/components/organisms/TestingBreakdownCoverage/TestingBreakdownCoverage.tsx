@@ -71,7 +71,9 @@ function TestingBreakdownCoverage({
                 lineHeight: "2.5rem",
               }}
             >
-              {value ?? formatMessage({ id: "time.unknown" })}
+              {value
+                ? formatMessage({ id: "time.value" }, { value })
+                : formatMessage({ id: "time.unknown" })}
             </Typography>
             <Typography
               sx={{
