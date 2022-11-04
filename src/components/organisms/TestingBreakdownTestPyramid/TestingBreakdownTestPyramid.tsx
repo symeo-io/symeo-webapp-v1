@@ -6,15 +6,17 @@ import React from "react";
 import { colors } from "theme/colors";
 
 export type TestingBreakdownTestPyramidProps = PropsWithSx & {
-  unit: number;
-  integration: number;
-  endToEnd: number;
+  unit?: number;
+  integration?: number;
+  endToEnd?: number;
+  loading?: boolean;
 };
 
 function TestingBreakdownTestPyramid({
   unit,
   integration,
   endToEnd,
+  loading,
   sx,
 }: TestingBreakdownTestPyramidProps) {
   const { formatMessage } = useIntl();
@@ -22,6 +24,7 @@ function TestingBreakdownTestPyramid({
   return (
     <BreakdownSectionContainer
       sx={{ width: "200px", ...sx }}
+      loading={loading}
       title={formatMessage({ id: "testing.test-pyramid.title" })}
     >
       <Box
@@ -58,7 +61,7 @@ function TestingBreakdownTestPyramid({
               }}
             >
               <Typography sx={{ fontWeight: 600, fontSize: "18px" }}>
-                {endToEnd}
+                {endToEnd ?? formatMessage({ id: "time.unknown" })}
               </Typography>
               <Typography sx={{ fontSize: "11px", lineHeight: "11px" }}>
                 {formatMessage({ id: "testing.test-pyramid.end-to-end" })}
@@ -71,7 +74,7 @@ function TestingBreakdownTestPyramid({
               }}
             >
               <Typography sx={{ fontWeight: 600, fontSize: "18px" }}>
-                {integration}
+                {integration ?? formatMessage({ id: "time.unknown" })}
               </Typography>
               <Typography sx={{ fontSize: "11px", lineHeight: "11px" }}>
                 {formatMessage({ id: "testing.test-pyramid.integration" })}
@@ -83,7 +86,7 @@ function TestingBreakdownTestPyramid({
               }}
             >
               <Typography sx={{ fontWeight: 600, fontSize: "18px" }}>
-                {unit}
+                {unit ?? formatMessage({ id: "time.unknown" })}
               </Typography>
               <Typography sx={{ fontSize: "11px", lineHeight: "11px" }}>
                 {formatMessage({ id: "testing.test-pyramid.unit" })}

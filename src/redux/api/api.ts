@@ -11,6 +11,7 @@ export const dataTagTypes = [
   "CycleTimeCurve",
   "CycleTimePieces",
   "Deployment",
+  "Testing",
 ];
 
 export const apiTagTypes = [

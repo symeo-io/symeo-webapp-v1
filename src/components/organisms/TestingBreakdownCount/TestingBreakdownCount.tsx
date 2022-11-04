@@ -9,11 +9,11 @@ import Tendency, {
 import React from "react";
 
 export type TestingBreakdownCountProps = PropsWithSx & {
-  value: number;
-  tendency: number;
+  value?: number;
+  tendency?: number;
   tendencyDates?: TendencyProps["tendencyDates"];
   positiveTendency: PositiveTendency;
-  testSuitesCount: number;
+  loading?: boolean;
 };
 
 function TestingBreakdownCount({
@@ -21,7 +21,7 @@ function TestingBreakdownCount({
   tendencyDates,
   tendency,
   positiveTendency,
-  testSuitesCount,
+  loading,
   sx,
 }: TestingBreakdownCountProps) {
   const { formatMessage } = useIntl();
@@ -29,6 +29,7 @@ function TestingBreakdownCount({
   return (
     <BreakdownSectionContainer
       sx={{ width: "200px", ...sx }}
+      loading={loading}
       title={formatMessage({ id: "testing.count.title" })}
     >
       <Box
@@ -57,22 +58,16 @@ function TestingBreakdownCount({
                 lineHeight: "2.5rem",
               }}
             >
-              {value}
+              {value ?? formatMessage({ id: "time.unknown" })}
             </Typography>
             <Tendency
               sx={{ marginLeft: (theme) => theme.spacing(0.5) }}
-              tendency={tendency * 100}
+              tendency={tendency}
               tendencyDates={tendencyDates}
               positiveTendency={positiveTendency}
             />
           </Box>
         </Box>
-        <Typography
-          variant="body1"
-          sx={{ fontStyle: "italic", marginTop: (theme) => theme.spacing(0.5) }}
-        >
-          {formatMessage({ id: "testing.count.message" }, { testSuitesCount })}
-        </Typography>
       </Box>
     </BreakdownSectionContainer>
   );
