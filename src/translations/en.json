@@ -1,7 +1,8 @@
 {
   "name": "Symeo",
   "confirm": {
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "close": "Close"
   },
   "tendency": {
     "unknown": "N/A"
@@ -113,6 +114,9 @@
     "title": "Cycle time details"
   },
   "testing": {
+    "no-data-message": "No data received yet.",
+    "configure-link-label": "Configure",
+    "configure-message": "your testing integration to send and display data.",
     "coverage": {
       "title": "Coverage"
     },
@@ -131,6 +135,23 @@
       "unit": "Unit",
       "integration": "Integration",
       "end-to-end": "E2E"
+    },
+    "configuration": {
+      "title": "Configure testing data integration",
+      "message": "Add the following command to your Continuous Integration configuration to be run after the generation of your code coverage report (do this for all the repository of the team):",
+      "with": "With:",
+      "parameters": {
+        "api-key": "The Symeo api key associated to your organization (contact Symeo support to get one)",
+        "coverage-report-path": "The path to your coverage report in xml format",
+        "coverage-report-type": "Your coverage report provider (jacoco, istanbul currently supported)",
+        "unit-test-file-pattern": "The wildcard pattern corresponding to all your unit testing files",
+        "integration-test-file-pattern": "The wildcard pattern corresponding to all your integration testing files",
+        "code-file-pattern": "The wildcard pattern corresponding to your production code (all your code except tests)",
+        "test-framework": "The test framework you use (jUnit, jest currently supported)",
+        "repository-name": "The name of the repository for which data are sent",
+        "branch-name": "The name of the branch for which data are sent",
+        "commit-sha": "The current commit hash for which data are sent"
+      }
     }
   },
   "deployment": {

@@ -9,6 +9,7 @@ export type GetTestingDataInput = {
 
 export type GetTestingDataResponse = ResponseWithErrors & {
   testing: {
+    has_data: boolean;
     current_end_date: string;
     current_start_date: string;
     previous_end_date: string;
