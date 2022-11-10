@@ -141,7 +141,8 @@
       "message": "Add the following command to your Continuous Integration configuration to be run after the generation of your code coverage report (do this for all the repository of the team):",
       "with": "With:",
       "parameters": {
-        "api-key": "The Symeo api key associated to your organization (contact Symeo support to get one)",
+        "api-key": "The Symeo api key associated to your organization.",
+        "api-key-link": "Create one",
         "coverage-report-path": "The path to your coverage report in xml format",
         "coverage-report-type": "Your coverage report provider (jacoco, istanbul currently supported)",
         "unit-test-file-pattern": "The wildcard pattern corresponding to all your unit testing files",

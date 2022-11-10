@@ -7,11 +7,13 @@ import {
   DialogContent,
   DialogTitle,
   Typography,
+  Link,
 } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import Button from "components/atoms/Button/Button";
 import { useIntl } from "react-intl";
 import { colors } from "theme/colors";
+import { useNavigate } from "hooks/useNavigate";
 
 export type TestingBreakdownConfigurationDialogProps = PropsWithSx & {
   open: boolean;
@@ -24,6 +26,7 @@ function TestingBreakdownConfigurationDialog({
   sx,
 }: TestingBreakdownConfigurationDialogProps) {
   const { formatMessage } = useIntl();
+  const navigate = useNavigate();
 
   const codeLines = [
     "curl -o- https://sh.symeo.io/testing.sh | bash -s -- \\",
@@ -108,7 +111,19 @@ function TestingBreakdownConfigurationDialog({
         >
           <Box className="parameter">
             <span className="code">--api-key</span>:{" "}
-            {formatMessage({ id: "testing.configuration.parameters.api-key" })}
+            {formatMessage({ id: "testing.configuration.parameters.api-key" })}{" "}
+            <Link
+              onClick={() =>
+                navigate("organization", { params: { tab: "api-keys" } })
+              }
+              color="primary"
+              sx={{ cursor: "pointer" }}
+            >
+              {formatMessage({
+                id: "testing.configuration.parameters.api-key-link",
+              })}
+            </Link>
+            .
           </Box>
           <Box className="parameter">
             <span className="code">--coverage-report-path</span>:{" "}
