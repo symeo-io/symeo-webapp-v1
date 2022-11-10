@@ -1,5 +1,10 @@
 import { api } from "../api";
 import {
+  CreateOrganizationApiKeyInput,
+  CreateOrganizationApiKeyResponse,
+  DeleteOrganizationApiKeyInput,
+  DeleteOrganizationApiKeyResponse,
+  GetOrganizationApiKeysResponse,
   GetOrganizationSettingsResponse,
   GetOrganizationUsersResponse,
   InviteUsersToOrganizationInput,
@@ -34,6 +39,14 @@ export const organizationsQueryApi = api.injectEndpoints({
       }),
       providesTags: ["OrganizationSettings"],
     }),
+    getOrganizationApiKeys: builder.query<GetOrganizationApiKeysResponse, void>(
+      {
+        query: () => ({
+          url: `/api/v1/organization/api-keys`,
+        }),
+        providesTags: ["OrganizationApiKeys"],
+      }
+    ),
   }),
 });
 
@@ -95,13 +108,42 @@ const organizationsMutationApi = api.injectEndpoints({
       }),
       invalidatesTags: ["OrganizationSettings"],
     }),
+    createOrganizationApiKey: builder.mutation<
+      CreateOrganizationApiKeyResponse,
+      CreateOrganizationApiKeyInput
+    >({
+      query: (input) => ({
+        url: `/api/v1/organization/api-keys`,
+        method: "POST",
+        body: input,
+      }),
+      invalidatesTags: ["OrganizationApiKeys"],
+    }),
+    deleteOrganizationApiKey: builder.mutation<
+      DeleteOrganizationApiKeyResponse,
+      DeleteOrganizationApiKeyInput
+    >({
+      query: (input) => ({
+        url: `/api/v1/organization/api-keys`,
+        method: "DELETE",
+        params: {
+          api_key_id: input.apiKeyId,
+        },
+      }),
+      invalidatesTags: ["OrganizationApiKeys"],
+    }),
   }),
 });
 
-export const { useGetOrganizationUsersQuery, useGetOrganizationSettingsQuery } =
-  organizationsQueryApi;
+export const {
+  useGetOrganizationUsersQuery,
+  useGetOrganizationSettingsQuery,
+  useGetOrganizationApiKeysQuery,
+} = organizationsQueryApi;
 export const {
   useDeleteUserFromOrganizationMutation,
   useInviteUserToOrganizationMutation,
   useUpdateOrganizationSettingsMutation,
+  useCreateOrganizationApiKeyMutation,
+  useDeleteOrganizationApiKeyMutation,
 } = organizationsMutationApi;

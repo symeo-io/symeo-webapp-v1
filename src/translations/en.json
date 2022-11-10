@@ -177,6 +177,7 @@
     "members-tab-label": "Members",
     "teams-tab-label": "Teams",
     "integrations-tab-label": "Integrations",
+    "api-keys-tab-label": "API keys",
     "advanced-tab-label": "Advanced",
     "members": {
       "title": "Manage your organization's members",
@@ -222,6 +223,27 @@
     "integrations": {
       "title": "Manage your organization's integrations",
       "code-repositories-provider-title": "code repositories provider"
+    },
+    "api-keys": {
+      "title": "Manage your organization's API keys",
+      "create-button-label": "Create a new API key",
+      "search-placeholder": "Find an API key...",
+      "remove-dialog": {
+        "title": "Removing an API key from {organizationName}",
+        "message": "API key {teamName} will be removed, you won't be able to use it to send data anymore",
+        "confirm-label": "Remove API key"
+      },
+      "create-dialog": {
+        "title": "Create API key for {organizationName}",
+        "create-button-label": "Create",
+        "name-field-label": "Name",
+        "name-field-placeholder": "Your API key name",
+        "value-field-label": "API key",
+        "value-field-helper": "Copy and save this value (you won't be able to get it once you close this dialog)",
+        "errors": {
+          "empty-name": "Name must not be empty"
+        }
+      }
     },
     "advanced": {
       "title": "Advanced settings",

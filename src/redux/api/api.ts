@@ -19,6 +19,8 @@ export const apiTagTypes = [
   "Team",
   "User",
   "Goal",
+  "OrganizationSettings",
+  "OrganizationApiKeys",
   ...dataTagTypes,
 ];
 
