@@ -60,6 +60,7 @@ function OrganizationApiKeyListItem({
           "& .MuiListItemText-primary": {
             fontSize: "1rem",
           },
+          flex: 1,
         }}
         primary={apiKey.name}
       />
@@ -68,6 +69,8 @@ function OrganizationApiKeyListItem({
           "& .MuiListItemText-primary": {
             fontSize: "1rem",
           },
+          flex: "unset",
+          marginRight: (theme) => theme.spacing(5),
         }}
         primary={apiKey.value}
       />
