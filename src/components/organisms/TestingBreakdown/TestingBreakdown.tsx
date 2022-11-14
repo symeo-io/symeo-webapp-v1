@@ -12,6 +12,7 @@ import dayjs from "dayjs";
 import { useGetTestingDataQuery } from "redux/api/testing/testing.api";
 import InitialProcessingLoader from "components/molecules/InitialProcessingLoader/InitialProcessingLoader";
 import React from "react";
+import TestingBreakdownNoDataMessage from "components/organisms/TestingBreakdownNoDateMessage/TestingBreakdownNoDateMessage";
 
 export type TestingBreakdownProps = PropsWithSx;
 
@@ -44,68 +45,75 @@ function TestingBreakdown({ sx }: TestingBreakdownProps) {
   };
 
   return (
-    <Card
-      sx={{
-        paddingY: (theme) => theme.spacing(2),
-        display: "flex",
-        ...sx,
-      }}
-    >
-      {isProcessingInitialJob && (
-        <Box
-          sx={{
-            padding: (theme) => theme.spacing(4),
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <CircularProgress />
-          <InitialProcessingLoader value={currentProgression} />
-        </Box>
-      )}
-      {!isProcessingInitialJob && (
-        <>
-          <TestingBreakdownCoverage
-            value={testingData?.testing?.coverage.value}
-            tendency={testingData?.testing?.coverage.tendency_percentage}
-            tendencyDates={tendencyDates}
-            positiveTendency="up"
-            loading={isLoadingTesting}
-            sx={{ borderRight: `1px solid ${colors.secondary.borders}` }}
-          />
-          <TestingBreakdownCount
-            value={testingData?.testing?.test_count.value}
-            tendency={testingData?.testing?.test_count.tendency_percentage}
-            tendencyDates={tendencyDates}
-            positiveTendency="up"
-            loading={isLoadingTesting}
-            sx={{ borderRight: `1px solid ${colors.secondary.borders}` }}
-          />
-          <TestingBreakdownTestCodeRatio
-            value={testingData?.testing?.test_to_code_ratio.value}
-            tendency={
-              testingData?.testing?.test_to_code_ratio.tendency_percentage
-            }
-            tendencyDates={tendencyDates}
-            positiveTendency="up"
-            productionLines={
-              testingData?.testing?.test_to_code_ratio.code_line_count
-            }
-            testLines={testingData?.testing?.test_to_code_ratio.test_line_count}
-            loading={isLoadingTesting}
-            sx={{ borderRight: `1px solid ${colors.secondary.borders}` }}
-          />
-          <TestingBreakdownTestPyramid
-            unit={testingData?.testing?.test_types.unit}
-            integration={testingData?.testing?.test_types.integration}
-            endToEnd={testingData?.testing?.test_types.end_to_end}
-            loading={isLoadingTesting}
-          />
-        </>
-      )}
-    </Card>
+    <Box>
+      {!isLoadingTesting &&
+        !!testingData &&
+        !testingData?.testing?.has_data && <TestingBreakdownNoDataMessage />}
+      <Card
+        sx={{
+          paddingY: (theme) => theme.spacing(2),
+          display: "flex",
+          ...sx,
+        }}
+      >
+        {isProcessingInitialJob && (
+          <Box
+            sx={{
+              padding: (theme) => theme.spacing(4),
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <CircularProgress />
+            <InitialProcessingLoader value={currentProgression} />
+          </Box>
+        )}
+        {!isProcessingInitialJob && (
+          <>
+            <TestingBreakdownCoverage
+              value={testingData?.testing?.coverage.value}
+              tendency={testingData?.testing?.coverage.tendency_percentage}
+              tendencyDates={tendencyDates}
+              positiveTendency="up"
+              loading={isLoadingTesting}
+              sx={{ borderRight: `1px solid ${colors.secondary.borders}` }}
+            />
+            <TestingBreakdownCount
+              value={testingData?.testing?.test_count.value}
+              tendency={testingData?.testing?.test_count.tendency_percentage}
+              tendencyDates={tendencyDates}
+              positiveTendency="up"
+              loading={isLoadingTesting}
+              sx={{ borderRight: `1px solid ${colors.secondary.borders}` }}
+            />
+            <TestingBreakdownTestCodeRatio
+              value={testingData?.testing?.test_to_code_ratio.value}
+              tendency={
+                testingData?.testing?.test_to_code_ratio.tendency_percentage
+              }
+              tendencyDates={tendencyDates}
+              positiveTendency="up"
+              productionLines={
+                testingData?.testing?.test_to_code_ratio.code_line_count
+              }
+              testLines={
+                testingData?.testing?.test_to_code_ratio.test_line_count
+              }
+              loading={isLoadingTesting}
+              sx={{ borderRight: `1px solid ${colors.secondary.borders}` }}
+            />
+            <TestingBreakdownTestPyramid
+              unit={testingData?.testing?.test_types.unit}
+              integration={testingData?.testing?.test_types.integration}
+              endToEnd={testingData?.testing?.test_types.end_to_end}
+              loading={isLoadingTesting}
+            />
+          </>
+        )}
+      </Card>
+    </Box>
   );
 }
 

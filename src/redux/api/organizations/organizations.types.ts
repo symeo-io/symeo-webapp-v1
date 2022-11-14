@@ -36,3 +36,21 @@ export type InviteUsersToOrganizationInput = { email: string }[];
 export type InviteUsersToOrganizationResponse = ResponseWithErrors & {
   users: OrganizationUser[];
 };
+
+export type ApiKey = {
+  id: string;
+  name: string;
+  value: string;
+};
+
+export type CreateOrganizationApiKeyInput = { name: string };
+export type CreateOrganizationApiKeyResponse = ResponseWithErrors & {
+  api_key: ApiKey;
+};
+
+export type GetOrganizationApiKeysResponse = ResponseWithErrors & {
+  api_keys: ApiKey[];
+};
+
+export type DeleteOrganizationApiKeyInput = { apiKeyId: string };
+export type DeleteOrganizationApiKeyResponse = ResponseWithErrors;

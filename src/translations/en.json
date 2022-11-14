@@ -1,7 +1,8 @@
 {
   "name": "Symeo",
   "confirm": {
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "close": "Close"
   },
   "tendency": {
     "unknown": "N/A"
@@ -113,6 +114,9 @@
     "title": "Cycle time details"
   },
   "testing": {
+    "no-data-message": "No data received yet.",
+    "configure-link-label": "Configure",
+    "configure-message": "your testing integration to send and display data.",
     "coverage": {
       "title": "Coverage"
     },
@@ -131,6 +135,24 @@
       "unit": "Unit",
       "integration": "Integration",
       "end-to-end": "E2E"
+    },
+    "configuration": {
+      "title": "Configure testing data integration",
+      "message": "Add the following command to your Continuous Integration configuration to be run after the generation of your code coverage report (do this for all the repository of the team):",
+      "with": "With:",
+      "parameters": {
+        "api-key": "The Symeo api key associated to your organization.",
+        "api-key-link": "Create one",
+        "coverage-report-path": "The path to your coverage report in xml format",
+        "coverage-report-type": "Your coverage report provider (jacoco, istanbul currently supported)",
+        "unit-test-file-pattern": "The wildcard pattern corresponding to all your unit testing files",
+        "integration-test-file-pattern": "The wildcard pattern corresponding to all your integration testing files",
+        "code-file-pattern": "The wildcard pattern corresponding to your production code (all your code except tests)",
+        "test-framework": "The test framework you use (jUnit, jest currently supported)",
+        "repository-name": "The name of the repository for which data are sent",
+        "branch-name": "The name of the branch for which data are sent",
+        "commit-sha": "The current commit hash for which data are sent"
+      }
     }
   },
   "deployment": {
@@ -156,6 +178,7 @@
     "members-tab-label": "Members",
     "teams-tab-label": "Teams",
     "integrations-tab-label": "Integrations",
+    "api-keys-tab-label": "API keys",
     "advanced-tab-label": "Advanced",
     "members": {
       "title": "Manage your organization's members",
@@ -201,6 +224,27 @@
     "integrations": {
       "title": "Manage your organization's integrations",
       "code-repositories-provider-title": "code repositories provider"
+    },
+    "api-keys": {
+      "title": "Manage your organization's API keys",
+      "create-button-label": "Create a new API key",
+      "search-placeholder": "Find an API key...",
+      "remove-dialog": {
+        "title": "Removing an API key from {organizationName}",
+        "message": "API key {teamName} will be removed, you won't be able to use it to send data anymore",
+        "confirm-label": "Remove API key"
+      },
+      "create-dialog": {
+        "title": "Create API key for {organizationName}",
+        "create-button-label": "Create",
+        "name-field-label": "Name",
+        "name-field-placeholder": "Your API key name",
+        "value-field-label": "API key",
+        "value-field-helper": "Copy and save this value (you won't be able to get it once you close this dialog)",
+        "errors": {
+          "empty-name": "Name must not be empty"
+        }
+      }
     },
     "advanced": {
       "title": "Advanced settings",
