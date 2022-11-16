@@ -11,10 +11,11 @@ import Tendency, {
 import React from "react";
 
 export type TestingBreakdownCoverageProps = PropsWithSx & {
-  value: number;
-  tendency: number;
+  value?: number;
+  tendency?: number;
   tendencyDates?: TendencyProps["tendencyDates"];
   positiveTendency: PositiveTendency;
+  loading?: boolean;
 };
 
 function TestingBreakdownCoverage({
@@ -22,6 +23,7 @@ function TestingBreakdownCoverage({
   tendencyDates,
   tendency,
   positiveTendency,
+  loading,
   sx,
 }: TestingBreakdownCoverageProps) {
   const { formatMessage } = useIntl();
@@ -29,6 +31,7 @@ function TestingBreakdownCoverage({
   return (
     <BreakdownSectionContainer
       sx={{ width: "200px", ...sx }}
+      loading={loading}
       title={formatMessage({ id: "testing.coverage.title" })}
     >
       <Box
@@ -39,7 +42,7 @@ function TestingBreakdownCoverage({
       >
         <Gauge
           radius={60}
-          value={25}
+          value={value ?? 0}
           color={colors.success.borders as string}
         />
         <Box
@@ -68,7 +71,9 @@ function TestingBreakdownCoverage({
                 lineHeight: "2.5rem",
               }}
             >
-              {value * 100}
+              {value
+                ? formatMessage({ id: "time.value" }, { value })
+                : formatMessage({ id: "time.unknown" })}
             </Typography>
             <Typography
               sx={{
@@ -81,7 +86,7 @@ function TestingBreakdownCoverage({
             </Typography>
           </Box>
           <Tendency
-            tendency={tendency * 100}
+            tendency={tendency}
             tendencyDates={tendencyDates}
             positiveTendency={positiveTendency}
           />

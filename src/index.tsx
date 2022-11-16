@@ -26,6 +26,7 @@ if (config.datadog.clientToken) {
       sampleRate: 100,
       trackInteractions: true,
     });
+    datadogRum.startSessionReplayRecording();
   }
 
   datadogLogs.init({

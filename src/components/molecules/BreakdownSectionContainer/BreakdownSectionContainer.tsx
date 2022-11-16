@@ -1,11 +1,13 @@
-import { Box, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import { PropsWithSx } from "types/PropsWithSx";
-import React, { PropsWithChildren } from "react";
+import React, { PropsWithChildren, useCallback } from "react";
 import Button from "components/atoms/Button/Button";
 import { useIntl } from "react-intl";
+import { useNavigate } from "hooks/useNavigate";
 
 export type BreakdownSectionContainerProps = PropsWithSx &
   PropsWithChildren & {
+    loading?: boolean;
     title: string;
   };
 
@@ -13,8 +15,14 @@ function BreakdownSectionContainer({
   sx,
   children,
   title,
+  loading = false,
 }: BreakdownSectionContainerProps) {
   const { formatMessage } = useIntl();
+  const navigate = useNavigate();
+  const onImproveClick = useCallback(
+    () => navigate("teamGoalsLibrary"),
+    [navigate]
+  );
 
   return (
     <Box
@@ -37,10 +45,12 @@ function BreakdownSectionContainer({
           alignItems: "center",
         }}
       >
-        {children}
+        {loading && <CircularProgress size={20} />}
+        {!loading && children}
       </Box>
       <Box>
         <Button
+          onClick={onImproveClick}
           sx={{
             marginTop: (theme) => theme.spacing(1),
             padding: (theme) => `${theme.spacing(0.5)} ${theme.spacing(1)}`,

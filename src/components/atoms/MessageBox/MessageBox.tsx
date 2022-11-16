@@ -5,7 +5,7 @@ import { PropsWithSx } from "types/PropsWithSx";
 
 export type MessageBoxProps = PropsWithSx & {
   Icon?: typeof SvgIcon;
-  message: string;
+  message: React.ReactNode;
   variant?: "primary" | "secondary" | "success" | "warning" | "error";
 };
 

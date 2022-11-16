@@ -33,7 +33,15 @@ export const pullRequestsQueryApi = api.injectEndpoints({
       providesTags: (
         _,
         __,
-        { teamId, startDate, endDate, pageIndex, pageSize }
+        {
+          teamId,
+          startDate,
+          endDate,
+          pageIndex,
+          pageSize,
+          sortBy,
+          sortDirection,
+        }
       ) => [
         {
           type: "PullRequests",
@@ -42,6 +50,8 @@ export const pullRequestsQueryApi = api.injectEndpoints({
           endDate,
           pageIndex,
           pageSize,
+          sortBy,
+          sortDirection,
         },
       ],
     }),

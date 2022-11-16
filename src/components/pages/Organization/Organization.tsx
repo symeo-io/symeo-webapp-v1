@@ -12,6 +12,7 @@ import TabPanel from "@mui/lab/TabPanel";
 import { TabContext, TabList } from "@mui/lab";
 import { useGetOrganizationSettingsQuery } from "redux/api/organizations/organizations.api";
 import { useDataStatus } from "hooks/useDataStatus";
+import OrganizationApiKeys from "components/organisms/OrganizationApiKeys/OrganizationApiKeys";
 
 function Organization() {
   const { formatMessage } = useIntl();
@@ -66,6 +67,10 @@ function Organization() {
             value="integrations"
           />
           <Tab
+            label={formatMessage({ id: "organization.api-keys-tab-label" })}
+            value="api-keys"
+          />
+          <Tab
             label={formatMessage({ id: "organization.advanced-tab-label" })}
             value="advanced"
           />
@@ -82,6 +87,11 @@ function Organization() {
         </TabPanel>
         <TabPanel value="integrations">
           <OrganizationIntegrations />
+        </TabPanel>
+        <TabPanel value="api-keys">
+          <OrganizationApiKeys
+            organizationName={currentUser?.organization?.name ?? ""}
+          />
         </TabPanel>
         <TabPanel value="advanced">
           {settingsData && (

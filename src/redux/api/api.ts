@@ -8,7 +8,10 @@ export const dataTagTypes = [
   "Repository",
   "PullRequest",
   "CycleTime",
-  "CycleTimeBreakdown",
+  "CycleTimeCurve",
+  "CycleTimePieces",
+  "Deployment",
+  "Testing",
 ];
 
 export const apiTagTypes = [
@@ -16,6 +19,8 @@ export const apiTagTypes = [
   "Team",
   "User",
   "Goal",
+  "OrganizationSettings",
+  "OrganizationApiKeys",
   ...dataTagTypes,
 ];
 

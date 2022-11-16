@@ -51,7 +51,7 @@ function TeamGoal() {
           color="secondary"
           sx={{ cursor: "pointer" }}
         >
-          Back to your Team Goals
+          {formatMessage({ id: "team-goal.back-to-team-goals" })}
         </Link>
       </Box>
       <Box

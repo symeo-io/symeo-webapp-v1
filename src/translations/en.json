@@ -1,7 +1,8 @@
 {
   "name": "Symeo",
   "confirm": {
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "close": "Close"
   },
   "tendency": {
     "unknown": "N/A"
@@ -26,6 +27,8 @@
       "skip-button-label": "Skip",
       "next-button-label": "Next",
       "form": {
+        "select-all-label": "Select all",
+        "deselect-all-label": "Deselect all",
         "name-field-label": "Team name",
         "name-field-placeholder": "Your team name",
         "repositories-field-label": "Select your team repositories",
@@ -73,18 +76,23 @@
     "title": "Dashboard - {teamName}",
     "improve-button-label": "Improve",
     "coming-soon": "Coming soon",
-    "cycle-time": {
-      "title": "Cycle time"
+    "delivery": {
+      "title": "Delivery",
+      "cycle-time": {
+        "title": "Cycle time"
+      },
+      "deployment": {
+        "title": "Deployment"
+      }
     },
-    "testing": {
-      "title": "Testing"
+    "quality": {
+      "title": "Quality",
+      "testing": {
+        "title": "Testing"
+      }
     }
   },
   "cycle-time": {
-    "value-days": "{value, number, ::.##} {value, plural, =0 {day} one {day} other {days}}",
-    "value-hours": "{value, number, ::.##} {value, plural, =0 {hour} one {hour} other {hours}}",
-    "value-minutes": "{value, number, ::.##} {value, plural, =0 {minute} one {minute} other {minutes}}",
-    "unknown": "N/A",
     "average-subtitle": "Avg. cycle time",
     "coding": {
       "title": "Coding",
@@ -101,7 +109,14 @@
     },
     "configure-link-label": "configure"
   },
+  "cycle-time-page": {
+    "back-to-key-metrics": "Back to key metrics",
+    "title": "Cycle time details"
+  },
   "testing": {
+    "no-data-message": "No data received yet.",
+    "configure-link-label": "Configure",
+    "configure-message": "your testing integration to send and display data.",
     "coverage": {
       "title": "Coverage"
     },
@@ -120,6 +135,42 @@
       "unit": "Unit",
       "integration": "Integration",
       "end-to-end": "E2E"
+    },
+    "configuration": {
+      "title": "Configure testing data integration",
+      "message": "Add the following command to your Continuous Integration configuration to be run after the generation of your code coverage report (do this for all the repository of the team):",
+      "with": "With:",
+      "parameters": {
+        "api-key": "The Symeo api key associated to your organization.",
+        "api-key-link": "Create one",
+        "coverage-report-path": "The path to your coverage report in xml format",
+        "coverage-report-type": "Your coverage report provider (jacoco, istanbul currently supported)",
+        "unit-test-file-pattern": "The wildcard pattern corresponding to all your unit testing files",
+        "integration-test-file-pattern": "The wildcard pattern corresponding to all your integration testing files",
+        "code-file-pattern": "The wildcard pattern corresponding to your production code (all your code except tests)",
+        "test-framework": "The test framework you use (jUnit, jest currently supported)",
+        "repository-name": "The name of the repository for which data are sent",
+        "branch-name": "The name of the branch for which data are sent",
+        "commit-sha": "The current commit hash for which data are sent"
+      }
+    }
+  },
+  "deployment": {
+    "count": {
+      "title": "Deployment count",
+      "date-message": "Between {startDate} and {endDate}",
+      "repositories-message": "Over {repositoriesCount} repositories"
+    },
+    "per-day": {
+      "title": "Deployment per day"
+    },
+    "time-between-deploys": {
+      "title": "Avg. time between deployments",
+      "unit": "{value, plural, =0 {day} one {day} other {days}}"
+    },
+    "last-deploy": {
+      "title": "Last deploy",
+      "on": "On"
     }
   },
   "organization": {
@@ -127,6 +178,7 @@
     "members-tab-label": "Members",
     "teams-tab-label": "Teams",
     "integrations-tab-label": "Integrations",
+    "api-keys-tab-label": "API keys",
     "advanced-tab-label": "Advanced",
     "members": {
       "title": "Manage your organization's members",
@@ -173,6 +225,27 @@
       "title": "Manage your organization's integrations",
       "code-repositories-provider-title": "code repositories provider"
     },
+    "api-keys": {
+      "title": "Manage your organization's API keys",
+      "create-button-label": "Create a new API key",
+      "search-placeholder": "Find an API key...",
+      "remove-dialog": {
+        "title": "Removing an API key from {organizationName}",
+        "message": "API key {teamName} will be removed, you won't be able to use it to send data anymore",
+        "confirm-label": "Remove API key"
+      },
+      "create-dialog": {
+        "title": "Create API key for {organizationName}",
+        "create-button-label": "Create",
+        "name-field-label": "Name",
+        "name-field-placeholder": "Your API key name",
+        "value-field-label": "API key",
+        "value-field-helper": "Copy and save this value (you won't be able to get it once you close this dialog)",
+        "errors": {
+          "empty-name": "Name must not be empty"
+        }
+      }
+    },
     "advanced": {
       "title": "Advanced settings",
       "settings-saved-message": "Settings saved",
@@ -211,6 +284,9 @@
       "message": "Set up a 'New Team Goal' to start improving your key indicators",
       "button-label": "New Team Goal"
     }
+  },
+  "team-goal": {
+    "back-to-team-goals": "Back to your Team Goals"
   },
   "standards": {
     "new": "New",
@@ -329,10 +405,39 @@
     },
     "days-to-merge-value": "{value, number, compact-short}"
   },
+  "cycle-time-piece-table": {
+    "title": "Pull Requests cycle time values",
+    "empty-message": "No pull requests for the selected time period",
+    "columns": {
+      "vcs_repository": "Repo",
+      "title": "Name",
+      "author": "Author",
+      "cycle_time": "Cycle time",
+      "coding_time": "Coding",
+      "review_time": "Review",
+      "time_to_deploy": "Deployment"
+    }
+  },
+  "cycle-time-curve": {
+    "title": "Cycle time",
+    "yAxisTitle": "Pull Requests"
+  },
   "data-status": {
     "loading": "Symeo is performing the initial processing of your data. Graphs will be displayed shortly.",
     "initial-data-processing": "Initial processing of your data {progression}%",
     "data-processing": "Updating your data {progression}%",
     "last-update": "Last data update: {date}"
+  },
+  "time": {
+    "value": "{value, number, ::.##}",
+    "percent-value": "{value, number, ::.##}%",
+    "ago": "ago",
+    "value-days": "{value, number, ::.##} {value, plural, =0 {day} one {day} other {days}}",
+    "value-hours": "{value, number, ::.##} {value, plural, =0 {hour} one {hour} other {hours}}",
+    "value-minutes": "{value, number, ::.##} {value, plural, =0 {minute} one {minute} other {minutes}}",
+    "unit-days": "{value, plural, =0 {day} one {day} other {days}}",
+    "unit-hours": "{value, plural, =0 {hour} one {hour} other {hours}}",
+    "unit-minutes": "{value, plural, =0 {minute} one {minute} other {minutes}}",
+    "unknown": "N/A"
   }
 }
