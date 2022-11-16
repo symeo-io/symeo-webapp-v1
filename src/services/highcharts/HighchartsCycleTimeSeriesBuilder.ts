@@ -94,7 +94,7 @@ function buildPieceScatterSeries(
       custom: {
         branchName: point.label,
         codingTime: point.coding_time,
-        reviewTime: point.coding_time,
+        reviewTime: point.review_time,
         timeToDeploy: point.time_to_deploy,
       },
     })),
