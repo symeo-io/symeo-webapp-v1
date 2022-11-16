@@ -424,8 +424,8 @@
   },
   "data-status": {
     "loading": "Symeo is performing the initial processing of your data. Graphs will be displayed shortly.",
-    "initial-data-processing": "Initial processing of your data {progression}%",
-    "data-processing": "Updating your data {progression}%",
+    "initial-data-processing": "Initial processing of your data {progression, number, ::.##}%",
+    "data-processing": "Updating your data {progression, number, ::.##}%",
     "last-update": "Last data update: {date}"
   },
   "time": {
