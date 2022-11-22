@@ -64,6 +64,8 @@ function OrganizationAdvancedSettings({
           pull_request_merged_on_branch_regex:
             selectedReleaseDetection === "branch" ? branchValue : null,
           tag_regex: selectedReleaseDetection === "tags" ? tagsValue : null,
+          deploy_detection_type:
+            selectedReleaseDetection === "branch" ? "pull_request" : "tag",
           branch_regexes_to_exclude: branchRegexesToExcludeValue,
         },
       },

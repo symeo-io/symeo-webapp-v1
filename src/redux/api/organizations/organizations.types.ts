@@ -10,6 +10,7 @@ export type DeployDetectionSettings = {
   pull_request_merged_on_branch_regex: string | null;
   tag_regex: string | null;
   branch_regexes_to_exclude: string[];
+  deploy_detection_type: "pull_request" | "tag";
 };
 
 export type DeliverySettings = {
