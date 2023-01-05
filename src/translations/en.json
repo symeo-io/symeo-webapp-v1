@@ -401,7 +401,13 @@
       "author": "Author",
       "commit_number": "Commits",
       "size": "Size",
+      "status": "Status",
       "days_opened": "Days to merge"
+    },
+    "statuses": {
+      "merge": "Merged",
+      "open": "Open",
+      "close": "Closed"
     },
     "days-to-merge-value": "{value, number, compact-short}"
   },
@@ -412,10 +418,16 @@
       "vcs_repository": "Repo",
       "title": "Name",
       "author": "Author",
+      "status": "Status",
       "cycle_time": "Cycle time",
       "coding_time": "Coding",
       "review_time": "Review",
       "time_to_deploy": "Deployment"
+    },
+    "statuses": {
+      "merge": "Merged",
+      "open": "Open",
+      "close": "Closed"
     }
   },
   "cycle-time-curve": {

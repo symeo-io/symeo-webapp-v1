@@ -62,6 +62,19 @@ const COLUMNS = [
     ),
   },
   {
+    key: "status",
+    label: intl.formatMessage({
+      id: `pull-requests-table.columns.status`,
+    }),
+    renderCell: (pullRequest: PullRequest) => (
+      <TableCell key={`status:${pullRequest.id}`}>
+        {intl.formatMessage({
+          id: `pull-requests-table.statuses.${pullRequest.status}`,
+        })}
+      </TableCell>
+    ),
+  },
+  {
     key: "days_opened",
     label: intl.formatMessage({
       id: `pull-requests-table.columns.days_opened`,

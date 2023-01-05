@@ -46,6 +46,17 @@ const COLUMNS = [
     ),
   },
   {
+    key: "status",
+    label: intl.formatMessage({ id: `cycle-time-piece-table.columns.status` }),
+    renderCell: (piece: CycleTimePiece) => (
+      <TableCell key={`status:${piece.id}`}>
+        {intl.formatMessage({
+          id: `cycle-time-piece-table.statuses.${piece.status}`,
+        })}
+      </TableCell>
+    ),
+  },
+  {
     key: "cycle_time",
     label: intl.formatMessage({
       id: `cycle-time-piece-table.columns.cycle_time`,
